@@ -1,0 +1,19 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "utilisateurs",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "nom",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "prenom",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
