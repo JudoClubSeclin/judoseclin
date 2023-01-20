@@ -93,6 +93,6 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   fonts:
-    - family: HIRO MISAKE
+    - family: Hiromisake
       fonts:
-        - asset: fonts/HIROMISAKE.ttf
+        - asset: fonts/Hiromisake-Regular.ttf

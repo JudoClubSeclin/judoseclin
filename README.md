@@ -1,6 +1,6 @@
 # Judo Club Seclin
-[![Website](https://github.com/JudoClubSeclin/judoseclin/actions/workflows/firebase-hosting-merge.yml/badge.svg?branch=main)](https://github.com/JudoClubSeclin/judoseclin/actions/workflows/firebase-hosting-merge.yml) 
-[![Github Page](https://github.com/JudoClubSeclin/judoseclin/actions/workflows/github-pages.yml/badge.svg?branch=main)](https://github.com/JudoClubSeclin/judoseclin/actions/workflows/github-pages.yml)
+[![Website](https://github.com/JudoClubSeclin/judoseclin/actions/workflows/website-deploy.yml/badge.svg?branch=main)](https://github.com/JudoClubSeclin/judoseclin/actions/workflows/website-deploy.yml) 
+[![Analysis](https://github.com/JudoClubSeclin/judoseclin/actions/workflows/code-analysis.yml/badge.svg?branch=main)](https://github.com/JudoClubSeclin/judoseclin/actions/workflows/code-analysis.yml)
 [![codecov](https://codecov.io/github/JudoClubSeclin/judoseclin/branch/main/graph/badge.svg?token=YH9ZPC2F6S)](https://codecov.io/github/JudoClubSeclin/judoseclin)
 
 ![Logo](./assets/images/logo-fond-blanc.png)
