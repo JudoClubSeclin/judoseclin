@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:judoseclin/landing_page/landing.dart';
 import 'package:judoseclin/theme.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 // coverage:ignore-start
 void main() {
+  usePathUrlStrategy();
   runApp(const Landing());
 }
 // coverage:ignore-end

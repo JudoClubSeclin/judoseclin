@@ -13,6 +13,7 @@ class Landing extends StatelessWidget {
     ScrollController controller = ScrollController();
     return MaterialApp(
       title: "Judo Club Seclin",
+      debugShowCheckedModeBanner: false,
       theme: theme,
       home: Scaffold(
         body: SingleChildScrollView(

@@ -57,6 +57,6 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JCS_APP_DA13E }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JUDOSECLIN_E4B0F }}'
           channelId: live
-          projectId: jcs-app-da13e
+          projectId: judoseclin-e4b0f

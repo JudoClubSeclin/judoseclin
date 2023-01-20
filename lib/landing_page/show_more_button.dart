@@ -14,7 +14,7 @@ class ShowMoreButton extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(
         top: size.height * .7 - 25,
-        left: size.width * .6,
+        left: size.width * .6 - 25,
       ),
       child: ElevatedButton(
         onPressed: () {
