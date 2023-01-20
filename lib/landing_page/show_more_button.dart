@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:judoseclin/size_extensions.dart';
 
 class ShowMoreButton extends StatelessWidget {
   final ScrollController scrollController;
@@ -13,7 +14,7 @@ class ShowMoreButton extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: EdgeInsets.only(
-        top: size.height * .7 - 25,
+        top: size.headerHeight() - 25,
         left: size.width * .6 - 25,
       ),
       child: ElevatedButton(

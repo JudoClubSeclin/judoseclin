@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:judoseclin/size_extensions.dart';
 
 class NewsContainer extends StatelessWidget {
   const NewsContainer({Key? key}) : super(key: key);
@@ -8,7 +9,7 @@ class NewsContainer extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      height: size.height * .3,
+      height: size.newsHeight(),
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage("assets/images/bg-news.jpg"),

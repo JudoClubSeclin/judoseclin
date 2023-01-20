@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:judoseclin/size_extensions.dart';
 
 class LogoAndName extends StatelessWidget {
   const LogoAndName({Key? key}) : super(key: key);
@@ -8,7 +9,7 @@ class LogoAndName extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     double? titleFont = size.width / 10;
     return Container(
-      height: size.height * .7,
+      height: size.headerHeight(),
       width: double.infinity,
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -16,21 +17,21 @@ class LogoAndName extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width * .02),
+            padding: EdgeInsets.symmetric(vertical: size.height * .02),
             child: SizedBox(
-              width: size.width / 9,
-              height: size.width / 9,
-              child: Image.asset("assets/images/logo.png"),
+              width: size.max() / 9,
+              height: size.max() / 9,
+              child: Image.asset("assets/images/logo-fond-blanc.png"),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(right: size.width * .02),
+            padding: EdgeInsets.only(top: size.height * .02),
             child: Text(
               "Judo Club Seclin",
               style: TextStyle(
