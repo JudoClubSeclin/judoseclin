@@ -1,5 +1,6 @@
-import 'package:bloc/bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:judoseclin/firebase_options.dart';
 import 'package:judoseclin/landing_page/landing.dart';
 import 'package:judoseclin/theme.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
@@ -7,7 +8,10 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 // coverage:ignore-start
 void main() {
   usePathUrlStrategy();
-  runApp(const Landing());
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value){
+    runApp(const Landing());
+  });
+
 }
 // coverage:ignore-end
 
@@ -96,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),

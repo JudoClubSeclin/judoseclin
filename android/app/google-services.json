@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "285971971611",
+    "project_id": "judoseclin-e4b0f",
+    "storage_bucket": "judoseclin-e4b0f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285971971611:android:843c6c7d8c1c2f4110c2be",
+        "android_client_info": {
+          "package_name": "fr.benoitfontaine.judoseclin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285971971611-8fop0puqr8ekalgl0ho1i5gu3u7fsba5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDs3uGWEsH4IsnCS5n2wW8XDH4WOSZCQgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "285971971611-8fop0puqr8ekalgl0ho1i5gu3u7fsba5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

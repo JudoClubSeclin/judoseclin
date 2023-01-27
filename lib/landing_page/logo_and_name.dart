@@ -25,8 +25,8 @@ class LogoAndName extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(vertical: size.height * .02),
             child: SizedBox(
-              width: size.max() / 9,
-              height: size.max() / 9,
+              width: size.height / 5,
+              height: size.height / 5,
               child: Image.asset("assets/images/logo-fond-blanc.png"),
             ),
           ),
