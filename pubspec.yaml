@@ -47,6 +47,9 @@ dependencies:
   freezed: ^2.3.2
   firebase_core: ^2.4.1
   cloud_firestore: ^4.3.1
+  firebase_storage: ^11.0.10
+  http: ^0.13.5
+  url_launcher: ^6.1.8
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +80,7 @@ flutter:
   assets:
     - assets/images/
     - assets/documents/
+    - assets/markdown/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

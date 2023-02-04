@@ -8,6 +8,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 // coverage:ignore-start
 void main() {
   usePathUrlStrategy();
+  WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value){
     runApp(const Landing());
   });

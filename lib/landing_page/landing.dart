@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:judoseclin/landing_page/more_info.dart';
 import 'package:judoseclin/landing_page/news_container.dart';
 import 'package:judoseclin/theme.dart';
 
@@ -25,6 +26,7 @@ class Landing extends StatelessWidget {
                 children: const [
                   LogoAndName(),
                   NewsContainer(),
+                  MoreInfo(),
                 ],
               ),
               ShowMoreButton(scrollController: controller),
