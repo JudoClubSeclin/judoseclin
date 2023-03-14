@@ -13,7 +13,7 @@ class LogoAndName extends StatelessWidget {
       width: double.infinity,
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/bg-appbar.jpeg"),
+          image: AssetImage("assets/images/bg-appbar-0.jpg"),
           fit: BoxFit.cover,
         ),
       ),

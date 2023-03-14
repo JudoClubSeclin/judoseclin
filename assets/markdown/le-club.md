@@ -2,7 +2,7 @@
 
 Le Judo club de Seclin, qui a vu le jour en 1973, a été créer par le Docteur Prast qui faisait partie de l'union sportive Seclinoise regroupant plusieurs diciplines. Aujourd'hui cette association n'existe plus. Chaque dicipline est devenue une association sportive (club). Le judo club de seclin est affilié à la Fédération Française de Judo numéro d'affiliation : 590840. L’association regroupe près de 130 licenciés. Nous pratiquons Judo, Jujitsu et self-défense au dojo seclinois (salle municipale Delaunne, au fond du parc des époux Rosenberg), Rue Marx Dormoy, 59113 SECLIN.
 
-# Les membres du bureau :
+# Les membres du bureau
 
 - Président : Steeve VANDENSTORME
 - Vice-président : Benoît FONTAINE
@@ -14,7 +14,7 @@ Le Judo club de Seclin, qui a vu le jour en 1973, a été créer par le Docteur 
 - Responsable comunication : Manon SPYSSCHAERT
 - Site web : Benoît FONTAINE et Ludovic SPYSSCHAERT
 
-# Les enseignants :
+# Les enseignants
 
 Maitre [Gerard DUCROCQ](http://gerardducrocq.com/) 6ieme Dan, diplomé d'état (DE), conseiller technique
 Emmanuelle VANDENSTORME 3ieme Dan diplôme CQP

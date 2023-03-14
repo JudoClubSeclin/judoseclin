@@ -29,7 +29,7 @@ class NewsContainer extends HookWidget {
       height: size.newsHeight(),
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/bg-news.jpg"),
+          image: AssetImage("assets/images/bg-news-0.jpg"),
           fit: BoxFit.cover,
         ),
       ),

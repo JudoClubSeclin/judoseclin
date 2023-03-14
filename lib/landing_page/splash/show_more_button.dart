@@ -15,7 +15,7 @@ class ShowMoreButton extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(
         top: size.headerHeight() - 25,
-        left: size.width * .6 - 25,
+        left: size.width * .5 - 95,
       ),
       child: ElevatedButton(
         onPressed: () {
@@ -31,7 +31,7 @@ class ShowMoreButton extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30.0),
                     side: const BorderSide(color: Colors.red)))),
         child: SizedBox(
-          width: 150,
+          width: 160,
           height: 50,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

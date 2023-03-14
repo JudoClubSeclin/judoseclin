@@ -12,12 +12,20 @@ MarkdownStyleSheet getMDTheme(BuildContext context, Color fontColor) =>
       h1: Theme.of(context).textTheme.headlineLarge?.copyWith(
             color: fontColor,
             fontFamily: "Hiromisake",
+            height: 2,
           ),
       h2: Theme.of(context).textTheme.headlineMedium?.copyWith(
             color: fontColor,
             fontFamily: "Hiromisake",
+            height: 2,
           ),
-      h3: Theme.of(context).textTheme.headlineSmall?.copyWith(color: fontColor),
+      h3: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            color: fontColor,
+            height: 2,
+          ),
       listBullet:
-          Theme.of(context).textTheme.bodyLarge?.copyWith(color: fontColor),
+          Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: fontColor
+          ),
+      listBulletPadding: const EdgeInsets.only(top: 10, left: 20),
     );

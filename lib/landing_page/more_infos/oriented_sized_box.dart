@@ -18,7 +18,7 @@ class OrientedSizedBox extends StatelessWidget {
     bool fullHeight = size.orientation() == SizeOrientation.paysage;
     return SizedBox(
       width: size.width * (fullHeight ? fraction : 1),
-      //height: fullHeight ? size.height : null,
+      //height: fullHeight ? double.infinity : null,
       child: Padding(
         padding: const EdgeInsets.all(5),
         child: child,
