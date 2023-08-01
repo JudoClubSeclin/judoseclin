@@ -3,6 +3,8 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  firebase_core
+  freelance
   url_launcher_windows
 )
 
