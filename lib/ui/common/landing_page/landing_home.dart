@@ -15,7 +15,7 @@ class LandingHome extends StatelessWidget {
       child: Center(
         child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.5,
-          height: MediaQuery.of(context).size.height * 0.5,
+          height: MediaQuery.of(context).size.height * 2/3,
           child: FractionallySizedBox(
             alignment: Alignment.center,
             widthFactor: 1.0, // Set widthFactor to 1.0 to use the full width of the parent container
@@ -39,7 +39,7 @@ class LandingHome extends StatelessWidget {
                 ),
                  const SizedBox(height: 25,),
                const Positioned(
-                  bottom: 16,
+                  bottom: 86,
                   child: Text(
                     "Judo Club Seclin",
                     style: TextStyle(
