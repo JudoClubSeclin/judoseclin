@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:judoseclin/ui/common/landing_page/landing_home.dart';
 import 'package:judoseclin/ui/common/landing_page/landing_massage.dart';
 import 'package:judoseclin/ui/common/landing_page/show_button.dart';
+import 'package:judoseclin/ui/common/more_infos/more_info.dart';
 
 import 'theme.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
                 children: [
                   LandingHome(),
                   LandingMessage(),
+                  MoreInfo(),
                 ],
               ),
             Positioned(

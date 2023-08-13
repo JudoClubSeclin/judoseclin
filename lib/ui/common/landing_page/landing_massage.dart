@@ -19,7 +19,7 @@ class LandingMessage extends StatelessWidget {
       child: Column(mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
        children: [
-        Container(padding: const EdgeInsets.all(15)),
+        Container(padding: const EdgeInsets.all(20)),
         const Text(
           'Inscription 2023',
           style: TextStyle(
@@ -31,7 +31,8 @@ class LandingMessage extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(20),
           child: const Text(
-            'Les inscription pour la saison 2023/2024 serron ouverte au public le jour ou on en auras envis PROUUUTTTTTT',
+            'Les inscription pour la saison 2023/2024 serron ouverte au public le mardi 30 août de 17h30 à 19h00 Les cours reprendrons la semaine qui suis au horaire abituelles ',
+            
             style: TextStyle(
                 fontFamily: 'Hiromisake',
                 fontSize: 17,
