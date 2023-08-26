@@ -1,14 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:freelance/extensions/context_extensions.dart';
+import 'package:judoseclin/size_extensions.dart';
 
 class ShowButton extends StatelessWidget {
- 
-  const ShowButton({ Key? key, }) : super(key: key);
-   
+  final ScrollController scrollController;
+  const ShowButton({
+  Key? key,
+  required this.scrollController,
+  })
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return 
-    ElevatedButton(
-      onPressed: () {},
+    Size size = MediaQuery.sizeOf(context);
+    return  Padding(
+        padding: EdgeInsets.only(
+          top: size.headerHeight() -25,
+            left: size.width * .5 -95,
+        ),
+   child:  ElevatedButton(
+      onPressed: () {
+        scrollController.animateTo(
+       size.height,
+            duration: const Duration(seconds: 1),
+        curve: Curves.easeOut
+        );
+
+  },
       style: ButtonStyle(
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
@@ -32,6 +50,7 @@ class ShowButton extends StatelessWidget {
           ],
         ),
       ),
+   ),
     );
   }
 }
