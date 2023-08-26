@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:judoseclin/size_extensions.dart';
 import 'package:judoseclin/ui/common/more_infos/colone_links.dart';
-import 'package:judoseclin/ui/common/more_infos/colonne_club.dart';
-import 'package:judoseclin/ui/common/more_infos/colonne_cours.dart';
+import 'package:judoseclin/ui/common/more_infos/colonne_page.dart';
 import 'package:judoseclin/ui/common/more_infos/orientation_stack.dart';
 
 
@@ -25,6 +24,9 @@ class MoreInfo extends StatelessWidget {
     orientation: orientation,
     children: [
       ColonneLinks(fraction: .2, size: size),
+      ColonnePage(docUrl: "assets/markdown/le-club.md", fraction: .4, size: size,),
+      ColonnePage(docUrl: "assets/markdown/les-cours.md", fraction: .4, size: size,),
+
     ],
         ),
     );
