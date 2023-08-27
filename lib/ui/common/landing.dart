@@ -3,38 +3,72 @@ import 'package:judoseclin/ui/common/landing_page/landing_home.dart';
 import 'package:judoseclin/ui/common/landing_page/landing_news.dart';
 import 'package:judoseclin/ui/common/landing_page/show_button.dart';
 import 'package:judoseclin/ui/common/more_infos/more_info.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:judoseclin/size_extensions.dart';
+
 
 import 'theme.dart';
 
 class Landing extends StatelessWidget {
-  const Landing({super.key});
+
+  Future<void> simulateImageLoading() async {
+    // Simulate image loading process
+    await Future.delayed(const Duration(seconds: 3));
+  }
+
+   Landing({super.key});
 
   @override
   Widget build(BuildContext context) {
     ScrollController controller = ScrollController();
+    Size size = MediaQuery.sizeOf(context);
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Judo Club Seclinois',
-      theme: theme,
-      home: Scaffold(
-        body: SingleChildScrollView(
-          controller: controller,
-          child: Stack(
-            children: [
-             const Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  LandingHome(),
-                  LandingNews(),
-                  MoreInfo()
+        debugShowCheckedModeBanner: false,
+        title: 'Judo Club Seclinois',
+        theme: theme,
+        home: Scaffold(
 
-                ],
-              ),
-              ShowButton(scrollController: controller),
-            ],
+          body: SingleChildScrollView(
+            controller: controller,
+            child: FutureBuilder(
+              future: simulateImageLoading(),
+              builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Container(
+                    height: size.height /4,
+                    color: Colors.white, // Background color
+                    child: Center(
+                      child: SpinKitFadingCircle(
+                        size: 50,
+                        itemBuilder: (BuildContext context, int index) {
+                          return DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: index.isEven ? Colors.red : Colors.black,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                } else {
+                  return Stack(
+                    children: [
+                      const Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          LandingHome(),
+                          LandingNews(),
+                          MoreInfo(),
+                        ],
+                      ),
+                      ShowButton(scrollController: controller),
+                    ],
+                  );
+                }
+              },
+            ),
           ),
         ),
-      )
     );
   }
 }
