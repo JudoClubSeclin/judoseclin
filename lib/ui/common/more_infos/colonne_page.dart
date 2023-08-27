@@ -32,9 +32,14 @@ class ColonnePage extends HookWidget {
       size: size,
       fraction: fraction,
       child:  Card(
+
         color: Colors.white,
+        child: SizedBox(
+         height: MediaQuery.sizeOf(context).height *1.33,
+
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+
+          padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
           child: MarkdownBody(
             data: contenu.value,
             styleSheet: getMDTheme(context, Colors.black),
@@ -47,6 +52,7 @@ class ColonnePage extends HookWidget {
           ),
         ),
       ),
+      )
     );
   }
 }
