@@ -33,10 +33,12 @@ class LandingHome extends StatelessWidget {
               Image.asset("assets/images/logo-fond-blanc.png"),
             ),
           ),
+
           Padding(
               padding: EdgeInsets.only(
                 top: size.height * 0.0,
               ),
+
           child: Text(
             "JUDO CLUB SECLIN",
             style: TextStyle(

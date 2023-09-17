@@ -7,43 +7,57 @@ import 'package:judoseclin/size_extensions.dart';
 
 import '../theme.dart';
 
-class LandingNews extends HookWidget{
-  const LandingNews({super.key});
+class LandingNews extends HookWidget {
+  const LandingNews({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var db = FirebaseFirestore.instance;
     final mesNews = useState<List<News>>([]);
-    db
-    .collection("news")
-        .orderBy("date_publication", descending: true)
-        .limit(3)
-        .get()
-        .then((event) {
-      mesNews.value = event.docs.map((e) => News.fromFirestore(e)).toList();
-    });
+
+    useEffect(() {
+      var db = FirebaseFirestore.instance;
+      db
+          .collection("news")
+          .orderBy("date_publication", descending: true)
+          .limit(3)
+          .get()
+          .then((event) {
+        mesNews.value = event.docs.map((e) => News.fromFirestore(e)).toList();
+      });
+
+      return () {
+        // Clean up any resources or subscriptions here, if needed.
+      };
+    }, const []);
+
     Size size = MediaQuery.of(context).size;
-    return Container(
-      width: size.width,
-      height: size.newsHeight(),
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/images/bg-news-0.jpg"),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: CarouselSlider(
-        options: CarouselOptions(
+
+    return ValueListenableBuilder<List<News>>(
+      valueListenable: mesNews,
+      builder: (context, newsList, child) {
+        return Container(
+          width: size.width,
           height: size.newsHeight(),
-          aspectRatio: size.width / size.newsHeight(),
-          autoPlay: true,
-          autoPlayInterval: const Duration(seconds: 15),
-          autoPlayAnimationDuration: const Duration(milliseconds: 800),
-          autoPlayCurve: Curves.fastOutSlowIn,
-          viewportFraction: 1,
-        ),
-        items: mesNews.value.toMarkdown(),
-      ),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/bg-news-0.jpg"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: CarouselSlider(
+            options: CarouselOptions(
+              height: size.newsHeight(),
+              aspectRatio: size.width / size.newsHeight(),
+              autoPlay: true,
+              autoPlayInterval: const Duration(seconds: 15),
+              autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              viewportFraction: 1,
+            ),
+            items: newsList.toMarkdown(),
+          ),
+        );
+      },
     );
   }
 }
