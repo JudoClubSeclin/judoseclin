@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:judoseclin/ui/common/connexion_to_firebase/login.dart';
 
-import 'login_page.dart';
 
 class ConnexionButton extends StatelessWidget {
   const ConnexionButton({super.key});
@@ -27,7 +27,7 @@ class ConnexionButton extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) {
                   // Remplacez LoginPage par le nom de votre page de connexion
-                  return const LoginPage();
+                  return const Login();
                 },
               ),
             );

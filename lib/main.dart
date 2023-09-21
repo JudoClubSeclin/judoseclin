@@ -10,7 +10,7 @@ void main() {
   usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value){
-    runApp( Landing());
+    runApp( const Landing());
   });
 
 }

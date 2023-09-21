@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:judoseclin/size_extensions.dart';
 import 'package:judoseclin/ui/common/connexion_to_firebase/inscription.dart';
+import 'package:judoseclin/ui/common/connexion_to_firebase/login.dart';
 
 import '../../../custom_textfield.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class Inscription extends StatefulWidget {
+  const Inscription({Key? key}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  _Inscription createState() => _Inscription();
 }
 
-class _LoginState extends State<Login> {
+class _Inscription extends State<Inscription> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -22,36 +23,58 @@ class _LoginState extends State<Login> {
     double? titlefont = size.width / 9;
 
     return Scaffold(
-      body: Padding(
+
+        body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 55, horizontal: 10),
+    child: SingleChildScrollView(
+    child: Padding(
+    padding: const EdgeInsets.symmetric(vertical: 55, horizontal: 10),
 
-            child: Column(
-              children: [
-
-                Text(
-                  "CONNEXION",
-                  style: TextStyle(
-                    fontFamily: 'Hiromisake',
-                    fontSize: titlefont,
-                    color: Colors.black,
-                    shadows: const [
-                      Shadow(
-                        offset: Offset(1.0, 1.0),
-                        blurRadius: 3.0,
-                        color: Colors.black,
-                      ),
-                    ],
+    child: Column(
+              children:  [
+                Align(
+                  alignment: Alignment.topCenter, // Aligner le texte en haut
+                  child: Text(
+                    "INSCRIPTION",
+                    style: TextStyle(
+                      fontFamily: 'Hiromisake',
+                      fontSize: titlefont,
+                      color: Colors.black,
+                      shadows: const [
+                        Shadow(
+                            offset: Offset(1.0, 1.0),
+                            blurRadius: 3.0,
+                            color: Colors.black),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(height: 70,),
+                const SizedBox(height: 70),
+                CustomTextField(
+                  labelText: 'NOM',
+                  controller: emailController,
+                ),
+                const SizedBox(height: 20),
+                CustomTextField(
+                  labelText: 'PRENOM',
+                  controller: emailController,
+                ),
+                const SizedBox(height: 20),
+                CustomTextField(
+                  labelText: 'Née le',
+                  controller: emailController,
+                ),
+                const SizedBox(height: 20),
+                CustomTextField(
+                  labelText: 'N° licence',
+                  controller: emailController,
+                ),
+                const SizedBox(height: 20),
                 CustomTextField(
                   labelText: 'E-mail',
                   controller: emailController,
                 ),
-                const SizedBox(height: 70),
+                const SizedBox(height: 20),
                 CustomTextField(
                   labelText: 'Mot de passe',
                   controller: passwordController,
@@ -79,28 +102,26 @@ class _LoginState extends State<Login> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("CONNEXION"),
+                        Text("JE M'INSCRIE"),
                       ],
                     ),
                   ),
                 ),
                 const SizedBox(height: 22,),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
+                TextButton(onPressed: (){
+                  Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => Inscription(),
-                      ),
-                    );
-                  },
-                  child: Text("Ou créer un compte"),
+                      MaterialPageRoute(builder: (context) => const Login()),
+                  );
+                },
+                    child:
+                    Text("Connexion")
                 ),
               ],
             ),
-          ),
-        ),
+          )
       ),
+        ),
     );
   }
 }
