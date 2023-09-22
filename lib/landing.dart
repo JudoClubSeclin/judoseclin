@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:judoseclin/more_info.dart';
 import 'package:judoseclin/ui/common/connexion_to_firebase/connexion_button.dart';
 import 'package:judoseclin/ui/common/landing_page/landing_home.dart';
 import 'package:judoseclin/ui/common/landing_page/landing_news.dart';
 import 'package:judoseclin/ui/common/landing_page/show_button.dart';
-import 'package:judoseclin/more_info.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:judoseclin/size_extensions.dart';
 
 import 'ui/common/theme.dart';
 

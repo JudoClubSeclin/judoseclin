@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:judoseclin/size_extensions.dart';
 import 'package:judoseclin/ui/common/connexion_to_firebase/inscription.dart';
 
 import '../../../custom_textfield.dart';
@@ -18,7 +17,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    SizeOrientation orientation = size.orientation();
     double? titlefont = size.width / 9;
 
     return Scaffold(
@@ -27,10 +25,8 @@ class _LoginState extends State<Login> {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 55, horizontal: 10),
-
             child: Column(
               children: [
-
                 Text(
                   "CONNEXION",
                   style: TextStyle(
@@ -46,7 +42,9 @@ class _LoginState extends State<Login> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 70,),
+                const SizedBox(
+                  height: 70,
+                ),
                 CustomTextField(
                   labelText: 'E-mail',
                   controller: emailController,
@@ -84,17 +82,19 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 22,),
+                const SizedBox(
+                  height: 22,
+                ),
                 TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Inscription(),
+                        builder: (context) => const Inscription(),
                       ),
                     );
                   },
-                  child: Text("Ou créer un compte"),
+                  child: const Text("Ou créer un compte"),
                 ),
               ],
             ),

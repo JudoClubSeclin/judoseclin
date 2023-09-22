@@ -10,24 +10,14 @@ class Connexion extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     SizeOrientation orientation = size.orientation();
-    return
-      
-      SingleChildScrollView(
-            child: Container(
-              width: size.width,
-              child: OrientedStack(
-                orientation: orientation,
-                children: const [
-                  Login()
-                ],
-              ),
-            ),
-
-
+    return SingleChildScrollView(
+      child: SizedBox(
+        width: size.width,
+        child: OrientedStack(
+          orientation: orientation,
+          children: const [Login()],
+        ),
+      ),
     );
-
-
-
-
   }
 }

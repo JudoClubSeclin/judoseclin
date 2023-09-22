@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:judoseclin/size_extensions.dart';
 import 'package:judoseclin/ui/common/connexion_to_firebase/login.dart';
 
 import '../../../custom_textfield.dart';
@@ -18,7 +17,7 @@ class _Inscription extends State<Inscription> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    SizeOrientation orientation = size.orientation();
+
     double? titlefont = size.width / 9;
 
     return Scaffold(
@@ -46,15 +45,19 @@ class _Inscription extends State<Inscription> {
                   ),
                 ),
               ),
-              const SizedBox(height: 70),
-              CustomTextField(
-                labelText: 'NOM',
-                controller: emailController,
+              Padding(
+                padding: const EdgeInsets.only(top: 70),
+                child: CustomTextField(
+                  labelText: 'NOM',
+                  controller: emailController,
+                ),
               ),
-              const SizedBox(height: 20),
-              CustomTextField(
-                labelText: 'PRENOM',
-                controller: emailController,
+              Padding(
+                padding: const EdgeInsets.only(top: .70),
+                child: CustomTextField(
+                  labelText: 'PRENOM',
+                  controller: emailController,
+                ),
               ),
               const SizedBox(height: 20),
               CustomTextField(
@@ -114,7 +117,7 @@ class _Inscription extends State<Inscription> {
                       MaterialPageRoute(builder: (context) => const Login()),
                     );
                   },
-                  child: Text("Connexion")),
+                  child: const Text("Connexion")),
             ],
           ),
         )),
