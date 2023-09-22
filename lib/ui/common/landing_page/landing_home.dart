@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:freelance/extensions/context_extensions.dart';
 import 'package:judoseclin/size_extensions.dart';
 
 class LandingHome extends StatelessWidget {
