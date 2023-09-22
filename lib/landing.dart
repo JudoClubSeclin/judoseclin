@@ -3,16 +3,16 @@ import 'package:judoseclin/ui/common/connexion_to_firebase/connexion_button.dart
 import 'package:judoseclin/ui/common/landing_page/landing_home.dart';
 import 'package:judoseclin/ui/common/landing_page/landing_news.dart';
 import 'package:judoseclin/ui/common/landing_page/show_button.dart';
-import 'package:judoseclin/ui/common/more_infos/more_info.dart';
+import 'package:judoseclin/more_info.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:judoseclin/size_extensions.dart';
 
-import 'theme.dart';
+import 'ui/common/theme.dart';
 
 class Landing extends StatelessWidget {
   Future<void> simulateImageLoading() async {
     // Simulate image loading process
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1));
   }
 
   const Landing({super.key});

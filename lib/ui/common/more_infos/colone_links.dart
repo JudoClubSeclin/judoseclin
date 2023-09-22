@@ -107,24 +107,31 @@ class _ColonneLinksState extends State<ColonneLinks> {
               ),
               FutureBuilder(
                 future: getFiles("documents"),
-                builder:
-                    (BuildContext context, AsyncSnapshot<List<File>> snapshot) {
-                  if (snapshot.hasData) {
-                    List<File> files = snapshot.data ?? [];
-                    if (files.isEmpty) {
-                      return const Text(
-                          "Vous retrouverez l'ensemble des documents à cet endroit");
-                    } else {
-                      return FileListButtons(files: files);
-                    }
-                  } else if (snapshot.hasError) {
-                    return const Text(
-                        "Erreur lors de la récupération des documents");
-                  } else {
-                    return const CircularProgressIndicator();
+                builder: (BuildContext context, AsyncSnapshot<List<File>> snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.none:
+                    case ConnectionState.waiting:
+                      return CircularProgressIndicator();
+                    case ConnectionState.done:
+                      if (snapshot.hasError) {
+                        return Text("Erreur lors de la récupération des documents");
+                      } else if (snapshot.hasData) {
+                        List<File> files = snapshot.data ?? [];
+                        if (files.isEmpty) {
+                          return Text("Vous retrouverez l'ensemble des documents à cet endroit");
+                        } else {
+                          return FileListButtons(files: files);
+                        }
+                      }
+                      break;
+                    default:
+                      return Text("En attente de données..."); // Ajoutez une valeur par défaut ici
                   }
+                  return SizedBox(); // Une valeur de retour par défaut si aucun cas n'est atteint
                 },
               ),
+
+
               Text(
                 "Ceinture Noire",
                 style: titleStyle,

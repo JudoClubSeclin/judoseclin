@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:judoseclin/firebase_options.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
-import 'ui/common/landing.dart';
+import 'landing.dart';
 
 // coverage:ignore-start
 void main() {

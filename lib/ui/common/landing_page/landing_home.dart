@@ -8,7 +8,7 @@ class LandingHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    double? titlefont = size.width /10;
+    double? titlefont = size.width / 10;
     return Container(
       height: size.headerHeight(),
       width: double.infinity,
@@ -18,48 +18,42 @@ class LandingHome extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child:  Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-              padding:EdgeInsets.symmetric(vertical: size.height * 0.1,
-              ),
+            padding: EdgeInsets.symmetric(
+              vertical: size.height * 0.1,
+            ),
             child: SizedBox(
-              width: size.height /6,
-              height: size.height /6,
-              child: 
-              Image.asset("assets/images/logo-fond-blanc.png"),
+              width: size.height / 6,
+              height: size.height / 6,
+              child: Image.asset("assets/images/logo-fond-blanc.png"),
             ),
           ),
-
           Padding(
-              padding: EdgeInsets.only(
-                top: size.height * 0.0,
+            padding: EdgeInsets.only(
+              top: size.height * 0.0,
+            ),
+            child: Text(
+              "JUDO CLUB SECLIN",
+              style: TextStyle(
+                fontFamily: 'Hiromisake',
+                fontSize: titlefont,
+                color: Colors.black,
+                shadows: const [
+                  Shadow(
+                      offset: Offset(1.0, 1.0),
+                      blurRadius: 3.0,
+                      color: Colors.white)
+                ],
               ),
-
-          child: Text(
-            "JUDO CLUB SECLIN",
-            style: TextStyle(
-              fontFamily: 'Hiromisake',
-              fontSize: titlefont,
-              color: Colors.black,
-              shadows: const [
-                Shadow(
-                    offset: Offset(1.0, 1.0),
-                    blurRadius: 3.0,
-                    color: Colors.white)
-              ],
             ),
-          ),
           )
-
         ],
-            ),
-
-
-
+      ),
     );
   }
 }

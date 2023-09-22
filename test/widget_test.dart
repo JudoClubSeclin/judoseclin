@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:judoseclin/ui/common/landing.dart';
+import 'package:judoseclin/landing.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
