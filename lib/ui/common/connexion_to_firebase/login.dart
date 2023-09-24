@@ -1,18 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:judoseclin/main.dart';
 import 'package:judoseclin/ui/common/connexion_to_firebase/inscription.dart';
 
 import '../../../custom_textfield.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class Login extends StatelessWidget {
+  Login({Key? key}) : super(key: key);
 
-  @override
-  _LoginState createState() => _LoginState();
-}
-
-class _LoginState extends State<Login> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +55,7 @@ class _LoginState extends State<Login> {
                 const SizedBox(height: 70),
                 ElevatedButton(
                   onPressed: () {
-                    // Gérez l'authentification ici en utilisant les contrôleurs
-                    String email = emailController.text;
-                    String password = passwordController.text;
-                    // Ajoutez votre logique de connexion ici
+                    loginToFirebase();
                   },
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -90,7 +84,7 @@ class _LoginState extends State<Login> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const Inscription(),
+                        builder: (context) => Inscription(),
                       ),
                     );
                   },
@@ -102,5 +96,23 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  void loginToFirebase() {
+    try {
+      auth
+          .signInWithEmailAndPassword(
+              email: emailController.text.trim(),
+              password: passwordController.text.trim())
+          .then((value) {
+        if (kDebugMode) {
+          print(value.toString());
+        }
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    }
   }
 }
