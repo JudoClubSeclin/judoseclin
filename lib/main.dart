@@ -23,7 +23,7 @@ void main() {
         runApp(const Landing());
       } else {
         if (kDebugMode) {
-          print('Utilisateur connecté: ' + user.email!);
+          print('Utilisateur connecté: ${user.email!}');
         }
         runApp(const LandingAccount());
       }

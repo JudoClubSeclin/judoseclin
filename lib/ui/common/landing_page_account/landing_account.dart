@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:judoseclin/main.dart';
 
 class LandingAccount extends StatelessWidget {
-  const LandingAccount({Key? key});
+  const LandingAccount({super.key});
 
   @override
   Widget build(BuildContext context) {
