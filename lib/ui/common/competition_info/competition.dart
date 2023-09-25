@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:judoseclin/size_extensions.dart';
-import 'package:judoseclin/ui/common/competition_info/competition_info.dart';
 import 'package:judoseclin/ui/common/more_infos/orientation_stack.dart';
+
+import 'competition_info.dart';
 
 class MoreInfo extends StatelessWidget {
   const MoreInfo({super.key});
