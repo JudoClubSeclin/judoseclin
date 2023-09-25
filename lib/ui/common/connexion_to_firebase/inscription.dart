@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:judoseclin/main.dart';
 import 'package:judoseclin/ui/common/connexion_to_firebase/login.dart';
 
 import '../../../custom_textfield.dart';
+
+FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 class Inscription extends StatelessWidget {
   Inscription({Key? key}) : super(key: key);
@@ -14,7 +17,6 @@ class Inscription extends StatelessWidget {
   final numeroLicenceController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -141,6 +143,14 @@ class Inscription extends StatelessWidget {
           .then((value) {
         if (kDebugMode) {
           print(value.user!.uid);
+          addUser(
+            value.user!.uid,
+            nomController.text.trim(),
+            prenomController.text.trim(),
+            dateNaissanceController.text.trim(),
+            numeroLicenceController.text.trim(),
+            emailController.text.trim(),
+          );
         }
       });
     } catch (e) {
@@ -148,5 +158,21 @@ class Inscription extends StatelessWidget {
         print(e.toString());
       }
     }
+  }
+
+  Future<void> addUser(String userID, String nom, String prenom,
+      String datedenaissance, String licence, String email) {
+    return firestore
+        .collection('Users')
+        .doc(userID)
+        .set({
+          'nom': nom,
+          'prenom': prenom,
+          'date de naissance': datedenaissance,
+          'licence': licence,
+          'email': email
+        })
+        .then((value) => print('Utilisateur ajouté'))
+        .catchError((error) => print('Erreur: $error'));
   }
 }
