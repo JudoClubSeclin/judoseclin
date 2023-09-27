@@ -7,8 +7,8 @@ class LandingAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    double? titlefont = size.width / 10;
+    Size size = MediaQuery.of(context).size; // Modifiez cette ligne
+    double titlefont = size.width / 10; // Retirez le "?"
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -26,28 +26,31 @@ class LandingAccount extends StatelessWidget {
             ],
           ),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        body: ListView(
+          // Modifiez cette ligne
           children: <Widget>[
-            Text(
-              "Bonjour",
-              style: TextStyle(
-                fontFamily: 'Hiromisake',
-                fontSize: titlefont,
-                color: Colors.black,
-                shadows: const [
-                  Shadow(
-                    offset: Offset(1.0, 1.0),
-                    blurRadius: 3.0,
-                    color: Colors.black,
-                  ),
-                ],
+            Center(
+              child: Text(
+                "Bienvenue ",
+                style: TextStyle(
+                  fontFamily: 'Hiromisake',
+                  fontSize: titlefont,
+                  color: Colors.black,
+                  shadows: const [
+                    Shadow(
+                      offset: Offset(1.0, 1.0),
+                      blurRadius: 3.0,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(
-              height: 150,
-              child: UserInfo(),
-            )
+              height: MediaQuery.of(context).size.height -
+                  (titlefont + 56.0 + 20.0),
+              child: const UserInfo(),
+            ),
           ],
         ),
       ),
