@@ -25,7 +25,6 @@ class ConnexionButton extends StatelessWidget {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) {
-                  // Remplacez LoginPage par le nom de votre page de connexion
                   return Login();
                 },
               ),

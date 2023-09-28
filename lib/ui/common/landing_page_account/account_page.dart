@@ -14,45 +14,42 @@ class AccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ScrollController controller = ScrollController();
     Size size = MediaQuery.sizeOf(context);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: SingleChildScrollView(
-          controller: controller,
-          child: FutureBuilder(
-            future: simulateImageLoading(),
-            builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Container(
-                  height: size.height / 4,
-                  color: Colors.white, // Background color
-                  child: Center(
-                    child: SpinKitFadingCircle(
-                      size: 50,
-                      itemBuilder: (BuildContext context, int index) {
-                        return DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: index.isEven ? Colors.red : Colors.black,
-                          ),
-                        );
-                      },
-                    ),
+    return Scaffold(
+      body: SingleChildScrollView(
+        controller: controller,
+        child: FutureBuilder(
+          future: simulateImageLoading(),
+          builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Container(
+                height: size.height / 4,
+                color: Colors.white, // Background color
+                child: Center(
+                  child: SpinKitFadingCircle(
+                    size: 50,
+                    itemBuilder: (BuildContext context, int index) {
+                      return DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: index.isEven ? Colors.red : Colors.black,
+                        ),
+                      );
+                    },
                   ),
-                );
-              } else {
-                return const Stack(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        LandingAccount(),
-                      ],
-                    ),
-                  ],
-                );
-              }
-            },
-          ),
+                ),
+              );
+            } else {
+              return const Stack(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      LandingAccount(),
+                    ],
+                  ),
+                ],
+              );
+            }
+          },
         ),
       ),
     );
