@@ -15,7 +15,9 @@ class Connexion extends StatelessWidget {
         width: size.width,
         child: OrientedStack(
           orientation: orientation,
-          children: [Login()],
+          children: [
+            Login(),
+          ],
         ),
       ),
     );

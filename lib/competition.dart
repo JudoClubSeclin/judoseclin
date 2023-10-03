@@ -14,7 +14,7 @@ class Competition extends StatelessWidget {
       body: SizedBox(
         width: size.width,
         height: size.height,
-        child: OrientedStack(orientation: orientation, children: [
+        child: OrientedStack(orientation: orientation, children: const [
           Expanded(
             child: CompetitionsListScreen(),
           ),

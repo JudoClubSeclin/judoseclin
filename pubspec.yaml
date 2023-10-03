@@ -59,6 +59,7 @@ dependencies:
   json_annotation: ^4.8.1
   flutter_spinkit: ^5.2.0
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -10,7 +10,7 @@ class CompetitionCubit extends Cubit<List<Competition>> {
 
   void getCompetitions() async {
     try {
-      QuerySnapshot snapshot = await firestore.collection('Compétition').get();
+      QuerySnapshot snapshot = await firestore.collection('competition').get();
       List<Competition> competitions = snapshot.docs
           .map((doc) => Competition.fromFirestore(
               doc as DocumentSnapshot<Map<String, dynamic>>))

@@ -6,6 +6,8 @@ import '../../Cubit/competition_cubit.dart';
 import 'competition_details_screen.dart';
 
 class CompetitionsListScreen extends StatefulWidget {
+  const CompetitionsListScreen({super.key});
+
   @override
   _CompetitionsListScreenState createState() => _CompetitionsListScreenState();
 }
@@ -18,10 +20,17 @@ class _CompetitionsListScreenState extends State<CompetitionsListScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    context.read<CompetitionCubit>().getCompetitions();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Competitions List'),
+        backgroundColor: Colors.red[400],
+        title: const Text('Competitions List'),
       ),
       body: BlocBuilder<CompetitionCubit, List<Competition>>(
         builder: (context, competitions) {

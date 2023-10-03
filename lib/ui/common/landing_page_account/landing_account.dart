@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:judoseclin/ui/common/landing_page_account/user_info.dart';
 
 import '../../../appbar.dart';
-import '../competition_info/Cubit/competition_cubit.dart';
 import '../competition_info/view/screen/competitions_list_screen.dart';
 
 class LandingAccount extends StatelessWidget {
@@ -21,14 +19,15 @@ class LandingAccount extends StatelessWidget {
           InkWell(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => BlocProvider.value(
-                  value: context.read<CompetitionCubit>(),
-                  child: CompetitionsListScreen(),
-                ),
+                builder: (context) => const CompetitionsListScreen(),
               ));
             },
-            child: const Text("Compétition"),
-          )
+            child: Container(
+              height: 56.0, // la hauteur de l'AppBar
+              alignment: Alignment.center, // centrage du contenu
+              child: const Text("Compétition"),
+            ),
+          ),
         ],
       ),
       body: ListView(
