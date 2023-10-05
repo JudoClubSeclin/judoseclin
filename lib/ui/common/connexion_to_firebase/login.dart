@@ -5,6 +5,7 @@ import 'package:judoseclin/main.dart';
 import 'package:judoseclin/ui/common/connexion_to_firebase/inscription.dart';
 
 import '../../../custom_textfield.dart';
+import '../landing_page_account/landing_account.dart';
 
 class Login extends StatelessWidget {
   Login({Key? key}) : super(key: key);
@@ -67,7 +68,7 @@ class Login extends StatelessWidget {
                     const SizedBox(height: 40),
                     ElevatedButton(
                       onPressed: () {
-                        loginToFirebase();
+                        loginToFirebase(context);
                       },
                       style: ButtonStyle(
                         backgroundColor:
@@ -121,7 +122,7 @@ class Login extends StatelessWidget {
     );
   }
 
-  void loginToFirebase() {
+  void loginToFirebase(BuildContext context) {
     try {
       auth
           .signInWithEmailAndPassword(
@@ -131,6 +132,10 @@ class Login extends StatelessWidget {
         if (kDebugMode) {
           print(value.toString());
         }
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LandingAccount()),
+        );
       });
     } catch (e) {
       if (kDebugMode) {

@@ -32,20 +32,23 @@ class LandingAccount extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          Center(
-            child: Text(
-              "Bienvenue ",
-              style: TextStyle(
-                fontFamily: 'Hiromisake',
-                fontSize: titlefont,
-                color: Colors.black,
-                shadows: const [
-                  Shadow(
-                    offset: Offset(1.0, 1.0),
-                    blurRadius: 3.0,
-                    color: Colors.black,
-                  ),
-                ],
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: Center(
+              child: Text(
+                "Bienvenue ",
+                style: TextStyle(
+                  fontFamily: 'Hiromisake',
+                  fontSize: titlefont,
+                  color: Colors.black,
+                  shadows: const [
+                    Shadow(
+                      offset: Offset(1.0, 1.0),
+                      blurRadius: 3.0,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

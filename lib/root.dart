@@ -9,7 +9,15 @@ class Root extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-    return user == null ? const Landing() : const LandingAccount();
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          final User? user = snapshot.data;
+          return user == null ? const Landing() : const LandingAccount();
+        }
+        return const CircularProgressIndicator(); // Affiche un indicateur de chargement pendant la vérification
+      },
+    );
   }
 }

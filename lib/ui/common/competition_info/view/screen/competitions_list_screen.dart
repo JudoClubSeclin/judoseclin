@@ -28,12 +28,12 @@ class _CompetitionsListScreenState extends State<CompetitionsListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.red[400],
-        title: const Text('Competitions List'),
-      ),
-      body: BlocBuilder<CompetitionCubit, List<Competition>>(
-        builder: (context, competitions) {
+        appBar: AppBar(
+          backgroundColor: Colors.red[400],
+          title: const Text('Liste des competitions'),
+        ),
+        body: BlocBuilder<CompetitionCubit, List<Competition>>(
+            builder: (context, competitions) {
           if (competitions.isEmpty) {
             return const CircularProgressIndicator();
           }
@@ -42,25 +42,37 @@ class _CompetitionsListScreenState extends State<CompetitionsListScreen> {
             itemCount: competitions.length,
             itemBuilder: (context, index) {
               final competition = competitions[index];
-              return Card(
-                child: ListTile(
-                  title: Text(competition.title),
-                  subtitle: Text(competition.date),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            CompetitionDetailsScreen(competition: competition),
+              return Padding(
+                padding: const EdgeInsets.all(20),
+                child: Align(
+                  alignment: Alignment.center, // Pour centrer le contenu
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    // Ici, j'ai pris 70% de la largeur de l'écran
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        side: BorderSide(color: Colors.red[400]!, width: 2.0),
                       ),
-                    );
-                  },
+                      child: ListTile(
+                        title: Text(competition.title),
+                        subtitle: Text(competition.date),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CompetitionDetailsScreen(
+                                  competition: competition),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                 ),
               );
             },
           );
-        },
-      ),
-    );
+        }));
   }
 }
