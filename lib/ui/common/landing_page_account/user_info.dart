@@ -48,7 +48,6 @@ class _UserInfoState extends State<UserInfo> {
         GetUserData(userData!, 'date de naissance', 'Date de naissance'),
         GetUserData(userData!, 'nom', 'Nom'),
         GetUserData(userData!, 'prenom', 'Prénom'),
-        GetUserData(userData!, 'licence', 'Licence'),
       ],
     ]);
   }
@@ -59,12 +58,20 @@ class GetUserData extends StatelessWidget {
   final String fieldName;
   final String fieldTitle;
 
-  const GetUserData(this.userData, this.fieldName, this.fieldTitle,
-      {super.key});
+  const GetUserData(this.userData, this.fieldName, this.fieldTitle, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String displayValue;
     if (userData.containsKey(fieldName)) {
+      var value = userData[fieldName];
+      if (value is Timestamp) {
+        DateTime date = value.toDate();
+        displayValue = "${date.day}/${date.month}/${date.year}";
+      } else {
+        displayValue = value.toString();
+      }
       return ListTile(
         title: Text(
           fieldTitle,
@@ -72,7 +79,7 @@ class GetUserData extends StatelessWidget {
               fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
         ),
         subtitle: Text(
-          userData[fieldName],
+          displayValue,
           style: const TextStyle(fontSize: 20, color: Colors.black),
         ),
       );

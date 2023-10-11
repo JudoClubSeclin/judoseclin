@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+FirebaseAuth auth = FirebaseAuth.instance;
+
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;
@@ -22,9 +24,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               )),
         IconButton(
           icon: const Icon(Icons.logout), // Icône de déconnexion
-          onPressed: () async {
-            await FirebaseAuth.instance.signOut();
-            // Vous pouvez aussi naviguer vers la page de connexion après la déconnexion
+
+          onPressed: () {
+            auth.signOut().then((_) {
+              debugPrint('Déconnexion réussie');
+            }).catchError((error) {
+              debugPrint('Erreur lors de la déconnexion: $error');
+            });
           },
         ),
       ],

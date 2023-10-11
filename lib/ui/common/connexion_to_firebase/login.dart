@@ -5,7 +5,7 @@ import 'package:judoseclin/main.dart';
 import 'package:judoseclin/ui/common/connexion_to_firebase/inscription.dart';
 
 import '../../../custom_textfield.dart';
-import '../landing_page_account/landing_account.dart';
+import '../../../image_fond_ecran.dart';
 
 class Login extends StatelessWidget {
   Login({Key? key}) : super(key: key);
@@ -21,7 +21,15 @@ class Login extends StatelessWidget {
     double? titlefont = size.width / 9;
 
     return Scaffold(
-      body: Padding(
+        body: DecoratedBox(
+      position: DecorationPosition.background,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(ImageFondEcran.imagePath),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Stack(
           children: [
@@ -119,7 +127,7 @@ class Login extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 
   void loginToFirebase(BuildContext context) {
@@ -132,10 +140,6 @@ class Login extends StatelessWidget {
         if (kDebugMode) {
           print(value.toString());
         }
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const LandingAccount()),
-        );
       });
     } catch (e) {
       if (kDebugMode) {

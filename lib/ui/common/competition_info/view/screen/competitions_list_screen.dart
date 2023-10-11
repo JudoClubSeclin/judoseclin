@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:judoseclin/ui/common/competition_info/model/competition.dart';
 
 import '../../Cubit/competition_cubit.dart';
@@ -42,6 +43,8 @@ class _CompetitionsListScreenState extends State<CompetitionsListScreen> {
             itemCount: competitions.length,
             itemBuilder: (context, index) {
               final competition = competitions[index];
+              String formattedDate =
+                  DateFormat('dd/MM/yyyy').format(competition.date);
               return Padding(
                 padding: const EdgeInsets.all(20),
                 child: Align(
@@ -56,7 +59,7 @@ class _CompetitionsListScreenState extends State<CompetitionsListScreen> {
                       ),
                       child: ListTile(
                         title: Text(competition.title),
-                        subtitle: Text(competition.date),
+                        subtitle: Text(formattedDate),
                         onTap: () {
                           Navigator.push(
                             context,
