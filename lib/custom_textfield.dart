@@ -22,37 +22,40 @@ class CustomTextField extends StatelessWidget {
     // 2. Définissez un facteur d'échelle basé sur cette largeur
     double scaleFactor = screenWidth > 600 ? screenWidth / 600 : 1;
 
-    return TextField(
-      controller: controller,
-      style: TextStyle(
-          fontSize: 18 *
-              scaleFactor), // Augmenter la taille de la police du texte saisi
-      decoration: InputDecoration(
-        labelText: labelText,
-        labelStyle: TextStyle(
-          color: borderColor,
-          fontSize: 24 *
-              scaleFactor, // Augmenter la taille de la police de l'étiquette
-        ),
+    return Material(
+      // <-- Added this
+      child: TextField(
+        controller: controller,
+        style: TextStyle(
+            fontSize: 15 *
+                scaleFactor), // Augmenter la taille de la police du texte saisi
+        decoration: InputDecoration(
+          labelText: labelText,
+          labelStyle: TextStyle(
+            color: borderColor,
+            fontSize: 15 *
+                scaleFactor, // Augmenter la taille de la police de l'étiquette
+          ),
 
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50.0),
-          borderSide: BorderSide(
-            color: borderColor,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30.0),
+            borderSide: BorderSide(
+              color: borderColor,
+            ),
           ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50.0),
-          borderSide: BorderSide(
-            color: borderColor,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30.0),
+            borderSide: BorderSide(
+              color: borderColor,
+            ),
           ),
+          contentPadding: EdgeInsets.symmetric(
+              vertical: 10 * scaleFactor,
+              horizontal: 10 *
+                  scaleFactor), // Ajuster le padding selon le facteur d'échelle
         ),
-        contentPadding: EdgeInsets.symmetric(
-            vertical: 20 * scaleFactor,
-            horizontal: 20 *
-                scaleFactor), // Ajuster le padding selon le facteur d'échelle
+        obscureText: obscureText,
       ),
-      obscureText: obscureText,
     );
   }
 }

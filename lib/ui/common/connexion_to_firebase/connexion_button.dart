@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:judoseclin/ui/common/connexion_to_firebase/login.dart';
+import 'package:go_router/go_router.dart';
 
 class ConnexionButton extends StatelessWidget {
   const ConnexionButton({super.key});
@@ -15,21 +15,16 @@ class ConnexionButton extends StatelessWidget {
           shape: BoxShape.circle,
           color: Colors.red[400],
         ),
-        child: IconButton(
-          icon: const Icon(
-            Icons.person,
-            color: Colors.white,
+        child: Material(
+          color: Colors
+              .transparent, // Pour éviter d'ajouter un fond supplémentaire
+          child: IconButton(
+            icon: const Icon(
+              Icons.person,
+              color: Colors.white,
+            ),
+            onPressed: () => context.go("/login"),
           ),
-          onPressed: () {
-            // Navigation vers la page de connexion
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) {
-                  return Login();
-                },
-              ),
-            );
-          },
         ),
       ),
     );

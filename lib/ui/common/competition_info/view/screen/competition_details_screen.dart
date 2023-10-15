@@ -6,9 +6,11 @@ import 'package:judoseclin/ui/common/competition_info/model/competition.dart';
 import '../../Cubit/inscription-competition_cubit.dart';
 
 class CompetitionDetailsScreen extends StatelessWidget {
-  final Competition competition;
+  final String id;
+  final Competition? competition;
 
-  const CompetitionDetailsScreen({Key? key, required this.competition})
+  const CompetitionDetailsScreen(
+      {Key? key, required this.competition, required this.id})
       : super(key: key);
 
   @override
@@ -36,7 +38,7 @@ class CompetitionDetailsScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.red[400],
-            title: Text(' ${competition.title}'),
+            title: Text(' ${competition?.title}'),
           ),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -44,7 +46,7 @@ class CompetitionDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  ' ${competition.subtitle}',
+                  ' ${competition?.subtitle}',
                   style: TextStyle(
                       fontSize: titlefont, fontWeight: FontWeight.w400),
                 ),
@@ -52,7 +54,7 @@ class CompetitionDetailsScreen extends StatelessWidget {
                   height: 22,
                 ),
                 Text(
-                  ' ${competition.date}',
+                  ' ${competition?.date}',
                   style: TextStyle(
                       fontSize: titlefont, fontWeight: FontWeight.w400),
                 ),
@@ -60,28 +62,28 @@ class CompetitionDetailsScreen extends StatelessWidget {
                   height: 22,
                 ),
                 Text(
-                  ' ${competition.address}',
+                  ' ${competition?.address}',
                   style: TextStyle(fontSize: textfont),
                 ),
                 const SizedBox(
                   height: 22,
                 ),
                 Text(
-                  ' ${competition.poussin}',
+                  ' ${competition?.poussin}',
                   style: TextStyle(fontSize: textfont),
                 ),
                 const SizedBox(
                   height: 22,
                 ),
                 Text(
-                  ' ${competition.benjamin}',
+                  ' ${competition?.benjamin}',
                   style: TextStyle(fontSize: textfont),
                 ),
                 const SizedBox(
                   height: 22,
                 ),
                 Text(
-                  ' ${competition.minime}',
+                  ' ${competition?.minime}',
                   style: TextStyle(fontSize: textfont),
                 ),
                 const SizedBox(
@@ -91,7 +93,7 @@ class CompetitionDetailsScreen extends StatelessWidget {
                   onPressed: () {
                     context
                         .read<InscriptionCompetitionCubit>()
-                        .registerForCompetition(userId, competition.id);
+                        .registerForCompetition(userId, competition!.id);
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.red[400]),

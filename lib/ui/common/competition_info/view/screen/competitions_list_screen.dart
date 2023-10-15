@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:judoseclin/ui/common/competition_info/model/competition.dart';
 
 import '../../Cubit/competition_cubit.dart';
-import 'competition_details_screen.dart';
 
 class CompetitionsListScreen extends StatefulWidget {
   const CompetitionsListScreen({super.key});
@@ -61,13 +61,7 @@ class _CompetitionsListScreenState extends State<CompetitionsListScreen> {
                         title: Text(competition.title),
                         subtitle: Text(formattedDate),
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CompetitionDetailsScreen(
-                                  competition: competition),
-                            ),
-                          );
+                          context.go('/detail/id');
                         },
                       ),
                     ),
