@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:judoseclin/size_extensions.dart';
 
-import '../theme.dart';
+import '../theme/theme.dart';
 
 class LandingNews extends HookWidget {
   const LandingNews({Key? key}) : super(key: key);
@@ -109,6 +109,3 @@ extension MarkdownNewsList on List<News> {
   List<Widget> toMarkdown() =>
       map((e) => MarkdownedNews(text: e.toMarkdownText())).toList();
 }
-
-
-

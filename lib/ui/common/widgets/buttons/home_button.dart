@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:judoseclin/landing.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeButton extends StatelessWidget {
   const HomeButton({super.key});
@@ -25,16 +25,7 @@ class HomeButton extends StatelessWidget {
               Icons.home,
               color: Colors.white,
             ),
-            onPressed: () {
-              // Navigation vers la page de connexion
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const Landing();
-                  },
-                ),
-              );
-            },
+            onPressed: () => context.go('/'),
           ),
         ),
       ),

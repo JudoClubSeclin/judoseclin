@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:judoseclin/home_button.dart';
+import 'package:go_router/go_router.dart';
+import 'package:judoseclin/ui/common/widgets/buttons/home_button.dart';
 
-import '../../../../custom_textfield.dart';
 import '../../../../image_fond_ecran.dart';
+import '../../theme/theme.dart';
+import '../../widgets/buttons/custom_buttom.dart';
+import '../../widgets/inputs/custom_textfield.dart';
 import '../bloc/login_bloc.dart';
 import '../bloc/login_event.dart';
 import '../bloc/login_state.dart';
@@ -28,7 +31,6 @@ class LoginView extends StatelessWidget {
       builder: (context, state) {
         Size size = MediaQuery.of(context).size;
         double screenWidth = size.width;
-        double titlefont = screenWidth / 13;
 
         return DecoratedBox(
           position: DecorationPosition.background,
@@ -44,34 +46,29 @@ class LoginView extends StatelessWidget {
               children: [
                 Text(
                   "CONNEXION",
-                  style: TextStyle(
-                    fontFamily: 'Hiromisake',
-                    fontSize: titlefont,
-                    color: Colors.black,
-                    shadows: const [
-                      Shadow(
-                        offset: Offset(1.0, 1.0),
-                        blurRadius: 3.0,
-                        color: Colors.black,
-                      ),
-                    ],
-                  ),
+                  style: titleStyle(context),
+                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 40),
+
                 CustomTextField(
                   labelText: 'E-mail',
                   controller: emailController,
                 ),
+
                 const SizedBox(height: 40),
+
                 CustomTextField(
                   labelText: 'Mot de passe',
                   controller: passwordController,
                   obscureText: true,
                 ),
+
                 const SizedBox(height: 40),
                 SizedBox(
                   width: screenWidth - 40,
-                  child: ElevatedButton(
+                  child: CustomButton(
+                    label: 'Connexion',
                     onPressed: () {
                       context.read<LoginBloc>().add(
                             LoginWithEmailPassword(
@@ -80,27 +77,12 @@ class LoginView extends StatelessWidget {
                             ),
                           );
                     },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.red[400]),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          side: const BorderSide(color: Colors.red),
-                        ),
-                      ),
-                    ),
-                    child: const SizedBox(
-                      height: 50,
-                      child: Center(child: Text("CONNEXION")),
-                    ),
                   ),
                 ),
+
                 const SizedBox(height: 22),
                 TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/inscription');
-                  },
+                  onPressed: () => context.go('/inscription'),
                   child: Text(
                     "Ou créer un compte",
                     style: TextStyle(color: Colors.red[400]),

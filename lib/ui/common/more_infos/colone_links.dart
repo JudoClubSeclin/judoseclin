@@ -2,7 +2,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../theme.dart';
+import '../theme/theme.dart';
 import 'oriented_size_box.dart';
 
 class File {

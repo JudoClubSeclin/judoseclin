@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:judoseclin/ui/common/landing_page_account/user_info.dart';
 
-import '../../../appbar.dart';
 import '../competition_info/view/screen/competitions_list_screen.dart';
+import '../widgets/appbar/appbar.dart';
 
 class LandingAccount extends StatelessWidget {
   const LandingAccount({Key? key}) : super(key: key);

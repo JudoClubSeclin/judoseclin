@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:judoseclin/home_button.dart';
 import 'package:judoseclin/main.dart';
+import 'package:judoseclin/ui/common/widgets/buttons/home_button.dart';
 
-import '../../../custom_textfield.dart';
 import '../../../image_fond_ecran.dart';
+import '../widgets/inputs/custom_textfield.dart';
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
