@@ -11,3 +11,13 @@ class LoginFailure extends LoginState {
 
   LoginFailure({required this.error});
 }
+
+class PasswordResetInProgress extends LoginState {}
+
+class PasswordResetSuccess extends LoginState {}
+
+class PasswordResetFailure extends LoginState {
+  final String error;
+
+  PasswordResetFailure({required this.error});
+}

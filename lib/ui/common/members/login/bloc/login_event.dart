@@ -10,3 +10,9 @@ class LoginWithEmailPassword extends LoginEvent {
       required this.password,
       required this.navigateToAccount});
 }
+
+class ResetPasswordRequested extends LoginEvent {
+  final String email;
+
+  ResetPasswordRequested({required this.email});
+}

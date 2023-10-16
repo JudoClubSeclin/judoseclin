@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class LoginInteractor {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -11,8 +12,12 @@ class LoginInteractor {
       );
       return userCredential.user;
     } catch (e) {
-      print(e);
+      debugPrint(e as String?);
       rethrow;
     }
+  }
+
+  Future<void> resetPassword(String email) async {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   }
 }

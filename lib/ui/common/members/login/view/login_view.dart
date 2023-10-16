@@ -82,12 +82,29 @@ class LoginView extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 22),
-                TextButton(
-                  onPressed: () => context.go('/inscription'),
-                  child: Text(
-                    "Ou créer un compte",
-                    style: TextStyle(color: Colors.red[400]),
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () => context.go('/inscription'),
+                        child: Text(
+                          "Créer un compte",
+                          style: TextStyle(color: Colors.red[400]),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () => context.go('/ResetPassword'),
+                        child: Text(
+                          "Mot de passe oublié?",
+                          style: TextStyle(color: Colors.red[400]),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 40), // You can adjust this for spacing
                 const HomeButton(),

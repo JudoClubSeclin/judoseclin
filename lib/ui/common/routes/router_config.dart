@@ -7,6 +7,7 @@ import 'package:judoseclin/ui/common/competition_info/view/screen/competitions_l
 import 'package:judoseclin/ui/common/members/inscription/view/inscription_view.dart';
 
 import '../members/login/view/login_view.dart';
+import '../members/login/view/resetPassword_view.dart';
 
 final goRouter = GoRouter(
   debugLogDiagnostics: true,
@@ -32,6 +33,10 @@ final goRouter = GoRouter(
     GoRoute(
       path: '/inscription',
       builder: (context, state) => InscriptionView(),
+    ),
+    GoRoute(
+      path: '/resetPassword',
+      builder: (context, state) => ResetPasswordView(),
     ),
     GoRoute(
       path: '/account',

@@ -18,5 +18,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(LoginFailure(error: error.toString()));
       }
     });
+
+    // Ajoutez cette partie pour gérer l'événement de réinitialisation du mot de passe
+    on<ResetPasswordRequested>((event, emit) async {
+      emit(PasswordResetInProgress());
+      try {
+        await loginInteractor.resetPassword(event.email);
+        emit(PasswordResetSuccess());
+      } catch (error) {
+        emit(PasswordResetFailure(error: error.toString()));
+      }
+    });
   }
 }
