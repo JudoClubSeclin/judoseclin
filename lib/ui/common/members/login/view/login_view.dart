@@ -70,12 +70,13 @@ class LoginView extends StatelessWidget {
                   child: CustomButton(
                     label: 'Connexion',
                     onPressed: () {
-                      context.read<LoginBloc>().add(
-                            LoginWithEmailPassword(
-                              email: emailController.text,
-                              password: passwordController.text,
-                            ),
-                          );
+                      BlocProvider.of<LoginBloc>(context).add(
+                        LoginWithEmailPassword(
+                            email: emailController.text,
+                            password: passwordController.text,
+                            navigateToAccount: () =>
+                                GoRouter.of(context).go('/account')),
+                      );
                     },
                   ),
                 ),

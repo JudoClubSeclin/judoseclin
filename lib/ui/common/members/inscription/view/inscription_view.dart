@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../theme/theme.dart';
 import '../../../widgets/buttons/custom_buttom.dart';
@@ -20,12 +21,11 @@ class InscriptionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    double screenWidth = size.width;
     return BlocBuilder<InscriptionBloc, InscriptionState>(
       builder: (context, state) {
         if (state is SignUpLoadingState) {
-          return const CircularProgressIndicator();
+          return const SizedBox(
+              width: 60, height: 60, child: CircularProgressIndicator());
         } else if (state is SignUpErrorState) {
           return Text(state.error);
         } else {
@@ -76,12 +76,13 @@ class InscriptionView extends StatelessWidget {
                 onPressed: () {
                   context.read<InscriptionBloc>().add(
                         SignUpEvent(
-                          nom: nomController.text.trim(),
-                          prenom: prenomController.text.trim(),
-                          dateNaissance: dateNaissanceController.text.trim(),
-                          email: emailController.text.trim(),
-                          password: passwordController.text.trim(),
-                        ),
+                            nom: nomController.text.trim(),
+                            prenom: prenomController.text.trim(),
+                            dateNaissance: dateNaissanceController.text.trim(),
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim(),
+                            navigateToAccount: () =>
+                                GoRouter.of(context).go('/account')),
                       );
                 },
                 label: "S'inscrire",

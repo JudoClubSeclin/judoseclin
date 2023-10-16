@@ -7,12 +7,9 @@ import 'inscription_state.dart';
 class InscriptionBloc extends Bloc<InscriptionEvent, InscriptionState> {
   final InscriptionInteractor inscriptionInteractor;
 
-  InscriptionBloc(this.inscriptionInteractor) : super(SignUpInitialState());
-
-  @override
-  Stream<InscriptionState> mapEventToState(InscriptionEvent event) async* {
-    if (event is SignUpEvent) {
-      yield SignUpLoadingState();
+  InscriptionBloc(this.inscriptionInteractor) : super(SignUpInitialState()) {
+    on<SignUpEvent>((event, emit) async {
+      emit(SignUpLoadingState());
       try {
         await inscriptionInteractor.signUpToFirebase(
           event.nom,
@@ -21,10 +18,11 @@ class InscriptionBloc extends Bloc<InscriptionEvent, InscriptionState> {
           event.email,
           event.password,
         );
-        yield SignUpSuccessState();
+        event.navigateToAccount();
+        emit(SignUpSuccessState());
       } catch (error) {
-        yield SignUpErrorState(error.toString());
+        emit(SignUpErrorState(error.toString()));
       }
-    }
+    });
   }
 }

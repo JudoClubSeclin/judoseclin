@@ -2,8 +2,8 @@
 
 import 'package:go_router/go_router.dart';
 import 'package:judoseclin/landing.dart';
+import 'package:judoseclin/ui/common/account/view/account_view.dart';
 import 'package:judoseclin/ui/common/competition_info/view/screen/competitions_list_screen.dart';
-import 'package:judoseclin/ui/common/landing_page_account/landing_account.dart';
 import 'package:judoseclin/ui/common/members/inscription/view/inscription_view.dart';
 
 import '../members/login/view/login_view.dart';
@@ -35,7 +35,7 @@ final goRouter = GoRouter(
     ),
     GoRoute(
       path: '/account',
-      builder: (context, state) => const LandingAccount(),
+      builder: (context, state) => const AccountView(),
     ),
     GoRoute(
       path: '/ListCompetition',
