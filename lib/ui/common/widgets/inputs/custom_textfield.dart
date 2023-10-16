@@ -49,7 +49,7 @@ class CustomTextField extends StatelessWidget {
                 labelText: labelText,
                 labelStyle: TextStyle(
                   color: borderColor,
-                  fontSize: 15 *
+                  fontSize: 10 *
                       scaleFactor, // Augmenter la taille de la police de l'étiquette
                 ),
 

@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/home_button.dart';
 
-import '../../../../image_fond_ecran.dart';
-import '../../theme/theme.dart';
-import '../../widgets/buttons/custom_buttom.dart';
-import '../../widgets/inputs/custom_textfield.dart';
+import '../../../theme/theme.dart';
+import '../../../widgets/buttons/custom_buttom.dart';
+import '../../../widgets/images/image_fond_ecran.dart';
+import '../../../widgets/inputs/custom_textfield.dart';
 import '../bloc/login_bloc.dart';
 import '../bloc/login_event.dart';
 import '../bloc/login_state.dart';
@@ -29,7 +29,7 @@ class LoginView extends StatelessWidget {
         // Ajouter d'autres réactions pour différents états si nécessaire
       },
       builder: (context, state) {
-        Size size = MediaQuery.of(context).size;
+        Size size = MediaQuery.sizeOf(context);
         double screenWidth = size.width;
 
         return DecoratedBox(

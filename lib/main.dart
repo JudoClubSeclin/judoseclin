@@ -7,8 +7,10 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:judoseclin/firebase_options.dart';
 import 'package:judoseclin/ui/common/competition_info/Cubit/competition_cubit.dart';
 import 'package:judoseclin/ui/common/competition_info/Cubit/inscription-competition_cubit.dart';
-import 'package:judoseclin/ui/common/members/bloc/login_bloc.dart';
-import 'package:judoseclin/ui/common/members/interactor/login_interactor.dart';
+import 'package:judoseclin/ui/common/members/inscription/bloc/inscription_bloc.dart';
+import 'package:judoseclin/ui/common/members/inscription/interactor/inscription_interactor.dart';
+import 'package:judoseclin/ui/common/members/login/bloc/login_bloc.dart';
+import 'package:judoseclin/ui/common/members/login/interactor/login_interactor.dart';
 import 'package:judoseclin/ui/common/routes/router_config.dart';
 import 'package:judoseclin/ui/common/theme/theme.dart';
 
@@ -33,6 +35,12 @@ void main() {
               create: (context) =>
                   LoginBloc(loginInteractor: LoginInteractor()),
               lazy: false,
+            ),
+            BlocProvider<InscriptionBloc>(
+              create: (context) => InscriptionBloc(InscriptionInteractor(
+                auth: FirebaseAuth.instance,
+                firestore: FirebaseFirestore.instance,
+              )),
             ),
           ],
           child: Builder(builder: (BuildContext context) {
