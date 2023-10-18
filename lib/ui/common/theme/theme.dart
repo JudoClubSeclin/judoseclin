@@ -31,7 +31,7 @@ MarkdownStyleSheet getMDTheme(BuildContext context, Color fontColor) =>
 TextStyle titleStyle(BuildContext context) {
   double screenWidth = MediaQuery.of(context).size.width;
   double fontSize =
-      screenWidth * 0.08; // Ajustez le facteur 0.08 selon vos besoins
+      screenWidth * 0.05; // Ajustez le facteur 0.08 selon vos besoins
 
   return Theme.of(context).textTheme.headlineLarge?.copyWith(
         fontSize: fontSize,
@@ -45,5 +45,5 @@ TextStyle titleStyle(BuildContext context) {
           ),
         ],
       ) ??
-      TextStyle();
+      const TextStyle();
 }
