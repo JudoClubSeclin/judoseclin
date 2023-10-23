@@ -4,6 +4,8 @@ import 'package:judoseclin/ui/common/landing_page/landing_news.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/connexion_button.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/landing_show_button.dart';
 
+import 'more_info.dart';
+
 class Landing extends StatelessWidget {
   const Landing({super.key});
 
@@ -18,10 +20,7 @@ class Landing extends StatelessWidget {
           children: [
             const Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                LandingHome(),
-                LandingNews(),
-              ],
+              children: [LandingHome(), LandingNews(), MoreInfo()],
             ),
             const Positioned(
               top: 40.0, // Ajustez la position verticale

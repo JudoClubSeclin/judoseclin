@@ -28,8 +28,7 @@ void main() {
       MultiBlocProvider(
           providers: [
             BlocProvider<CompetitionCubit>(
-              create: (context) => CompetitionCubit(),
-            ),
+                create: (context) => CompetitionCubit()),
             BlocProvider<InscriptionCompetitionCubit>(
               create: (context) => InscriptionCompetitionCubit(_firestore),
             ),

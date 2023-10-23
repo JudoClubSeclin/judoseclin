@@ -61,7 +61,8 @@ class _CompetitionsListScreenState extends State<CompetitionsListScreen> {
                         title: Text(competition.title),
                         subtitle: Text(formattedDate),
                         onTap: () {
-                          context.go('/detail/id');
+                          String competitionId = competition.id.toString();
+                          context.go('/details/$competitionId');
                         },
                       ),
                     ),

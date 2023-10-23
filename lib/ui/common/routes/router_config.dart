@@ -7,22 +7,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:judoseclin/landing.dart';
 import 'package:judoseclin/ui/common/account/view/account_view.dart';
-import 'package:judoseclin/ui/common/competition_info/view/screen/competitions_list_screen.dart';
 import 'package:judoseclin/ui/common/members/inscription/view/inscription_view.dart';
 
 import '../account/bloc/account_bloc.dart';
 import '../account/interactor/account_interactor.dart';
+import '../competition_info/view/screen/competition_details_screen.dart';
+import '../competition_info/view/screen/competitions_list_screen.dart';
 import '../members/login/view/login_view.dart';
 import '../members/login/view/resetPassword_view.dart';
 
 final goRouter = GoRouter(
   debugLogDiagnostics: true,
-  /*redirect: (BuildContext context, GoRouterState state) {
-    if (FirebaseAuth.instance.currentUser == null && state.uri.path != '/') {
-      return '/'; // Redirige vers l'écran `Landing` si l'utilisateur n'est pas connecté
-    }
-    return null; // Continue normalement
-  },*/
   routes: [
     GoRoute(
       path: '/',
@@ -62,13 +57,13 @@ final goRouter = GoRouter(
       path: '/ListCompetition',
       builder: (context, state) => const CompetitionsListScreen(),
     ),
-    /*GoRoute(
-      path: '/details/:detailsId',
-      builder: (context, state) {
-        final detailsId = state.pathParameters['detailsId'];
-        if (detailsId != null) {
+    GoRoute(
+      path: '/details/:competitionId',
+      builder: (BuildContext context, GoRouterState state) {
+        final competitionId = state.pathParameters['competitionId'];
+        if (competitionId != null) {
           return CompetitionDetailsScreen(
-            id: detailsId,
+            id: competitionId,
             competition: null,
           );
         } else {
@@ -77,6 +72,6 @@ final goRouter = GoRouter(
           );
         }
       },
-    ),*/
+    ),
   ],
 );

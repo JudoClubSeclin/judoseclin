@@ -23,4 +23,19 @@ class CompetitionCubit extends Cubit<List<Competition>> {
       }
     }
   }
+
+  Future<Competition?> getCompetitionById(String id) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> doc =
+          await firestore.collection('competition').doc(id).get();
+      if (doc.exists) {
+        return Competition.fromFirestore(doc);
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
 }
