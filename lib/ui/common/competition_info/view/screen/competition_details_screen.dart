@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:judoseclin/ui/common/competition_info/model/competition.dart';
 import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/custom_buttom.dart';
@@ -39,15 +40,18 @@ class CompetitionDetailsScreen extends StatelessWidget {
           return BlocConsumer<InscriptionCompetitionCubit,
               InscriptionCompetitionState>(
             listener: (context, state) {
-              if (state is InscriptionCompetitionSuccess) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Inscription réussie!')),
-                );
+              if (state is InscriptionCompetitionProgress) {
+                debugPrint("Inscription in progress");
+              } else if (state is InscriptionCompetitionSuccess) {
+                debugPrint('inscription reussi');
               } else if (state is InscriptionCompetitionFailure) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Erreur: ${state.errorMessage}')),
-                );
+                debugPrint('echec de l\'incription');
+              } else if (state is InscriptionCompetitionClosed) {
+                debugPrint("Inscription is closed");
+              } else {
+                debugPrint("Unhandled state: $state");
               }
+              context.go('/ListCompetition');
             },
             builder: (context, state) {
               Size size = MediaQuery.of(context).size;

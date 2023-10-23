@@ -28,6 +28,7 @@ class InscriptionCompetitionCubit extends Cubit<InscriptionCompetitionState> {
 
   Future<void> registerForCompetition(
       String userId, String competitionId) async {
+    debugPrint("Trying to register for competition");
     emit(InscriptionCompetitionProgress());
 
     // Vérification de la période d'inscription.
@@ -62,21 +63,26 @@ class InscriptionCompetitionCubit extends Cubit<InscriptionCompetitionState> {
     final Map<String, dynamic> data =
         competitionDoc.data() as Map<String, dynamic>;
 
-    if (!data.containsKey('date')) {
-      throw Exception('Required field date not found in the document');
+    if (!data.containsKey('date') || !data.containsKey('publishDate')) {
+      throw Exception(
+          'Required fields date or publishDate not found in the document');
     }
 
     DateTime now = DateTime.now();
     DateTime competitionDate = (data['date'] as Timestamp).toDate();
+    DateTime publishDate = (data['publishDate'] as Timestamp).toDate();
 
-    // Calculate registrationEnd by subtracting 24 hours from competitionDate
+    // Calculate registrationEnd by subtracting 7 days from competitionDate
     DateTime registrationEnd =
-        competitionDate.subtract(const Duration(hours: 24));
-
-    // For registrationStart, let's consider it as the moment when the competition was created.
-    // For this example, let's consider it as 1 week before the competitionDate.
-    DateTime registrationStart =
         competitionDate.subtract(const Duration(days: 7));
+
+    // For registrationStart, let's consider it as the moment when the competition was published.
+    DateTime registrationStart = publishDate;
+
+    print("Now: $now");
+    print("Registration Start: $registrationStart");
+    print("Registration End: $registrationEnd");
+    print("Competition Date: $competitionDate");
 
     return now.isAfter(registrationStart) && now.isBefore(registrationEnd);
   }
@@ -91,6 +97,25 @@ class InscriptionCompetitionCubit extends Cubit<InscriptionCompetitionState> {
     } catch (e) {
       debugPrint("Erreur lors de la récupération de l'inscription: $e");
       return null;
+    }
+  }
+
+  Future<List<String>> getInscriptionsForUser(String userId) async {
+    try {
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('inscription-competition')
+          .where('userId', isEqualTo: userId)
+          .get();
+
+      List<String> competitionIds = [];
+      for (var doc in querySnapshot.docs) {
+        competitionIds.add(doc['competitionId']);
+      }
+
+      return competitionIds;
+    } catch (e) {
+      debugPrint("Erreur lors de la récupération des inscriptions: $e");
+      return [];
     }
   }
 }

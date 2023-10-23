@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -5,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:judoseclin/ui/common/competition_info/model/competition.dart';
 
 import '../../Cubit/competition_cubit.dart';
+import '../../Cubit/inscription-competition_cubit.dart';
 
 class CompetitionsListScreen extends StatefulWidget {
   const CompetitionsListScreen({super.key});
@@ -14,10 +16,22 @@ class CompetitionsListScreen extends StatefulWidget {
 }
 
 class _CompetitionsListScreenState extends State<CompetitionsListScreen> {
+  List<String> userInscriptions = [];
+  String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
   @override
   void initState() {
     super.initState();
     context.read<CompetitionCubit>().getCompetitions();
+    _loadUserInscriptions();
+  }
+
+  _loadUserInscriptions() async {
+    List<String> inscriptions = await context
+        .read<InscriptionCompetitionCubit>()
+        .getInscriptionsForUser(userId);
+    setState(() {
+      userInscriptions = inscriptions;
+    });
   }
 
   @override
@@ -43,6 +57,8 @@ class _CompetitionsListScreenState extends State<CompetitionsListScreen> {
             itemCount: competitions.length,
             itemBuilder: (context, index) {
               final competition = competitions[index];
+              bool isUserInscribed = userInscriptions.contains(competition.id);
+
               String formattedDate =
                   DateFormat('dd/MM/yyyy').format(competition.date);
               return Padding(
@@ -60,6 +76,12 @@ class _CompetitionsListScreenState extends State<CompetitionsListScreen> {
                       child: ListTile(
                         title: Text(competition.title),
                         subtitle: Text(formattedDate),
+                        trailing: isUserInscribed
+                            ? const Text('je suis Inscrit à cette compétition',
+                                style: TextStyle(color: Colors.green))
+                            : const Text(
+                                'je ne suis pas  inscrit à cette compétition',
+                                style: TextStyle(color: Colors.red)),
                         onTap: () {
                           String competitionId = competition.id.toString();
                           context.go('/details/$competitionId');
