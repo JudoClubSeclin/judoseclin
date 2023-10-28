@@ -58,3 +58,98 @@ graph TB
   A --> D[Administration]
 ```
 Cette documentation donne une vue globale de la façon dont l'application du Club de Judo sera structurée. Les différentes fonctionnalités permettront à la fois une gestion efficace du club par l'administration et une meilleure expérience pour les membres.
+
+## Données
+
+### News et Compétitions
+
+``` mermaid
+classDiagram
+class News {
+    + String titre
+    + DateTime datePublication
+    + Bloc description
+}
+
+class Competitions {
+    + Geocode adresse
+    + String titre
+    + String sousTitre
+    + DateTime dateDebut
+    + DateTime dateFin
+    + DateTime limiteInscription
+    + Bloc description
+}
+```
+
+### Compte et Adhésions
+
+``` mermaid
+classDiagram
+Utilisateur <.. Adherents
+class Utilisateur {
+    - String id
+    + String nom
+    + String prenom
+    + String emailContact
+    + String telephone
+    + String UID
+}
+
+class Adherents {
+    + String nom
+    + String prenom
+    + DateTime dateDeNaissance
+    + String Ceinture
+    + String ecoleFrequentee
+    + String NumeroLicense
+    + Boolean droitAlImage
+    + Boolean droitAppelSecours
+    + Boolean certificatMedicalOk 
+    + Boolean paiementEffectue
+    + Boolean judo
+    + Boolean selfDefense
+    + Boolean taiso
+}
+```
+
+### Inscription aux compétitions
+
+``` mermaid
+classDiagram
+Adherents <.. InscrtiptionCompetition
+Competitions <.. InscrtiptionCompetition
+class Adherents {
+    + String nom
+    + String prenom
+    + DateTime dateDeNaissance
+    + String Ceinture
+    + String ecoleFrequentee
+    + String NumeroLicense
+    + Boolean droitAlImage
+    + Boolean droitAppelSecours
+    + Boolean certificatMedicalOk 
+    + Boolean paiementEffectue
+    + Boolean judo
+    + Boolean selfDefense
+    + Boolean taiso
+}
+
+class Competitions {
+    - String id
+    + Geocode adresse
+    + String titre
+    + String sousTitre
+    + DateTime dateDebut
+    + DateTime dateFin
+    + DateTime limiteInscription
+    + Bloc description
+}
+
+class InscrtiptionCompetition {
+  - String idUtilisateur
+  - String idCompetition
+  + DateTime dateInscription
+  + Boolean estValide
+}
+```
