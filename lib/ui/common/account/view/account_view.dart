@@ -17,7 +17,7 @@ class AccountView extends StatelessWidget {
     context.read<AccountBloc>().add(LoadUserInfo());
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Mon espace personnel',
+        title: '',
         actions: [
           GestureDetector(
             onTap: () {
@@ -64,7 +64,7 @@ class AccountView extends StatelessWidget {
                   children: [
                     Text(
                       "Bienvenue sur votre espace",
-                      style: titleStyle(context),
+                      style: titleStyleMedium(context),
                       textAlign: TextAlign.center,
                     ),
                     ListTile(

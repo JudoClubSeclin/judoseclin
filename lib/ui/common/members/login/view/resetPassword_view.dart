@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/custom_buttom.dart';
 import 'package:judoseclin/ui/common/widgets/inputs/custom_textfield.dart';
 
+import '../../../theme/theme.dart';
+import '../../../widgets/images/image_fond_ecran.dart';
 import '../bloc/login_bloc.dart';
 import '../bloc/login_event.dart';
 import '../bloc/login_state.dart';
@@ -30,22 +32,31 @@ class ResetPasswordView extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          body: Padding(
+        return DecoratedBox(
+          position: DecorationPosition.background,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(ImageFondEcran.imagePath),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   "Réinitialisation du mot de passe",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: titleStyleMedium(context),
+                  textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 80),
                 CustomTextField(
                   labelText: 'E-mail',
                   controller: emailController,
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 80),
                 CustomButton(
                   onPressed: () {
                     BlocProvider.of<LoginBloc>(context).add(
@@ -54,6 +65,14 @@ class ResetPasswordView extends StatelessWidget {
                   },
                   label: 'Envoyé',
                 ),
+                const SizedBox(height: 80),
+                TextButton(
+                    onPressed: () => context.go('/login'),
+                    child: Text(
+                      "Connexion",
+                      style: TextStyle(color: Colors.red[400]),
+                      textAlign: TextAlign.center,
+                    )),
               ],
             ),
           ),

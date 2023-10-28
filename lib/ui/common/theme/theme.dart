@@ -29,12 +29,28 @@ MarkdownStyleSheet getMDTheme(BuildContext context, Color fontColor) =>
     );
 
 TextStyle titleStyle(BuildContext context) {
-  double screenWidth = MediaQuery.of(context).size.width;
-  double fontSize =
-      screenWidth * 0.05; // Ajustez le facteur 0.08 selon vos besoins
-
+  Size size = MediaQuery.sizeOf(context);
+  double? titlefont = size.width / 10;
   return Theme.of(context).textTheme.headlineLarge?.copyWith(
-        fontSize: fontSize,
+        fontSize: titlefont,
+        color: Colors.black,
+        fontFamily: "Hiromisake",
+        shadows: [
+          const Shadow(
+            offset: Offset(1.0, 1.0),
+            blurRadius: 3.0,
+            color: Colors.black,
+          ),
+        ],
+      ) ??
+      const TextStyle();
+}
+
+TextStyle titleStyleMedium(BuildContext context) {
+  Size size = MediaQuery.sizeOf(context);
+  double? titlefont = size.width / 18;
+  return Theme.of(context).textTheme.headlineLarge?.copyWith(
+        fontSize: titlefont,
         color: Colors.black,
         fontFamily: "Hiromisake",
         shadows: [

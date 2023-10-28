@@ -2,10 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:judoseclin/ui/common/competition_info/model/competition.dart';
 import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/custom_buttom.dart';
 
+import '../../../widgets/images/image_fond_ecran.dart';
 import '../../Cubit/competition_cubit.dart';
 import '../../Cubit/inscription-competition_cubit.dart';
 
@@ -36,6 +38,8 @@ class CompetitionDetailsScreen extends StatelessWidget {
           }
 
           final competition = snapshot.data!;
+          String formattedDate =
+              DateFormat('dd/MM/yyyy').format(competition.date);
 
           return BlocConsumer<InscriptionCompetitionCubit,
               InscriptionCompetitionState>(
@@ -62,50 +66,60 @@ class CompetitionDetailsScreen extends StatelessWidget {
                 appBar: CustomAppBar(
                   title: competition.title,
                 ),
-                body: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        ' ${competition.subtitle}',
-                        style: TextStyle(
-                            fontSize: titlefont, fontWeight: FontWeight.w400),
+                body: Stack(children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(ImageFondEcran.imagePath),
+                        fit: BoxFit.cover,
                       ),
-                      const SizedBox(
-                        height: 22,
-                      ),
-                      Text(
-                        ' ${competition.date}',
-                        style: TextStyle(
-                            fontSize: titlefont, fontWeight: FontWeight.w400),
-                      ),
-                      const SizedBox(
-                        height: 22,
-                      ),
-                      Text(
-                        ' ${competition.address}',
-                        style: TextStyle(fontSize: textfont),
-                      ),
-                      const SizedBox(
-                        height: 22,
-                      ),
-                      ...buildTextWidgets(competition, textfont),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      CustomButton(
-                        label: 'JE M\'INSCRIS',
-                        onPressed: () {
-                          context
-                              .read<InscriptionCompetitionCubit>()
-                              .registerForCompetition(userId, competition.id);
-                        },
-                      )
-                    ],
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          ' ${competition.subtitle}',
+                          style: TextStyle(
+                              fontSize: titlefont, fontWeight: FontWeight.w400),
+                        ),
+                        const SizedBox(
+                          height: 22,
+                        ),
+                        Text(
+                          formattedDate,
+                          style: TextStyle(
+                              fontSize: titlefont, fontWeight: FontWeight.w400),
+                        ),
+                        const SizedBox(
+                          height: 22,
+                        ),
+                        Text(
+                          ' ${competition.address}',
+                          style: TextStyle(fontSize: textfont),
+                        ),
+                        const SizedBox(
+                          height: 22,
+                        ),
+                        ...buildTextWidgets(competition, textfont),
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        CustomButton(
+                          label: 'JE M\'INSCRIS',
+                          onPressed: () {
+                            context
+                                .read<InscriptionCompetitionCubit>()
+                                .registerForCompetition(userId, competition.id);
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                ]),
               );
             },
           );

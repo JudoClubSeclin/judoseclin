@@ -28,10 +28,7 @@ class LoginView extends StatelessWidget {
         }
         // Ajouter d'autres réactions pour différents états si nécessaire
       },
-      builder: (context, state) {
-        Size size = MediaQuery.sizeOf(context);
-        double screenWidth = size.width;
-
+      builder: (context, constraints) {
         return DecoratedBox(
           position: DecorationPosition.background,
           decoration: const BoxDecoration(
@@ -44,29 +41,25 @@ class LoginView extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: ListView(
               children: [
+                const HomeButton(),
                 Text(
                   "CONNEXION",
                   style: titleStyle(context),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 40),
-
                 CustomTextField(
                   labelText: 'E-mail',
                   controller: emailController,
                 ),
-
                 const SizedBox(height: 40),
-
                 CustomTextField(
                   labelText: 'Mot de passe',
                   controller: passwordController,
                   obscureText: true,
                 ),
-
                 const SizedBox(height: 40),
                 SizedBox(
-                  width: screenWidth - 40,
                   child: CustomButton(
                     label: 'Connexion',
                     onPressed: () {
@@ -80,7 +73,6 @@ class LoginView extends StatelessWidget {
                     },
                   ),
                 ),
-
                 const SizedBox(height: 22),
                 Row(
                   children: [
@@ -106,8 +98,6 @@ class LoginView extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 40), // You can adjust this for spacing
-                const HomeButton(),
               ],
             ),
           ),

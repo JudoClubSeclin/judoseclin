@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:judoseclin/ui/common/widgets/buttons/home_button.dart';
 
 import '../../../theme/theme.dart';
 import '../../../widgets/buttons/custom_buttom.dart';
@@ -48,6 +49,7 @@ class InscriptionView extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: ListView(
             children: [
+              const HomeButton(),
               Text(
                 "Inscription",
                 style: titleStyle(context),
@@ -87,6 +89,16 @@ class InscriptionView extends StatelessWidget {
                 },
                 label: "S'inscrire",
               ),
+              const SizedBox(
+                height: 25,
+              ),
+              TextButton(
+                  onPressed: () => context.go('/login'),
+                  child: Text(
+                    "Connexion",
+                    style: TextStyle(color: Colors.red[400]),
+                    textAlign: TextAlign.center,
+                  )),
             ],
           )),
     );

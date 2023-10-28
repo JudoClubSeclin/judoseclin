@@ -10,7 +10,7 @@ class OrientedSizedBox extends StatelessWidget {
     Key? key,
     required this.size,
     this.child,
-    this.fraction = 1/3,
+    this.fraction = 1 / 3,
   }) : super(key: key);
 
   @override

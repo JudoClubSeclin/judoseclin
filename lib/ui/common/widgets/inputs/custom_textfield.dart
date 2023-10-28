@@ -43,13 +43,13 @@ class CustomTextField extends StatelessWidget {
             child: TextField(
               controller: controller,
               style: TextStyle(
-                  fontSize: 12 *
+                  fontSize: 15 *
                       scaleFactor), // Augmenter la taille de la police du texte saisi
               decoration: InputDecoration(
                 labelText: labelText,
                 labelStyle: TextStyle(
                   color: borderColor,
-                  fontSize: 10 *
+                  fontSize: 12 *
                       scaleFactor, // Augmenter la taille de la police de l'étiquette
                 ),
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../main.dart';
 
@@ -18,7 +19,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.red[400],
-      title: Text(title),
+      title: Text(
+        title,
+        textAlign: TextAlign.center,
+      ),
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () => context.pop(),
+      ),
       actions: <Widget>[
         if (actions != null)
           ...actions!.map((action) => Padding(
@@ -35,6 +43,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () {
             auth.signOut().then((_) {
               debugPrint('Déconnexion réussie');
+              context.go('/');
             }).catchError((error) {
               debugPrint('Erreur lors de la déconnexion: $error');
             });

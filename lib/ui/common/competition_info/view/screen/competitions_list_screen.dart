@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:judoseclin/ui/common/competition_info/model/competition.dart';
 
+import '../../../widgets/appbar/custom_appbar.dart';
+import '../../../widgets/images/image_fond_ecran.dart';
 import '../../Cubit/competition_cubit.dart';
 import '../../Cubit/inscription-competition_cubit.dart';
 
@@ -43,56 +45,101 @@ class _CompetitionsListScreenState extends State<CompetitionsListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.red[400],
-          title: const Text('Liste des competitions'),
+        appBar: CustomAppBar(
+          title: '',
+          actions: [
+            GestureDetector(
+              onTap: () {
+                GoRouter.of(context).go('/ListCompetition');
+              },
+              child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Center(child: Text(''))),
+            ),
+          ],
         ),
-        body: BlocBuilder<CompetitionCubit, List<Competition>>(
-            builder: (context, competitions) {
-          if (competitions.isEmpty) {
-            return const CircularProgressIndicator();
-          }
+        body: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(ImageFondEcran.imagePath),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: BlocBuilder<CompetitionCubit, List<Competition>>(
+                builder: (context, competitions) {
+              if (competitions.isEmpty) {
+                return Container(
+                  width: 70,
+                  height: 70,
+                  child: const CircularProgressIndicator(),
+                );
+              }
 
-          return ListView.builder(
-            itemCount: competitions.length,
-            itemBuilder: (context, index) {
-              final competition = competitions[index];
-              bool isUserInscribed = userInscriptions.contains(competition.id);
+              return ListView.builder(
+                itemCount: competitions.length,
+                itemBuilder: (context, index) {
+                  final competition = competitions[index];
+                  bool isUserInscribed =
+                      userInscriptions.contains(competition.id);
 
-              String formattedDate =
-                  DateFormat('dd/MM/yyyy').format(competition.date);
-              return Padding(
-                padding: const EdgeInsets.all(20),
-                child: Align(
-                  alignment: Alignment.center, // Pour centrer le contenu
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    // Ici, j'ai pris 70% de la largeur de l'écran
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        side: BorderSide(color: Colors.red[400]!, width: 2.0),
-                      ),
-                      child: ListTile(
-                        title: Text(competition.title),
-                        subtitle: Text(formattedDate),
-                        trailing: isUserInscribed
-                            ? const Text('je suis Inscrit à cette compétition',
-                                style: TextStyle(color: Colors.green))
-                            : const Text(
-                                'je ne suis pas  inscrit à cette compétition',
-                                style: TextStyle(color: Colors.red)),
-                        onTap: () {
-                          String competitionId = competition.id.toString();
-                          context.go('/details/$competitionId');
-                        },
+                  String formattedDate =
+                      DateFormat('dd/MM/yyyy').format(competition.date);
+                  return Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Align(
+                      alignment: Alignment.center, // Pour centrer le contenu
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: Card(
+                          color: Colors.transparent,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side:
+                                BorderSide(color: Colors.red[400]!, width: 2.0),
+                          ),
+                          child: ListTile(
+                            title: Wrap(
+                              children: [
+                                Text(
+                                  competition.title,
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                Text(
+                                  formattedDate,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                Text(
+                                  isUserInscribed
+                                      ? 'je suis inscrit à cette compétition'
+                                      : 'je ne suis pas inscrit à cette compétition',
+                                  style: TextStyle(
+                                    color: isUserInscribed
+                                        ? Colors.green
+                                        : Colors.red,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            onTap: () {
+                              String competitionId = competition.id.toString();
+                              context.go('/details/$competitionId');
+                            },
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
               );
-            },
-          );
-        }));
+            })));
   }
 }

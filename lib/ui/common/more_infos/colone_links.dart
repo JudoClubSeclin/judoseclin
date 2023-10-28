@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../theme/theme.dart';
@@ -102,9 +104,13 @@ class _ColonneLinksState extends State<ColonneLinks> {
           child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         child: Column(children: [
-          Text(
-            "Documents",
-            style: titleStyle,
+          FittedBox(
+            fit: BoxFit
+                .scaleDown, // Utilisez BoxFit.contain si vous voulez conserver les proportions
+            child: Text(
+              "Documents",
+              style: titleStyle,
+            ),
           ),
           FutureBuilder(
             future: getFiles("documents"),
@@ -135,9 +141,13 @@ class _ColonneLinksState extends State<ColonneLinks> {
               return const SizedBox(); // Une valeur de retour par défaut si aucun cas n'est atteint
             },
           ),
-          Text(
-            "Ceinture Noire",
-            style: titleStyle,
+          FittedBox(
+            fit: BoxFit
+                .scaleDown, // Utilisez BoxFit.contain si vous voulez conserver les proportions
+            child: Text(
+              "Cienture Noir",
+              style: titleStyle,
+            ),
           ),
           FutureBuilder(
             future: getFiles("ceinture_noire"),
@@ -159,30 +169,28 @@ class _ColonneLinksState extends State<ColonneLinks> {
               }
             },
           ),
-          Text(
-            "Compétitions",
-            style: titleStyle,
+          FittedBox(
+            fit: BoxFit
+                .scaleDown, // Utilisez BoxFit.contain si vous voulez conserver les proportions
+            child: Text(
+              "Compétition",
+              style: titleStyle,
+            ),
           ),
-          FutureBuilder(
-            future: getFiles("competitions"),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<File>> snapshot) {
-              if (snapshot.hasData) {
-                List<File> files = snapshot.data ?? [];
-                if (files.isEmpty) {
-                  return const Text(
-                      "Vous retrouverez toutes les convocations pour les compétitions à cet endroit");
-                } else {
-                  return FileListButtons(files: files);
-                }
-              } else if (snapshot.hasError) {
-                return const Text(
-                    "Erreur lors de la récupération des compétitions");
-              } else {
-                return const CircularProgressIndicator();
-              }
-            },
-          ),
+          TextButton(
+              onPressed: () {
+                FirebaseAuth.instance.authStateChanges().listen((User? user) {
+                  if (user == null) {
+                    context.go('/login');
+                  } else {
+                    context.go('/ListCompetition');
+                  }
+                });
+              },
+              child: const Text(
+                'Retrouvé toutes les compétitions a cette endroit',
+                style: TextStyle(color: Colors.black),
+              )),
         ]),
       )),
     );
