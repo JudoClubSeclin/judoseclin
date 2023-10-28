@@ -181,9 +181,9 @@ class _ColonneLinksState extends State<ColonneLinks> {
               onPressed: () {
                 FirebaseAuth.instance.authStateChanges().listen((User? user) {
                   if (user == null) {
-                    context.go('/login');
+                    context.go('/account/login');
                   } else {
-                    context.go('/ListCompetition');
+                    context.go('/competitions');
                   }
                 });
               },

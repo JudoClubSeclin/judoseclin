@@ -1,19 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:judoseclin/domain/usecases/user/fetch_user_data.dart';
 
 class AccountInteractor {
-  final FirebaseAuth auth;
-  final FirebaseFirestore firestore;
+  final fetchUserDataDomain = FetchUserDataUseCase();
 
-  AccountInteractor({required this.auth, required this.firestore});
+  AccountInteractor();
 
-  Future<Map<String, dynamic>> fetchUserData() async {
-    final currentUser = auth.currentUser;
-    if (currentUser != null) {
-      DocumentSnapshot snapshot =
-          await firestore.collection('Users').doc(currentUser.uid).get();
-      return snapshot.data() as Map<String, dynamic>;
-    }
-    throw Exception('No current user found.');
-  }
+  Future<Map<String, dynamic>> fetchUserData() => fetchUserDataDomain.invoke();
 }

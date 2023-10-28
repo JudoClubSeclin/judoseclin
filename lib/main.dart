@@ -45,10 +45,7 @@ void main() {
             ),
             BlocProvider<AccountBloc>(
               create: (context) => AccountBloc(
-                  accountInteractor: AccountInteractor(
-                auth: FirebaseAuth.instance,
-                firestore: FirebaseFirestore.instance,
-              )),
+                  accountInteractor: AccountInteractor()),
             ),
           ],
           child: Builder(builder: (BuildContext context) {

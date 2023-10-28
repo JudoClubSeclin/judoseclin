@@ -21,7 +21,7 @@ class AccountView extends StatelessWidget {
         actions: [
           GestureDetector(
             onTap: () {
-              GoRouter.of(context).go('/ListCompetition');
+              GoRouter.of(context).go('/competitions');
             },
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),

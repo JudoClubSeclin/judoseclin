@@ -78,7 +78,7 @@ class LoginView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextButton(
-                        onPressed: () => context.go('/inscription'),
+                        onPressed: () => context.go('/account/inscription'),
                         child: Text(
                           "Créer un compte",
                           style: TextStyle(color: Colors.red[400]),
@@ -88,7 +88,7 @@ class LoginView extends StatelessWidget {
                     ),
                     Expanded(
                       child: TextButton(
-                        onPressed: () => context.go('/ResetPassword'),
+                        onPressed: () => context.go('/account/ResetPassword'),
                         child: Text(
                           "Mot de passe oublié?",
                           style: TextStyle(color: Colors.red[400]),

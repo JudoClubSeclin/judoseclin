@@ -23,10 +23,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         title,
         textAlign: TextAlign.center,
       ),
-      leading: IconButton(
+      leading: context.canPop() ? IconButton(
         icon: const Icon(Icons.arrow_back),
-        onPressed: () => context.pop(),
-      ),
+        onPressed: () => context.pop()
+      ) : null,
       actions: <Widget>[
         if (actions != null)
           ...actions!.map((action) => Padding(

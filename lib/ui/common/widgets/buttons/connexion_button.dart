@@ -29,7 +29,7 @@ class ConnexionButton extends StatelessWidget {
                   Icons.person,
                   color: Colors.white,
                 ),
-                onPressed: () => context.go("/login"),
+                onPressed: () => context.go("/account/login"),
               ),
             ),
           ),

@@ -55,7 +55,7 @@ class CompetitionDetailsScreen extends StatelessWidget {
               } else {
                 debugPrint("Unhandled state: $state");
               }
-              context.go('/ListCompetition');
+              context.go('/competitions');
             },
             builder: (context, state) {
               Size size = MediaQuery.of(context).size;

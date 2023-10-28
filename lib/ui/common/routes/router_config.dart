@@ -22,56 +22,56 @@ final goRouter = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) => const Landing(),
-    ),
-    GoRoute(
-      path: '/login',
-      builder: (context, state) => LoginView(),
-    ),
-    GoRoute(
-      path: '/connexion',
-      builder: (context, state) => LoginView(),
-    ),
-    GoRoute(
-      path: '/inscription',
-      builder: (context, state) => InscriptionView(),
-    ),
-    GoRoute(
-      path: '/resetPassword',
-      builder: (context, state) => ResetPasswordView(),
+      routes: [
+        GoRoute(
+          path: 'competitions',
+          builder: (context, state) => const CompetitionsListScreen(),
+          routes: [
+            GoRoute(
+              path: ':competitionId',
+              builder: (BuildContext context, GoRouterState state) {
+                final competitionId = state.pathParameters['competitionId'];
+                if (competitionId != null) {
+                  return CompetitionDetailsScreen(
+                    id: competitionId,
+                    competition: null,
+                  );
+                } else {
+                  return const Center(
+                    child: Text("Erreur : ID des détails manquant"),
+                  );
+                }
+              },
+            ),
+          ],
+        ),
+      ],
     ),
     GoRoute(
       path: '/account',
       pageBuilder: (context, state) => MaterialPage(
         child: BlocProvider<AccountBloc>(
           create: (BuildContext context) {
-            var interactor = AccountInteractor(
-                auth: FirebaseAuth.instance,
-                firestore: FirebaseFirestore.instance);
+            var interactor = AccountInteractor();
             return AccountBloc(accountInteractor: interactor);
           },
           child: const AccountView(),
         ),
       ),
-    ),
-    GoRoute(
-      path: '/ListCompetition',
-      builder: (context, state) => const CompetitionsListScreen(),
-    ),
-    GoRoute(
-      path: '/details/:competitionId',
-      builder: (BuildContext context, GoRouterState state) {
-        final competitionId = state.pathParameters['competitionId'];
-        if (competitionId != null) {
-          return CompetitionDetailsScreen(
-            id: competitionId,
-            competition: null,
-          );
-        } else {
-          return const Center(
-            child: Text("Erreur : ID des détails manquant"),
-          );
-        }
-      },
+      routes: [
+        GoRoute(
+          path: 'login',
+          builder: (context, state) => LoginView(),
+        ),
+        GoRoute(
+          path: 'inscription',
+          builder: (context, state) => InscriptionView(),
+        ),
+        GoRoute(
+          path: 'resetPassword',
+          builder: (context, state) => ResetPasswordView(),
+        ),
+      ],
     ),
   ],
 );

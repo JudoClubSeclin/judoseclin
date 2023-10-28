@@ -50,7 +50,7 @@ class _CompetitionsListScreenState extends State<CompetitionsListScreen> {
           actions: [
             GestureDetector(
               onTap: () {
-                GoRouter.of(context).go('/ListCompetition');
+                GoRouter.of(context).go('/competitions');
               },
               child: const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -131,7 +131,7 @@ class _CompetitionsListScreenState extends State<CompetitionsListScreen> {
                             ),
                             onTap: () {
                               String competitionId = competition.id.toString();
-                              context.go('/details/$competitionId');
+                              context.go('/competitions/$competitionId');
                             },
                           ),
                         ),
