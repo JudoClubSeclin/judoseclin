@@ -68,7 +68,7 @@ class LoginView extends StatelessWidget {
                             email: emailController.text,
                             password: passwordController.text,
                             navigateToAccount: () =>
-                                GoRouter.of(context).go('/account')),
+                                GoRouter.of(context).go('account')),
                       );
                     },
                   ),

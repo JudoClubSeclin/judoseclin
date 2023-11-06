@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:judoseclin/size_extensions.dart';
 
 class ImageFondEcran extends StatelessWidget {
   const ImageFondEcran({super.key});
@@ -8,9 +7,8 @@ class ImageFondEcran extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
     return Container(
-      height: size.headerHeight(),
+      height: double.infinity,
       width: double.infinity,
       decoration: const BoxDecoration(
         image: DecorationImage(

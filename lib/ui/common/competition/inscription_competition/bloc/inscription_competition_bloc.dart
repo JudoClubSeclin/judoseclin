@@ -1,45 +1,31 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:judoseclin/ui/common/competition/inscription_competition/bloc/inscription_competition_state.dart';
 
-import '../model/inscription_competition.dart';
+import '../../../../../domain/entities/inscription_competition.dart';
+import 'inscription_competition_event.dart';
 
-abstract class InscriptionCompetitionState {}
-
-class InscriptionCompetitionInitial extends InscriptionCompetitionState {}
-
-class InscriptionCompetitionProgress extends InscriptionCompetitionState {}
-
-class InscriptionCompetitionSuccess extends InscriptionCompetitionState {}
-
-class InscriptionCompetitionFailure extends InscriptionCompetitionState {
-  final String errorMessage;
-
-  InscriptionCompetitionFailure(this.errorMessage);
-}
-
-class InscriptionCompetitionClosed extends InscriptionCompetitionState {}
-
-class InscriptionCompetitionCubit extends Cubit<InscriptionCompetitionState> {
+class InscriptionCompetitionBloc
+    extends Bloc<InscriptionCompetitionEvent, InscriptionCompetitionState> {
   final FirebaseFirestore _firestore;
 
-  InscriptionCompetitionCubit(this._firestore)
+  InscriptionCompetitionBloc(this._firestore)
       : super(InscriptionCompetitionInitial());
 
   Future<void> registerForCompetition(
       String userId, String competitionId) async {
-    debugPrint("Trying to register for competition");
-    emit(InscriptionCompetitionProgress());
+    debugPrint('Trying to register for competition');
+    emit((InscriptionCompetitionProgress()));
 
-    // Vérification de la période d'inscription.
+    //Vérification de la periode d'inscription.
     bool canRegister = await _canRegisterForCompetition(competitionId);
 
     if (!canRegister) {
       emit(InscriptionCompetitionClosed());
       return;
     }
-
-    // Procéder à l'inscription.
+    //Procéder à l'inscription.
     try {
       await _firestore.collection('inscription-competition').add({
         'userId': userId,
@@ -48,16 +34,16 @@ class InscriptionCompetitionCubit extends Cubit<InscriptionCompetitionState> {
       });
       emit(InscriptionCompetitionSuccess());
     } catch (e) {
-      emit(InscriptionCompetitionFailure(e.toString()));
+      emit(InscriptionCompetitionError(e.toString()));
     }
   }
 
   Future<bool> _canRegisterForCompetition(String competitionId) async {
     DocumentSnapshot competitionDoc =
-        await _firestore.collection('competition').doc(competitionId).get();
+        await _firestore.collection('competitions').doc(competitionId).get();
 
     if (!competitionDoc.exists) {
-      throw Exception('Document not found');
+      throw Exception('Document no found');
     }
 
     final Map<String, dynamic> data =
@@ -72,17 +58,17 @@ class InscriptionCompetitionCubit extends Cubit<InscriptionCompetitionState> {
     DateTime competitionDate = (data['date'] as Timestamp).toDate();
     DateTime publishDate = (data['publishDate'] as Timestamp).toDate();
 
-    // Calculate registrationEnd by subtracting 7 days from competitionDate
+    //Calculate registration by subtracting 7 day from competitionDate
     DateTime registrationEnd =
         competitionDate.subtract(const Duration(days: 7));
 
-    // For registrationStart, let's consider it as the moment when the competition was published.
+    //For registrationStart, let's consider it as the moment when the competition was published.
     DateTime registrationStart = publishDate;
 
-    print("Now: $now");
-    print("Registration Start: $registrationStart");
-    print("Registration End: $registrationEnd");
-    print("Competition Date: $competitionDate");
+    debugPrint("Now: $now");
+    debugPrint('Registration Start: $registrationStart');
+    debugPrint('registration end: $registrationEnd');
+    debugPrint('Competition Date: $competitionDate');
 
     return now.isAfter(registrationStart) && now.isBefore(registrationEnd);
   }
@@ -95,26 +81,24 @@ class InscriptionCompetitionCubit extends Cubit<InscriptionCompetitionState> {
           .get();
       return InscriptionCompetition.fromFirestore(doc);
     } catch (e) {
-      debugPrint("Erreur lors de la récupération de l'inscription: $e");
+      debugPrint('Erreur lors de la recuperation de l\'inscription: $e');
       return null;
     }
   }
 
-  Future<List<String>> getInscriptionsForUser(String userId) async {
+  Future<List<String>> getInscriptionForUser(String userId) async {
     try {
       QuerySnapshot querySnapshot = await _firestore
           .collection('inscription-competition')
           .where('userId', isEqualTo: userId)
           .get();
-
       List<String> competitionIds = [];
       for (var doc in querySnapshot.docs) {
         competitionIds.add(doc['competitionId']);
       }
-
       return competitionIds;
     } catch (e) {
-      debugPrint("Erreur lors de la récupération des inscriptions: $e");
+      debugPrint('Erreur lors de la récupération des inscriptions: $e');
       return [];
     }
   }

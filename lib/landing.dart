@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:judoseclin/ui/common/landing_page/landing_home.dart';
 import 'package:judoseclin/ui/common/landing_page/landing_news.dart';
+import 'package:judoseclin/ui/common/landing_page/landing_show_button.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/connexion_button.dart';
-import 'package:judoseclin/ui/common/widgets/buttons/landing_show_button.dart';
 
 import 'more_info.dart';
 

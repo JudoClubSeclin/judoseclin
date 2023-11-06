@@ -4,11 +4,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:judoseclin/domain/usecases/competitions/fetch_competitions_data_usecase.dart';
 import 'package:judoseclin/firebase_options.dart';
 import 'package:judoseclin/ui/common/account/bloc/account_bloc.dart';
 import 'package:judoseclin/ui/common/account/interactor/account_interactor.dart';
-import 'package:judoseclin/ui/common/competition_info/Cubit/competition_cubit.dart';
-import 'package:judoseclin/ui/common/competition_info/Cubit/inscription-competition_cubit.dart';
+import 'package:judoseclin/ui/common/competition/inscription_competition/bloc/inscription_competition_bloc.dart';
+import 'package:judoseclin/ui/common/competition/list_competition/bloc/competition_bloc.dart';
+import 'package:judoseclin/ui/common/competition/list_competition/interactor/competition_interactor.dart';
 import 'package:judoseclin/ui/common/members/inscription/bloc/inscription_bloc.dart';
 import 'package:judoseclin/ui/common/members/inscription/interactor/inscription_interactor.dart';
 import 'package:judoseclin/ui/common/members/login/bloc/login_bloc.dart';
@@ -27,10 +29,13 @@ void main() {
     runApp(
       MultiBlocProvider(
           providers: [
-            BlocProvider<CompetitionCubit>(
-                create: (context) => CompetitionCubit()),
-            BlocProvider<InscriptionCompetitionCubit>(
-              create: (context) => InscriptionCompetitionCubit(_firestore),
+            BlocProvider<CompetitionBloc>(
+              create: (context) => CompetitionBloc(
+                CompetitionInteractor(FetchCompetitionDataUseCase()),
+              ),
+            ),
+            BlocProvider<InscriptionCompetitionBloc>(
+              create: (context) => InscriptionCompetitionBloc(_firestore),
             ),
             BlocProvider<LoginBloc>(
               create: (context) =>
@@ -44,8 +49,8 @@ void main() {
               )),
             ),
             BlocProvider<AccountBloc>(
-              create: (context) => AccountBloc(
-                  accountInteractor: AccountInteractor()),
+              create: (context) =>
+                  AccountBloc(accountInteractor: AccountInteractor()),
             ),
           ],
           child: Builder(builder: (BuildContext context) {
