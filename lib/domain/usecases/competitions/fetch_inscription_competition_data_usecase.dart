@@ -9,7 +9,7 @@ class FetchInscriptionCompetitionDataUseCase {
   Future<void> registerForCompetition(
       String userId, String competitionId) async {
     try {
-      await firestore.collection('inscription-competition').add({
+      await firestore.collection('competition-registration').add({
         'userId': userId,
         'competitionId': competitionId,
         'timestamp': FieldValue.serverTimestamp(),

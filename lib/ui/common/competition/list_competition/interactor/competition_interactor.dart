@@ -14,4 +14,13 @@ class CompetitionInteractor {
       rethrow;
     }
   }
+
+  Future<Competition?> getCompetitionById(String competitionId) async {
+    try {
+      return await fetchCompetitionDataUseCase
+          .getCompetitionById(competitionId);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

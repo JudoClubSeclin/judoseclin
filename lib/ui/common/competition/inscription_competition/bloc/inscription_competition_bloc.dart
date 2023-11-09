@@ -13,6 +13,18 @@ class InscriptionCompetitionBloc
   InscriptionCompetitionBloc(this._firestore)
       : super(InscriptionCompetitionInitial());
 
+  Future<void> validateInscription(String inscriptionId) async {
+    try {
+      await _firestore
+          .collection('competition-registration')
+          .doc(inscriptionId)
+          .update({'validated': true});
+      emit(InscriptionCompetitionSuccess());
+    } catch (e) {
+      emit(InscriptionCompetitionError(e.toString()));
+    }
+  }
+
   Future<void> registerForCompetition(
       String userId, String competitionId) async {
     debugPrint('Trying to register for competition');
@@ -27,7 +39,7 @@ class InscriptionCompetitionBloc
     }
     //Procéder à l'inscription.
     try {
-      await _firestore.collection('inscription-competition').add({
+      await _firestore.collection('competition-registration').add({
         'userId': userId,
         'competitionId': competitionId,
         'timestamp': FieldValue.serverTimestamp(),
@@ -40,7 +52,7 @@ class InscriptionCompetitionBloc
 
   Future<bool> _canRegisterForCompetition(String competitionId) async {
     DocumentSnapshot competitionDoc =
-        await _firestore.collection('competitions').doc(competitionId).get();
+        await _firestore.collection('competition').doc(competitionId).get();
 
     if (!competitionDoc.exists) {
       throw Exception('Document no found');
@@ -76,7 +88,7 @@ class InscriptionCompetitionBloc
   Future<InscriptionCompetition?> getInscription(String inscriptionId) async {
     try {
       DocumentSnapshot doc = await _firestore
-          .collection('inscription-competition')
+          .collection('competition-registration')
           .doc(inscriptionId)
           .get();
       return InscriptionCompetition.fromFirestore(doc);
@@ -89,7 +101,7 @@ class InscriptionCompetitionBloc
   Future<List<String>> getInscriptionForUser(String userId) async {
     try {
       QuerySnapshot querySnapshot = await _firestore
-          .collection('inscription-competition')
+          .collection('competition-registration')
           .where('userId', isEqualTo: userId)
           .get();
       List<String> competitionIds = [];

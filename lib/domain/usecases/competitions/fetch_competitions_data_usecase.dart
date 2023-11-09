@@ -10,16 +10,41 @@ class FetchCompetitionDataUseCase {
     try {
       debugPrint("Fetching competition data from Firestore...");
 
-      QuerySnapshot snapshot = await firestore.collection('competitions').get();
+      QuerySnapshot snapshot = await firestore.collection('competition').get();
       debugPrint("Competition data fetched successfully.");
 
-      List<Competition> competitions = snapshot.docs
-          .map((doc) => Competition.fromFirestore(doc as Map<String, dynamic>))
+      List<Competition> competition = snapshot.docs
+          .map((doc) => Competition.fromFirestore(
+              doc as DocumentSnapshot<Map<String, dynamic>>))
           .toList();
-      return competitions; // Renvoyez les données de la compétition
+      return competition; // Renvoyez les données de la compétition
     } catch (e) {
       debugPrint(e.toString());
       rethrow; // Lancez l'erreur pour que la partie appelante puisse la gérer
+    }
+  }
+
+  Future<Competition?> getCompetitionById(String competitionId) async {
+    try {
+      debugPrint("Fetching competition data from Firestore...");
+
+      // Utilisez le .doc(competitionId) pour récupérer une compétition spécifique par son ID
+      DocumentSnapshot<Map<String, dynamic>> competitionSnapshot =
+          await firestore.collection('competition').doc(competitionId).get();
+
+      if (competitionSnapshot.exists) {
+        // Si la compétition existe, créez une instance de Competition à partir des données
+        Competition competition =
+            Competition.fromFirestore(competitionSnapshot);
+
+        return competition;
+      } else {
+        // La compétition n'existe pas
+        return null;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      rethrow;
     }
   }
 }

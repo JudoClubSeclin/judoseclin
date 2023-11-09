@@ -27,10 +27,12 @@ class CompetitionsListView extends StatelessWidget {
     _loadUserInscriptions();
 
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('competitions').snapshots(),
+      stream: FirebaseFirestore.instance.collection('competition').snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
 
         if (snapshot.hasError) {
@@ -71,7 +73,7 @@ class CompetitionsListView extends StatelessWidget {
                 bool isUserInscribed =
                     userInscriptions.contains(competition.id);
 
-                Timestamp timestamp = competition['debut'] as Timestamp;
+                Timestamp timestamp = competition['date'] as Timestamp;
                 DateTime date = timestamp.toDate();
                 String formattedDate = DateFormat('dd/MM/yyyy').format(date);
 

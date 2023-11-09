@@ -1,53 +1,41 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Competition {
   final String id;
-  final Geocode address;
-  final String titre;
-  final String sousTitre;
-  final DateTime debut;
-  final DateTime fin;
-  final DateTime limiteInscription;
-  final List<String>
-      description; // Utilisez le type approprié pour votre description.
+  final String address;
+  final String title;
+  final String subtitle;
+  final Timestamp date;
+  final String poussin;
+  final String benjamin;
+  final String minime;
 
-  Competition({
-    required this.id,
-    required this.address,
-    required this.titre,
-    required this.sousTitre,
-    required this.debut,
-    required this.fin,
-    required this.limiteInscription,
-    required this.description,
-  });
+  Competition(
+      {required this.id,
+      required this.address,
+      required this.title,
+      required this.subtitle,
+      required this.date,
+      required this.poussin,
+      required this.benjamin,
+      required this.minime});
 
-  //  méthode de conversion statique pour créer une instance de Competition depuis les données Firestore.
-  static Competition fromFirestore(Map<String, dynamic> data) {
-    final Geocode address = Geocode(
-      longitude: data['address']['longitude'],
-      latitude: data['address']['latitude'],
-    );
-
-    return Competition(
-      id: data['id'],
-      address: address,
-      titre: data['titre'],
-      sousTitre: data['sousTitre'],
-      debut: data['debut'].toDate(),
-      fin: data['fin'].toDate(),
-      limiteInscription: data['limiteInscription'].toDate(),
-      description: data['description'],
-    );
+  factory Competition.fromFirestore(
+      DocumentSnapshot<Map<String, dynamic>> doc) {
+    final data = doc.data();
+    if (data != null) {
+      return Competition(
+        id: doc.id,
+        address: data['address'] ?? '',
+        title: data['title'] ?? '',
+        subtitle: data['subtitle'] ?? '',
+        date: data['date'],
+        poussin: data['poussin'] ?? '',
+        benjamin: data['benjamin'] ?? '',
+        minime: data['minime'] ?? '',
+      );
+    } else {
+      throw Exception('Document non trouver');
+    }
   }
-}
-
-class Geocode {
-  final double longitude;
-  final double latitude;
-
-  Geocode({required this.longitude, required this.latitude});
-
-  // Constructeur de copie
-  Geocode.copy(Geocode other)
-      : longitude = other.longitude,
-        latitude = other.latitude;
 }
