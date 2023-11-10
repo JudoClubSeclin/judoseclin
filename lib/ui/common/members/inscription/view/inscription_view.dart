@@ -56,24 +56,32 @@ class InscriptionView extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 40),
-              CustomTextField(labelText: 'NOM', controller: nomController),
-              const SizedBox(height: 10),
-              CustomTextField(
-                  labelText: 'PRENOM', controller: prenomController),
-              const SizedBox(height: 10),
-              CustomTextField(
-                labelText: 'Date de naissance (JJ/MM/AAAA)',
-                controller: dateNaissanceController,
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                CustomTextField(labelText: 'NOM', controller: nomController),
+                const SizedBox(width: 40),
+                CustomTextField(
+                    labelText: 'PRENOM', controller: prenomController),
+              ]),
+              const SizedBox(height: 25),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomTextField(
+                    labelText: 'Date de naissance (JJ/MM/AAAA)',
+                    controller: dateNaissanceController,
+                  ),
+                  const SizedBox(width: 40),
+                  CustomTextField(
+                      labelText: 'E-mail', controller: emailController),
+                ],
               ),
-              const SizedBox(height: 10),
-              CustomTextField(labelText: 'E-mail', controller: emailController),
-              const SizedBox(height: 10),
+              const SizedBox(height: 25),
               CustomTextField(
                 labelText: 'Mot de passe',
                 controller: passwordController,
                 obscureText: true,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 25),
               CustomButton(
                 onPressed: () {
                   context.read<InscriptionBloc>().add(
@@ -93,7 +101,7 @@ class InscriptionView extends StatelessWidget {
                 height: 25,
               ),
               TextButton(
-                  onPressed: () => context.go('/login'),
+                  onPressed: () => context.go('/account/login'),
                   child: Text(
                     "Connexion",
                     style: TextStyle(color: Colors.red[400]),

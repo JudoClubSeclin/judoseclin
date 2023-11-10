@@ -1,13 +1,17 @@
+// login_bloc.dart
+
 import 'package:bloc/bloc.dart';
 
 import '../interactor/login_interactor.dart';
 import 'login_event.dart';
-import 'login_state.dart';
+import 'login_state.dart' as LoginState;
+import 'login_state.dart'; // Ajoutez cette ligne
 
-class LoginBloc extends Bloc<LoginEvent, LoginState> {
+class LoginBloc extends Bloc<LoginEvent, LoginState.LoginState> {
   final LoginInteractor loginInteractor;
 
-  LoginBloc({required this.loginInteractor}) : super(LoginInitial()) {
+  LoginBloc({required this.loginInteractor})
+      : super(LoginState.LoginInitial()) {
     on<LoginWithEmailPassword>((event, emit) async {
       emit(LoginLoading());
       try {
@@ -19,7 +23,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     });
 
-    // Ajoutez cette partie pour gérer l'événement de réinitialisation du mot de passe
     on<ResetPasswordRequested>((event, emit) async {
       emit(PasswordResetInProgress());
       try {

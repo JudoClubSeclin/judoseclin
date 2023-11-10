@@ -22,11 +22,23 @@ class LoginView extends StatelessWidget {
     return BlocConsumer<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state is LoginFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error)),
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text("Erreur de connexion"),
+              content: Text(state.error),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    GoRouter.of(context).pop();
+                  },
+                  child: const Text("OK"),
+                ),
+              ],
+            ),
           );
         }
-        // Ajouter d'autres réactions pour différents états si nécessaire
+        // Ajoutez d'autres réactions pour différents états si nécessaire
       },
       builder: (context, constraints) {
         return DecoratedBox(
@@ -65,10 +77,11 @@ class LoginView extends StatelessWidget {
                     onPressed: () {
                       BlocProvider.of<LoginBloc>(context).add(
                         LoginWithEmailPassword(
-                            email: emailController.text,
-                            password: passwordController.text,
-                            navigateToAccount: () =>
-                                GoRouter.of(context).go('account')),
+                          email: emailController.text,
+                          password: passwordController.text,
+                          navigateToAccount: () =>
+                              GoRouter.of(context).go('/account'),
+                        ),
                       );
                     },
                   ),
