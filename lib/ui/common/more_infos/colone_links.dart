@@ -1,9 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../domain/entities/competition.dart';
+import '../../../domain/usecases/competitions/fetch_competitions_data_usecase.dart';
 import '../theme/theme.dart';
 import 'oriented_size_box.dart';
 
@@ -15,6 +16,36 @@ class File {
     required this.fileTitle,
     required this.fileUrl,
   });
+}
+
+class CompetitionListButtons extends StatelessWidget {
+  final List<Competition> competitions;
+
+  const CompetitionListButtons({
+    Key? key,
+    required this.competitions,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      width: double.infinity,
+      child: ToggleButtons(
+        direction: Axis.vertical,
+        onPressed: (int index) {
+          context.go('/competitions/${competitions[index].id}');
+        },
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        selectedBorderColor: Colors.red[700],
+        selectedColor: Colors.white,
+        fillColor: Colors.red,
+        color: Colors.red[400],
+        isSelected: competitions.map((e) => true).toList(),
+        children: competitions.map((e) => PaddedText(text: e.title)).toList(),
+      ),
+    );
+  }
 }
 
 class FileListButtons extends StatelessWidget {
@@ -80,6 +111,8 @@ class ColonneLinks extends StatefulWidget {
 
 class _ColonneLinksState extends State<ColonneLinks> {
   final FirebaseStorage storage = FirebaseStorage.instance;
+  final FetchCompetitionDataUseCase fetchCompetitionDataUseCase =
+      FetchCompetitionDataUseCase();
 
   Future<List<File>> getFiles(String folderName) async {
     final Reference folderRef = storage.ref().child(folderName);
@@ -170,27 +203,41 @@ class _ColonneLinksState extends State<ColonneLinks> {
             },
           ),
           FittedBox(
-            fit: BoxFit
-                .scaleDown, // Utilisez BoxFit.contain si vous voulez conserver les proportions
+            fit: BoxFit.scaleDown,
             child: Text(
-              "Compétition",
+              "Compétitions",
               style: titleStyle,
             ),
           ),
-          TextButton(
-              onPressed: () {
-                FirebaseAuth.instance.authStateChanges().listen((User? user) {
-                  if (user == null) {
-                    context.go('/account/login');
-                  } else {
-                    context.go('/competitions');
+          FutureBuilder(
+            future: fetchCompetitionDataUseCase.getCompetition(),
+            builder: (BuildContext context,
+                AsyncSnapshot<List<Competition>> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                  return const CircularProgressIndicator();
+                case ConnectionState.done:
+                  if (snapshot.hasError) {
+                    return const Text(
+                        "Erreur lors de la récupération des compétitions");
+                  } else if (snapshot.hasData) {
+                    List<Competition> competitions = snapshot.data!;
+                    if (competitions.isEmpty) {
+                      return const Text(
+                          "Aucune compétition disponible pour le moment");
+                    } else {
+                      return CompetitionListButtons(
+                          competitions: snapshot.data ?? []);
+                    }
                   }
-                });
-              },
-              child: const Text(
-                'Retrouvé toutes les compétitions a cette endroit',
-                style: TextStyle(color: Colors.black),
-              )),
+                  break;
+                default:
+                  return const Text("En attente de données...");
+              }
+              return const SizedBox();
+            },
+          )
         ]),
       )),
     );
