@@ -145,7 +145,7 @@ class _ColonneLinksState extends State<ColonneLinks> {
             fit: BoxFit
                 .scaleDown, // Utilisez BoxFit.contain si vous voulez conserver les proportions
             child: Text(
-              "Cienture Noir",
+              "Cienture Noire",
               style: titleStyle,
             ),
           ),

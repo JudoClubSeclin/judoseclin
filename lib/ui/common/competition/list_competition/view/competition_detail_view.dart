@@ -103,17 +103,35 @@ class CompetitionDetailView extends StatelessWidget {
                   label: 'JE M\'INSCRIT',
                   onPressed: () async {
                     final bloc = context.read<InscriptionCompetitionBloc>();
+
                     await bloc.registerForCompetition(userId!, competitionId);
 
                     // Vérifiez si l'inscription a réussi
                     if (bloc.state is InscriptionCompetitionSuccess) {
-                      // Affichez un message de succès ou effectuez d'autres actions
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Inscription réussie !'),
-                          duration: Duration(seconds: 2),
-                        ),
-                      );
+                      // Affichez un message de succès dans une fenêtre modale
+                      Future.delayed(Duration.zero, () {
+                        showDialog(
+                          context: Navigator.of(context, rootNavigator: true)
+                              .overlay!
+                              .context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Inscription réussie'),
+                              content: const Text(
+                                  'Votre inscription a été validée avec succès !'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context, rootNavigator: true)
+                                        .pop(); // Utilise rootNavigator
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      });
                     }
                   },
                 ),
