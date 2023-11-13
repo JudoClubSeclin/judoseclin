@@ -90,6 +90,7 @@ class News {
 
   factory News.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     final data = snapshot.data();
+
     return News(
         titre: data?['titre'],
         contenu: data?['contenu'],

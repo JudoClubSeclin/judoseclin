@@ -17,14 +17,14 @@ class CompetitionsListView extends StatelessWidget {
     final String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
     List<String> userInscriptions = [];
 
-    _loadUserInscriptions() async {
+    loadUserInscriptions() async {
       List<String> inscriptions = await context
           .read<InscriptionCompetitionBloc>()
           .getInscriptionForUser(userId);
       userInscriptions = inscriptions;
     }
 
-    _loadUserInscriptions();
+    loadUserInscriptions();
 
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('competition').snapshots(),

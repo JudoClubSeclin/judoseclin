@@ -72,7 +72,7 @@ class InscriptionCompetitionBloc
 
     //Calculate registration by subtracting 7 day from competitionDate
     DateTime registrationEnd =
-        competitionDate.subtract(const Duration(days: 7));
+        competitionDate.subtract(const Duration(days: 2));
 
     //For registrationStart, let's consider it as the moment when the competition was published.
     DateTime registrationStart = publishDate;

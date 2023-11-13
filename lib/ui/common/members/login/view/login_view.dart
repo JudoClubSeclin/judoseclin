@@ -77,11 +77,13 @@ class LoginView extends StatelessWidget {
                     onPressed: () {
                       BlocProvider.of<LoginBloc>(context).add(
                         LoginWithEmailPassword(
-                          email: emailController.text,
-                          password: passwordController.text,
-                          navigateToAccount: () =>
-                              GoRouter.of(context).go('/account'),
-                        ),
+                            email: emailController.text,
+                            password: passwordController.text,
+                            navigateToAccount: () {
+                              print(
+                                  "Login successful. Navigating to /account/login");
+                              GoRouter.of(context).go('/account');
+                            }),
                       );
                     },
                   ),
