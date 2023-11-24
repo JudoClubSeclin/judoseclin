@@ -8,6 +8,10 @@ import 'package:judoseclin/domain/usecases/competitions/fetch_competitions_data_
 import 'package:judoseclin/firebase_options.dart';
 import 'package:judoseclin/ui/common/account/bloc/account_bloc.dart';
 import 'package:judoseclin/ui/common/account/interactor/account_interactor.dart';
+import 'package:judoseclin/ui/common/adherents/bloc/adherents_bloc.dart';
+import 'package:judoseclin/ui/common/adherents/bloc/adherents_event.dart';
+import 'package:judoseclin/ui/common/adherents/interactor/adherents_interactor.dart';
+import 'package:judoseclin/ui/common/adherents/view/add_adherents_view.dart';
 import 'package:judoseclin/ui/common/competition/inscription_competition/bloc/inscription_competition_bloc.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/bloc/competition_bloc.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/interactor/competition_interactor.dart';
@@ -51,6 +55,19 @@ void main() {
             BlocProvider<AccountBloc>(
               create: (context) =>
                   AccountBloc(accountInteractor: AccountInteractor()),
+            ),
+            BlocProvider<AdherentsBloc>(
+              create: (context) {
+                var interactor =
+                    AdherentsInteractor(firestore: FirebaseFirestore.instance);
+                var adherentsBloc = AdherentsBloc(interactor);
+                // Attach event handlers
+                adherentsBloc.on<SignUpEvent>((event, emit) {
+                  // Implement event handling logic here
+                });
+                return adherentsBloc;
+              },
+              child: AddAdherentsView(),
             ),
           ],
           child: Builder(builder: (BuildContext context) {

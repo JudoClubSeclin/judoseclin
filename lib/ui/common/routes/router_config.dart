@@ -1,11 +1,10 @@
-// router_config.dart
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:judoseclin/domain/usecases/competitions/fetch_competitions_data_usecase.dart';
 import 'package:judoseclin/landing.dart';
 import 'package:judoseclin/ui/common/account/view/account_view.dart';
+import 'package:judoseclin/ui/common/adherents/view/add_adherents_view.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/interactor/competition_interactor.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/view/competition_list_view.dart';
 import 'package:judoseclin/ui/common/members/inscription/view/inscription_view.dart';
@@ -75,6 +74,8 @@ final goRouter = GoRouter(
           path: 'resetPassword',
           builder: (context, state) => ResetPasswordView(),
         ),
+        GoRoute(
+            path: 'adherents', builder: (context, state) => AddAdherentsView()),
       ],
     ),
   ],

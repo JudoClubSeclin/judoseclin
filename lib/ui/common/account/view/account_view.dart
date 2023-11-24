@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../domain/usecases/function_admin/function_admin.dart';
 import '../../theme/theme.dart';
 import '../../widgets/appbar/custom_appbar.dart';
 import '../../widgets/images/image_fond_ecran.dart';
@@ -26,9 +27,31 @@ class AccountView extends StatelessWidget {
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Center(
-                  child:
-                      Text('Compétitions', style: TextStyle(fontSize: 16.0))),
+                child: Text('Compétitions', style: TextStyle(fontSize: 16.0)),
+              ),
             ),
+          ),
+          FutureBuilder<bool>(
+            future: hasAccess(),
+            builder: (context, snapshot) {
+              final bool hasAccess = snapshot.data ?? false;
+              if (hasAccess) {
+                return GestureDetector(
+                  onTap: () {
+                    GoRouter.of(context).go('/account/adherents');
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Center(
+                      child:
+                          Text('Adhérents', style: TextStyle(fontSize: 16.0)),
+                    ),
+                  ),
+                );
+              } else {
+                return Container(); // Un conteneur vide pour ne pas afficher le bouton Adhérents.
+              }
+            },
           ),
         ],
       ),
