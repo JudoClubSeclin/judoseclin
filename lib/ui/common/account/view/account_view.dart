@@ -27,7 +27,8 @@ class AccountView extends StatelessWidget {
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Center(
-                child: Text('Compétitions', style: TextStyle(fontSize: 16.0)),
+                child: Text('Compétitions',
+                    style: TextStyle(fontSize: 16.0, color: Colors.white)),
               ),
             ),
           ),
@@ -35,21 +36,41 @@ class AccountView extends StatelessWidget {
             future: hasAccess(),
             builder: (context, snapshot) {
               final bool hasAccess = snapshot.data ?? false;
+              print(
+                  'hasAccess: $hasAccess'); // Ajoutez cette ligne pour le débogage
               if (hasAccess) {
-                return GestureDetector(
-                  onTap: () {
-                    GoRouter.of(context).go('/account/adherents');
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Center(
-                      child:
-                          Text('Adhérents', style: TextStyle(fontSize: 16.0)),
+                return Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        GoRouter.of(context).go('/account/adherents');
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Center(
+                          child: Text('Adhérents',
+                              style: TextStyle(
+                                  fontSize: 16.0, color: Colors.white)),
+                        ),
+                      ),
                     ),
-                  ),
+                    GestureDetector(
+                      onTap: () {
+                        GoRouter.of(context).go('/account/listAdherents');
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Center(
+                          child: Text('Liste des Adhérents',
+                              style: TextStyle(
+                                  fontSize: 16.0, color: Colors.white)),
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               } else {
-                return Container(); // Un conteneur vide pour ne pas afficher le bouton Adhérents.
+                return Container(); // Un conteneur vide pour ne pas afficher les boutons Adhérents.
               }
             },
           ),

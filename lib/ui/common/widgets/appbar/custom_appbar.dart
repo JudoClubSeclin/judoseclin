@@ -23,10 +23,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         title,
         textAlign: TextAlign.center,
       ),
-      leading: context.canPop() ? IconButton(
-        icon: const Icon(Icons.arrow_back),
-        onPressed: () => context.pop()
-      ) : null,
+      leading: context.canPop()
+          ? IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              onPressed: () => context.pop())
+          : null,
       actions: <Widget>[
         if (actions != null)
           ...actions!.map((action) => Padding(
@@ -35,11 +39,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               )),
         if (onNavigate != null) // Ajoutez cette condition
           IconButton(
-            icon: const Icon(Icons.new_releases),
+            icon: const Icon(
+              Icons.new_releases,
+              color: Colors.white,
+            ),
             onPressed: onNavigate,
           ),
         IconButton(
-          icon: const Icon(Icons.logout),
+          icon: const Icon(
+            Icons.logout,
+            color: Colors.white,
+          ),
           onPressed: () {
             auth.signOut().then((_) {
               debugPrint('Déconnexion réussie');

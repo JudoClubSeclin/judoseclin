@@ -41,7 +41,10 @@ class ShowButton extends StatelessWidget {
                 height: 25,
                 width: 25,
               ),
-              const Text("EN SAVOIR PLUS..."),
+              const Text(
+                "EN SAVOIR PLUS...",
+                style: TextStyle(color: Colors.white),
+              ),
             ],
           ),
         ),

@@ -170,9 +170,21 @@ class AddAdherentsView extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              CustomTextField(
-                labelText: 'Paiements (séparés par des virgules)',
-                controller: payementController,
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                CustomTextField(
+                  labelText: 'Adresse)',
+                  controller: addressController,
+                ),
+                const SizedBox(
+                  width: 40,
+                ),
+                CustomTextField(
+                  labelText: 'Paiements (séparés par des virgules)',
+                  controller: payementController,
+                ),
+              ]),
+              const SizedBox(
+                height: 20,
               ),
               CustomButton(
                 onPressed: () {
