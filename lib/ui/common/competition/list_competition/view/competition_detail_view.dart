@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:judoseclin/configuration_locale.dart';
 import 'package:judoseclin/ui/common/competition/inscription_competition/bloc/inscription_competition_bloc.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/interactor/competition_interactor.dart';
 import 'package:judoseclin/ui/common/theme/theme.dart';
@@ -100,7 +101,7 @@ class CompetitionDetailView extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  CustomButton(
+                  ConfigurationLocale.instance.peutSeConnecter ? CustomButton(
                     label: 'JE M\'INSCRIT',
                     onPressed: () async {
                       // Obtenez l'état actuel de l'utilisateur
@@ -146,7 +147,7 @@ class CompetitionDetailView extends StatelessWidget {
                         context.go('/account/login');
                       }
                     },
-                  )
+                  ) : const SizedBox()
                 ]));
               } else {
                 return const Text('Détails de la compétition introuvables.');

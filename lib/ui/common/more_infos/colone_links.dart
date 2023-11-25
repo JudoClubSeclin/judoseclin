@@ -72,7 +72,7 @@ class FileListButtons extends StatelessWidget {
         fillColor: Colors.red,
         color: Colors.red[400],
         isSelected: files.map((e) => true).toList(),
-        children: files.map((e) => PaddedText(text: e.fileTitle)).toList(),
+        children: files.map((e) => PaddedText(text: e.fileTitle.substring(0, e.fileTitle.length - 4))).toList(),
       ),
     );
   }
@@ -178,7 +178,7 @@ class _ColonneLinksState extends State<ColonneLinks> {
             fit: BoxFit
                 .scaleDown, // Utilisez BoxFit.contain si vous voulez conserver les proportions
             child: Text(
-              "Cienture Noire",
+              "Ceinture Noire",
               style: titleStyle,
             ),
           ),

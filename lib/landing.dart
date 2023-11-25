@@ -5,6 +5,7 @@ import 'package:judoseclin/ui/common/landing_page/landing_show_button.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/connexion_button.dart';
 
 import 'more_info.dart';
+import 'configuration_locale.dart';
 
 class Landing extends StatelessWidget {
   const Landing({super.key});
@@ -22,11 +23,12 @@ class Landing extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [LandingHome(), LandingNews(), MoreInfo()],
             ),
-            const Positioned(
-              top: 40.0, // Ajustez la position verticale
-              right: 10.0, // Ajustez la position horizontale
-              child: ConnexionButton(),
-            ),
+            Positioned(
+                top: 40.0, // Ajustez la position verticale
+                right: 10.0, // Ajustez la position horizontale
+                child: ConfigurationLocale.instance.peutSeConnecter
+                    ? const ConnexionButton()
+                    : const SizedBox()),
             ShowButton(scrollController: controller),
           ],
         ),
