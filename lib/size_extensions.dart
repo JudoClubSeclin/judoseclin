@@ -16,7 +16,7 @@ extension MaterialSizeRatio on Size {
   double headerHeight() {
     switch(orientation()) {
       case SizeOrientation.portrait:
-        return height * .4;
+        return height * .5;
       case SizeOrientation.paysage:
         return height * .7;
       default:

@@ -1,116 +1,81 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:judoseclin/firebase_options.dart';
-import 'package:judoseclin/landing_page/landing.dart';
-import 'package:judoseclin/theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:judoseclin/domain/usecases/competitions/fetch_competitions_data_usecase.dart';
+import 'package:judoseclin/firebase_options.dart';
+import 'package:judoseclin/ui/common/account/bloc/account_bloc.dart';
+import 'package:judoseclin/ui/common/account/interactor/account_interactor.dart';
+import 'package:judoseclin/ui/common/adherents/bloc/adherents_bloc.dart';
+import 'package:judoseclin/ui/common/adherents/bloc/adherents_event.dart';
+import 'package:judoseclin/ui/common/adherents/interactor/adherents_interactor.dart';
+import 'package:judoseclin/ui/common/adherents/view/add_adherents_view.dart';
+import 'package:judoseclin/ui/common/competition/inscription_competition/bloc/inscription_competition_bloc.dart';
+import 'package:judoseclin/ui/common/competition/list_competition/bloc/competition_bloc.dart';
+import 'package:judoseclin/ui/common/competition/list_competition/interactor/competition_interactor.dart';
+import 'package:judoseclin/ui/common/members/inscription/bloc/inscription_bloc.dart';
+import 'package:judoseclin/ui/common/members/inscription/interactor/inscription_interactor.dart';
+import 'package:judoseclin/ui/common/members/login/bloc/login_bloc.dart';
+import 'package:judoseclin/ui/common/members/login/interactor/login_interactor.dart';
+import 'package:judoseclin/ui/common/routes/router_config.dart';
+import 'package:judoseclin/ui/common/theme/theme.dart';
 
-// coverage:ignore-start
+FirebaseAuth auth = FirebaseAuth.instance;
+final _firestore = FirebaseFirestore.instance;
+
 void main() {
   usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value){
-    runApp(const Landing());
-  });
-
-}
-// coverage:ignore-end
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: theme,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+      .then((value) {
+    runApp(
+      MultiBlocProvider(
+          providers: [
+            BlocProvider<CompetitionBloc>(
+              create: (context) => CompetitionBloc(
+                CompetitionInteractor(FetchCompetitionDataUseCase()),
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            BlocProvider<InscriptionCompetitionBloc>(
+              create: (context) => InscriptionCompetitionBloc(_firestore),
+            ),
+            BlocProvider<LoginBloc>(
+              create: (context) =>
+                  LoginBloc(loginInteractor: LoginInteractor()),
+              lazy: false,
+            ),
+            BlocProvider<InscriptionBloc>(
+              create: (context) => InscriptionBloc(InscriptionInteractor(
+                auth: FirebaseAuth.instance,
+                firestore: FirebaseFirestore.instance,
+              )),
+            ),
+            BlocProvider<AccountBloc>(
+              create: (context) =>
+                  AccountBloc(accountInteractor: AccountInteractor()),
+            ),
+            BlocProvider<AdherentsBloc>(
+              create: (context) {
+                var interactor =
+                    AdherentsInteractor(firestore: FirebaseFirestore.instance);
+                var adherentsBloc = AdherentsBloc(interactor);
+                // Attach event handlers
+                adherentsBloc.on<SignUpEvent>((event, emit) {
+                  // Implement event handling logic here
+                });
+                return adherentsBloc;
+              },
+              child: AddAdherentsView(),
             ),
           ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+          child: Builder(builder: (BuildContext context) {
+            return MaterialApp.router(
+                theme: theme,
+                routerConfig: goRouter,
+                debugShowCheckedModeBanner: false);
+          })),
     );
-  }
+  });
 }
