@@ -12,7 +12,7 @@ import 'package:judoseclin/ui/common/widgets/buttons/custom_buttom.dart';
 
 import '../../../../../domain/entities/competition.dart';
 import '../../../widgets/images/image_fond_ecran.dart';
-import '../../inscription_competition/bloc/inscription_competition_state.dart';
+import '../../inscription_competition/bloc/inscription_competition_event.dart';
 
 class CompetitionDetailView extends StatelessWidget {
   final String competitionId;
@@ -101,53 +101,44 @@ class CompetitionDetailView extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  ConfigurationLocale.instance.peutSeConnecter ? CustomButton(
-                    label: 'JE M\'INSCRIT',
-                    onPressed: () async {
-                      // Obtenez l'état actuel de l'utilisateur
-                      User? user = FirebaseAuth.instance.currentUser;
+                  ConfigurationLocale.instance.peutSeConnecter
+                      ? CustomButton(
+                          label: 'JE M\'INSCRIS',
+                          onPressed: () async {
+                            User? user = FirebaseAuth.instance.currentUser;
 
-                      if (user != null) {
-                        // Utilisateur connecté, exécutez le code pour s'inscrire à la compétition
-                        final bloc = context.read<InscriptionCompetitionBloc>();
-                        await bloc.registerForCompetition(
-                            userId!, competitionId);
+                            if (user != null) {
+                              final bloc =
+                                  context.read<InscriptionCompetitionBloc>();
+                              bloc.add(RegisterForCompetition(
+                                  competitionId: competitionId,
+                                  userId: userId!));
 
-                        // Vérifiez si l'inscription a réussi
-                        if (bloc.state is InscriptionCompetitionSuccess) {
-                          // Affichez un message de succès dans une fenêtre modale
-                          Future.delayed(Duration.zero, () {
-                            showDialog(
-                              context:
-                                  Navigator.of(context, rootNavigator: true)
-                                      .overlay!
-                                      .context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('Inscription réussie'),
-                                  content: const Text(
-                                      'Votre inscription a été validée avec succès !'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context,
-                                                rootNavigator: true)
-                                            .pop();
-                                      },
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          });
-                        }
-                      } else {
-                        // Utilisateur non connecté, naviguer vers la page de connexion
-                        context.go('/account/login');
-                      }
-                    },
-                  ) : const SizedBox()
+                              // Le bloc émettra l'état de succès, vous pouvez ici afficher le dialogue si nécessaire
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext dialogContext) {
+                                  return AlertDialog(
+                                    title: const Text('Inscription réussie'),
+                                    content: const Text(
+                                        'Votre inscription a été validée avec succès !'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(dialogContext).pop();
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            } else {
+                              context.go('/account/login');
+                            }
+                          },
+                        )
+                      : const SizedBox()
                 ]));
               } else {
                 return const Text('Détails de la compétition introuvables.');

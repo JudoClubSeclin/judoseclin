@@ -36,14 +36,14 @@ class AccountView extends StatelessWidget {
             future: hasAccess(),
             builder: (context, snapshot) {
               final bool hasAccess = snapshot.data ?? false;
-              print(
+              debugPrint(
                   'hasAccess: $hasAccess'); // Ajoutez cette ligne pour le débogage
               if (hasAccess) {
                 return Column(
                   children: [
                     GestureDetector(
                       onTap: () {
-                        GoRouter.of(context).go('/account/adherents');
+                        GoRouter.of(context).go('/admin/adherents');
                       },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),

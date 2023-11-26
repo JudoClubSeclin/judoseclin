@@ -1,17 +1,14 @@
 // login_bloc.dart
-
 import 'package:bloc/bloc.dart';
 
 import '../interactor/login_interactor.dart';
 import 'login_event.dart';
-import 'login_state.dart' as LoginState;
-import 'login_state.dart'; // Ajoutez cette ligne
+import 'login_state.dart';
 
-class LoginBloc extends Bloc<LoginEvent, LoginState.LoginState> {
+class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginInteractor loginInteractor;
 
-  LoginBloc({required this.loginInteractor})
-      : super(LoginState.LoginInitial()) {
+  LoginBloc({required this.loginInteractor}) : super(LoginInitial()) {
     on<LoginWithEmailPassword>((event, emit) async {
       emit(LoginLoading());
       try {

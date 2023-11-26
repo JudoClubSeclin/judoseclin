@@ -13,7 +13,7 @@ import '../account/bloc/account_bloc.dart';
 import '../account/interactor/account_interactor.dart';
 import '../competition/list_competition/view/competition_detail_view.dart';
 import '../members/login/view/login_view.dart';
-import '../members/login/view/resetPassword_view.dart';
+import '../members/login/view/reset_password_view.dart';
 
 final goRouter = GoRouter(
   debugLogDiagnostics: true,

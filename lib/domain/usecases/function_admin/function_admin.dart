@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 Future<bool> hasAccess() async {
   try {
@@ -19,14 +20,14 @@ Future<bool> hasAccess() async {
         return isAdmin; // L'utilisateur est autorisé si "admin" est égal à true
       } else {
         // Gérer le cas où le document de l'utilisateur n'existe pas
-        print('Document utilisateur non trouvé');
+        debugPrint('Document utilisateur non trouvé');
         return false;
       }
     } else {
       return false; // L'utilisateur n'est pas autorisé s'il n'est pas connecté
     }
   } catch (e) {
-    print('Erreur lors de la vérification de l\'accès: $e');
+    debugPrint('Erreur lors de la vérification de l\'accès: $e');
     return false;
   }
 }

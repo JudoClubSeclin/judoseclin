@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,16 @@ class InscriptionCompetitionBloc
   final FirebaseFirestore _firestore;
 
   InscriptionCompetitionBloc(this._firestore)
-      : super(InscriptionCompetitionInitial());
+      : super(InscriptionCompetitionInitial()) {
+    on<LoadInscriptionCompetition>(_loadInscriptionCompetition);
+    on<ValidationInscription>(_validationInscription);
+    on<RegisterForCompetition>(_registerForCompetition);
+    on<InscriptionCompetitionSuccess>(_inscriptionCompetitionSuccess);
+  }
+
+  void setContext(BuildContext context) {
+    context = context;
+  }
 
   Future<void> validateInscription(String inscriptionId) async {
     try {
@@ -19,36 +30,14 @@ class InscriptionCompetitionBloc
           .collection('competition-registration')
           .doc(inscriptionId)
           .update({'validated': true});
-      emit(InscriptionCompetitionSuccess());
+      (InscriptionCompetitionSuccess());
     } catch (e) {
-      emit(InscriptionCompetitionError(e.toString()));
+      (InscriptionCompetitionError(e.toString()));
     }
   }
 
   Future<void> registerForCompetition(
-      String userId, String competitionId) async {
-    debugPrint('Trying to register for competition');
-    emit((InscriptionCompetitionProgress()));
-
-    //Vérification de la periode d'inscription.
-    bool canRegister = await _canRegisterForCompetition(competitionId);
-
-    if (!canRegister) {
-      emit(InscriptionCompetitionClosed());
-      return;
-    }
-    //Procéder à l'inscription.
-    try {
-      await _firestore.collection('competition-registration').add({
-        'userId': userId,
-        'competitionId': competitionId,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
-      emit(InscriptionCompetitionSuccess());
-    } catch (e) {
-      emit(InscriptionCompetitionError(e.toString()));
-    }
-  }
+      String userId, String competitionId) async {}
 
   Future<bool> _canRegisterForCompetition(String competitionId) async {
     DocumentSnapshot competitionDoc =
@@ -113,5 +102,54 @@ class InscriptionCompetitionBloc
       debugPrint('Erreur lors de la récupération des inscriptions: $e');
       return [];
     }
+  }
+
+  FutureOr<void> _loadInscriptionCompetition(LoadInscriptionCompetition event,
+      Emitter<InscriptionCompetitionState> emit) {}
+
+  FutureOr<void> _validationInscription(ValidationInscription event,
+      Emitter<InscriptionCompetitionState> emit) async {
+    try {
+      await _firestore
+          .collection('competition-registration')
+          .doc(event.id)
+          .update({'validated': true});
+      InscriptionCompetitionSuccess();
+    } catch (e) {
+      emit(InscriptionCompetitionError(e.toString()));
+    }
+  }
+
+  FutureOr<void> _registerForCompetition(RegisterForCompetition event,
+      Emitter<InscriptionCompetitionState> emit) async {
+    debugPrint('Trying to register for competition');
+    emit((InscriptionCompetitionProgress()));
+
+    //Vérification de la periode d'inscription.
+    bool canRegister = await _canRegisterForCompetition(event.competitionId);
+
+    if (!canRegister) {
+      emit(InscriptionCompetitionClosed());
+      return;
+    }
+    //Procéder à l'inscription.
+    try {
+      await _firestore.collection('competition-registration').add({
+        'userId': event.userId,
+        'competitionId': event.competitionId,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+      InscriptionCompetitionSuccess();
+    } catch (e) {
+      emit(InscriptionCompetitionError(e.toString()));
+    }
+  }
+
+  FutureOr<void> _inscriptionCompetitionSuccess(
+    InscriptionCompetitionSuccess event,
+    Emitter<InscriptionCompetitionState> emit,
+  ) {
+    // Émettre l'état de succès
+    emit(InscriptionCompetitionSuccessState());
   }
 }

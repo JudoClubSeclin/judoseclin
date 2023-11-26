@@ -80,7 +80,7 @@ class LoginView extends StatelessWidget {
                             email: emailController.text,
                             password: passwordController.text,
                             navigateToAccount: () {
-                              print(
+                              debugPrint(
                                   "Login successful. Navigating to /account/login");
                               GoRouter.of(context).go('/account');
                             }),
