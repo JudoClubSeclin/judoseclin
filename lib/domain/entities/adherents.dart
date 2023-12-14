@@ -19,7 +19,6 @@ class Adherents {
   final String sante;
   final String medicalCertificate;
   final String invoice;
-  final List<String> payement;
 
   Adherents({
     required this.id,
@@ -38,7 +37,6 @@ class Adherents {
     required this.sante,
     required this.medicalCertificate,
     required this.invoice,
-    required this.payement,
   });
 
   factory Adherents.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
@@ -61,7 +59,6 @@ class Adherents {
         sante: data['sante'] ?? '',
         medicalCertificate: data['medicalCertificate'] ?? '',
         invoice: data['invoice'] ?? '',
-        payement: List<String>.from(data['payement'] ?? []),
       );
     } else {
       throw Exception('Document non trouver');
