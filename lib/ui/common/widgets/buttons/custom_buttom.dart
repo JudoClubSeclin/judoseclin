@@ -7,8 +7,8 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     required this.label,
     required this.onPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

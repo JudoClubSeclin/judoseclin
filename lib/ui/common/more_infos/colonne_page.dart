@@ -11,11 +11,10 @@ class ColonnePage extends HookWidget {
   final double fraction;
   final Size size;
   const ColonnePage(
-      {Key? key,
+      {super.key,
       required this.docUrl,
       required this.fraction,
-      required this.size})
-      : super(key: key);
+      required this.size});
 
   @override
   Widget build(BuildContext context) {

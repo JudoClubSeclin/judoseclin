@@ -6,11 +6,11 @@ class CustomCheckBox extends StatefulWidget {
   final ValueNotifier<bool> isCheckedNotifier;
 
   const CustomCheckBox({
-    Key? key,
+    super.key,
     required this.labelText,
     required this.controller,
     required this.isCheckedNotifier,
-  }) : super(key: key);
+  });
 
   @override
   CustomCheckBoxState createState() => CustomCheckBoxState();

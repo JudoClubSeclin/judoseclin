@@ -25,20 +25,21 @@ class ListAdherentsView extends StatelessWidget {
         }
 
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return const Text('Aucun adherents  trouvé.');
+          return const Text('Aucun adhérent trouvé.');
         }
 
         final adherents = snapshot.data!.docs;
 
         return Scaffold(
           appBar: CustomAppBar(
-            title: '',
+            title: 'Liste des adherents',
             actions: [
               GestureDetector(
                 onTap: () {},
                 child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Center(child: Text(''))),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Center(child: Text('')),
+                ),
               ),
             ],
           ),
@@ -49,49 +50,71 @@ class ListAdherentsView extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            child: ListView.builder(
-              itemCount: adherents.length,
-              itemBuilder: (context, index) {
-                final adherent = adherents[index];
-
-                return Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      child: Card(
-                        color: Colors.transparent,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          side: BorderSide(color: Colors.red[400]!, width: 2.0),
-                        ),
-                        child: ListTile(
-                          title: Wrap(
-                            children: [
-                              Text('Liste des adherents',
-                                  style: titleStyleMedium(context)),
-                            ],
-                          ),
-                          onTap: () {
-                            String adherentsId = adherent.id.toString();
-                            if (adherentsId.isNotEmpty) {
-                              context.go('account/adherents/$adherentsId');
-                            } else {
-                              // L'ID est vide, donc vous pouvez afficher un message d'erreur ou effectuer une autre action si nécessaire.
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('adherent introuvable')),
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                    ),
+            child: Column(
+              children: [
+                // Titre en dehors de la liste
+                Center(
+                  child: Text(
+                    'Liste des adherents',
+                    style: titleStyleMedium(context),
                   ),
-                );
-              },
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: adherents.length,
+                    itemBuilder: (context, index) {
+                      final adherent = adherents[index];
+
+                      return Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            child: Card(
+                                color: Colors.transparent,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  side: BorderSide(
+                                    color: Colors.red[400]!,
+                                    width: 2.0,
+                                  ),
+                                ),
+                                child: ListTile(
+                                  title: Row(
+                                    children: [
+                                      Text(adherent['firstName'] as String),
+                                      const SizedBox(
+                                          width:
+                                              8.0), // Espace entre le prénom et le nom
+                                      Text(adherent['lastName'] as String),
+                                    ],
+                                  ),
+                                  subtitle: Text(adherent['email'] as String),
+                                  // Ajoutez ici le nom de l'adhérent
+                                  onTap: () {
+                                    String adherentsId = adherent.id.toString();
+                                    if (adherentsId.isNotEmpty) {
+                                      context.go(
+                                          '/admin/list/adherents/$adherentsId');
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                            content:
+                                                Text('Adhérent introuvable')),
+                                      );
+                                    }
+                                  },
+                                )),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         );

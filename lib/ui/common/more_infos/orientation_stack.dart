@@ -6,10 +6,10 @@ class OrientedStack extends StatelessWidget {
   final List<Widget> children;
 
   const OrientedStack({
-    Key? key,
+    super.key,
     required this.orientation,
     required this.children,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

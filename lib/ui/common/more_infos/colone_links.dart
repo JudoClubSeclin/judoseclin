@@ -22,9 +22,9 @@ class CompetitionListButtons extends StatelessWidget {
   final List<Competition> competitions;
 
   const CompetitionListButtons({
-    Key? key,
+    super.key,
     required this.competitions,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +52,9 @@ class FileListButtons extends StatelessWidget {
   final List<File> files;
 
   const FileListButtons({
-    Key? key,
+    super.key,
     required this.files,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -82,9 +82,9 @@ class PaddedText extends StatelessWidget {
   final String text;
 
   const PaddedText({
-    Key? key,
+    super.key,
     required this.text,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -100,10 +100,10 @@ class ColonneLinks extends StatefulWidget {
   final Size size;
 
   const ColonneLinks({
-    Key? key,
+    super.key,
     required this.fraction,
     required this.size,
-  }) : super(key: key);
+  });
 
   @override
   State<ColonneLinks> createState() => _ColonneLinksState();

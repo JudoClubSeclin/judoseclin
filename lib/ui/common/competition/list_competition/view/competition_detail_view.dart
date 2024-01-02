@@ -22,8 +22,8 @@ class CompetitionDetailView extends StatelessWidget {
   CompetitionDetailView({
     required this.competitionId,
     required this.competitionInteractor,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

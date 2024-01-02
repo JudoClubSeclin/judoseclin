@@ -7,7 +7,7 @@ class SignUpEvent extends AdherentsEvent {
   final String email;
   final String dateOfBirth;
   final String licence;
-  final String belt;
+  final String blet;
   final String discipline;
   final String category;
   final String tutor;
@@ -26,7 +26,7 @@ class SignUpEvent extends AdherentsEvent {
     required this.email,
     required this.dateOfBirth,
     required this.licence,
-    required this.belt,
+    required this.blet,
     required this.discipline,
     required this.category,
     required this.tutor,
