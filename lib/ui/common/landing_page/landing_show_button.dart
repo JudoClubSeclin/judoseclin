@@ -4,9 +4,9 @@ import 'package:judoseclin/size_extensions.dart';
 class ShowButton extends StatelessWidget {
   final ScrollController scrollController;
   const ShowButton({
-    Key? key,
+    super.key,
     required this.scrollController,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:judoseclin/size_extensions.dart';
 
 class LandingHome extends StatelessWidget {
-  const LandingHome({Key? key}) : super(key: key);
+  const LandingHome({super.key});
 
   @override
   Widget build(BuildContext context) {

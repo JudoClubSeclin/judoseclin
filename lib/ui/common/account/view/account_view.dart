@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../domain/usecases/function_admin/function_admin.dart';
+import '../../functions/function_admin.dart';
 import '../../theme/theme.dart';
 import '../../widgets/appbar/custom_appbar.dart';
 import '../../widgets/images/image_fond_ecran.dart';
@@ -39,16 +39,17 @@ class AccountView extends StatelessWidget {
               debugPrint(
                   'hasAccess: $hasAccess'); // Ajoutez cette ligne pour le débogage
               if (hasAccess) {
-                return Column(
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     GestureDetector(
                       onTap: () {
-                        GoRouter.of(context).go('/admin/adherents');
+                        GoRouter.of(context).go('/admin/list/adhérents');
                       },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: Center(
-                          child: Text('Adhérents',
+                          child: Text('Liste adhérents',
                               style: TextStyle(
                                   fontSize: 16.0, color: Colors.white)),
                         ),
@@ -56,12 +57,12 @@ class AccountView extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        GoRouter.of(context).go('/account/listAdherents');
+                        GoRouter.of(context).go('admin/add/adherents');
                       },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: Center(
-                          child: Text('Liste des Adhérents',
+                          child: Text('ajouté un adhérent',
                               style: TextStyle(
                                   fontSize: 16.0, color: Colors.white)),
                         ),

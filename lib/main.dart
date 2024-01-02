@@ -22,6 +22,8 @@ import 'package:judoseclin/ui/common/members/login/interactor/login_interactor.d
 import 'package:judoseclin/ui/common/routes/router_config.dart';
 import 'package:judoseclin/ui/common/theme/theme.dart';
 
+import 'domain/usecases/adherents/fetch_adherents_data_usecase.dart';
+
 FirebaseAuth auth = FirebaseAuth.instance;
 final _firestore = FirebaseFirestore.instance;
 
@@ -58,13 +60,18 @@ void main() {
             ),
             BlocProvider<AdherentsBloc>(
               create: (context) {
+                var fetchAdherentsDataUseCase = FetchAdherentsDataUseCase();
+                var firestore = FirebaseFirestore.instance;
+
                 var interactor =
-                    AdherentsInteractor(firestore: FirebaseFirestore.instance);
+                    AdherentsInteractor(fetchAdherentsDataUseCase, firestore);
                 var adherentsBloc = AdherentsBloc(interactor);
+
                 // Attach event handlers
                 adherentsBloc.on<SignUpEvent>((event, emit) {
                   // Implement event handling logic here
                 });
+
                 return adherentsBloc;
               },
               child: AddAdherentsView(),

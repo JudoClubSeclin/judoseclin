@@ -12,7 +12,7 @@ class FetchAdherentsDataUseCase {
       QuerySnapshot snapshot = await firestore.collection('adherents').get();
       debugPrint("Adherents data fetched successfully.");
 
-      Iterable<Adherents> adherents = snapshot.docs
+      List<Adherents> adherents = snapshot.docs
           .map((doc) => Adherents.fromFirestore(
               doc as DocumentSnapshot<Map<String, dynamic>>))
           .toList();

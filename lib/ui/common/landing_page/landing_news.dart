@@ -8,7 +8,7 @@ import 'package:judoseclin/size_extensions.dart';
 import '../theme/theme.dart';
 
 class LandingNews extends HookWidget {
-  const LandingNews({Key? key}) : super(key: key);
+  const LandingNews({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +66,9 @@ class MarkdownedNews extends StatelessWidget {
   final String text;
 
   const MarkdownedNews({
-    Key? key,
+    super.key,
     required this.text,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

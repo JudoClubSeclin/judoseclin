@@ -7,11 +7,11 @@ class OrientedSizedBox extends StatelessWidget {
   final double fraction;
 
   const OrientedSizedBox({
-    Key? key,
+    super.key,
     required this.size,
     this.child,
     this.fraction = 1 / 3,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

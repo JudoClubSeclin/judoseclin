@@ -1,5 +1,3 @@
-import 'dart:core';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Adherents {
@@ -9,7 +7,7 @@ class Adherents {
   final String email;
   final String dateOfBirth;
   final String licence;
-  final String belt;
+  final String blet;
   final String discipline;
   final String category;
   final String tutor;
@@ -27,7 +25,7 @@ class Adherents {
     required this.email,
     required this.dateOfBirth,
     required this.licence,
-    required this.belt,
+    required this.blet,
     required this.discipline,
     required this.category,
     required this.tutor,
@@ -49,7 +47,7 @@ class Adherents {
         email: data['email'] ?? '',
         dateOfBirth: data['dateOfBirth'] ?? '',
         licence: data['licence'] ?? '',
-        belt: data['belt'] ?? '',
+        blet: data['belt'] ?? '',
         discipline: data['discipline'] ?? '',
         category: data['category'] ?? '',
         tutor: data['tutor'] ?? '',

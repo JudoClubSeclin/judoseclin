@@ -19,7 +19,7 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
             event.email,
             event.dateOfBirth,
             event.licence,
-            event.belt,
+            event.blet,
             event.discipline,
             event.category,
             event.tutor,
@@ -29,7 +29,6 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
             event.sante,
             event.medicalCertificate,
             event.invoice,
-            event.payement,
           );
           emit(SignUpSuccessState());
         } catch (error) {

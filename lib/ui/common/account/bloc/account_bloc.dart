@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../interactor/account_interactor.dart';
 import 'account_event.dart';
@@ -12,8 +13,12 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       emit(AccountLoading());
       try {
         final userData = await accountInteractor.fetchUserData();
+        debugPrint('AccountBloc: LoadUserInfo event received');
+
         emit(AccountLoaded(userData: userData));
       } catch (e) {
+        debugPrint('AccountBloc: Error - ${e.toString()}');
+
         emit(AccountError(message: e.toString()));
       }
     });

@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:judoseclin/domain/entities/adherents.dart';
+import 'package:judoseclin/domain/usecases/adherents/fetch_adherents_data_usecase.dart';
 
 class AdherentsInteractor {
-  final FirebaseFirestore firestore;
+  final FetchAdherentsDataUseCase fetchAdherentsDataUseCase;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  AdherentsInteractor({required this.firestore});
+  AdherentsInteractor(this.fetchAdherentsDataUseCase, this.firestore);
 
   Future<void> addAdherents(
     String id,
@@ -12,7 +15,7 @@ class AdherentsInteractor {
     String email,
     String dateOfBirth,
     String licence,
-    String belt,
+    String blet,
     String discipline,
     String category,
     String tutor,
@@ -22,25 +25,49 @@ class AdherentsInteractor {
     String sante,
     String medicalCertificate,
     String invoice,
-    List<dynamic> payement,
   ) {
     return firestore.collection('adherents').add({
-      'nom': firstName,
-      'prenom': lastName,
+      'firstName': firstName,
+      'lastName': lastName,
       'email': email,
-      'dateDeNaissance': dateOfBirth,
+      'dateOfBirth': dateOfBirth,
       'licence': licence,
-      'ceinture': belt,
+      'blet': blet,
       'discipline': discipline,
-      'categorie': category,
-      'tuteur': tutor,
+      'category': category,
+      'tutor': tutor,
       'phone': phone,
-      'adresse': address,
+      'address': address,
       'droitAImage': image,
-      'droitUrgence': sante,
-      'certificatMedical': medicalCertificate,
-      'facture': invoice,
-      'paiement': payement,
+      'sante': sante,
+      'medicalCertificate': medicalCertificate,
+      'invoice': invoice,
     }).catchError((error) => throw error);
+  }
+
+  Future<Iterable<Adherents>> fetchAdherentsData() async {
+    try {
+      return await fetchAdherentsDataUseCase.getAdherents();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Adherents?> getAdherentsById(String adherentsId) async {
+    try {
+      return await fetchAdherentsDataUseCase.getAdherentsById(adherentsId);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> updateAdherentField(
+      String adherentId, String fieldName, String newValue) {
+    Map<String, dynamic> updatedData = {fieldName: newValue};
+    return firestore
+        .collection('adherents')
+        .doc(adherentId)
+        .update(updatedData)
+        .catchError((error) => throw error);
   }
 }
