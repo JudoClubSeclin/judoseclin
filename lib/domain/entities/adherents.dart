@@ -47,7 +47,7 @@ class Adherents {
         email: data['email'] ?? '',
         dateOfBirth: data['dateOfBirth'] ?? '',
         licence: data['licence'] ?? '',
-        blet: data['belt'] ?? '',
+        blet: data['blet'] ?? '',
         discipline: data['discipline'] ?? '',
         category: data['category'] ?? '',
         tutor: data['tutor'] ?? '',

@@ -61,8 +61,11 @@ class AdherentsInteractor {
     }
   }
 
-  Future<void> updateAdherentField(
-      String adherentId, String fieldName, String newValue) {
+  Future<void> updateAdherentField({
+    required String adherentId,
+    required String fieldName,
+    required String newValue,
+  }) async {
     Map<String, dynamic> updatedData = {fieldName: newValue};
     return firestore
         .collection('adherents')
