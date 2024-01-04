@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:judoseclin/domain/entities/adherents.dart';
 
 import '../adherents/interactor/adherents_interactor.dart';
 import '../functions/show_edit_text_fiel_dialog.dart';
@@ -8,6 +9,7 @@ class InfoField extends StatelessWidget {
   final String value;
   final String field;
   final AdherentsInteractor adherentsInteractor;
+  final Adherents adherent; // Ajoutez le paramètre adherent ici
 
   const InfoField({
     super.key,
@@ -15,6 +17,7 @@ class InfoField extends StatelessWidget {
     required this.value,
     required this.field,
     required this.adherentsInteractor,
+    required this.adherent, // Ajoutez cette ligne pour recevoir l'adhérent
   });
 
   @override
@@ -58,7 +61,6 @@ class InfoField extends StatelessWidget {
           );
           if (editedValue != null) {
             try {
-              var adherent;
               await adherentsInteractor.updateAdherentField(
                 adherentId: adherent.id,
                 fieldName: field,
