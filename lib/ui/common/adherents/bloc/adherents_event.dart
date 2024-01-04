@@ -17,7 +17,6 @@ class SignUpEvent extends AdherentsEvent {
   final String sante;
   final String medicalCertificate;
   final String invoice;
-  final List<String> payement;
 
   SignUpEvent({
     required this.id,
@@ -36,6 +35,5 @@ class SignUpEvent extends AdherentsEvent {
     required this.sante,
     required this.medicalCertificate,
     required this.invoice,
-    required this.payement,
   });
 }

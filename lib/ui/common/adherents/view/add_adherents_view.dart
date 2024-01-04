@@ -26,7 +26,6 @@ class AddAdherentsView extends StatelessWidget {
   final santeController = TextEditingController();
   final medicalCertificateController = TextEditingController();
   final invoiceController = TextEditingController();
-  final payementController = TextEditingController();
 
   AddAdherentsView({super.key});
 
@@ -181,10 +180,6 @@ class AddAdherentsView extends StatelessWidget {
                   const SizedBox(
                     width: 40,
                   ),
-                  CustomTextField(
-                    labelText: 'Paiements (séparés par des virgules)',
-                    controller: payementController,
-                  ),
                 ]),
                 const SizedBox(
                   height: 20,
@@ -211,10 +206,6 @@ class AddAdherentsView extends StatelessWidget {
                               medicalCertificate:
                                   medicalCertificateController.text.trim(),
                               invoice: invoiceController.text.trim(),
-                              payement: payementController.text
-                                  .split(',')
-                                  .map((e) => e.trim())
-                                  .toList(),
                             ),
                           );
                       // Réinitialisez les contrôleurs de text
@@ -233,7 +224,6 @@ class AddAdherentsView extends StatelessWidget {
                       santeController.clear();
                       medicalCertificateController.clear();
                       invoiceController.clear();
-                      payementController.clear();
                     } catch (e) {
                       debugPrint('Error parsing date: $e');
                       // Handle the error as needed, e.g., show a message to the user
