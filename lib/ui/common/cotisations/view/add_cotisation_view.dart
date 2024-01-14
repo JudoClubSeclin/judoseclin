@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:judoseclin/ui/common/cotisations/bloc/Cotisation_Event.dart';
-import 'package:judoseclin/ui/common/cotisations/bloc/Cotisation_sate.dart';
+import 'package:judoseclin/ui/common/cotisations/bloc/cotisation_Event.dart';
+import 'package:judoseclin/ui/common/cotisations/bloc/cotisation_sate.dart';
 import 'package:judoseclin/ui/common/theme/theme.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/custom_buttom.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
