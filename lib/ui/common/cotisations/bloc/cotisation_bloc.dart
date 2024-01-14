@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:judoseclin/ui/common/cotisations/bloc/Cotisation_Event.dart';
-import 'package:judoseclin/ui/common/cotisations/bloc/Cotisation_sate.dart';
+import 'package:judoseclin/ui/common/cotisations/bloc/cotisation_Event.dart';
+import 'package:judoseclin/ui/common/cotisations/bloc/cotisation_sate.dart';
 
 import '../interactor/cotisation_interactor.dart';
 
