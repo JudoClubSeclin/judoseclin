@@ -6,8 +6,10 @@ import 'adherents_state.dart';
 
 class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
   final AdherentsInteractor adherentsInteractor;
+  final String adherentId;
 
-  AdherentsBloc(this.adherentsInteractor) : super(SignUpInitialState()) {
+  AdherentsBloc(this.adherentsInteractor, {required this.adherentId})
+      : super(SignUpInitialState()) {
     on<AdherentsEvent>((event, emit) async {
       if (event is SignUpEvent) {
         emit(SignUpLoadingState());
@@ -30,7 +32,7 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
             event.medicalCertificate,
             event.invoice,
           );
-          emit(SignUpSuccessState());
+          emit(SignUpSuccessState(adherentId: adherentId));
         } catch (error) {
           emit(SignUpErrorState(error.toString()));
         }

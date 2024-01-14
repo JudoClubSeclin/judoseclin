@@ -43,9 +43,7 @@ class AccountView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        GoRouter.of(context).go('/admin/list/adhérents');
-                      },
+                      onTap: () => context.go('/admin/list/adherents'),
                       child: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: Center(
@@ -56,9 +54,7 @@ class AccountView extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        GoRouter.of(context).go('admin/add/adherents');
-                      },
+                      onTap: () => context.go('/admin/add/adherents'),
                       child: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: Center(

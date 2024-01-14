@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:judoseclin/domain/usecases/competitions/fetch_competitions_data_usecase.dart';
+import 'package:judoseclin/domain/usecases/cotisation/fetch_cotisation_data_usecase.dart';
 import 'package:judoseclin/firebase_options.dart';
 import 'package:judoseclin/ui/common/account/bloc/account_bloc.dart';
 import 'package:judoseclin/ui/common/account/interactor/account_interactor.dart';
@@ -15,6 +16,9 @@ import 'package:judoseclin/ui/common/adherents/view/add_adherents_view.dart';
 import 'package:judoseclin/ui/common/competition/inscription_competition/bloc/inscription_competition_bloc.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/bloc/competition_bloc.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/interactor/competition_interactor.dart';
+import 'package:judoseclin/ui/common/cotisations/bloc/cotisation_bloc.dart';
+import 'package:judoseclin/ui/common/cotisations/interactor/cotisation_interactor.dart';
+import 'package:judoseclin/ui/common/cotisations/view/add_cotisation_view.dart';
 import 'package:judoseclin/ui/common/members/inscription/bloc/inscription_bloc.dart';
 import 'package:judoseclin/ui/common/members/inscription/interactor/inscription_interactor.dart';
 import 'package:judoseclin/ui/common/members/login/bloc/login_bloc.dart';
@@ -65,7 +69,7 @@ void main() {
 
                 var interactor =
                     AdherentsInteractor(fetchAdherentsDataUseCase, firestore);
-                var adherentsBloc = AdherentsBloc(interactor);
+                var adherentsBloc = AdherentsBloc(interactor, adherentId: '');
 
                 // Attach event handlers
                 adherentsBloc.on<SignUpEvent>((event, emit) {
@@ -75,6 +79,23 @@ void main() {
                 return adherentsBloc;
               },
               child: AddAdherentsView(),
+            ),
+            BlocProvider(
+              create: (context) {
+                var fetchCotisationDataUseCase = FetchCotisationDataUseCase();
+                var cotisationInteractor = CotisationInteractor(
+                  fetchCotisationDataUseCase,
+                  FirebaseFirestore.instance,
+                );
+
+                return CotisationBloc(
+                  cotisationInteractor: cotisationInteractor,
+                  adherentId: '',
+                );
+              },
+              child: AddCotisationView(
+                adherentId: '',
+              ),
             ),
           ],
           child: Builder(builder: (BuildContext context) {

@@ -1,14 +1,14 @@
-abstract class PaymentEvent {}
+abstract class CotisationEvent {}
 
-class SignUpEvent extends PaymentEvent {
+class CotisationSignUpEvent extends CotisationEvent {
   final String adherentId;
-  final double amount;
-  final DateTime date;
+  final String amount;
+  final String date;
   final String chequeNumber;
-  final double chequeAmount;
+  final String chequeAmount;
   final String bankName;
 
-  SignUpEvent({
+  CotisationSignUpEvent({
     required this.adherentId,
     required this.amount,
     required this.date,

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:judoseclin/ui/common/adherents/interactor/adherents_interactor.dart';
+import 'package:judoseclin/ui/common/cotisations/interactor/cotisation_interactor.dart';
 import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
+import 'package:judoseclin/ui/common/widgets/buttons/custom_buttom.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 
 import '../../../../domain/entities/adherents.dart';
@@ -10,9 +13,13 @@ import '../../widgets/infos_fields.dart';
 class AdherentsDetailView extends StatelessWidget {
   final String adherentId;
   final AdherentsInteractor adherentsInteractor;
+  final CotisationInteractor cotisationInteractor;
 
   const AdherentsDetailView(
-      {super.key, required this.adherentId, required this.adherentsInteractor});
+      {super.key,
+      required this.adherentId,
+      required this.adherentsInteractor,
+      required this.cotisationInteractor});
 
   @override
   Widget build(BuildContext context) {
@@ -175,6 +182,28 @@ class AdherentsDetailView extends StatelessWidget {
                           ),
                         ],
                       ),
+                      FutureBuilder(
+                        future:
+                            cotisationInteractor.getCotisationById(adherentId),
+                        builder: (context, snapshot) {
+                          var cotisation = snapshot.data;
+                          if (adherent.id == cotisation?.adherentId) {
+                            return Text(cotisation!.adherentId);
+                          } else if (adherent.id != cotisation?.adherentId) {
+                            // Cotisation non trouvée
+                            return CustomButton(
+                              label: 'Ajouter la cotisation',
+                              onPressed: () => context
+                                  .go('/admin/add/cotisation/$adherentId'),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text('Erreur: ${snapshot.error}');
+                          }
+
+                          // Widget par défaut pour éviter l'erreur de type
+                          return Container();
+                        },
+                      )
                     ],
                   )
                 ]),

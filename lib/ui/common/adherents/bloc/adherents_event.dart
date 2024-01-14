@@ -2,6 +2,7 @@ abstract class AdherentsEvent {}
 
 class SignUpEvent extends AdherentsEvent {
   final String id;
+  final String adherentId;
   final String firstName;
   final String lastName;
   final String email;
@@ -20,6 +21,7 @@ class SignUpEvent extends AdherentsEvent {
 
   SignUpEvent({
     required this.id,
+    required this.adherentId,
     required this.firstName,
     required this.lastName,
     required this.email,
@@ -36,4 +38,9 @@ class SignUpEvent extends AdherentsEvent {
     required this.medicalCertificate,
     required this.invoice,
   });
+}
+
+class AddCotisationEvent extends AdherentsEvent {
+  final String adherentId;
+  AddCotisationEvent(this.adherentId) : super();
 }
