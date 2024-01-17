@@ -33,10 +33,7 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-  freelance:
-    git:
-      url: https://github.com/benoit-fontaine/freelance.git
-      ref: main
+  freelance: ^1.0.0+7
 
 
   # The following adds the Cupertino Icons font to your application.
