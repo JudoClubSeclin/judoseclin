@@ -424,12 +424,11 @@ packages:
   freelance:
     dependency: "direct main"
     description:
-      path: "."
-      ref: main
-      resolved-ref: "909de8e4806978d3fa67d3ecb7234d640aefb22b"
-      url: "https://github.com/benoit-fontaine/freelance.git"
-    source: git
-    version: "1.0.0+1"
+      name: freelance
+      sha256: "13935d4773eaa3740a0d55c94e91dfb071e7aeb4421fe1f1fadde44915462f0d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0+7"
   freezed:
     dependency: "direct main"
     description:
@@ -490,10 +489,10 @@ packages:
     dependency: "direct main"
     description:
       name: http
-      sha256: d4872660c46d929f6b8a9ef4e7a7eff7e49bbf0c4ec3f385ee32df5119175139
+      sha256: a2bbf9d017fcced29139daa8ed2bba4ece450ab222871df93ca9eec6f80c34ba
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.2"
+    version: "1.2.0"
   http_multi_server:
     dependency: transitive
     description:
