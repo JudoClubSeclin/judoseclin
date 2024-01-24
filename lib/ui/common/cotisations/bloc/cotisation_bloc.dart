@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:judoseclin/domain/entities/cotisation.dart';
 import 'package:judoseclin/ui/common/cotisations/bloc/cotisation_event.dart';
 import 'package:judoseclin/ui/common/cotisations/bloc/cotisation_sate.dart';
 
@@ -15,11 +16,11 @@ class CotisationBloc extends Bloc<CotisationEvent, CotisationState> {
         emit(SignUpLoadingState());
         try {
           await cotisationInteractor.addCotisation(
+              event.id,
               event.adherentId,
               event.amount,
               event.date,
-              event.chequeNumber,
-              event.chequeAmount,
+              event.cheques.cast<Cheque>(),
               event.bankName);
           emit(SignUpSuccessState());
         } catch (error) {

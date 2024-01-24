@@ -13,19 +13,25 @@ class CotisationInteractor {
   );
 
   Future<void> addCotisation(
+    String id,
     String adherentId,
-    String amount,
+    int amount,
     String date,
-    String chequeNumber,
-    String chequeAmount,
+    List<Cheque> cheques,
     String bankName,
-  ) {
-    return firestore.collection('cotisation').add({
+  ) async {
+    List<Map<String, dynamic>> chequesData = cheques
+        .map((cheque) => {
+              'numero': cheque.numeroCheque,
+              'montant': cheque.montantCheque,
+            })
+        .toList();
+
+    return firestore.collection('cotisation').doc(adherentId).set({
       'adherentId': adherentId,
       'amount': amount,
       'date': date,
-      'chequeNumber': chequeNumber,
-      'chequeAmount': chequeAmount,
+      'cheques': chequesData,
       'bankName': bankName,
     }).catchError((error) => throw error);
   }
