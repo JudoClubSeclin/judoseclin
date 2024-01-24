@@ -7,8 +7,9 @@ import 'package:judoseclin/ui/common/widgets/buttons/custom_buttom.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 
 import '../../../../domain/entities/adherents.dart';
+import '../../../../domain/entities/cotisation.dart';
 import '../../theme/theme.dart';
-import '../../widgets/infos_fields.dart';
+import '../../widgets/infos_fields/infos_fields.dart';
 
 class AdherentsDetailView extends StatelessWidget {
   final String adherentId;
@@ -186,22 +187,98 @@ class AdherentsDetailView extends StatelessWidget {
                         future:
                             cotisationInteractor.getCotisationById(adherentId),
                         builder: (context, snapshot) {
-                          var cotisation = snapshot.data;
-                          if (adherent.id == cotisation?.adherentId) {
-                            return Text(cotisation!.adherentId);
-                          } else if (adherent.id != cotisation?.adherentId) {
-                            // Cotisation non trouvée
-                            return CustomButton(
-                              label: 'Ajouter la cotisation',
-                              onPressed: () => context
-                                  .go('/admin/add/cotisation/$adherentId'),
-                            );
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
                           } else if (snapshot.hasError) {
                             return Text('Erreur: ${snapshot.error}');
+                          } else {
+                            var cotisation = snapshot.data;
+                            if (cotisation != null &&
+                                adherent.id == cotisation.id) {
+                              return Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Wrap(
+                                    alignment: WrapAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            CotisationInfoField(
+                                                label: 'date',
+                                                value: cotisation.date,
+                                                field: 'date',
+                                                cotisationInteractor:
+                                                    cotisationInteractor,
+                                                cotisation: cotisation),
+                                            CotisationInfoField(
+                                                label: 'Banque',
+                                                value: cotisation.bankName,
+                                                field: 'bankName',
+                                                cotisationInteractor:
+                                                    cotisationInteractor,
+                                                cotisation: cotisation),
+                                          ]),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          if (cotisation
+                                              .cheques.isNotEmpty) ...[
+                                            const Text(''),
+                                            for (Cheque cheque
+                                                in cotisation.cheques)
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  CotisationInfoField(
+                                                    label: 'Numéro du chèque',
+                                                    value: cheque.numeroCheque,
+                                                    field: 'cheques',
+                                                    cotisationInteractor:
+                                                        cotisationInteractor,
+                                                    cotisation: cotisation,
+                                                  ),
+                                                  CotisationInfoField(
+                                                    label: 'Montant du chèque:',
+                                                    value: cheque.montantCheque
+                                                        .toString(),
+                                                    field: 'cheque',
+                                                    cotisationInteractor:
+                                                        cotisationInteractor,
+                                                    cotisation: cotisation,
+                                                  ),
+                                                ],
+                                              ),
+                                          ] else
+                                            CotisationInfoField(
+                                              label: 'Montant en espèce',
+                                              value:
+                                                  cotisation.amount.toString(),
+                                              field: 'amount',
+                                              cotisationInteractor:
+                                                  cotisationInteractor,
+                                              cotisation: cotisation,
+                                            ),
+                                          // Affichage du détail du paiement en espèces ou par chèque
+                                        ],
+                                      )
+                                    ],
+                                  ));
+                            } else {
+                              return CustomButton(
+                                label: 'Ajouter la cotisation',
+                                onPressed: () => context
+                                    .go('/admin/add/cotisation/$adherentId'),
+                              );
+                            }
                           }
-
-                          // Widget par défaut pour éviter l'erreur de type
-                          return Container();
                         },
                       )
                     ],
