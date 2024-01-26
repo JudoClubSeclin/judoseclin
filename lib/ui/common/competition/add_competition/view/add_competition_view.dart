@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:judoseclin/ui/common/competition/add_competition/bloc/add_competition_bloc.dart';
 import 'package:judoseclin/ui/common/competition/add_competition/bloc/add_competition_event.dart';
 import 'package:judoseclin/ui/common/theme/theme.dart';
@@ -18,8 +19,11 @@ class AddCompetitionView extends StatelessWidget {
   final poussinController = TextEditingController();
   final benjaminController = TextEditingController();
   final minimeController = TextEditingController();
+  final cadetController = TextEditingController();
+  final juniorSeniorController = TextEditingController();
+  final DateTime? publishDate;
 
-  AddCompetitionView({super.key});
+  AddCompetitionView({super.key, this.publishDate});
 
   @override
   Widget build(BuildContext context) {
@@ -80,40 +84,60 @@ class AddCompetitionView extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 20),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  CustomTextField(
+                      labelText: 'Poussin', controller: poussinController),
+                  CustomTextField(
+                      labelText: 'Benjamin', controller: benjaminController),
+                ]),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomTextField(
-                        labelText: 'Poussin', controller: poussinController),
+                        labelText: 'Minime', controller: minimeController),
                     CustomTextField(
-                        labelText: 'Benjamin', controller: benjaminController),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CustomTextField(
-                            labelText: 'Minime', controller: minimeController)
-                      ],
-                    )
+                        labelText: 'cadet', controller: cadetController)
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomTextField(
+                        labelText: 'junior senior',
+                        controller: juniorSeniorController),
                   ],
                 ),
                 const SizedBox(height: 20),
                 CustomButton(
                   onPressed: () async {
                     try {
+                      // Convertir la chaîne de date en objet DateTime
+                      DateTime parsedDate = DateFormat('dd/MM/yyyy')
+                          .parse(dateController.text.trim());
+
+                      // Créer la date de publication (utiliser DateTime.now() pour la date actuelle)
+                      DateTime publishDate = DateTime.now();
+
+                      // Utiliser la date convertie dans votre AddCompetitionSignUpEvent
                       context.read<AddCompetitionBloc>().add(
                             AddCompetitionSignUpEvent(
                               id: '',
                               address: addressController.text.trim(),
                               title: titleController.text.trim(),
                               subtitle: subtitleController.text.trim(),
-                              date: dateController.text.trim(),
+                              date: parsedDate,
+                              publishDate:
+                                  publishDate, // Assurez-vous de spécifier la date de publication ici
                               poussin: poussinController.text.trim(),
                               benjamin: benjaminController.text.trim(),
                               minime: minimeController.text.trim(),
+                              cadet: cadetController.text.trim(),
+                              juniorSenior: juniorSeniorController.text.trim(),
                             ),
                           );
-                      //Reset text controller
+
+                      // Réinitialiser les contrôleurs de texte
                       addressController.clear();
                       titleController.clear();
                       subtitleController.clear();
@@ -121,6 +145,8 @@ class AddCompetitionView extends StatelessWidget {
                       poussinController.clear();
                       benjaminController.clear();
                       minimeController.clear();
+                      cadetController.clear();
+                      juniorSeniorController.clear();
                     } catch (e) {
                       debugPrint('Erreur d\'enregistrement des données: $e');
                     }
