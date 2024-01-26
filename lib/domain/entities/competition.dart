@@ -5,7 +5,7 @@ class Competition {
   final String address;
   final String title;
   final String subtitle;
-  final Timestamp date;
+  final String date;
   final String poussin;
   final String benjamin;
   final String minime;
@@ -29,13 +29,13 @@ class Competition {
         address: data['address'] ?? '',
         title: data['title'] ?? '',
         subtitle: data['subtitle'] ?? '',
-        date: data['date'],
+        date: data['date'] ?? '',
         poussin: data['poussin'] ?? '',
         benjamin: data['benjamin'] ?? '',
         minime: data['minime'] ?? '',
       );
     } else {
-      throw Exception('Document non trouver');
+      throw Exception('Document non trouvé');
     }
   }
 }

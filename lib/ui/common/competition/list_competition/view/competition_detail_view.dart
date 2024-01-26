@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:judoseclin/configuration_locale.dart';
 import 'package:judoseclin/ui/common/competition/inscription_competition/bloc/inscription_competition_bloc.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/interactor/competition_interactor.dart';
@@ -54,10 +52,6 @@ class CompetitionDetailView extends StatelessWidget {
               if (competition != null) {
                 debugPrint(competition.toString());
 
-                Timestamp timestamp = competition.date;
-                DateTime date = timestamp.toDate();
-                String formattedDate = DateFormat('dd/MM/yyyy').format(date);
-
                 return Center(
                     child: ListView(children: [
                   Text(
@@ -74,7 +68,7 @@ class CompetitionDetailView extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  Text(formattedDate,
+                  Text(competition.date,
                       style: titleStyleSmall(context),
                       textAlign: TextAlign.center),
                   Text(competition.address,

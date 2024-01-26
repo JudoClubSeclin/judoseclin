@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:judoseclin/domain/usecases/competitions/fetch_add_comptetition_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/competitions/fetch_competitions_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/cotisation/fetch_cotisation_data_usecase.dart';
 import 'package:judoseclin/firebase_options.dart';
@@ -13,6 +14,10 @@ import 'package:judoseclin/ui/common/adherents/bloc/adherents_bloc.dart';
 import 'package:judoseclin/ui/common/adherents/bloc/adherents_event.dart';
 import 'package:judoseclin/ui/common/adherents/interactor/adherents_interactor.dart';
 import 'package:judoseclin/ui/common/adherents/view/add_adherents_view.dart';
+import 'package:judoseclin/ui/common/competition/add_competition/bloc/add_competition_bloc.dart';
+import 'package:judoseclin/ui/common/competition/add_competition/bloc/add_competition_event.dart';
+import 'package:judoseclin/ui/common/competition/add_competition/interactor/add_competition_interactor.dart';
+import 'package:judoseclin/ui/common/competition/add_competition/view/add_competition_view.dart';
 import 'package:judoseclin/ui/common/competition/inscription_competition/bloc/inscription_competition_bloc.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/bloc/competition_bloc.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/interactor/competition_interactor.dart';
@@ -97,6 +102,21 @@ void main() {
                 adherentId: '',
               ),
             ),
+            BlocProvider<AddCompetitionBloc>(
+              create: (context) {
+                var fetchAddCompetitionDataUseCase =
+                    FetchAddCompetitionDataUseCase();
+                var firestore = FirebaseFirestore.instance;
+                var interactor = AddCompetitionInteractor(
+                    fetchAddCompetitionDataUseCase, firestore);
+                var addCompetitionBloc = AddCompetitionBloc(interactor);
+                //attach event handlers
+                addCompetitionBloc
+                    .on<AddCompetitionSignUpEvent>((event, emit) {});
+                return addCompetitionBloc;
+              },
+              child: AddCompetitionView(),
+            )
           ],
           child: Builder(builder: (BuildContext context) {
             return MaterialApp.router(
