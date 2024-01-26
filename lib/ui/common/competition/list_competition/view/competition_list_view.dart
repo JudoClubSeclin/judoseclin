@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:judoseclin/ui/common/competition/inscription_competition/bloc/inscription_competition_bloc.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 
@@ -73,10 +72,6 @@ class CompetitionsListView extends StatelessWidget {
                 bool isUserInscribed =
                     userInscriptions.contains(competition.id);
 
-                Timestamp timestamp = competition['date'] as Timestamp;
-                DateTime date = timestamp.toDate();
-                String formattedDate = DateFormat('dd/MM/yyyy').format(date);
-
                 return Padding(
                   padding: const EdgeInsets.all(20),
                   child: Align(
@@ -98,7 +93,7 @@ class CompetitionsListView extends StatelessWidget {
                                 style: const TextStyle(fontSize: 16),
                               ),
                               Text(
-                                formattedDate,
+                                competition['date'],
                                 style: const TextStyle(fontSize: 16),
                               ),
                               const SizedBox(

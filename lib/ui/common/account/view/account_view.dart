@@ -58,12 +58,23 @@ class AccountView extends StatelessWidget {
                       child: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: Center(
-                          child: Text('ajouté un adhérent',
+                          child: Text('ajouter un adhérent',
                               style: TextStyle(
                                   fontSize: 16.0, color: Colors.white)),
                         ),
                       ),
                     ),
+                    GestureDetector(
+                      onTap: () => context.go('/admin/add/competition'),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Center(
+                          child: Text('ajouter une compétition',
+                              style: TextStyle(
+                                  fontSize: 16.0, color: Colors.white)),
+                        ),
+                      ),
+                    )
                   ],
                 );
               } else {

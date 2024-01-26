@@ -10,6 +10,7 @@ import 'package:judoseclin/ui/common/account/view/account_view.dart';
 import 'package:judoseclin/ui/common/adherents/interactor/adherents_interactor.dart';
 import 'package:judoseclin/ui/common/adherents/view/adherents_detail_view.dart';
 import 'package:judoseclin/ui/common/adherents/view/list_adherents_view.dart';
+import 'package:judoseclin/ui/common/competition/add_competition/view/add_competition_view.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/interactor/competition_interactor.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/view/competition_list_view.dart';
 import 'package:judoseclin/ui/common/cotisations/interactor/cotisation_interactor.dart';
@@ -58,6 +59,9 @@ final goRouter = GoRouter(
         ),
       ],
     ),
+    GoRoute(
+        path: '/admin/add/competition',
+        builder: (context, state) => AddCompetitionView()),
     GoRoute(
         path: '/admin/add/adherents',
         builder: (context, state) => AddAdherentsView()),
