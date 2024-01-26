@@ -15,19 +15,25 @@ class AddCompetitionInteractor {
       String address,
       String title,
       String subtitle,
-      String date,
+      DateTime date,
+      DateTime publishDate,
       String poussin,
       String benjamin,
-      String minime) async {
+      String minime,
+      String cadet,
+      String juniorSenior) async {
     try {
       await firestore.collection('competition').add({
         'address': address,
         'title': title,
         'subtitle': subtitle,
         'date': date,
+        'publishDate': publishDate,
         'poussin': poussin,
         'benjamin': benjamin,
-        'minime': minime
+        'minime': minime,
+        'cadet': cadet,
+        'juniorSenior': juniorSenior,
       });
     } catch (error) {
       debugPrint('Erreur lors de l\'ajout de la compétition : $error');

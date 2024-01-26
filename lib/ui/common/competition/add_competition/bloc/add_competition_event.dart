@@ -5,18 +5,25 @@ class AddCompetitionSignUpEvent extends AddCompetitionEvent {
   final String address;
   final String title;
   final String subtitle;
-  final String date;
+  final DateTime date;
+  final DateTime? publishDate;
   final String poussin;
   final String benjamin;
   final String minime;
+  final String cadet;
+  final String juniorSenior;
 
-  AddCompetitionSignUpEvent(
-      {required this.id,
-      required this.address,
-      required this.title,
-      required this.subtitle,
-      required this.date,
-      required this.poussin,
-      required this.benjamin,
-      required this.minime});
+  AddCompetitionSignUpEvent({
+    required this.id,
+    required this.address,
+    required this.title,
+    required this.subtitle,
+    required this.date,
+    required this.publishDate,
+    required this.poussin,
+    required this.benjamin,
+    required this.minime,
+    required this.cadet,
+    required this.juniorSenior,
+  });
 }

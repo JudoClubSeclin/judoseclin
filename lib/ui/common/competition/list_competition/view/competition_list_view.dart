@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:judoseclin/ui/common/competition/inscription_competition/bloc/inscription_competition_bloc.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 
@@ -72,6 +73,24 @@ class CompetitionsListView extends StatelessWidget {
                 bool isUserInscribed =
                     userInscriptions.contains(competition.id);
 
+                dynamic dateField = competition['date'];
+                DateTime date;
+
+                if (dateField is Timestamp) {
+                  // Si c'est un Timestamp, convertissez-le en DateTime
+                  date = dateField.toDate();
+                } else if (dateField is String) {
+                  // Si c'est une String, vous devrez peut-être la convertir en DateTime selon le format
+                  // Assurez-vous que le format est correct avant de faire la conversion.
+                  date = DateTime.parse(dateField);
+                } else {
+                  // Gérez d'autres types si nécessaire
+                  throw Exception(
+                      'Type de date inattendu : ${dateField.runtimeType}');
+                }
+
+                String formattedDate = DateFormat('dd/MM/yyyy').format(date);
+
                 return Padding(
                   padding: const EdgeInsets.all(20),
                   child: Align(
@@ -93,7 +112,7 @@ class CompetitionsListView extends StatelessWidget {
                                 style: const TextStyle(fontSize: 16),
                               ),
                               Text(
-                                competition['date'],
+                                formattedDate,
                                 style: const TextStyle(fontSize: 16),
                               ),
                               const SizedBox(
