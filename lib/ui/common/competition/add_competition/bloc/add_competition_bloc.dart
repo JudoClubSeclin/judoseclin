@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:judoseclin/domain/entities/competition.dart';
 
 import '../interactor/add_competition_interactor.dart';
 import 'add_competition_event.dart';
@@ -26,19 +27,21 @@ class AddCompetitionBloc
           debugPrint('Date après conversion: $parsedDate');
           debugPrint('Publish Date après conversion: $parsedPublishDate');
 
-          await addCompetitionInteractor.addCompetition(
-            event.id,
-            event.address,
-            event.title,
-            event.subtitle,
-            parsedDate,
-            parsedPublishDate,
-            event.poussin,
-            event.benjamin,
-            event.minime,
-            event.cadet,
-            event.juniorSenior,
+          final competition = Competition(
+            id: event.id,
+            address: event.address,
+            title: event.title,
+            subtitle: event.subtitle,
+            date: parsedDate,
+            publishDate: parsedPublishDate,
+            poussin: event.poussin,
+            benjamin: event.benjamin,
+            minime: event.minime,
+            cadet: event.cadet,
+            juniorSenior: event.juniorSenior,
           );
+
+          await addCompetitionInteractor.addCompetition(competition);
           emit(AddCompetitionSignUpSuccessState(addCompetitionId: event.id));
         } catch (error) {
           emit(AddCompetitionSignUpErrorState(error.toString()));

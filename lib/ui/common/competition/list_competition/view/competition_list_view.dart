@@ -111,6 +111,9 @@ class CompetitionsListView extends StatelessWidget {
                                 competition['title'] as String,
                                 style: const TextStyle(fontSize: 16),
                               ),
+                              const SizedBox(
+                                width: 15,
+                              ),
                               Text(
                                 formattedDate,
                                 style: const TextStyle(fontSize: 16),
