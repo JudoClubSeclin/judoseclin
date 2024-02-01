@@ -10,30 +10,19 @@ class AddCompetitionInteractor {
 
   AddCompetitionInteractor(this.fetchAddCompetitionDataUseCase, this.firestore);
 
-  Future<void> addCompetition(
-      String id,
-      String address,
-      String title,
-      String subtitle,
-      DateTime date,
-      DateTime publishDate,
-      String poussin,
-      String benjamin,
-      String minime,
-      String cadet,
-      String juniorSenior) async {
+  Future<void> addCompetition(Competition competition) async {
     try {
       await firestore.collection('competition').add({
-        'address': address,
-        'title': title,
-        'subtitle': subtitle,
-        'date': date,
-        'publishDate': publishDate,
-        'poussin': poussin,
-        'benjamin': benjamin,
-        'minime': minime,
-        'cadet': cadet,
-        'juniorSenior': juniorSenior,
+        'address': competition.address,
+        'title': competition.title,
+        'subtitle': competition.subtitle,
+        'date': competition.date,
+        'publishDate': competition.publishDate,
+        'poussin': competition.poussin,
+        'benjamin': competition.benjamin,
+        'minime': competition.minime,
+        'cadet': competition.cadet,
+        'juniorSenior': competition.juniorSenior,
       });
     } catch (error) {
       debugPrint('Erreur lors de l\'ajout de la compétition : $error');

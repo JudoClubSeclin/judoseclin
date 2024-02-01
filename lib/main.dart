@@ -115,7 +115,7 @@ void main() {
                     .on<AddCompetitionSignUpEvent>((event, emit) {});
                 return addCompetitionBloc;
               },
-              child: AddCompetitionView(),
+              child: const AddCompetitionView(publishDate: null),
             )
           ],
           child: Builder(builder: (BuildContext context) {

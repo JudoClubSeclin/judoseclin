@@ -14,18 +14,19 @@ class Competition {
   final String cadet;
   final String juniorSenior;
 
-  Competition(
-      {required this.id,
-      required this.address,
-      required this.title,
-      required this.subtitle,
-      required this.date,
-      required this.publishDate,
-      required this.poussin,
-      required this.benjamin,
-      required this.minime,
-      required this.cadet,
-      required this.juniorSenior});
+  Competition({
+    required this.id,
+    required this.address,
+    required this.title,
+    required this.subtitle,
+    required this.date,
+    required this.publishDate,
+    required this.poussin,
+    required this.benjamin,
+    required this.minime,
+    required this.cadet,
+    required this.juniorSenior,
+  });
   // Formatte la date au format (DD/MM/YYYY)
   String get formattedPublishDate {
     return DateFormat('dd/MM/yyyy').format(publishDate);
@@ -59,27 +60,29 @@ class Competition {
   }
   //Méthode de creation d'une compétition avec publishDate automatique
   factory Competition.publish(
-      String id,
-      String address,
-      String title,
-      String subtitle,
-      DateTime date,
-      String poussin,
-      String benjamin,
-      String minime,
-      String cadet,
-      String juniorSenior) {
+    String id,
+    String address,
+    String title,
+    String subtitle,
+    DateTime date,
+    String poussin,
+    String benjamin,
+    String minime,
+    String cadet,
+    String juniorSenior,
+  ) {
     return Competition(
-        id: id,
-        address: address,
-        title: title,
-        subtitle: subtitle,
-        date: date,
-        publishDate: DateTime.now(),
-        poussin: poussin,
-        benjamin: benjamin,
-        minime: minime,
-        cadet: cadet,
-        juniorSenior: juniorSenior);
+      id: id,
+      address: address,
+      title: title,
+      subtitle: subtitle,
+      date: date,
+      publishDate: DateTime.now(),
+      poussin: poussin,
+      benjamin: benjamin,
+      minime: minime,
+      cadet: cadet,
+      juniorSenior: juniorSenior,
+    );
   }
 }

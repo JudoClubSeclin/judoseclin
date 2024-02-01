@@ -61,7 +61,8 @@ final goRouter = GoRouter(
     ),
     GoRoute(
         path: '/admin/add/competition',
-        builder: (context, state) => AddCompetitionView()),
+        builder: (context, state) =>
+            const AddCompetitionView(publishDate: null)),
     GoRoute(
         path: '/admin/add/adherents',
         builder: (context, state) => AddAdherentsView()),
