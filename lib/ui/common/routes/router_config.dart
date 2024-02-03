@@ -7,6 +7,7 @@ import 'package:judoseclin/domain/usecases/competitions/fetch_competitions_data_
 import 'package:judoseclin/domain/usecases/cotisation/fetch_cotisation_data_usecase.dart';
 import 'package:judoseclin/landing.dart';
 import 'package:judoseclin/ui/common/account/view/account_view.dart';
+import 'package:judoseclin/ui/common/adherents/adherents_repository/adherents_repository.dart';
 import 'package:judoseclin/ui/common/adherents/interactor/adherents_interactor.dart';
 import 'package:judoseclin/ui/common/adherents/view/adherents_detail_view.dart';
 import 'package:judoseclin/ui/common/adherents/view/list_adherents_view.dart';
@@ -23,6 +24,8 @@ import '../competition/list_competition/view/competition_detail_view.dart';
 import '../cotisations/view/add_cotisation_view.dart';
 import '../members/login/view/login_view.dart';
 import '../members/login/view/reset_password_view.dart';
+
+AdherentsRepository adherentsRepository = ConcreteAdherentsRepository();
 
 final goRouter = GoRouter(
   debugLogDiagnostics: true,
@@ -64,23 +67,44 @@ final goRouter = GoRouter(
         builder: (context, state) =>
             const AddCompetitionView(publishDate: null)),
     GoRoute(
-        path: '/admin/add/adherents',
-        builder: (context, state) => AddAdherentsView()),
+      path: '/admin/add/adherents',
+      builder: (context, state) => AddAdherentsView(
+        adherentsRepository: adherentsRepository,
+      ),
+    ),
     GoRoute(
       path: '/admin/list/adherents',
-      builder: (context, state) => const ListAdherentsView(),
+      builder: (context, state) {
+        var fetchAdherentsDataUseCase =
+            FetchAdherentsDataUseCase(adherentsRepository);
+        var fetchCotisationDataUseCase = FetchCotisationDataUseCase();
+        var interactor =
+            AdherentsInteractor(fetchAdherentsDataUseCase, adherentsRepository);
+        var cotisationInteractor = CotisationInteractor(
+            fetchCotisationDataUseCase,
+            adherentsRepository as FirebaseFirestore);
+
+        return ListAdherentsView(
+          adherentsRepository: adherentsRepository,
+          interactor: interactor,
+          cotisationInteractor: cotisationInteractor,
+        );
+      },
       routes: [
         GoRoute(
-          path: ':adherentsId', // Modifiez le chemin ici
+          path: ':adherentsId',
           builder: (BuildContext context, GoRouterState state) {
             final adherentsId = state.pathParameters['adherentsId'];
-            var fetchAdherentsDataUseCase = FetchAdherentsDataUseCase();
+
+            var adherentsRepository = ConcreteAdherentsRepository();
+            var fetchAdherentsDataUseCase =
+                FetchAdherentsDataUseCase(adherentsRepository);
             var fetchCotisationDataUseCase = FetchCotisationDataUseCase();
-            var firestore = FirebaseFirestore.instance;
-            var interactor =
-                AdherentsInteractor(fetchAdherentsDataUseCase, firestore);
-            var cotisationInteractor =
-                CotisationInteractor(fetchCotisationDataUseCase, firestore);
+            var interactor = AdherentsInteractor(
+                fetchAdherentsDataUseCase, adherentsRepository);
+            var cotisationInteractor = CotisationInteractor(
+                fetchCotisationDataUseCase,
+                adherentsRepository.firestoreInstance);
             if (adherentsId != null) {
               debugPrint(adherentsId);
               return AdherentsDetailView(

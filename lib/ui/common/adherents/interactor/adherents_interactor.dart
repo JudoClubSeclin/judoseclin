@@ -1,12 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/domain/usecases/adherents/fetch_adherents_data_usecase.dart';
 
+import '../adherents_repository/adherents_repository.dart';
+
 class AdherentsInteractor {
   final FetchAdherentsDataUseCase fetchAdherentsDataUseCase;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final AdherentsRepository adherentsRipository;
 
-  AdherentsInteractor(this.fetchAdherentsDataUseCase, this.firestore);
+  AdherentsInteractor(this.fetchAdherentsDataUseCase, this.adherentsRipository);
 
   Future<void> addAdherents(
     String id,
@@ -26,7 +27,7 @@ class AdherentsInteractor {
     String medicalCertificate,
     String invoice,
   ) {
-    return firestore.collection('adherents').add({
+    final data = {
       'firstName': firstName,
       'lastName': lastName,
       'email': email,
@@ -42,7 +43,9 @@ class AdherentsInteractor {
       'sante': sante,
       'medicalCertificate': medicalCertificate,
       'invoice': invoice,
-    }).catchError((error) => throw error);
+    };
+
+    return adherentsRipository.add(data).catchError((error) => throw error);
   }
 
   Future<Iterable<Adherents>> fetchAdherentsData() async {
@@ -66,11 +69,10 @@ class AdherentsInteractor {
     required String fieldName,
     required String newValue,
   }) async {
-    Map<String, dynamic> updatedData = {fieldName: newValue};
-    return firestore
-        .collection('adherents')
-        .doc(adherentId)
-        .update(updatedData)
-        .catchError((error) => throw error);
+    try {
+      await adherentsRipository.updateField(adherentId, fieldName, newValue);
+    } catch (error) {
+      rethrow;
+    }
   }
 }

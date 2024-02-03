@@ -1,13 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:judoseclin/ui/common/adherents/interactor/adherents_interactor.dart';
+import 'package:judoseclin/ui/common/cotisations/interactor/cotisation_interactor.dart';
 import 'package:judoseclin/ui/common/theme/theme.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 
 import '../../widgets/appbar/custom_appbar.dart';
 
 class ListAdherentsView extends StatelessWidget {
-  const ListAdherentsView({super.key});
+  const ListAdherentsView(
+      {super.key,
+      required adherentsRepository,
+      required AdherentsInteractor interactor,
+      required CotisationInteractor cotisationInteractor});
 
   @override
   Widget build(BuildContext context) {

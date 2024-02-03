@@ -27,7 +27,7 @@ class AddAdherentsView extends StatelessWidget {
   final medicalCertificateController = TextEditingController();
   final invoiceController = TextEditingController();
 
-  AddAdherentsView({super.key});
+  AddAdherentsView({super.key, required adherentsRepository});
 
   @override
   Widget build(BuildContext context) {
