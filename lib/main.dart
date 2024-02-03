@@ -10,6 +10,7 @@ import 'package:judoseclin/domain/usecases/cotisation/fetch_cotisation_data_usec
 import 'package:judoseclin/firebase_options.dart';
 import 'package:judoseclin/ui/common/account/bloc/account_bloc.dart';
 import 'package:judoseclin/ui/common/account/interactor/account_interactor.dart';
+import 'package:judoseclin/ui/common/adherents/adherents_repository/adherents_repository.dart';
 import 'package:judoseclin/ui/common/adherents/bloc/adherents_bloc.dart';
 import 'package:judoseclin/ui/common/adherents/bloc/adherents_event.dart';
 import 'package:judoseclin/ui/common/adherents/interactor/adherents_interactor.dart';
@@ -34,7 +35,7 @@ import 'package:judoseclin/ui/common/theme/theme.dart';
 import 'domain/usecases/adherents/fetch_adherents_data_usecase.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
-final _firestore = FirebaseFirestore.instance;
+final firestore = FirebaseFirestore.instance;
 
 void main() {
   usePathUrlStrategy();
@@ -50,7 +51,7 @@ void main() {
               ),
             ),
             BlocProvider<InscriptionCompetitionBloc>(
-              create: (context) => InscriptionCompetitionBloc(_firestore),
+              create: (context) => InscriptionCompetitionBloc(firestore),
             ),
             BlocProvider<LoginBloc>(
               create: (context) =>
@@ -69,21 +70,23 @@ void main() {
             ),
             BlocProvider<AdherentsBloc>(
               create: (context) {
-                var fetchAdherentsDataUseCase = FetchAdherentsDataUseCase();
-                var firestore = FirebaseFirestore.instance;
-
-                var interactor =
-                    AdherentsInteractor(fetchAdherentsDataUseCase, firestore);
+                var adherentsRepository = AdherentsRepository;
+                var fetchAdherentsDataUseCase = FetchAdherentsDataUseCase(
+                    adherentsRepository as AdherentsRepository);
+                var adherentsRipository = AdherentsRepository;
+                var interactor = AdherentsInteractor(fetchAdherentsDataUseCase,
+                    adherentsRipository as AdherentsRepository);
                 var adherentsBloc = AdherentsBloc(interactor, adherentId: '');
 
                 // Attach event handlers
                 adherentsBloc.on<SignUpEvent>((event, emit) {
                   // Implement event handling logic here
                 });
-
                 return adherentsBloc;
               },
-              child: AddAdherentsView(),
+              child: AddAdherentsView(
+                adherentsRepository: null,
+              ),
             ),
             BlocProvider(
               create: (context) {

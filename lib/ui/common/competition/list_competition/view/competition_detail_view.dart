@@ -98,6 +98,19 @@ class CompetitionDetailView extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
+
+                  Text(competition.cadet,
+                      style: titleStyleSmall(context),
+                      textAlign: TextAlign.center),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(competition.juniorSenior,
+                      style: titleStyleSmall(context),
+                      textAlign: TextAlign.center),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   // ConfigurationLocale.instance.peutSeConnecter &&
 
                   CustomButton(
