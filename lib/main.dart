@@ -70,12 +70,12 @@ void main() {
             ),
             BlocProvider<AdherentsBloc>(
               create: (context) {
-                var adherentsRepository = AdherentsRepository;
-                var fetchAdherentsDataUseCase = FetchAdherentsDataUseCase(
-                    adherentsRepository as AdherentsRepository);
-                var adherentsRipository = AdherentsRepository;
-                var interactor = AdherentsInteractor(fetchAdherentsDataUseCase,
-                    adherentsRipository as AdherentsRepository);
+                AdherentsRepository adherentsRepository =
+                    ConcreteAdherentsRepository();
+                var fetchAdherentsDataUseCase =
+                    FetchAdherentsDataUseCase(adherentsRepository);
+                var interactor = AdherentsInteractor(
+                    fetchAdherentsDataUseCase, adherentsRepository);
                 var adherentsBloc = AdherentsBloc(interactor, adherentId: '');
 
                 // Attach event handlers

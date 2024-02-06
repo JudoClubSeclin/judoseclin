@@ -54,7 +54,10 @@ class AccountView extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => context.go('/admin/add/adherents'),
+                      onTap: () {
+                        debugPrint('Navigating to /admin/add/adherents');
+                        context.go('/admin/add/adherents');
+                      },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: Center(

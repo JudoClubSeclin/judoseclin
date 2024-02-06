@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -9,10 +8,10 @@ import 'package:judoseclin/landing.dart';
 import 'package:judoseclin/ui/common/account/view/account_view.dart';
 import 'package:judoseclin/ui/common/adherents/adherents_repository/adherents_repository.dart';
 import 'package:judoseclin/ui/common/adherents/interactor/adherents_interactor.dart';
-import 'package:judoseclin/ui/common/adherents/view/adherents-detail/adherents_detail_view.dart';
 import 'package:judoseclin/ui/common/adherents/view/list_adherents_view.dart';
 import 'package:judoseclin/ui/common/competition/add_competition/view/add_competition_view.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/interactor/competition_interactor.dart';
+import 'package:judoseclin/ui/common/competition/list_competition/view/competition_detail_view.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/view/competition_list_view.dart';
 import 'package:judoseclin/ui/common/cotisations/interactor/cotisation_interactor.dart';
 import 'package:judoseclin/ui/common/members/inscription/view/inscription_view.dart';
@@ -20,7 +19,7 @@ import 'package:judoseclin/ui/common/members/inscription/view/inscription_view.d
 import '../account/bloc/account_bloc.dart';
 import '../account/interactor/account_interactor.dart';
 import '../adherents/view/add_adherents_view.dart';
-import '../competition/list_competition/view/competition_detail_view.dart';
+import '../adherents/view/adherents-detail/adherents_detail_view.dart';
 import '../cotisations/view/add_cotisation_view.dart';
 import '../members/login/view/login_view.dart';
 import '../members/login/view/reset_password_view.dart';
@@ -77,17 +76,12 @@ final goRouter = GoRouter(
       builder: (context, state) {
         var fetchAdherentsDataUseCase =
             FetchAdherentsDataUseCase(adherentsRepository);
-        var fetchCotisationDataUseCase = FetchCotisationDataUseCase();
         var interactor =
             AdherentsInteractor(fetchAdherentsDataUseCase, adherentsRepository);
-        var cotisationInteractor = CotisationInteractor(
-            fetchCotisationDataUseCase,
-            adherentsRepository as FirebaseFirestore);
 
         return ListAdherentsView(
           adherentsRepository: adherentsRepository,
           interactor: interactor,
-          cotisationInteractor: cotisationInteractor,
         );
       },
       routes: [
