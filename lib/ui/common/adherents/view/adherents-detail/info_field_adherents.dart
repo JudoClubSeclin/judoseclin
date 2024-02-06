@@ -1,8 +1,8 @@
 // InfoFieldAdherents
 import 'package:flutter/material.dart';
+import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/ui/common/adherents/interactor/adherents_interactor.dart';
 
-import '../../../../../domain/entities/adherents.dart';
 import '../../../theme/theme.dart';
 import '../../../widgets/infos_fields/infos_fields.dart';
 
@@ -57,7 +57,7 @@ class InfoFieldAdherents extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       InfoField(
-                        label: 'Nom',
+                        label: 'Nom :',
                         value: adherent.firstName,
                         field: 'firstName',
                         adherentsInteractor: adherentsInteractor,

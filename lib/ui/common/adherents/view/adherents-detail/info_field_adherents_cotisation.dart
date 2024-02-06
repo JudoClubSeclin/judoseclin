@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:judoseclin/domain/entities/adherents.dart';
+import 'package:judoseclin/domain/entities/cotisation.dart';
 import 'package:judoseclin/ui/common/cotisations/interactor/cotisation_interactor.dart';
 
-import '../../../../../domain/entities/cotisation.dart';
 import '../../../widgets/infos_fields/infos_fields.dart';
 
 class InfoFieldAdherentsCotisation extends StatelessWidget {
@@ -26,8 +25,7 @@ class InfoFieldAdherentsCotisation extends StatelessWidget {
           return Text('Erreur: ${snapshot.error}');
         } else {
           var cotisation = snapshot.data;
-          final adherent = snapshot.data as Adherents;
-          if (cotisation != null && adherent.id == cotisation.id) {
+          if (cotisation != null && adherentId == cotisation.adherentId) {
             return Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Wrap(

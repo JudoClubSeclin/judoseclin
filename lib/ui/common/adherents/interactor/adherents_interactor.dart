@@ -5,9 +5,9 @@ import '../adherents_repository/adherents_repository.dart';
 
 class AdherentsInteractor {
   final FetchAdherentsDataUseCase fetchAdherentsDataUseCase;
-  final AdherentsRepository adherentsRipository;
+  final AdherentsRepository adherentsRepository;
 
-  AdherentsInteractor(this.fetchAdherentsDataUseCase, this.adherentsRipository);
+  AdherentsInteractor(this.fetchAdherentsDataUseCase, this.adherentsRepository);
 
   Future<void> addAdherents(
     String id,
@@ -45,7 +45,7 @@ class AdherentsInteractor {
       'invoice': invoice,
     };
 
-    return adherentsRipository.add(data).catchError((error) => throw error);
+    return adherentsRepository.add(data).catchError((error) => throw error);
   }
 
   Future<Iterable<Adherents>> fetchAdherentsData() async {
@@ -70,7 +70,7 @@ class AdherentsInteractor {
     required String newValue,
   }) async {
     try {
-      await adherentsRipository.updateField(adherentId, fieldName, newValue);
+      await adherentsRepository.updateField(adherentId, fieldName, newValue);
     } catch (error) {
       rethrow;
     }
