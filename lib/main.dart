@@ -16,7 +16,6 @@ import 'package:judoseclin/ui/common/adherents/interactor/adherents_interactor.d
 import 'package:judoseclin/ui/common/adherents/view/add_adherents_view.dart';
 import 'package:judoseclin/ui/common/competition/add_competition/bloc/add_competition_bloc.dart';
 import 'package:judoseclin/ui/common/competition/add_competition/bloc/add_competition_event.dart';
-import 'package:judoseclin/ui/common/competition/add_competition/interactor/add_competition_interactor.dart';
 import 'package:judoseclin/ui/common/competition/add_competition/view/add_competition_view.dart';
 import 'package:judoseclin/ui/common/competition/competition_repository/competition_repository.dart';
 import 'package:judoseclin/ui/common/competition/inscription_competition/bloc/inscription_competition_bloc.dart';
@@ -126,7 +125,7 @@ void main() {
                     ConcretedCompetitionRepository();
                 var fetchCompetitionDataUseCase =
                     FetchCompetitionDataUseCase(competitionRepository);
-                var interactor = AddCompetitionInteractor(
+                var interactor = CompetitionInteractor(
                     fetchCompetitionDataUseCase, competitionRepository);
                 var addCompetitionBloc = AddCompetitionBloc(interactor);
                 //attach event handlers
