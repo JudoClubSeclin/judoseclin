@@ -39,7 +39,7 @@ class LoginInteractor {
   }
 
   Future<void> checkAuthenticationStatus() async {
-    User? user = await _auth.currentUser;
+    User? user = _auth.currentUser;
     if (user != null) {
       // L'utilisateur est déjà connecté, vous pouvez effectuer des actions supplémentaires si nécessaire.
       // Redirigez l'utilisateur vers la page d'accueil.

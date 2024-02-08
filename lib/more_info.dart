@@ -8,7 +8,7 @@ import 'package:judoseclin/ui/common/more_infos/orientation_stack.dart';
 class MoreInfo extends StatelessWidget {
   final CompetitionRepository competitionRepository;
 
-  MoreInfo({super.key, required this.competitionRepository});
+  const MoreInfo({super.key, required this.competitionRepository});
 
   @override
   Widget build(BuildContext context) {

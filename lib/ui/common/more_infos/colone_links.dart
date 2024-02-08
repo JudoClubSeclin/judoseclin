@@ -104,7 +104,7 @@ class ColonneLinks extends StatefulWidget {
   final Size size;
   final CompetitionRepository competitionRepository;
 
-  ColonneLinks({
+  const ColonneLinks({
     super.key,
     required this.fraction,
     required this.size,
