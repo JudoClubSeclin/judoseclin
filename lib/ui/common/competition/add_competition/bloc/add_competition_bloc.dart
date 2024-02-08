@@ -1,16 +1,16 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:judoseclin/domain/entities/competition.dart';
+import 'package:judoseclin/ui/common/competition/list_competition/interactor/competition_interactor.dart';
 
-import '../interactor/add_competition_interactor.dart';
 import 'add_competition_event.dart';
 import 'add_competition_state.dart';
 
 class AddCompetitionBloc
     extends Bloc<AddCompetitionEvent, AddCompetitionState> {
-  final AddCompetitionInteractor addCompetitionInteractor;
+  final CompetitionInteractor competitionInteractor;
 
-  AddCompetitionBloc(this.addCompetitionInteractor)
+  AddCompetitionBloc(this.competitionInteractor)
       : super(AddCompetitionSignUpInitialState()) {
     on<AddCompetitionEvent>((event, emit) async {
       if (event is AddCompetitionSignUpEvent) {
@@ -41,7 +41,7 @@ class AddCompetitionBloc
             juniorSenior: event.juniorSenior,
           );
 
-          await addCompetitionInteractor.addCompetition(competition);
+          await competitionInteractor.addCompetition(competition);
           emit(AddCompetitionSignUpSuccessState(addCompetitionId: event.id));
         } catch (error) {
           emit(AddCompetitionSignUpErrorState(error.toString()));
