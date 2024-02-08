@@ -10,6 +10,7 @@ import 'package:judoseclin/ui/common/adherents/adherents_repository/adherents_re
 import 'package:judoseclin/ui/common/adherents/interactor/adherents_interactor.dart';
 import 'package:judoseclin/ui/common/adherents/view/list_adherents_view.dart';
 import 'package:judoseclin/ui/common/competition/add_competition/view/add_competition_view.dart';
+import 'package:judoseclin/ui/common/competition/competition_repository/competition_repository.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/interactor/competition_interactor.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/view/competition_detail_view.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/view/competition_list_view.dart';
@@ -31,7 +32,7 @@ final goRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const Landing(),
+      builder: (context, state) => Landing(),
       routes: [
         GoRoute(
           path: 'competitions',
@@ -40,10 +41,13 @@ final goRouter = GoRouter(
             GoRoute(
               path: ':competitionId',
               builder: (BuildContext context, GoRouterState state) {
+                final CompetitionRepository competitionRepository =
+                    ConcretedCompetitionRepository();
                 final competitionId = state.pathParameters['competitionId'];
-                var fetchCompetitionDataUseCase = FetchCompetitionDataUseCase();
-                var interactor =
-                    CompetitionInteractor(fetchCompetitionDataUseCase);
+                var fetchCompetitionDataUseCase =
+                    FetchCompetitionDataUseCase(competitionRepository);
+                var interactor = CompetitionInteractor(
+                    fetchCompetitionDataUseCase, competitionRepository);
                 if (competitionId != null) {
                   debugPrint(competitionId);
                   return CompetitionDetailView(

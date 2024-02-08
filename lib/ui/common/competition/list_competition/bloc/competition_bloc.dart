@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../interactor/competition_interactor.dart';
@@ -7,9 +6,10 @@ import 'competition_state.dart';
 
 class CompetitionBloc extends Bloc<CompetitionEvent, CompetitionState> {
   final CompetitionInteractor competitionInteractor;
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final String competitionId;
 
-  CompetitionBloc(this.competitionInteractor) : super(CompetitionLoading());
+  CompetitionBloc(this.competitionInteractor, {required this.competitionId})
+      : super(CompetitionLoading());
 
   Stream<CompetitionState> mapEventToState(CompetitionEvent event) async* {
     if (event is LoadCompetitions) {

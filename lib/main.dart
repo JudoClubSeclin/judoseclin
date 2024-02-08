@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
-import 'package:judoseclin/domain/usecases/competitions/fetch_add_comptetition_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/competitions/fetch_competitions_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/cotisation/fetch_cotisation_data_usecase.dart';
 import 'package:judoseclin/firebase_options.dart';
@@ -19,9 +18,12 @@ import 'package:judoseclin/ui/common/competition/add_competition/bloc/add_compet
 import 'package:judoseclin/ui/common/competition/add_competition/bloc/add_competition_event.dart';
 import 'package:judoseclin/ui/common/competition/add_competition/interactor/add_competition_interactor.dart';
 import 'package:judoseclin/ui/common/competition/add_competition/view/add_competition_view.dart';
+import 'package:judoseclin/ui/common/competition/competition_repository/competition_repository.dart';
 import 'package:judoseclin/ui/common/competition/inscription_competition/bloc/inscription_competition_bloc.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/bloc/competition_bloc.dart';
+import 'package:judoseclin/ui/common/competition/list_competition/bloc/competition_event.dart';
 import 'package:judoseclin/ui/common/competition/list_competition/interactor/competition_interactor.dart';
+import 'package:judoseclin/ui/common/competition/list_competition/view/competition_list_view.dart';
 import 'package:judoseclin/ui/common/cotisations/bloc/cotisation_bloc.dart';
 import 'package:judoseclin/ui/common/cotisations/interactor/cotisation_interactor.dart';
 import 'package:judoseclin/ui/common/cotisations/view/add_cotisation_view.dart';
@@ -46,9 +48,22 @@ void main() {
       MultiBlocProvider(
           providers: [
             BlocProvider<CompetitionBloc>(
-              create: (context) => CompetitionBloc(
-                CompetitionInteractor(FetchCompetitionDataUseCase()),
-              ),
+              create: (context) {
+                CompetitionRepository competitionRepository =
+                    ConcretedCompetitionRepository();
+                var fetchCompetitionDataUseCase =
+                    FetchCompetitionDataUseCase(competitionRepository);
+                var interactor = CompetitionInteractor(
+                    fetchCompetitionDataUseCase, competitionRepository);
+
+                // Passer interactor et competitionId lors de la création du CompetitionBloc
+                var competitionBloc =
+                    CompetitionBloc(interactor, competitionId: '');
+                competitionBloc.on<CompetitionEvent>((event, emit) {});
+
+                return competitionBloc;
+              },
+              child: const CompetitionsListView(),
             ),
             BlocProvider<InscriptionCompetitionBloc>(
               create: (context) => InscriptionCompetitionBloc(firestore),
@@ -107,11 +122,12 @@ void main() {
             ),
             BlocProvider<AddCompetitionBloc>(
               create: (context) {
-                var fetchAddCompetitionDataUseCase =
-                    FetchAddCompetitionDataUseCase();
-                var firestore = FirebaseFirestore.instance;
+                CompetitionRepository competitionRepository =
+                    ConcretedCompetitionRepository();
+                var fetchCompetitionDataUseCase =
+                    FetchCompetitionDataUseCase(competitionRepository);
                 var interactor = AddCompetitionInteractor(
-                    fetchAddCompetitionDataUseCase, firestore);
+                    fetchCompetitionDataUseCase, competitionRepository);
                 var addCompetitionBloc = AddCompetitionBloc(interactor);
                 //attach event handlers
                 addCompetitionBloc

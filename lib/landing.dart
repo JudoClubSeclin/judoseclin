@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:judoseclin/ui/common/competition/competition_repository/competition_repository.dart';
 import 'package:judoseclin/ui/common/landing_page/landing_home.dart';
 import 'package:judoseclin/ui/common/landing_page/landing_news.dart';
 import 'package:judoseclin/ui/common/landing_page/landing_show_button.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/connexion_button.dart';
 
-import 'more_info.dart';
 import 'configuration_locale.dart';
+import 'more_info.dart';
 
 class Landing extends StatelessWidget {
-  const Landing({super.key});
+  final CompetitionRepository competitionRepository =
+      ConcretedCompetitionRepository();
+  Landing({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +24,13 @@ class Landing extends StatelessWidget {
         controller: controller,
         child: Stack(
           children: [
-            const Column(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [LandingHome(), LandingNews(), MoreInfo()],
+              children: [
+                const LandingHome(),
+                const LandingNews(),
+                MoreInfo(competitionRepository: competitionRepository)
+              ],
             ),
             Positioned(
                 top: 40.0, // Ajustez la position verticale

@@ -1,18 +1,19 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../../domain/entities/competition.dart';
-import '../../../../../domain/usecases/competitions/fetch_add_comptetition_data_usecase.dart';
+import '../../../../../domain/usecases/competitions/fetch_competitions_data_usecase.dart';
+import '../../competition_repository/competition_repository.dart';
 
 class AddCompetitionInteractor {
-  final FetchAddCompetitionDataUseCase fetchAddCompetitionDataUseCase;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FetchCompetitionDataUseCase fetchCompetitionDataUseCase;
+  final CompetitionRepository competitionRepository;
 
-  AddCompetitionInteractor(this.fetchAddCompetitionDataUseCase, this.firestore);
+  AddCompetitionInteractor(
+      this.fetchCompetitionDataUseCase, this.competitionRepository);
 
   Future<void> addCompetition(Competition competition) async {
     try {
-      await firestore.collection('competition').add({
+      await competitionRepository.add({
         'address': competition.address,
         'title': competition.title,
         'subtitle': competition.subtitle,
@@ -30,9 +31,9 @@ class AddCompetitionInteractor {
     }
   }
 
-  Future<Competition?> getCompetitionById(String competitionId) async {
+  Future<Competition?> getCompetitionById(competitionId) async {
     try {
-      return await fetchAddCompetitionDataUseCase
+      return await fetchCompetitionDataUseCase
           .getCompetitionById(competitionId);
     } catch (e) {
       debugPrint(
@@ -42,13 +43,13 @@ class AddCompetitionInteractor {
   }
 
   Future<void> updateCompetitionField({
-    required String id,
+    required String competitionId,
     required String fieldName,
     required String newValue,
   }) async {
     try {
-      Map<String, dynamic> updateData = {fieldName: newValue};
-      await firestore.collection('competition').doc(id).update(updateData);
+      await competitionRepository.updateField(
+          competitionId, fieldName, newValue);
     } catch (error) {
       debugPrint('Erreur lors de la mise à jour du champ : $error');
       rethrow;

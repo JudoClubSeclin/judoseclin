@@ -1,6 +1,7 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:judoseclin/ui/common/competition/competition_repository/competition_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../domain/entities/competition.dart';
@@ -72,7 +73,10 @@ class FileListButtons extends StatelessWidget {
         fillColor: Colors.red,
         color: Colors.red[400],
         isSelected: files.map((e) => true).toList(),
-        children: files.map((e) => PaddedText(text: e.fileTitle.substring(0, e.fileTitle.length - 4))).toList(),
+        children: files
+            .map((e) => PaddedText(
+                text: e.fileTitle.substring(0, e.fileTitle.length - 4)))
+            .toList(),
       ),
     );
   }
@@ -98,11 +102,13 @@ class PaddedText extends StatelessWidget {
 class ColonneLinks extends StatefulWidget {
   final double fraction;
   final Size size;
+  final CompetitionRepository competitionRepository;
 
-  const ColonneLinks({
+  ColonneLinks({
     super.key,
     required this.fraction,
     required this.size,
+    required this.competitionRepository,
   });
 
   @override
@@ -110,9 +116,15 @@ class ColonneLinks extends StatefulWidget {
 }
 
 class _ColonneLinksState extends State<ColonneLinks> {
+  late FetchCompetitionDataUseCase fetchCompetitionDataUseCase;
+
   final FirebaseStorage storage = FirebaseStorage.instance;
-  final FetchCompetitionDataUseCase fetchCompetitionDataUseCase =
-      FetchCompetitionDataUseCase();
+  @override
+  void initState() {
+    super.initState();
+    fetchCompetitionDataUseCase =
+        FetchCompetitionDataUseCase(widget.competitionRepository);
+  }
 
   Future<List<File>> getFiles(String folderName) async {
     final Reference folderRef = storage.ref().child(folderName);

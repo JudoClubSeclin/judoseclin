@@ -50,7 +50,9 @@ class AddAdherentsView extends StatelessWidget {
 
   Widget _buildForm(BuildContext context, String adherentId) {
     return Scaffold(
-        appBar: const CustomAppBar(title: 'ajouter un adhérent'),
+        appBar: const CustomAppBar(
+          title: 'ajouter un adhérent',
+        ),
         body: DecoratedBox(
           decoration: const BoxDecoration(
             image: DecorationImage(
