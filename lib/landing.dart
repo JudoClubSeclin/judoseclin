@@ -11,9 +11,10 @@ import 'more_info.dart';
 class Landing extends StatelessWidget {
   final CompetitionRepository competitionRepository =
       ConcretedCompetitionRepository();
+
   Landing({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
