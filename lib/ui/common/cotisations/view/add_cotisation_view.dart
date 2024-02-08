@@ -38,7 +38,9 @@ class AddCotisationView extends StatelessWidget {
 
   Widget _buildForm(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'ajouter la cotisation'),
+      appBar: const CustomAppBar(
+        title: 'ajouter la cotisation',
+      ),
       body: DecoratedBox(
         decoration: const BoxDecoration(
             image: DecorationImage(

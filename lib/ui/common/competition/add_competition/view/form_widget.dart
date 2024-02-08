@@ -34,7 +34,9 @@ class FormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Ajouter une compétition'),
+      appBar: const CustomAppBar(
+        title: 'Ajouter une compétition',
+      ),
       body: DecoratedBox(
         decoration: const BoxDecoration(
             image: DecorationImage(

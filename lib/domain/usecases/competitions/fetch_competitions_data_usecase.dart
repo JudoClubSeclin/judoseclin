@@ -1,16 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:judoseclin/ui/common/competition/competition_repository/competition_repository.dart';
 
 import '../../entities/competition.dart';
 
 class FetchCompetitionDataUseCase {
-  final firestore = FirebaseFirestore.instance;
+  final CompetitionRepository competitionRepository;
+
+  FetchCompetitionDataUseCase(this.competitionRepository);
 
   Future<List<Competition>> getCompetition() async {
     try {
       debugPrint("Fetching competition data from Firestore...");
 
-      QuerySnapshot snapshot = await firestore.collection('competition').get();
+      Stream<QuerySnapshot> snapshotStream =
+          competitionRepository.getCompetitionStream();
+      QuerySnapshot snapshot = await snapshotStream.first;
       debugPrint("Competition data fetched successfully.");
 
       List<Competition> competition = snapshot.docs
@@ -29,19 +34,14 @@ class FetchCompetitionDataUseCase {
       debugPrint("Fetching competition data from Firestore...");
 
       // Utilisez le .doc(competitionId) pour récupérer une compétition spécifique par son ID
-      DocumentSnapshot<Map<String, dynamic>> competitionSnapshot =
-          await firestore.collection('competition').doc(competitionId).get();
+      DocumentSnapshot<Object?> competitionSnapshot =
+          await competitionRepository.getById(competitionId);
+      Competition? competition = competitionSnapshot.exists
+          ? Competition.fromFirestore(
+              competitionSnapshot as DocumentSnapshot<Map<String, dynamic>>)
+          : null;
 
-      if (competitionSnapshot.exists) {
-        // Si la compétition existe, créez une instance de Competition à partir des données
-        Competition competition =
-            Competition.fromFirestore(competitionSnapshot);
-
-        return competition;
-      } else {
-        // La compétition n'existe pas
-        return null;
-      }
+      return competition;
     } catch (e) {
       debugPrint(e.toString());
       rethrow;
