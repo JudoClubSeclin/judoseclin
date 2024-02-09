@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
-import 'package:judoseclin/ui/common/adherents/adherents_repository/adherents_repository.dart';
+
+import '../../../ui/adherents/adherents_repository/adherents_repository.dart';
 
 class FetchAdherentsDataUseCase {
   final AdherentsRepository adherentsRepository;

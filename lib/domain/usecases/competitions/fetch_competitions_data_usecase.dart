@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:judoseclin/ui/common/competition/competition_repository/competition_repository.dart';
 
+import '../../../ui/competition/competition_repository/competition_repository.dart';
 import '../../entities/competition.dart';
 
 class FetchCompetitionDataUseCase {

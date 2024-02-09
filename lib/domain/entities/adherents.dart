@@ -5,7 +5,7 @@ class Adherents {
   final String firstName;
   final String lastName;
   final String email;
-  final String dateOfBirth;
+  final DateTime dateOfBirth;
   final String licence;
   final String blet;
   final String discipline;
@@ -45,7 +45,7 @@ class Adherents {
         firstName: data['firstName'] ?? '',
         lastName: data['lastName'] ?? '',
         email: data['email'] ?? '',
-        dateOfBirth: data['dateOfBirth'] ?? '',
+        dateOfBirth: (data['dateOfBirth'] as Timestamp).toDate(),
         licence: data['licence'] ?? '',
         blet: data['blet'] ?? '',
         discipline: data['discipline'] ?? '',
