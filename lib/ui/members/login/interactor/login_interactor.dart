@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../../common/routes/router_config.dart';
+
 class LoginInteractor {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -40,9 +42,13 @@ class LoginInteractor {
 
   Future<void> checkAuthenticationStatus() async {
     User? user = _auth.currentUser;
+
     if (user != null) {
-      // L'utilisateur est déjà connecté, vous pouvez effectuer des actions supplémentaires si nécessaire.
-      // Redirigez l'utilisateur vers la page d'accueil.
+      // L'utilisateur est déjà connecté, redirigez-le vers la page du compte.
+      goRouter.go('/account');
+    } else {
+      // L'utilisateur n'est pas connecté, redirigez-le vers la page d'accueil.
+      goRouter.go('/');
     }
   }
 }

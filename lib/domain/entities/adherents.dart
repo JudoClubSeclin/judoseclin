@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class Adherents {
   final String id;
@@ -37,29 +38,28 @@ class Adherents {
     required this.invoice,
   });
 
-  factory Adherents.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
-    final data = doc.data();
-    if (data != null) {
-      return Adherents(
-        id: doc.id,
-        firstName: data['firstName'] ?? '',
-        lastName: data['lastName'] ?? '',
-        email: data['email'] ?? '',
-        dateOfBirth: (data['dateOfBirth'] as Timestamp).toDate(),
-        licence: data['licence'] ?? '',
-        blet: data['blet'] ?? '',
-        discipline: data['discipline'] ?? '',
-        category: data['category'] ?? '',
-        tutor: data['tutor'] ?? '',
-        phone: data['phone'] ?? '',
-        address: data['address'] ?? '',
-        image: data['image'] ?? '',
-        sante: data['sante'] ?? '',
-        medicalCertificate: data['medicalCertificate'] ?? '',
-        invoice: data['invoice'] ?? '',
-      );
-    } else {
-      throw Exception('Document non trouver');
-    }
+  String get formattedDateOfBirth {
+    return DateFormat('dd/MM/yyyy').format(dateOfBirth);
+  }
+
+  factory Adherents.fromMap(Map<String, dynamic> data, String id) {
+    return Adherents(
+      id: id,
+      firstName: data['firstName'] ?? '',
+      lastName: data['lastName'] ?? '',
+      email: data['email'] ?? '',
+      dateOfBirth: (data['dateOfBirth'] as Timestamp).toDate(),
+      licence: data['licence'] ?? '',
+      blet: data['blet'] ?? '',
+      discipline: data['discipline'] ?? '',
+      category: data['category'] ?? '',
+      tutor: data['tutor'] ?? '',
+      phone: data['phone'] ?? '',
+      address: data['address'] ?? '',
+      image: data['image'] ?? '',
+      sante: data['sante'] ?? '',
+      medicalCertificate: data['medicalCertificate'] ?? '',
+      invoice: data['invoice'] ?? '',
+    );
   }
 }

@@ -9,7 +9,6 @@ import 'package:judoseclin/domain/usecases/cotisation/fetch_cotisation_data_usec
 import 'package:judoseclin/firebase_options.dart';
 import 'package:judoseclin/ui/account/bloc/account_bloc.dart';
 import 'package:judoseclin/ui/account/interactor/account_interactor.dart';
-import 'package:judoseclin/ui/adherents/adherents_repository/adherents_repository.dart';
 import 'package:judoseclin/ui/adherents/bloc/adherents_bloc.dart';
 import 'package:judoseclin/ui/adherents/bloc/adherents_event.dart';
 import 'package:judoseclin/ui/adherents/interactor/adherents_interactor.dart';
@@ -33,6 +32,7 @@ import 'package:judoseclin/ui/members/inscription/interactor/inscription_interac
 import 'package:judoseclin/ui/members/login/bloc/login_bloc.dart';
 import 'package:judoseclin/ui/members/login/interactor/login_interactor.dart';
 
+import 'data/repository/adherents_repository/adherents_repository.dart';
 import 'domain/usecases/adherents/fetch_adherents_data_usecase.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;

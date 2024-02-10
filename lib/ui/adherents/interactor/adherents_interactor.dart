@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/domain/usecases/adherents/fetch_adherents_data_usecase.dart';
 
-import '../adherents_repository/adherents_repository.dart';
+import '../../../data/repository/adherents_repository/adherents_repository.dart';
 
 class AdherentsInteractor {
   final FetchAdherentsDataUseCase fetchAdherentsDataUseCase;
