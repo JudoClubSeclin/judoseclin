@@ -6,10 +6,10 @@ import 'package:judoseclin/domain/usecases/competitions/fetch_competitions_data_
 import 'package:judoseclin/domain/usecases/cotisation/fetch_cotisation_data_usecase.dart';
 import 'package:judoseclin/ui/landing/landing.dart';
 
+import '../../../data/repository/adherents_repository/adherents_repository.dart';
 import '../../account/bloc/account_bloc.dart';
 import '../../account/interactor/account_interactor.dart';
 import '../../account/view/account_view.dart';
-import '../../adherents/adherents_repository/adherents_repository.dart';
 import '../../adherents/interactor/adherents_interactor.dart';
 import '../../adherents/view/add_adherents_view.dart';
 import '../../adherents/view/adherents-detail/adherents_detail_view.dart';
@@ -84,7 +84,6 @@ final goRouter = GoRouter(
             AdherentsInteractor(fetchAdherentsDataUseCase, adherentsRepository);
 
         return ListAdherentsView(
-          adherentsRepository: adherentsRepository,
           interactor: interactor,
         );
       },
