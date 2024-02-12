@@ -6,7 +6,10 @@ class CotisationSignUpInitialState extends CotisationState {}
 
 class CotisationSignUpLoadingState extends CotisationState {}
 
-class CotisationSignUpSuccessState extends CotisationState {}
+class CotisationSignUpSuccessState extends CotisationState {
+  final String adherentId;
+  CotisationSignUpSuccessState({required this.adherentId});
+}
 
 class CotisationSignUpErrorState extends CotisationState {
   final String error;

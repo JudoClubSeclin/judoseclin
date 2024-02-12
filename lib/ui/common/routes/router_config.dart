@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:judoseclin/data/repository/cotisation_repository/cotisation_repository.dart';
 import 'package:judoseclin/domain/usecases/adherents/fetch_adherents_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/competitions/fetch_competitions_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/cotisation/fetch_cotisation_data_usecase.dart';
@@ -25,7 +26,7 @@ import '../../members/inscription/view/inscription_view.dart';
 import '../../members/login/view/login_view.dart';
 import '../../members/login/view/reset_password_view.dart';
 
-AdherentsRepository adherentsRepository = ConcreteAdherentsRepository();
+AdherentsRepository adherentsRepository = ConcretedAdherentsRepository();
 
 final goRouter = GoRouter(
   debugLogDiagnostics: true,
@@ -92,16 +93,15 @@ final goRouter = GoRouter(
           path: ':adherentsId',
           builder: (BuildContext context, GoRouterState state) {
             final adherentsId = state.pathParameters['adherentsId'];
-
-            var adherentsRepository = ConcreteAdherentsRepository();
+            var cotisationRepository = ConcretedCotisationRepository();
             var fetchAdherentsDataUseCase =
                 FetchAdherentsDataUseCase(adherentsRepository);
-            var fetchCotisationDataUseCase = FetchCotisationDataUseCase();
+            var fetchCotisationDataUseCase =
+                FetchCotisationDataUseCase(cotisationRepository);
             var interactor = AdherentsInteractor(
                 fetchAdherentsDataUseCase, adherentsRepository);
             var cotisationInteractor = CotisationInteractor(
-                fetchCotisationDataUseCase,
-                adherentsRepository.firestoreInstance);
+                fetchCotisationDataUseCase, cotisationRepository);
             if (adherentsId != null) {
               debugPrint(adherentsId);
               return AdherentsDetailView(

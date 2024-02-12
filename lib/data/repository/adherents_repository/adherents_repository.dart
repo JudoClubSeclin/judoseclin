@@ -13,7 +13,7 @@ abstract class AdherentsRepository {
       String adherentId, String fieldName, String newValue);
 }
 
-class ConcreteAdherentsRepository extends AdherentsRepository {
+class ConcretedAdherentsRepository extends AdherentsRepository {
   @override
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 

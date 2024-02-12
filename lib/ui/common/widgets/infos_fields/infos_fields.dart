@@ -142,7 +142,7 @@ class CotisationInfoField extends StatelessWidget {
               }
 
               await cotisationInteractor.updateCotisationField(
-                id: cotisation.id,
+                cotisationId: cotisation.id,
                 fieldName: field,
                 newValue: editedValue,
               );

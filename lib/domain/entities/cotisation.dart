@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Cotisation {
@@ -18,38 +17,33 @@ class Cotisation {
     required this.bankName,
   });
 
-  factory Cotisation.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
+  factory Cotisation.fromFMap(Map<String, dynamic> data, String id) {
     try {
-      final data = doc.data();
-      if (data != null) {
-        List<Cheque> cheques = [];
-        if (data['cheques'] != null) {
-          for (var chequeData in data['cheques']) {
-            cheques.add(Cheque.fromMap(chequeData));
-          }
+      List<Cheque> cheques = [];
+      if (data['cheques'] != null) {
+        for (var chequeData in data['cheques']) {
+          cheques.add(Cheque.fromMap(chequeData));
         }
-
         return Cotisation(
-          id: doc.id,
-          adherentId: data['adherentId'] ?? '',
-          amount: (data['amount'] as int?)?.toInt() ?? 0,
-          date: data['date'] ?? '',
-          cheques: cheques,
-          bankName: data['bankName'] ?? '',
-        );
+            id: id,
+            adherentId: data['adherentId'] ?? '',
+            amount: (data['amount'] as int?)?.toInt() ?? 0,
+            date: data['date'] ?? '',
+            cheques: cheques,
+            bankName: data['bankName'] ?? '');
       } else {
         throw Exception('Données nul dans le document');
       }
     } catch (e) {
       debugPrint('Erreur lors de la conversion depuis Firestore: $e');
-      rethrow; // Rethrow l'exception pour ne pas cacher l'erreur d'origine.
+      rethrow;
     }
   }
 }
 
 class Cheque {
   final String numeroCheque;
-  final String montantCheque; // Garder le type String
+  final int montantCheque;
 
   Cheque({
     required this.numeroCheque,
@@ -59,7 +53,7 @@ class Cheque {
   factory Cheque.fromMap(Map<String, dynamic> map) {
     return Cheque(
       numeroCheque: map['numero'] ?? '',
-      montantCheque: map['montant'] ?? '',
+      montantCheque: map['montant'] ?? 0,
     );
   }
 }

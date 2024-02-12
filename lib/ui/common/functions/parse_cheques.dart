@@ -11,20 +11,25 @@ List<Cheque> parseCheques(String chequesInput) {
     List<String> chequesData = entry.split(':');
 
     if (chequesData.length == 2) {
-      String numeroCheque = chequesData[0].trim();
+      String numeroChequeStr = chequesData[0].trim();
       String montantChequeStr = chequesData[1].trim();
 
-      // Vous pouvez supprimer la ligne suivante qui nettoie la chaîne
-      // montantChequeStr = montantChequeStr.replaceAll(RegExp(r'[^0-9]'), '');
+      try {
+        int numeroCheque = int.parse(numeroChequeStr);
+        int montantChequeInt = int.parse(montantChequeStr);
 
-      debugPrint(
-        'Numero de cheque: $numeroCheque, Montant de cheque: $montantChequeStr',
-      );
-
-      cheques.add(Cheque(
-        numeroCheque: numeroCheque,
-        montantCheque: montantChequeStr,
-      ));
+        // Ajoutez la paire clé-valeur à la liste de chèques
+        debugPrint(
+            'Numero de cheque: $numeroCheque, Montant de cheque: $montantChequeInt');
+        cheques.add(Cheque(
+          numeroCheque:
+              numeroCheque.toString(), // Convertir en string si nécessaire
+          montantCheque: montantChequeInt,
+        ));
+      } catch (e) {
+        debugPrint('Erreur de conversion pour la chaîne: $entry');
+        debugPrint('Erreur détaillée: $e');
+      }
     }
   }
 
