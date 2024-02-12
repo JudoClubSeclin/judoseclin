@@ -33,6 +33,7 @@ import 'package:judoseclin/ui/members/login/bloc/login_bloc.dart';
 import 'package:judoseclin/ui/members/login/interactor/login_interactor.dart';
 
 import 'data/repository/adherents_repository/adherents_repository.dart';
+import 'data/repository/cotisation_repository/cotisation_repository.dart';
 import 'domain/usecases/adherents/fetch_adherents_data_usecase.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
@@ -85,7 +86,7 @@ void main() {
             BlocProvider<AdherentsBloc>(
               create: (context) {
                 AdherentsRepository adherentsRepository =
-                    ConcreteAdherentsRepository();
+                    ConcretedAdherentsRepository();
                 var fetchAdherentsDataUseCase =
                     FetchAdherentsDataUseCase(adherentsRepository);
                 var interactor = AdherentsInteractor(
@@ -104,11 +105,12 @@ void main() {
             ),
             BlocProvider(
               create: (context) {
-                var fetchCotisationDataUseCase = FetchCotisationDataUseCase();
+                CotisationRepository cotisationRepository =
+                    ConcretedCotisationRepository();
+                var fetchCotisationDataUseCase =
+                    FetchCotisationDataUseCase(cotisationRepository);
                 var cotisationInteractor = CotisationInteractor(
-                  fetchCotisationDataUseCase,
-                  FirebaseFirestore.instance,
-                );
+                    fetchCotisationDataUseCase, cotisationRepository);
 
                 return CotisationBloc(
                   cotisationInteractor: cotisationInteractor,

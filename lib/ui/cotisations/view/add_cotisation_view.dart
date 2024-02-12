@@ -95,10 +95,12 @@ class AddCotisationView extends StatelessWidget {
                 onPressed: () {
                   try {
                     debugPrint('bouton appuyer');
+                    debugPrint(
+                        'Valeur de chequesController: ${chequesController.text.trim()}');
                     // Utilisez la fonction parseCheques pour obtenir la liste des chèques.
                     var cheques = parseCheques(chequesController.text.trim());
 
-                    context.read<CotisationBloc>().add(CotisationSignUpEvent(
+                    context.read<CotisationBloc>().add(AddCotisationSignUpEvent(
                           id: 'adherentId',
                           adherentId: adherentId,
                           amount: int.parse(amountController.text.trim()),

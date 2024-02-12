@@ -2,7 +2,7 @@ import '../../../../domain/entities/cotisation.dart';
 
 abstract class CotisationEvent {}
 
-class CotisationSignUpEvent extends CotisationEvent {
+class AddCotisationSignUpEvent extends CotisationEvent {
   final String id;
   final String adherentId;
   final int amount;
@@ -10,7 +10,7 @@ class CotisationSignUpEvent extends CotisationEvent {
   final List<Cheque> cheques;
   final String bankName;
 
-  CotisationSignUpEvent({
+  AddCotisationSignUpEvent({
     required this.id,
     required this.adherentId,
     required this.amount,
