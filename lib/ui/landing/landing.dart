@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/connexion_button.dart';
 
 import '../../configuration_locale.dart';
-import '../competition/competition_repository/competition_repository.dart';
+import '../../data/repository/competition_repository/competition_repository.dart';
 import '../landing_page/landing_home.dart';
 import '../landing_page/landing_news.dart';
 import '../landing_page/landing_show_button.dart';

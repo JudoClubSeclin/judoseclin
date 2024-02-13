@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../../domain/entities/competition.dart';
+
 abstract class CompetitionRepository {
   FirebaseFirestore get firestore;
-  Stream<QuerySnapshot> getCompetitionStream();
-  Future<DocumentSnapshot<Object?>> getById(String competitionId);
+  Stream<Iterable<Competition>> getCompetitionStream();
+  Future<Map<String, dynamic>> getById(String competitionId);
   Future<void> add(Map<String, dynamic> data);
   Future<void> updateField(
       String competitionId, String fieldName, String newValue);
@@ -14,13 +16,20 @@ class ConcretedCompetitionRepository extends CompetitionRepository {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
-  Stream<QuerySnapshot<Object?>> getCompetitionStream() {
-    return firestore.collection('competition').snapshots();
+  Stream<Iterable<Competition>> getCompetitionStream() {
+    return firestore.collection('competition').snapshots().map(
+          (querySnapshot) => querySnapshot.docs
+              .map((doc) => Competition.fromMap(doc.data(), doc.id))
+              .toList(),
+        );
   }
 
   @override
-  Future<DocumentSnapshot<Object?>> getById(String competitionId) {
-    return firestore.collection('competition').doc(competitionId).get();
+  Future<Map<String, dynamic>> getById(String competitionId) async {
+    final docSnapshot =
+        await firestore.collection('competition').doc(competitionId).get();
+
+    return docSnapshot.data() ?? {};
   }
 
   @override

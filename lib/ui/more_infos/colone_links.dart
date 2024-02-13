@@ -5,8 +5,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../domain/entities/competition.dart';
 import '../../../domain/usecases/competitions/fetch_competitions_data_usecase.dart';
+import '../../data/repository/competition_repository/competition_repository.dart';
 import '../common/theme/theme.dart';
-import '../competition/competition_repository/competition_repository.dart';
 import 'oriented_size_box.dart';
 
 class File {
@@ -29,6 +29,9 @@ class CompetitionListButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(
+        'Building CompetitionListButtons with ${competitions.length} competitions');
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       width: double.infinity,
@@ -221,26 +224,28 @@ class _ColonneLinksState extends State<ColonneLinks> {
               style: titleStyle,
             ),
           ),
-          FutureBuilder(
+          FutureBuilder<List<Competition>>(
             future: fetchCompetitionDataUseCase.getCompetition(),
             builder: (BuildContext context,
                 AsyncSnapshot<List<Competition>> snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
                 case ConnectionState.waiting:
+                  debugPrint('la je passe');
                   return const CircularProgressIndicator();
                 case ConnectionState.done:
                   if (snapshot.hasError) {
+                    debugPrint('je ne dépasse pas lerreur $snapshot.hasError');
                     return const Text(
                         "Erreur lors de la récupération des compétitions");
                   } else if (snapshot.hasData) {
                     List<Competition> competitions = snapshot.data!;
+                    debugPrint('Data received: ${snapshot.data}');
                     if (competitions.isEmpty) {
                       return const Text(
                           "Aucune compétition disponible pour le moment");
                     } else {
-                      return CompetitionListButtons(
-                          competitions: snapshot.data ?? []);
+                      return CompetitionListButtons(competitions: competitions);
                     }
                   }
                   break;
@@ -249,7 +254,7 @@ class _ColonneLinksState extends State<ColonneLinks> {
               }
               return const SizedBox();
             },
-          )
+          ),
         ]),
       )),
     );

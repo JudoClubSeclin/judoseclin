@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:judoseclin/domain/usecases/competitions/fetch_competitions_data_usecase.dart';
 
 import '../../../../../domain/entities/competition.dart';
-import '../../competition_repository/competition_repository.dart';
+import '../../../../data/repository/competition_repository/competition_repository.dart';
 
 class CompetitionInteractor {
   final FetchCompetitionDataUseCase fetchCompetitionDataUseCase;
@@ -11,10 +11,12 @@ class CompetitionInteractor {
   CompetitionInteractor(
       this.fetchCompetitionDataUseCase, this.competitionRepository);
 
-  Future<List<Competition>> fetchCompetitionData() async {
+  Future<Iterable<Competition>> fetchCompetitionData() async {
     try {
-      return await fetchCompetitionDataUseCase.getCompetition();
+      final competitions = await fetchCompetitionDataUseCase.getCompetition();
+      return competitions ?? [];
     } catch (e) {
+      debugPrint('Erreur lors de la récupération des compétitions : $e');
       rethrow;
     }
   }
@@ -24,6 +26,8 @@ class CompetitionInteractor {
       return await fetchCompetitionDataUseCase
           .getCompetitionById(competitionId);
     } catch (e) {
+      debugPrint(
+          'Erreur lors de la récupération de la compétition par ID : $e');
       rethrow;
     }
   }

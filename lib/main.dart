@@ -18,7 +18,6 @@ import 'package:judoseclin/ui/common/theme/theme.dart';
 import 'package:judoseclin/ui/competition/add_competition/bloc/add_competition_bloc.dart';
 import 'package:judoseclin/ui/competition/add_competition/bloc/add_competition_event.dart';
 import 'package:judoseclin/ui/competition/add_competition/view/add_competition_view.dart';
-import 'package:judoseclin/ui/competition/competition_repository/competition_repository.dart';
 import 'package:judoseclin/ui/competition/inscription_competition/bloc/inscription_competition_bloc.dart';
 import 'package:judoseclin/ui/competition/list_competition/bloc/competition_bloc.dart';
 import 'package:judoseclin/ui/competition/list_competition/bloc/competition_event.dart';
@@ -33,6 +32,7 @@ import 'package:judoseclin/ui/members/login/bloc/login_bloc.dart';
 import 'package:judoseclin/ui/members/login/interactor/login_interactor.dart';
 
 import 'data/repository/adherents_repository/adherents_repository.dart';
+import 'data/repository/competition_repository/competition_repository.dart';
 import 'data/repository/cotisation_repository/cotisation_repository.dart';
 import 'domain/usecases/adherents/fetch_adherents_data_usecase.dart';
 

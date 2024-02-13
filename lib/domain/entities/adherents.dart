@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:judoseclin/ui/common/functions/date_converter.dart';
 
 class Adherents {
   final String id;
@@ -48,7 +48,7 @@ class Adherents {
       firstName: data['firstName'] ?? '',
       lastName: data['lastName'] ?? '',
       email: data['email'] ?? '',
-      dateOfBirth: (data['dateOfBirth'] as Timestamp).toDate(),
+      dateOfBirth: DateConverter.convertToDateTime(data['dateOfBirth']),
       licence: data['licence'] ?? '',
       blet: data['blet'] ?? '',
       discipline: data['discipline'] ?? '',
