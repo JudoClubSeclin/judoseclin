@@ -9,16 +9,21 @@ class CompetitionBloc extends Bloc<CompetitionEvent, CompetitionState> {
   final String competitionId;
 
   CompetitionBloc(this.competitionInteractor, {required this.competitionId})
-      : super(CompetitionLoading());
+      : super(CompetitionSignUpLoadingState());
 
   Stream<CompetitionState> mapEventToState(CompetitionEvent event) async* {
     if (event is LoadCompetitions) {
-      yield CompetitionLoading();
+      yield CompetitionSignUpLoadingState();
       try {
         final competition = await competitionInteractor.fetchCompetitionData();
-        yield CompetitionLoaded(competitionData: competition);
+
+        // Convertir l'itérable en une liste
+        final competitionList = competition.toList();
+
+        yield CompetitionSignUpLoadedState(competitionData: competitionList);
       } catch (e) {
-        yield CompetitionError(message: 'Une erreur s\'est produite : $e');
+        yield CompetitionSignUpErrorState(
+            message: 'Une erreur s\'est produite : $e');
       }
     }
   }

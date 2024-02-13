@@ -1,5 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+
+import '../../ui/common/functions/date_converter.dart';
 
 class Competition {
   final String id;
@@ -27,6 +28,7 @@ class Competition {
     required this.cadet,
     required this.juniorSenior,
   });
+
   // Formatte la date au format (DD/MM/YYYY)
   String get formattedPublishDate {
     return DateFormat('dd/MM/yyyy').format(publishDate);
@@ -37,46 +39,42 @@ class Competition {
     return date.isAfter(DateTime.now());
   }
 
-  factory Competition.fromFirestore(
-      DocumentSnapshot<Map<String, dynamic>> doc) {
-    final data = doc.data();
-    if (data != null) {
-      return Competition(
-        id: doc.id,
-        address: data['address'] ?? '',
-        title: data['title'] ?? '',
-        subtitle: data['subtitle'] ?? '',
-        date: (data['date'] as Timestamp).toDate(),
-        publishDate: (data['publishDate'] as Timestamp).toDate(),
-        poussin: data['poussin'] ?? '',
-        benjamin: data['benjamin'] ?? '',
-        minime: data['minime'] ?? '',
-        cadet: data['cadet'] ?? '',
-        juniorSenior: data['juniorSenior'] ?? '',
-      );
-    } else {
-      throw Exception('Document non trouvé');
-    }
+  // Constructeur de la classe à partir d'une map
+  factory Competition.fromMap(Map<String, dynamic>? data, String id) {
+    return Competition(
+      id: id,
+      address: data?['address'] ?? '',
+      title: data?['title'] ?? '',
+      subtitle: data?['subtitle'] ?? '',
+      date: DateConverter.convertToDateTime(data?['date']),
+      publishDate: DateConverter.convertToDateTime(data?['publishDate']),
+      poussin: data?['poussin'] ?? '',
+      benjamin: data?['benjamin'] ?? '',
+      minime: data?['minime'] ?? '',
+      cadet: data?['cadet'] ?? '',
+      juniorSenior: data?['juniorSenior'] ?? '',
+    );
   }
-  //Méthode de creation d'une compétition avec publishDate automatique
-  factory Competition.publish(
-    String id,
-    String address,
-    String title,
-    String subtitle,
-    DateTime date,
-    String poussin,
-    String benjamin,
-    String minime,
-    String cadet,
-    String juniorSenior,
-  ) {
+
+  // Méthode de création d'une compétition avec publishDate automatique
+  factory Competition.publish({
+    required String id,
+    required String address,
+    required String title,
+    required String subtitle,
+    required DateTime date,
+    required String poussin,
+    required String benjamin,
+    required String minime,
+    required String cadet,
+    required String juniorSenior,
+  }) {
     return Competition(
       id: id,
       address: address,
       title: title,
       subtitle: subtitle,
-      date: date,
+      date: DateConverter.convertToDateTime(date),
       publishDate: DateTime.now(),
       poussin: poussin,
       benjamin: benjamin,

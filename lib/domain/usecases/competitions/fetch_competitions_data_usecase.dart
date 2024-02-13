@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../../ui/competition/competition_repository/competition_repository.dart';
+import '../../../data/repository/competition_repository/competition_repository.dart';
 import '../../entities/competition.dart';
 
 class FetchCompetitionDataUseCase {
@@ -12,36 +11,29 @@ class FetchCompetitionDataUseCase {
   Future<List<Competition>> getCompetition() async {
     try {
       debugPrint("Fetching competition data from Firestore...");
-
-      Stream<QuerySnapshot> snapshotStream =
+      Stream<Iterable<Competition>> competitionStream =
           competitionRepository.getCompetitionStream();
-      QuerySnapshot snapshot = await snapshotStream.first;
-      debugPrint("Competition data fetched successfully.");
 
-      List<Competition> competition = snapshot.docs
-          .map((doc) => Competition.fromFirestore(
-              doc as DocumentSnapshot<Map<String, dynamic>>))
-          .toList();
-      return competition; // Renvoyez les données de la compétition
+      // Utilisez 'await for' pour consommer le Stream
+      List<Competition> competitionList = [];
+      await for (var competitionIterable in competitionStream) {
+        competitionList.addAll(competitionIterable);
+      }
+
+      return competitionList;
     } catch (e) {
       debugPrint(e.toString());
-      rethrow; // Lancez l'erreur pour que la partie appelante puisse la gérer
+      rethrow;
     }
   }
 
   Future<Competition?> getCompetitionById(String competitionId) async {
     try {
       debugPrint("Fetching competition data from Firestore...");
-
-      // Utilisez le .doc(competitionId) pour récupérer une compétition spécifique par son ID
-      DocumentSnapshot<Object?> competitionSnapshot =
+      Map<String, dynamic>? competitionData =
           await competitionRepository.getById(competitionId);
-      Competition? competition = competitionSnapshot.exists
-          ? Competition.fromFirestore(
-              competitionSnapshot as DocumentSnapshot<Map<String, dynamic>>)
-          : null;
 
-      return competition;
+      return Competition.fromMap(competitionData, competitionId);
     } catch (e) {
       debugPrint(e.toString());
       rethrow;

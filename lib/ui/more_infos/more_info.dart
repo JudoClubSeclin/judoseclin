@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:judoseclin/size_extensions.dart';
 
-import '../competition/competition_repository/competition_repository.dart';
+import '../../data/repository/competition_repository/competition_repository.dart';
 import 'colone_links.dart';
 import 'colonne_page.dart';
 import 'orientation_stack.dart';
