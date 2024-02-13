@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:judoseclin/data/repository/user_repository/user_repository.dart';
 import 'package:judoseclin/domain/usecases/competitions/fetch_competitions_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/cotisation/fetch_cotisation_data_usecase.dart';
 import 'package:judoseclin/firebase_options.dart';
@@ -80,8 +81,11 @@ void main() {
               )),
             ),
             BlocProvider<AccountBloc>(
-              create: (context) =>
-                  AccountBloc(accountInteractor: AccountInteractor()),
+              create: (context) {
+                UsersRepository userRepository = ConcretedUserRepository();
+                return AccountBloc(
+                    accountInteractor: AccountInteractor(userRepository));
+              },
             ),
             BlocProvider<AdherentsBloc>(
               create: (context) {

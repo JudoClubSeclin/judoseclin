@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:judoseclin/data/repository/cotisation_repository/cotisation_repository.dart';
+import 'package:judoseclin/data/repository/user_repository/user_repository.dart';
 import 'package:judoseclin/domain/usecases/adherents/fetch_adherents_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/competitions/fetch_competitions_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/cotisation/fetch_cotisation_data_usecase.dart';
@@ -134,7 +135,8 @@ final goRouter = GoRouter(
       pageBuilder: (context, state) => MaterialPage(
         child: BlocProvider<AccountBloc>(
           create: (BuildContext context) {
-            var interactor = AccountInteractor();
+            UsersRepository userRepository = ConcretedUserRepository();
+            var interactor = AccountInteractor(userRepository);
             return AccountBloc(accountInteractor: interactor);
           },
           child: const AccountView(),
