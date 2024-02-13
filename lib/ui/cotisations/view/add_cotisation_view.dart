@@ -6,6 +6,7 @@ import 'package:judoseclin/ui/common/widgets/buttons/custom_buttom.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 import 'package:judoseclin/ui/common/widgets/inputs/custom_textfield.dart';
 
+import '../../../domain/entities/cotisation.dart';
 import '../../common/widgets/appbar/custom_appbar.dart';
 import '../bloc/cotisation_bloc.dart';
 import '../bloc/cotisation_event.dart';
@@ -95,15 +96,26 @@ class AddCotisationView extends StatelessWidget {
                 onPressed: () {
                   try {
                     debugPrint('bouton appuyer');
+
+                    String amountInput = amountController.text.trim();
+                    int amount = amountInput.isNotEmpty
+                        ? int.parse(amountInput)
+                        : 0; // Valeur par défaut si la chaîne est vide
+
+                    String chequesInput = chequesController.text.trim();
+                    List<Cheque> cheques = chequesInput.isNotEmpty
+                        ? parseCheques(chequesInput)
+                        : [];
+
+                    debugPrint('Valeur de amountController: $amountInput');
+                    debugPrint('Valeur de chequesController: $chequesInput');
                     debugPrint(
-                        'Valeur de chequesController: ${chequesController.text.trim()}');
-                    // Utilisez la fonction parseCheques pour obtenir la liste des chèques.
-                    var cheques = parseCheques(chequesController.text.trim());
+                        'Valeur de chequesController (avant parseCheques): $chequesInput');
 
                     context.read<CotisationBloc>().add(AddCotisationSignUpEvent(
                           id: 'adherentId',
                           adherentId: adherentId,
-                          amount: int.parse(amountController.text.trim()),
+                          amount: amount,
                           date: dateController.text.trim(),
                           cheques: cheques,
                           bankName: bankNameController.text.trim(),

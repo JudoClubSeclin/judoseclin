@@ -27,7 +27,19 @@ class ConcretedCotisationRepository extends CotisationRepository {
   @override
   Future<void> add(Map<String, dynamic> data, String documentId) async {
     try {
-      await firestore.collection('cotisation').doc(documentId).set(data);
+      // Convertir la liste de chèques en une liste de Map
+      List<Map<String, dynamic>> chequesData = (data['cheques'] as List<Cheque>)
+          .map((cheque) => cheque.toMap())
+          .toList();
+
+      // Utiliser la liste convertie dans la sauvegarde Firestore
+      await firestore.collection('cotisation').doc(documentId).set({
+        'adherentId': data['adherentId'],
+        'amount': data['amount'],
+        'date': data['date'],
+        'cheques': chequesData,
+        'bankName': data['bankName'],
+      });
     } catch (e) {
       debugPrint(
           'Erreur Firestore lors de l\'enregistrement de la cotisation: $e');
