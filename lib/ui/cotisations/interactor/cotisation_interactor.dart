@@ -20,7 +20,7 @@ class CotisationInteractor {
         'adherentId': cotisation.adherentId,
         'amount': cotisation.amount,
         'date': cotisation.date,
-        'cheques': cotisation.cheques.map((cheque) => cheque.toMap()).toList(),
+        'cheques': [...cotisation.cheques.map((cheque) => cheque.toMap())],
         'bankName': cotisation.bankName,
       }, cotisation.adherentId);
     } catch (error) {
