@@ -14,8 +14,6 @@ class CompetitionInteractor {
   Future<Iterable<Competition>> fetchCompetitionData() async {
     try {
       final competitions = await fetchCompetitionDataUseCase.getCompetition();
-      ;
-
       return competitions;
     } catch (e) {
       debugPrint('Erreur lors de la récupération des compétitions : $e');

@@ -14,29 +14,23 @@ List<Cheque> parseCheques(String chequesInput) {
       String numeroChequeStr = chequesData[0].trim();
       String montantChequeStr = chequesData[1].trim();
 
-      try {
-        int numeroCheque = int.parse(numeroChequeStr);
-        int montantChequeInt = int.parse(montantChequeStr);
+      String numeroCheque = numeroChequeStr;
+      debugPrint(
+          'Valeur de montantChequeStr avant la conversion : $montantChequeStr');
+      int montantChequeInt = int.parse(montantChequeStr);
+      debugPrint(
+          'Valeur de montantChequeInt après la conversion : $montantChequeInt');
 
-        // Ajoutez la paire clé-valeur à la liste de chèques
-        debugPrint(
-            'Numero de cheque: $numeroCheque, Montant de cheque: $montantChequeInt');
-        cheques.add(Cheque(
-          numeroCheque:
-              numeroCheque.toString(), // Convertir en string si nécessaire
-          montantCheque: montantChequeInt,
-        ));
-      } catch (e) {
-        debugPrint('Erreur de conversion pour la chaîne: $entry');
-        debugPrint('Erreur détaillée: $e');
-      }
+      cheques.add(Cheque(
+        numeroCheque: numeroCheque, // Convertir en string si nécessaire
+        montantCheque: montantChequeInt,
+      ));
     }
   }
 
   // Tri des chèques par le numéro de chèque
-  cheques.sort(
-    (a, b) => int.parse(a.numeroCheque).compareTo(int.parse(b.numeroCheque)),
-  );
+
+  cheques.sort((a, b) => a.numeroCheque.compareTo(b.numeroCheque));
 
   return cheques;
 }

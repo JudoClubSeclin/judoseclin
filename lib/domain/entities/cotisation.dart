@@ -22,6 +22,7 @@ class Cotisation {
       List<Cheque> cheques = [];
       if (data['cheques'] != null) {
         for (var chequeData in data['cheques']) {
+          debugPrint('ChequeData from Firestore: $chequeData');
           cheques.add(Cheque.fromMap(chequeData));
         }
         return Cotisation(
@@ -50,10 +51,17 @@ class Cheque {
     required this.montantCheque,
   });
 
+  Map<String, dynamic> toMap() {
+    return {
+      'numeroCheque': numeroCheque,
+      'montantCheque': montantCheque,
+    };
+  }
+
   factory Cheque.fromMap(Map<String, dynamic> map) {
     return Cheque(
-      numeroCheque: map['numero'] ?? '',
-      montantCheque: map['montant'] ?? 0,
+      numeroCheque: map['numeroCheque'] ?? '',
+      montantCheque: map['montantCheque'] ?? 0,
     );
   }
 }
