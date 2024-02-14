@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:judoseclin/domain/entities/cotisation.dart';
 
 import '../interactor/cotisation_interactor.dart';
@@ -24,7 +23,6 @@ class CotisationBloc extends Bloc<CotisationEvent, CotisationState> {
               cheques: event.cheques.cast<Cheque>(),
               bankName: event.bankName);
           await cotisationInteractor.addCotisation(cotisation);
-          debugPrint('je suis le bloc');
           emit(CotisationSignUpSuccessState(adherentId: adherentId));
         } catch (error) {
           emit(CotisationSignUpErrorState(error.toString()));

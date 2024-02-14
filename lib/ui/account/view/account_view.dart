@@ -154,12 +154,14 @@ class AccountView extends StatelessWidget {
                         ListTile(
                           title: const Text('Nom',
                               style: TextStyle(fontWeight: FontWeight.bold)),
-                          subtitle: Text(userData['nom'] ?? 'Not available'),
+                          subtitle:
+                              Text(userData['firstName'] ?? 'Not available'),
                         ),
                         ListTile(
                           title: const Text('Prénom',
                               style: TextStyle(fontWeight: FontWeight.bold)),
-                          subtitle: Text(userData['prenom'] ?? 'Not available'),
+                          subtitle:
+                              Text(userData['lastName'] ?? 'Not available'),
                         ),
                       ],
                     ),

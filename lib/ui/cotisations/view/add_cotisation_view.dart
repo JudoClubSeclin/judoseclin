@@ -95,8 +95,6 @@ class AddCotisationView extends StatelessWidget {
               CustomButton(
                 onPressed: () {
                   try {
-                    debugPrint('bouton appuyer');
-
                     String amountInput = amountController.text.trim();
                     int amount = amountInput.isNotEmpty
                         ? int.parse(amountInput)

@@ -28,7 +28,7 @@ import 'package:judoseclin/ui/cotisations/bloc/cotisation_bloc.dart';
 import 'package:judoseclin/ui/cotisations/interactor/cotisation_interactor.dart';
 import 'package:judoseclin/ui/cotisations/view/add_cotisation_view.dart';
 import 'package:judoseclin/ui/members/inscription/bloc/inscription_bloc.dart';
-import 'package:judoseclin/ui/members/inscription/interactor/inscription_interactor.dart';
+import 'package:judoseclin/ui/members/inscription/interactor/users_interactor.dart';
 import 'package:judoseclin/ui/members/login/bloc/login_bloc.dart';
 import 'package:judoseclin/ui/members/login/interactor/login_interactor.dart';
 
@@ -74,12 +74,12 @@ void main() {
                   LoginBloc(loginInteractor: LoginInteractor()),
               lazy: false,
             ),
-            BlocProvider<InscriptionBloc>(
-              create: (context) => InscriptionBloc(InscriptionInteractor(
-                auth: FirebaseAuth.instance,
-                firestore: FirebaseFirestore.instance,
-              )),
-            ),
+            BlocProvider<InscriptionBloc>(create: (context) {
+              UsersRepository userRepository = ConcretedUserRepository();
+              return InscriptionBloc(
+                  UsersInteractor(userRepository: userRepository),
+                  userId: '');
+            }),
             BlocProvider<AccountBloc>(
               create: (context) {
                 UsersRepository userRepository = ConcretedUserRepository();

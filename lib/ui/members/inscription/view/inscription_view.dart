@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/home_button.dart';
 
 import '../../../common/theme/theme.dart';
@@ -12,9 +13,9 @@ import '../bloc/inscription_event.dart';
 import '../bloc/inscription_state.dart';
 
 class InscriptionView extends StatelessWidget {
-  final nomController = TextEditingController();
-  final prenomController = TextEditingController();
-  final dateNaissanceController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final dateOfBirthController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -57,10 +58,11 @@ class InscriptionView extends StatelessWidget {
               ),
               const SizedBox(height: 40),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                CustomTextField(labelText: 'NOM', controller: nomController),
+                CustomTextField(
+                    labelText: 'NOM', controller: firstNameController),
                 const SizedBox(width: 40),
                 CustomTextField(
-                    labelText: 'PRENOM', controller: prenomController),
+                    labelText: 'PRENOM', controller: lastNameController),
               ]),
               const SizedBox(height: 25),
               Row(
@@ -68,7 +70,7 @@ class InscriptionView extends StatelessWidget {
                 children: [
                   CustomTextField(
                     labelText: 'Date de naissance (JJ/MM/AAAA)',
-                    controller: dateNaissanceController,
+                    controller: dateOfBirthController,
                   ),
                   const SizedBox(width: 40),
                   CustomTextField(
@@ -83,17 +85,27 @@ class InscriptionView extends StatelessWidget {
               ),
               const SizedBox(height: 25),
               CustomButton(
-                onPressed: () {
-                  context.read<InscriptionBloc>().add(
-                        SignUpEvent(
-                            nom: nomController.text.trim(),
-                            prenom: prenomController.text.trim(),
-                            dateNaissance: dateNaissanceController.text.trim(),
-                            email: emailController.text.trim(),
-                            password: passwordController.text.trim(),
-                            navigateToAccount: () =>
-                                GoRouter.of(context).go('/account')),
-                      );
+                onPressed: () async {
+                  try {
+                    String firstNameInput = firstNameController.text.trim();
+                    DateTime parseDate = DateFormat('dd/MM/yyyy')
+                        .parse(dateOfBirthController.text.trim());
+                    debugPrint('valeur de firstName $firstNameInput');
+
+                    context.read<InscriptionBloc>().add(
+                          InscriptionSignUpEvent(
+                              id: '',
+                              firstName: firstNameController.text.trim(),
+                              lastName: lastNameController.text.trim(),
+                              dateOfBirth: parseDate,
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                              navigateToAccount: () =>
+                                  GoRouter.of(context).go('/account')),
+                        );
+                  } catch (error) {
+                    debugPrint('Erreur données non transmise: $error');
+                  }
                 },
                 label: "S'inscrire",
               ),
