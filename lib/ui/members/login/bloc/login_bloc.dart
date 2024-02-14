@@ -7,7 +7,7 @@ import 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UsersInteractor usersInteractor;
-  final userId;
+  final String userId;
 
   LoginBloc(this.usersInteractor, {required this.userId})
       : super(LoginInitial()) {
