@@ -3,12 +3,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/users.dart';
+import '../../../ui/common/routes/router_config.dart';
 
 abstract class UsersRepository {
   FirebaseFirestore get firestore;
 
   Future<Map<String, dynamic>> fetchUserData();
+
   Future<void> registerUser(Users users);
+
+  Future<void> login(String email, String password);
+
+  Future<void> resetPassword(String email);
+
+  Future<void> checkAuthenticationStatus();
 }
 
 class ConcretedUserRepository extends UsersRepository {
@@ -49,6 +57,55 @@ class ConcretedUserRepository extends UsersRepository {
       });
     } catch (error) {
       debugPrint('Error registering user : $error');
+    }
+  }
+
+  @override
+  Future<User?> login(String email, String password) async {
+    if (email.isEmpty || password.isEmpty) {
+      throw Exception(
+          "Veuillez fournir une adresse e-mail et un mot de passe valides.");
+    }
+
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+        email: email.trim(),
+        password: password.trim(),
+      );
+      return userCredential.user;
+    } catch (e) {
+      debugPrint("Erreur d'authentification : $e");
+      if (e is FirebaseAuthException) {
+        throw Exception("Échec de l'authentification : ${e.message}");
+      }
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> resetPassword(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    } catch (error) {
+      debugPrint("Erreur de réinitialisation du mot de passe : $error");
+      if (error is FirebaseAuthException) {
+        throw Exception(
+            "Échec de la réinitialisation du mot de passe : $error");
+      }
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> checkAuthenticationStatus() async {
+    User? user = auth.currentUser;
+
+    if (user != null) {
+      // L'utilisateur est déjà connecté, redirigez-le vers la page du compte.
+      goRouter.go('/account');
+    } else {
+      // L'utilisateur n'est pas connecté, redirigez-le vers la page d'accueil.
+      goRouter.go('/');
     }
   }
 }

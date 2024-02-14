@@ -1,18 +1,20 @@
 // login_bloc.dart
 import 'package:bloc/bloc.dart';
+import 'package:judoseclin/ui/members/interactor/users_interactor.dart';
 
-import '../interactor/login_interactor.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final LoginInteractor loginInteractor;
+  final UsersInteractor usersInteractor;
+  final userId;
 
-  LoginBloc({required this.loginInteractor}) : super(LoginInitial()) {
+  LoginBloc(this.usersInteractor, {required this.userId})
+      : super(LoginInitial()) {
     on<LoginWithEmailPassword>((event, emit) async {
       emit(LoginLoading());
       try {
-        await loginInteractor.login(event.email, event.password);
+        await usersInteractor.login(event.email, event.password);
         event.navigateToAccount();
         emit(LoginSuccess());
       } catch (error) {
@@ -23,7 +25,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<ResetPasswordRequested>((event, emit) async {
       emit(PasswordResetInProgress());
       try {
-        await loginInteractor.resetPassword(event.email);
+        await usersInteractor.resetPassword(event.email);
         emit(PasswordResetSuccess());
       } catch (error) {
         emit(PasswordResetFailure(error: error.toString()));

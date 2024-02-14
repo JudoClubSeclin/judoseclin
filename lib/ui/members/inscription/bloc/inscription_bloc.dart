@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/entities/users.dart';
-import '../interactor/inscription_interactor.dart';
+import '../../interactor/users_interactor.dart';
 import 'inscription_event.dart';
 import 'inscription_state.dart';
 

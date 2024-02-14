@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../interactor/users_interactor.dart';
 import '../bloc/inscription_bloc.dart';
-import '../interactor/inscription_interactor.dart';
 import 'inscription_view.dart';
 
 class InscriptionPage extends StatelessWidget {
