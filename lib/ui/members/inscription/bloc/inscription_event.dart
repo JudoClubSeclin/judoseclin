@@ -1,19 +1,21 @@
 abstract class InscriptionEvent {}
 
-class SignUpEvent extends InscriptionEvent {
+class InscriptionSignUpEvent extends InscriptionEvent {
+  final String id;
+  final String firstName;
+  final String lastName;
+  final DateTime dateOfBirth;
   final String email;
   final String password;
-  final String nom;
-  final String prenom;
-  final String dateNaissance;
   final Function navigateToAccount;
 
-  SignUpEvent({
+  InscriptionSignUpEvent({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.dateOfBirth,
     required this.email,
     required this.password,
-    required this.nom,
-    required this.prenom,
-    required this.dateNaissance,
     required this.navigateToAccount,
   });
 }

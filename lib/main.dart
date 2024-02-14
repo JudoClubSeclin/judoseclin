@@ -74,12 +74,12 @@ void main() {
                   LoginBloc(loginInteractor: LoginInteractor()),
               lazy: false,
             ),
-            BlocProvider<InscriptionBloc>(
-              create: (context) => InscriptionBloc(InscriptionInteractor(
-                auth: FirebaseAuth.instance,
-                firestore: FirebaseFirestore.instance,
-              )),
-            ),
+            BlocProvider<InscriptionBloc>(create: (context) {
+              UsersRepository userRepository = ConcretedUserRepository();
+              return InscriptionBloc(
+                  UsersInteractor(userRepository: userRepository),
+                  userId: '');
+            }),
             BlocProvider<AccountBloc>(
               create: (context) {
                 UsersRepository userRepository = ConcretedUserRepository();

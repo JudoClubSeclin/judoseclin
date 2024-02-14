@@ -1,25 +1,33 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../domain/entities/users.dart';
 import '../interactor/inscription_interactor.dart';
 import 'inscription_event.dart';
 import 'inscription_state.dart';
 
 class InscriptionBloc extends Bloc<InscriptionEvent, InscriptionState> {
-  final InscriptionInteractor inscriptionInteractor;
+  final UsersInteractor usersInteractor;
+  final String userId;
 
-  InscriptionBloc(this.inscriptionInteractor) : super(SignUpInitialState()) {
-    on<SignUpEvent>((event, emit) async {
+  InscriptionBloc(
+    this.usersInteractor, {
+    required this.userId,
+  }) : super(SignUpInitialState()) {
+    on<InscriptionSignUpEvent>((event, emit) async {
       emit(SignUpLoadingState());
       try {
-        await inscriptionInteractor.signUpToFirebase(
-          event.nom,
-          event.prenom,
-          event.dateNaissance,
-          event.email,
-          event.password,
+        DateTime parsedDate = DateTime.parse(event.dateOfBirth.toString());
+        final users = Users(
+          id: event.id,
+          firstName: event.firstName,
+          lastName: event.lastName,
+          dateOfBirth: parsedDate,
+          email: event.email,
+          password: event.password,
         );
         event.navigateToAccount();
-        emit(SignUpSuccessState());
+        await usersInteractor.registerUser(users);
+        emit(SignUpSuccessState(userId: ''));
       } catch (error) {
         emit(SignUpErrorState(error.toString()));
       }

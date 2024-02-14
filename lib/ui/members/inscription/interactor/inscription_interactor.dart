@@ -1,45 +1,26 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
-class InscriptionInteractor {
-  final FirebaseAuth auth;
-  final FirebaseFirestore firestore;
+import '../../../../data/repository/user_repository/user_repository.dart';
+import '../../../../domain/entities/users.dart';
 
-  InscriptionInteractor({required this.auth, required this.firestore});
+class UsersInteractor {
+  final UsersRepository userRepository;
 
-  Future<void> signUpToFirebase(String nom, String prenom, String dateNaissance,
-      String email, String password) async {
+  UsersInteractor({required this.userRepository});
+
+  Future<void> registerUser(Users users) async {
     try {
-      await auth
-          .createUserWithEmailAndPassword(
-        email: email.trim(),
-        password: password.trim(),
-      )
-          .then((value) async {
-        if (kDebugMode) {
-          print(value.user!.uid);
-          await _addUser(
-            value.user!.uid,
-            nom.trim(),
-            prenom.trim(),
-            dateNaissance.trim(),
-            email.trim(),
-          );
-        }
-      });
-    } catch (e) {
+      //Utilisez le repository pour enregistrer l'utilisateur
+      await userRepository.registerUser(Users(
+          id: (users.id),
+          firstName: users.firstName,
+          lastName: users.lastName,
+          dateOfBirth: users.dateOfBirth,
+          email: users.email,
+          password: users.password));
+    } catch (error) {
+      debugPrint('Erreur lors de l\'enregistrement de user: $error');
       rethrow;
     }
-  }
-
-  Future<void> _addUser(String userID, String nom, String prenom,
-      String datedenaissance, String email) {
-    return firestore.collection('Users').doc(userID).set({
-      'nom': nom,
-      'prenom': prenom,
-      'date de naissance': datedenaissance,
-      'email': email
-    }).catchError((error) => throw error);
   }
 }
