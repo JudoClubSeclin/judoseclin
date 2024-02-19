@@ -1,4 +1,5 @@
-abstract class InscriptionCompetitionState {}
+abstract class InscriptionCompetitionState {
+}
 
 class InscriptionCompetitionInitial extends InscriptionCompetitionState {}
 

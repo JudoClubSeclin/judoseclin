@@ -58,7 +58,7 @@ final goRouter = GoRouter(
                   );
                 } else {
                   return const Center(
-                    child: Text("Erreur : ID des détails manquant"),
+                    child: Text("Erreur : ID des détailsmanquant"),
                   );
                 }
               },

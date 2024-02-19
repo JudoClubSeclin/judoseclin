@@ -77,21 +77,21 @@ class InscriptionCompetitionBloc
   Future<InscriptionCompetition?> getInscription(String inscriptionId) async {
     try {
       DocumentSnapshot doc = await _firestore
-          .collection('competition-registration')
+         .collection('competition-registration')
           .doc(inscriptionId)
           .get();
-      return InscriptionCompetition.fromFirestore(doc);
+     return InscriptionCompetition.fromFirestore(doc);
     } catch (e) {
       debugPrint('Erreur lors de la recuperation de l\'inscription: $e');
-      return null;
+     return null;
     }
   }
 
-  Future<List<String>> getInscriptionForUser(String userId) async {
+ Future<List<String>> getInscriptionForUser(String userId) async {
     try {
-      QuerySnapshot querySnapshot = await _firestore
+     QuerySnapshot querySnapshot = await _firestore
           .collection('competition-registration')
-          .where('userId', isEqualTo: userId)
+         .where('userId', isEqualTo: userId)
           .get();
       List<String> competitionIds = [];
       for (var doc in querySnapshot.docs) {
@@ -99,7 +99,7 @@ class InscriptionCompetitionBloc
       }
       return competitionIds;
     } catch (e) {
-      debugPrint('Erreur lors de la récupération des inscriptions: $e');
+     debugPrint('Erreur lors de la récupération des inscriptions: $e');
       return [];
     }
   }
