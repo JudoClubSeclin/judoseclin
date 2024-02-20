@@ -25,7 +25,7 @@ class AdherentsDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        title: 'Détail adherent',
+        title: '',
       ),
       body: DecoratedBox(
         position: DecorationPosition.background,

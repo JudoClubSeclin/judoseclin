@@ -35,7 +35,7 @@ class FormWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        title: 'Ajouter une compétition',
+        title: '',
       ),
       body: DecoratedBox(
         decoration: const BoxDecoration(

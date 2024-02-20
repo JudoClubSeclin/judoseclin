@@ -35,17 +35,8 @@ class ListAdherentsView extends StatelessWidget {
         final adherents = snapshot.data!;
 
         return Scaffold(
-          appBar: CustomAppBar(
-            title: 'Liste des adherents',
-            actions: [
-              GestureDetector(
-                onTap: () {},
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Center(child: Text('')),
-                ),
-              ),
-            ],
+          appBar: const CustomAppBar(
+            title: '',
           ),
           body: Container(
             decoration: const BoxDecoration(

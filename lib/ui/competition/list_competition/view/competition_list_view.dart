@@ -46,18 +46,8 @@ class CompetitionsListView extends StatelessWidget {
         final competitions = snapshot.data!.docs;
 
         return Scaffold(
-          appBar: CustomAppBar(
+          appBar: const CustomAppBar(
             title: '',
-            actions: [
-              GestureDetector(
-                onTap: () {
-                  GoRouter.of(context).go('/competitions');
-                },
-                child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Center(child: Text(''))),
-              ),
-            ],
           ),
           body: Container(
             decoration: const BoxDecoration(
