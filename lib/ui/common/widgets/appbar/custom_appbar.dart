@@ -220,6 +220,22 @@ class CustomAppBarState extends State<CustomAppBar> {
                                 ),
                               ),
                             ),
+                            GestureDetector(
+                              onTap: () {
+                                GoRouter.of(context)
+                                    .go('/admin/add/competition');
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                                child: Center(
+                                  child: Text(
+                                    'Ajouter une compétition',
+                                    style: TextStyle(
+                                        fontSize: 16.0, color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         );
                       } else {

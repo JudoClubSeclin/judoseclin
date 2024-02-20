@@ -72,117 +72,86 @@ class AddAdherentsView extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 40),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomTextField(
-                        labelText: 'NOM',
-                        controller: firstNameController,
-                      ),
-                      const SizedBox(width: 40),
-                      CustomTextField(
-                        labelText: 'PRÉNOM',
-                        controller: lastNameController,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomTextField(
-                        labelText: 'Date de naissance (jj/mm/aaaa)',
-                        controller: dateOfBirthController,
-                      ),
-                      const SizedBox(width: 40),
-                      CustomTextField(
-                        labelText: 'Email',
-                        controller: emailController,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomTextField(
-                        labelText: 'Licence',
-                        controller: licenceController,
-                      ),
-                      const SizedBox(width: 40),
-                      CustomTextField(
-                        labelText: 'Ceinture',
-                        controller: bletController,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomTextField(
-                        labelText: 'discipline',
-                        controller: disciplineController,
-                      ),
-                      const SizedBox(width: 40),
-                      CustomTextField(
-                        labelText: 'Catégorie',
-                        controller: categoryController,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomTextField(
-                        labelText: 'Tuteur légal',
-                        controller: tutorController,
-                      ),
-                      const SizedBox(width: 40),
-                      CustomTextField(
-                        labelText: 'Téléphonne',
-                        controller: phoneController,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomTextField(
-                        labelText: 'droit à l\'mage',
-                        controller: imageController,
-                      ),
-                      const SizedBox(width: 40),
-                      CustomTextField(
-                        labelText: 'Droit medical',
-                        controller: santeController,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomTextField(
-                        labelText: 'Certificat médical',
-                        controller: medicalCertificateController,
-                      ),
-                      const SizedBox(width: 40),
-                      CustomTextField(
-                        labelText: 'Facture',
-                        controller: invoiceController,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    CustomTextField(
-                      labelText: 'Adresse)',
-                      controller: addressController,
-                    ),
-                  ]),
+                  Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 40.0,
+                      runSpacing: 20.0,
+                      children: [
+                        CustomTextField(
+                          labelText: 'NOM',
+                          controller: firstNameController,
+                        ),
+                        const SizedBox(width: 40),
+                        CustomTextField(
+                          labelText: 'PRÉNOM',
+                          controller: lastNameController,
+                        ),
+                        const SizedBox(height: 20),
+                        CustomTextField(
+                          labelText: 'Date de naissance (jj/mm/aaaa)',
+                          controller: dateOfBirthController,
+                        ),
+                        const SizedBox(width: 40),
+                        CustomTextField(
+                          labelText: 'Email',
+                          controller: emailController,
+                        ),
+                        const SizedBox(height: 20),
+                        CustomTextField(
+                          labelText: 'Licence',
+                          controller: licenceController,
+                        ),
+                        const SizedBox(width: 40),
+                        CustomTextField(
+                          labelText: 'Ceinture',
+                          controller: bletController,
+                        ),
+                        const SizedBox(height: 20),
+                        CustomTextField(
+                          labelText: 'discipline',
+                          controller: disciplineController,
+                        ),
+                        const SizedBox(width: 40),
+                        CustomTextField(
+                          labelText: 'Catégorie',
+                          controller: categoryController,
+                        ),
+                        const SizedBox(height: 20),
+                        CustomTextField(
+                          labelText: 'Tuteur légal',
+                          controller: tutorController,
+                        ),
+                        const SizedBox(width: 40),
+                        CustomTextField(
+                          labelText: 'Téléphonne',
+                          controller: phoneController,
+                        ),
+                        const SizedBox(height: 20),
+                        CustomTextField(
+                          labelText: 'droit à l\'mage',
+                          controller: imageController,
+                        ),
+                        const SizedBox(width: 40),
+                        CustomTextField(
+                          labelText: 'Droit medical',
+                          controller: santeController,
+                        ),
+                        const SizedBox(height: 20),
+                        CustomTextField(
+                          labelText: 'Certificat médical',
+                          controller: medicalCertificateController,
+                        ),
+                        const SizedBox(width: 40),
+                        CustomTextField(
+                          labelText: 'Facture',
+                          controller: invoiceController,
+                        ),
+                        const SizedBox(height: 20),
+                        CustomTextField(
+                          labelText: 'Adresse)',
+                          controller: addressController,
+                        ),
+                      ]),
                   const SizedBox(height: 20),
                   CustomButton(
                     onPressed: () async {

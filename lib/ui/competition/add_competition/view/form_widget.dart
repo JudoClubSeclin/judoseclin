@@ -54,51 +54,36 @@ class FormWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 40),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 40,
+                  runSpacing: 20,
                   children: [
                     CustomTextField(
                         labelText: 'Adresse', controller: addressController),
                     const SizedBox(width: 20),
                     CustomTextField(
-                        labelText: 'Titre', controller: titleController)
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                        labelText: 'Titre', controller: titleController),
+                    const SizedBox(height: 20),
                     CustomTextField(
                         labelText: 'Sous titre',
                         controller: subtitleController),
                     const SizedBox(width: 20),
                     CustomTextField(
-                        labelText: 'date', controller: dateController)
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  CustomTextField(
-                      labelText: 'Poussin', controller: poussinController),
-                  const SizedBox(width: 20),
-                  CustomTextField(
-                      labelText: 'Benjamin', controller: benjaminController),
-                ]),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                        labelText: 'date', controller: dateController),
+                    const SizedBox(height: 20),
+                    CustomTextField(
+                        labelText: 'Poussin', controller: poussinController),
+                    const SizedBox(width: 20),
+                    CustomTextField(
+                        labelText: 'Benjamin', controller: benjaminController),
+                    const SizedBox(height: 20),
                     CustomTextField(
                         labelText: 'Minime', controller: minimeController),
                     const SizedBox(width: 20),
                     CustomTextField(
-                        labelText: 'cadet', controller: cadetController)
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                        labelText: 'cadet', controller: cadetController),
+                    const SizedBox(height: 20),
                     CustomTextField(
                         labelText: 'junior senior',
                         controller: juniorSeniorController),
