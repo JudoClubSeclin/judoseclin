@@ -162,7 +162,7 @@ class CustomAppBarState extends State<CustomAppBar> {
             ),
             drawer: Drawer(
               backgroundColor: Colors.red[400],
-              elevation: 20.0,
+              elevation: 50.0,
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: [

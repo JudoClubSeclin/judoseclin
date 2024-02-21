@@ -1,6 +1,9 @@
-abstract class LoginEvent {}
+abstract class UserEvent {}
 
-class LoginWithEmailPassword extends LoginEvent {
+class FetchUserDataEvent extends UserEvent {}
+
+
+class LoginWithEmailPassword extends UserEvent {
   final String email;
   final String password;
   final Function navigateToAccount;
@@ -11,8 +14,10 @@ class LoginWithEmailPassword extends LoginEvent {
       required this.navigateToAccount});
 }
 
-class ResetPasswordRequested extends LoginEvent {
+class ResetPasswordRequested extends UserEvent {
   final String email;
 
   ResetPasswordRequested({required this.email});
 }
+
+class LogOutEvent extends UserEvent {}

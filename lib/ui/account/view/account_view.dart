@@ -17,6 +17,10 @@ class AccountView extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<AccountBloc>().add(LoadUserInfo());
 
+
+
+
+
     return Scaffold(
       appBar: const CustomAppBar(
         title: '',

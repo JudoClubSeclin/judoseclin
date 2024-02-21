@@ -2,24 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/home_button.dart';
-
 import '../../../common/theme/theme.dart';
 import '../../../common/widgets/buttons/custom_buttom.dart';
 import '../../../common/widgets/images/image_fond_ecran.dart';
 import '../../../common/widgets/inputs/custom_textfield.dart';
-import '../bloc/login_bloc.dart';
-import '../bloc/login_event.dart';
-import '../bloc/login_state.dart';
+import '../bloc/user_bloc.dart';
+import '../bloc/user_event.dart';
+import '../bloc/user_state.dart';
 
 class LoginView extends StatelessWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  LoginView({super.key});
+
+
+  LoginView({super.key, });
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginBloc, LoginState>(
+    return BlocConsumer<UserBloc, UserState>(
       listener: (context, state) {
         if (state is LoginFailure) {
           showDialog(
@@ -75,13 +76,11 @@ class LoginView extends StatelessWidget {
                   child: CustomButton(
                     label: 'Connexion',
                     onPressed: () {
-                      BlocProvider.of<LoginBloc>(context).add(
+                     BlocProvider.of<UserBloc>(context).add(
                         LoginWithEmailPassword(
                             email: emailController.text,
                             password: passwordController.text,
-                            navigateToAccount: () {
-                              debugPrint(
-                                  "Login successful. Navigating to /account/login");
+                            navigateToAccount: () async {
                               GoRouter.of(context).go('/account');
                             }),
                       );

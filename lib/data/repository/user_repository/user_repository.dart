@@ -3,12 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/users.dart';
-import '../../../ui/common/routes/router_config.dart';
 
 abstract class UsersRepository {
   FirebaseFirestore get firestore;
 
-  Future<Map<String, dynamic>> fetchUserData();
+  Future<Map<String, dynamic>> fetchUserData(String userId);
 
   Future<void> registerUser(Users users);
 
@@ -17,6 +16,7 @@ abstract class UsersRepository {
   Future<void> resetPassword(String email);
 
   Future<void> checkAuthenticationStatus();
+  Future<void> logOut();
 }
 
 class ConcretedUserRepository extends UsersRepository {
@@ -25,12 +25,12 @@ class ConcretedUserRepository extends UsersRepository {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
-  Future<Map<String, dynamic>> fetchUserData() async {
+  Future<Map<String, dynamic>> fetchUserData(userId) async {
     try {
       User? currentUser = auth.currentUser;
       if (currentUser != null) {
         DocumentSnapshot snapshot =
-            await firestore.collection('Users').doc(currentUser.uid).get();
+        await firestore.collection('Users').doc(currentUser.uid).get();
         return snapshot.data() as Map<String, dynamic>;
       } else {
         throw Exception('No current user found.');
@@ -98,14 +98,22 @@ class ConcretedUserRepository extends UsersRepository {
 
   @override
   Future<void> checkAuthenticationStatus() async {
-    User? user = auth.currentUser;
+    FirebaseAuth.instance
+        .authStateChanges()
+        .listen((User? user) {
+      if (user == null) {
+        debugPrint('User is currently signed out!');
+      } else {
+        debugPrint('User is signed in!');
+      }
+    });
+  }
 
-    if (user != null) {
-      // L'utilisateur est déjà connecté, redirigez-le vers la page du compte.
-      goRouter.go('/account');
-    } else {
-      // L'utilisateur n'est pas connecté, redirigez-le vers la page d'accueil.
-      goRouter.go('/');
-    }
+  @override
+  Future<void> logOut(){
+    try{
+        FirebaseAuth.instance.signOut();
+    }catch(error){debugPrint('Une erreur est survenue : $error');}
+    throw UnimplementedError();
   }
 }

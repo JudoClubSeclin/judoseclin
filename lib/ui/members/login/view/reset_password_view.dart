@@ -6,9 +6,9 @@ import 'package:judoseclin/ui/common/widgets/inputs/custom_textfield.dart';
 
 import '../../../common/theme/theme.dart';
 import '../../../common/widgets/images/image_fond_ecran.dart';
-import '../bloc/login_bloc.dart';
-import '../bloc/login_event.dart';
-import '../bloc/login_state.dart';
+import '../bloc/user_bloc.dart';
+import '../bloc/user_event.dart';
+import '../bloc/user_state.dart';
 
 class ResetPasswordView extends StatelessWidget {
   final emailController = TextEditingController();
@@ -17,7 +17,7 @@ class ResetPasswordView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginBloc, LoginState>(
+    return BlocConsumer<UserBloc, UserState>(
       listener: (context, state) {
         if (state is PasswordResetSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -59,7 +59,7 @@ class ResetPasswordView extends StatelessWidget {
                 const SizedBox(height: 80),
                 CustomButton(
                   onPressed: () {
-                    BlocProvider.of<LoginBloc>(context).add(
+                    BlocProvider.of<UserBloc>(context).add(
                       ResetPasswordRequested(email: emailController.text),
                     );
                   },

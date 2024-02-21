@@ -130,6 +130,8 @@ final goRouter = GoRouter(
             return const Text('l\'id est manquant');
           }
         }),
+
+
     GoRoute(
       path: '/account',
       pageBuilder: (context, state) => MaterialPage(
@@ -137,7 +139,7 @@ final goRouter = GoRouter(
           create: (BuildContext context) {
             UsersRepository userRepository = ConcretedUserRepository();
             var interactor = AccountInteractor(userRepository);
-            return AccountBloc(accountInteractor: interactor);
+            return AccountBloc(accountInteractor: interactor, userId:'' );
           },
           child: const AccountView(),
         ),

@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,7 +30,7 @@ import 'package:judoseclin/ui/cotisations/interactor/cotisation_interactor.dart'
 import 'package:judoseclin/ui/cotisations/view/add_cotisation_view.dart';
 import 'package:judoseclin/ui/members/inscription/bloc/inscription_bloc.dart';
 import 'package:judoseclin/ui/members/interactor/users_interactor.dart';
-import 'package:judoseclin/ui/members/login/bloc/login_bloc.dart';
+import 'package:judoseclin/ui/members/login/bloc/user_bloc.dart';
 
 import 'data/repository/adherents_repository/adherents_repository.dart';
 import 'data/repository/competition_repository/competition_repository.dart';
@@ -68,9 +69,9 @@ void main() {
             BlocProvider<InscriptionCompetitionBloc>(
               create: (context) => InscriptionCompetitionBloc(firestore),
             ),
-            BlocProvider<LoginBloc>(create: (context) {
+            BlocProvider<UserBloc>(create: (context) {
               UsersRepository userRepository = ConcretedUserRepository();
-              return LoginBloc(UsersInteractor(userRepository: userRepository),
+              return UserBloc(UsersInteractor(userRepository: userRepository),
                   userId: '');
             }),
             BlocProvider<InscriptionBloc>(create: (context) {
@@ -83,7 +84,7 @@ void main() {
               create: (context) {
                 UsersRepository userRepository = ConcretedUserRepository();
                 return AccountBloc(
-                    accountInteractor: AccountInteractor(userRepository));
+                    accountInteractor: AccountInteractor(userRepository), userId: '');
               },
             ),
             BlocProvider<AdherentsBloc>(
