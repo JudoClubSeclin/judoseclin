@@ -46,9 +46,10 @@ class CompetitionsListView extends StatelessWidget {
         final competitions = snapshot.data!.docs;
 
         return Scaffold(
-          appBar: const CustomAppBar(
-            title: '',
-          ),
+          appBar: MediaQuery.of(context).size.width > 750
+              ? const CustomAppBar(title: '')
+              : AppBar(title: const Text('')), // Use a placeholder title
+          drawer: MediaQuery.of(context).size.width <= 750 ? const CustomDrawer() : null,
           body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(

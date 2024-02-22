@@ -35,9 +35,10 @@ class ListAdherentsView extends StatelessWidget {
         final adherents = snapshot.data!;
 
         return Scaffold(
-          appBar: const CustomAppBar(
-            title: '',
-          ),
+          appBar: MediaQuery.of(context).size.width > 750
+              ? const CustomAppBar(title: '')
+              : AppBar(title: const Text('')), // Use a placeholder title
+          drawer: MediaQuery.of(context).size.width <= 750 ? const CustomDrawer() : null,
           body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(

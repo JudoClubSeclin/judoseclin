@@ -11,9 +11,10 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'Compte utilisateur',
-      ),
+      appBar: MediaQuery.of(context).size.width > 750
+          ? const CustomAppBar(title: '')
+          : AppBar(title: const Text('')), // Use a placeholder title
+      drawer: MediaQuery.of(context).size.width <= 750 ? const CustomDrawer() : null,
       body: BlocBuilder<AccountBloc, AccountState>(
         builder: (context, state) {
           if (state is AccountLoading) {

@@ -24,9 +24,10 @@ class AdherentsDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: '',
-      ),
+      appBar: MediaQuery.of(context).size.width > 750
+          ? const CustomAppBar(title: '')
+          : AppBar(title: const Text('')), // Use a placeholder title
+      drawer: MediaQuery.of(context).size.width <= 750 ? const CustomDrawer() : null,
       body: DecoratedBox(
         position: DecorationPosition.background,
         decoration: const BoxDecoration(

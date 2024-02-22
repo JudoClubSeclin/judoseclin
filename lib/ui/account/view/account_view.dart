@@ -17,14 +17,14 @@ class AccountView extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<AccountBloc>().add(LoadUserInfo());
 
-
-
-
-
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: '',
-      ),
+      appBar: MediaQuery.of(context).size.width > 750
+          ? const CustomAppBar(title: '')
+          : AppBar(title: const Text('')), // Use a placeholder title
+      drawer: MediaQuery.of(context).size.width <= 750 ? const CustomDrawer() : null,
+
+
+
       body: BlocConsumer<AccountBloc, AccountState>(
         listener: (context, state) {
           if (state is AccountError) {
@@ -85,5 +85,10 @@ class AccountView extends StatelessWidget {
         },
       ),
     );
+
+
+
+
+
   }
 }
