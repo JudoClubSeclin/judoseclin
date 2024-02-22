@@ -29,7 +29,6 @@ class MoreInfo extends StatelessWidget {
           ColonneLinks(
             fraction: .2,
             size: size,
-            competitionRepository: competitionRepository,
           ),
           ColonnePage(
             docUrl: "assets/markdown/le-club.md",

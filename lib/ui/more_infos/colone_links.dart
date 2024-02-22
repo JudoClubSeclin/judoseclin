@@ -1,11 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../domain/entities/competition.dart';
-import '../../../domain/usecases/competitions/fetch_competitions_data_usecase.dart';
-import '../../data/repository/competition_repository/competition_repository.dart';
 import '../common/theme/theme.dart';
 import 'oriented_size_box.dart';
 
@@ -29,9 +28,6 @@ class CompetitionListButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(
-        'Building CompetitionListButtons with ${competitions.length} competitions');
-
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       width: double.infinity,
@@ -56,9 +52,9 @@ class FileListButtons extends StatelessWidget {
   final List<File> files;
 
   const FileListButtons({
-    super.key,
+    Key? key,
     required this.files,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -76,10 +72,7 @@ class FileListButtons extends StatelessWidget {
         fillColor: Colors.red,
         color: Colors.red[400],
         isSelected: files.map((e) => true).toList(),
-        children: files
-            .map((e) => PaddedText(
-                text: e.fileTitle.substring(0, e.fileTitle.length - 4)))
-            .toList(),
+        children: files.map((e) => PaddedText(text: e.fileTitle.substring(0, e.fileTitle.length - 4))).toList(),
       ),
     );
   }
@@ -105,13 +98,12 @@ class PaddedText extends StatelessWidget {
 class ColonneLinks extends StatefulWidget {
   final double fraction;
   final Size size;
-  final CompetitionRepository competitionRepository;
 
   const ColonneLinks({
     super.key,
     required this.fraction,
     required this.size,
-    required this.competitionRepository,
+
   });
 
   @override
@@ -119,15 +111,8 @@ class ColonneLinks extends StatefulWidget {
 }
 
 class _ColonneLinksState extends State<ColonneLinks> {
-  late FetchCompetitionDataUseCase fetchCompetitionDataUseCase;
-
   final FirebaseStorage storage = FirebaseStorage.instance;
-  @override
-  void initState() {
-    super.initState();
-    fetchCompetitionDataUseCase =
-        FetchCompetitionDataUseCase(widget.competitionRepository);
-  }
+
 
   Future<List<File>> getFiles(String folderName) async {
     final Reference folderRef = storage.ref().child(folderName);
@@ -150,113 +135,121 @@ class _ColonneLinksState extends State<ColonneLinks> {
       fraction: widget.fraction,
       child: Card(
           child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-        child: Column(children: [
-          FittedBox(
-            fit: BoxFit
-                .scaleDown, // Utilisez BoxFit.contain si vous voulez conserver les proportions
-            child: Text(
-              "Documents",
-              style: titleStyle,
-            ),
-          ),
-          FutureBuilder(
-            future: getFiles("documents"),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<File>> snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-                case ConnectionState.waiting:
-                  return const CircularProgressIndicator();
-                case ConnectionState.done:
-                  if (snapshot.hasError) {
-                    return const Text(
-                        "Erreur lors de la récupération des documents");
-                  } else if (snapshot.hasData) {
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Column(children: [
+              FittedBox(
+                fit: BoxFit
+                    .scaleDown, // Utilisez BoxFit.contain si vous voulez conserver les proportions
+                child: Text(
+                  "Documents",
+                  style: titleStyle,
+                ),
+              ),
+              FutureBuilder(
+                future: getFiles("documents"),
+                builder:
+                    (BuildContext context, AsyncSnapshot<List<File>> snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.none:
+                    case ConnectionState.waiting:
+                      return const CircularProgressIndicator();
+                    case ConnectionState.done:
+                      if (snapshot.hasError) {
+                        return const Text(
+                            "Erreur lors de la récupération des documents");
+                      } else if (snapshot.hasData) {
+                        List<File> files = snapshot.data ?? [];
+                        if (files.isEmpty) {
+                          return const Text(
+                              "Vous retrouverez l'ensemble des documents à cet endroit");
+                        } else {
+                          return FileListButtons(files: files);
+                        }
+                      }
+                      break;
+                    default:
+                      return const Text(
+                          "En attente de données..."); // Ajoutez une valeur par défaut ici
+                  }
+                  return const SizedBox(); // Une valeur de retour par défaut si aucun cas n'est atteint
+                },
+              ),
+              FittedBox(
+                fit: BoxFit
+                    .scaleDown, // Utilisez BoxFit.contain si vous voulez conserver les proportions
+                child: Text(
+                  "Ceinture Noire",
+                  style: titleStyle,
+                ),
+              ),
+              FutureBuilder(
+                future: getFiles("ceinture_noire"),
+                builder:
+                    (BuildContext context, AsyncSnapshot<List<File>> snapshot) {
+                  if (snapshot.hasData) {
                     List<File> files = snapshot.data ?? [];
                     if (files.isEmpty) {
                       return const Text(
-                          "Vous retrouverez l'ensemble des documents à cet endroit");
+                          "Vous retrouverez l'ensemble des documents sur le passage de la ceinture noire à cet endroit");
                     } else {
                       return FileListButtons(files: files);
                     }
-                  }
-                  break;
-                default:
-                  return const Text(
-                      "En attente de données..."); // Ajoutez une valeur par défaut ici
-              }
-              return const SizedBox(); // Une valeur de retour par défaut si aucun cas n'est atteint
-            },
-          ),
-          FittedBox(
-            fit: BoxFit
-                .scaleDown, // Utilisez BoxFit.contain si vous voulez conserver les proportions
-            child: Text(
-              "Ceinture Noire",
-              style: titleStyle,
-            ),
-          ),
-          FutureBuilder(
-            future: getFiles("ceinture_noire"),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<File>> snapshot) {
-              if (snapshot.hasData) {
-                List<File> files = snapshot.data ?? [];
-                if (files.isEmpty) {
-                  return const Text(
-                      "Vous retrouverez l'ensemble des documents sur le passage de la ceinture noire à cet endroit");
-                } else {
-                  return FileListButtons(files: files);
-                }
-              } else if (snapshot.hasError) {
-                return const Text(
-                    "Erreur lors de la récupération des documents");
-              } else {
-                return const CircularProgressIndicator();
-              }
-            },
-          ),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              "Compétitions",
-              style: titleStyle,
-            ),
-          ),
-          FutureBuilder<List<Competition>>(
-            future: fetchCompetitionDataUseCase.getCompetition(),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<Competition>> snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-                case ConnectionState.waiting:
-                  debugPrint('la je passe');
-                  return const CircularProgressIndicator();
-                case ConnectionState.done:
-                  if (snapshot.hasError) {
-                    debugPrint('je ne dépasse pas lerreur $snapshot.hasError');
+                  } else if (snapshot.hasError) {
                     return const Text(
-                        "Erreur lors de la récupération des compétitions");
-                  } else if (snapshot.hasData) {
-                    List<Competition> competitions = snapshot.data!;
-                    debugPrint('Data received: ${snapshot.data}');
-                    if (competitions.isEmpty) {
-                      return const Text(
-                          "Aucune compétition disponible pour le moment");
-                    } else {
-                      return CompetitionListButtons(competitions: competitions);
-                    }
+                        "Erreur lors de la récupération des documents");
+                  } else {
+                    return const CircularProgressIndicator();
                   }
-                  break;
-                default:
-                  return const Text("En attente de données...");
-              }
-              return const SizedBox();
-            },
-          ),
-        ]),
-      )),
+                },
+              ),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  "Compétitions",
+                  style: titleStyle,
+                ),
+              ),
+              FutureBuilder<QuerySnapshot>(
+                future: FirebaseFirestore.instance.collection('competition').get(),
+                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.none:
+                    case ConnectionState.waiting:
+                      debugPrint('la je passe');
+                      return const CircularProgressIndicator();
+                    case ConnectionState.done:
+                      debugPrint('Data received: ${snapshot.data}');
+                      if (snapshot.hasError) {
+                        debugPrint('Erreur: ${snapshot.error}');
+                        return const Text(
+                          "Erreur lors de la récupération des compétitions",
+                        );
+                      } else if (snapshot.hasData) {
+                        List<Competition> competitions = snapshot.data!.docs.map((doc) {
+                          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+                          return Competition.fromMap(data, doc.id);
+                        }).toList();
+
+                        debugPrint('Data received: ${snapshot.data}');
+                        if (competitions.isEmpty) {
+                          return const Text(
+                            "Aucune compétition disponible pour le moment",
+                          );
+                        } else {
+                          return CompetitionListButtons(competitions: competitions);
+                        }
+                      }
+                      break;
+                    default:
+                      return const Text("En attente de données...");
+                  }
+                  return const SizedBox();
+                },
+
+              ),
+
+              ]),
+          )),
     );
   }
 }
