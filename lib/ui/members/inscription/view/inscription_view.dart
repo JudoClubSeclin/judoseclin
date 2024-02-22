@@ -57,17 +57,18 @@ class InscriptionView extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 40),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 40.0,
+                  runSpacing: 20.0, children: [
                 CustomTextField(
                     labelText: 'NOM', controller: firstNameController),
                 const SizedBox(width: 40),
                 CustomTextField(
                     labelText: 'PRENOM', controller: lastNameController),
-              ]),
+
               const SizedBox(height: 25),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+
                   CustomTextField(
                     labelText: 'Date de naissance (JJ/MM/AAAA)',
                     controller: dateOfBirthController,
@@ -75,14 +76,15 @@ class InscriptionView extends StatelessWidget {
                   const SizedBox(width: 40),
                   CustomTextField(
                       labelText: 'E-mail', controller: emailController),
-                ],
-              ),
+
               const SizedBox(height: 25),
               CustomTextField(
                 labelText: 'Mot de passe',
                 controller: passwordController,
                 obscureText: true,
               ),
+            ],
+          ),
               const SizedBox(height: 25),
               CustomButton(
                 onPressed: () async {
