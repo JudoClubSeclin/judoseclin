@@ -121,3 +121,8 @@ flutter:
     - family: Hiromisake
       fonts:
         - asset: fonts/Hiromisake-Regular.ttf
+
+    - family: MaterialIcons
+      fonts:
+       - asset: fonts/MaterialIcons-Regular.ttf
+
