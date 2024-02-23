@@ -9,7 +9,7 @@ abstract class UsersRepository {
 
   Future<Map<String, dynamic>> fetchUserData(String userId);
 
-  Future<void> registerUser(Users users);
+  Future<void> registerUser(Users userId);
 
   Future<void> login(String email, String password);
 
@@ -30,7 +30,7 @@ class ConcretedUserRepository extends UsersRepository {
       User? currentUser = auth.currentUser;
       if (currentUser != null) {
         DocumentSnapshot snapshot =
-        await firestore.collection('Users').doc(currentUser.uid).get();
+            await firestore.collection('Users').doc(currentUser.uid).get();
         return snapshot.data() as Map<String, dynamic>;
       } else {
         throw Exception('No current user found.');
@@ -98,9 +98,7 @@ class ConcretedUserRepository extends UsersRepository {
 
   @override
   Future<void> checkAuthenticationStatus() async {
-    FirebaseAuth.instance
-        .authStateChanges()
-        .listen((User? user) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         debugPrint('User is currently signed out!');
       } else {
@@ -110,10 +108,12 @@ class ConcretedUserRepository extends UsersRepository {
   }
 
   @override
-  Future<void> logOut(){
-    try{
-        FirebaseAuth.instance.signOut();
-    }catch(error){debugPrint('Une erreur est survenue : $error');}
+  Future<void> logOut() {
+    try {
+      FirebaseAuth.instance.signOut();
+    } catch (error) {
+      debugPrint('Une erreur est survenue : $error');
+    }
     throw UnimplementedError();
   }
 }

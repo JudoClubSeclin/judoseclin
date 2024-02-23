@@ -29,17 +29,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       leading: context.canPop()
           ? IconButton(
-        icon: const Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-        ),
-        onPressed: () => context.pop(),
-      )
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              onPressed: () => context.pop(),
+            )
           : null,
       actions: <Widget>[
         if (actions != null)
-          ...actions!.map((action) =>
-              Padding(
+          ...actions!.map((action) => Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: action,
               )),
@@ -83,8 +82,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       child: Center(
                         child: Text(
                           'Liste des adhérents',
-                          style: TextStyle(
-                              fontSize: 16.0, color: Colors.white),
+                          style: TextStyle(fontSize: 16.0, color: Colors.white),
                         ),
                       ),
                     ),
@@ -98,8 +96,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       child: Center(
                         child: Text(
                           'Ajouter un adhérent',
-                          style: TextStyle(
-                              fontSize: 16.0, color: Colors.white),
+                          style: TextStyle(fontSize: 16.0, color: Colors.white),
                         ),
                       ),
                     ),
@@ -113,8 +110,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       child: Center(
                         child: Text(
                           'Ajouter une compétition',
-                          style: TextStyle(
-                              fontSize: 16.0, color: Colors.white),
+                          style: TextStyle(fontSize: 16.0, color: Colors.white),
                         ),
                       ),
                     ),
@@ -145,7 +141,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
@@ -156,7 +151,6 @@ class CustomDrawer extends StatelessWidget {
       elevation: 0,
       child: ListView(
         padding: EdgeInsets.zero,
-
         children: [
           IconButton(
             icon: const Icon(

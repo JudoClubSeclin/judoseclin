@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
 import '../../../members/login/bloc/user_bloc.dart';
 import '../../../members/login/bloc/user_state.dart';
 
 class ConnexionButton extends StatelessWidget {
-  const ConnexionButton({super.key,  });
+  const ConnexionButton({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

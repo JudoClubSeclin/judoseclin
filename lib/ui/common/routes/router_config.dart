@@ -6,13 +6,13 @@ import 'package:judoseclin/data/repository/user_repository/user_repository.dart'
 import 'package:judoseclin/domain/usecases/adherents/fetch_adherents_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/competitions/fetch_competitions_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/cotisation/fetch_cotisation_data_usecase.dart';
+import 'package:judoseclin/ui/account/view/account_page.dart';
 import 'package:judoseclin/ui/landing/landing.dart';
 
 import '../../../data/repository/adherents_repository/adherents_repository.dart';
 import '../../../data/repository/competition_repository/competition_repository.dart';
 import '../../account/bloc/account_bloc.dart';
 import '../../account/interactor/account_interactor.dart';
-import '../../account/view/account_view.dart';
 import '../../adherents/interactor/adherents_interactor.dart';
 import '../../adherents/view/add_adherents_view.dart';
 import '../../adherents/view/adherents-detail/adherents_detail_view.dart';
@@ -130,18 +130,21 @@ final goRouter = GoRouter(
             return const Text('l\'id est manquant');
           }
         }),
-
-
     GoRoute(
       path: '/account',
       pageBuilder: (context, state) => MaterialPage(
         child: BlocProvider<AccountBloc>(
           create: (BuildContext context) {
             UsersRepository userRepository = ConcretedUserRepository();
-            var interactor = AccountInteractor(userRepository);
-            return AccountBloc(accountInteractor: interactor, userId:'' );
+            var userId = '';
+            var interactor = AccountInteractor(userRepository, userId);
+
+            return AccountBloc(
+              accountInteractor: interactor, userId: '',
+              // Assurez-vous de fournir le vrai userId ici
+            );
           },
-          child: const AccountView(),
+          child: const AccountPage(),
         ),
       ),
       routes: [

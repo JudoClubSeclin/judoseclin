@@ -37,7 +37,9 @@ class FormWidget extends StatelessWidget {
       appBar: MediaQuery.of(context).size.width > 750
           ? const CustomAppBar(title: '')
           : AppBar(title: const Text('')), // Use a placeholder title
-      drawer: MediaQuery.of(context).size.width <= 750 ? const CustomDrawer() : null,
+      drawer: MediaQuery.of(context).size.width <= 750
+          ? const CustomDrawer()
+          : null,
       body: DecoratedBox(
         decoration: const BoxDecoration(
             image: DecorationImage(

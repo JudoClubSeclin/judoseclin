@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,6 +10,7 @@ import 'package:judoseclin/domain/usecases/cotisation/fetch_cotisation_data_usec
 import 'package:judoseclin/firebase_options.dart';
 import 'package:judoseclin/ui/account/bloc/account_bloc.dart';
 import 'package:judoseclin/ui/account/interactor/account_interactor.dart';
+import 'package:judoseclin/ui/account/view/account_page.dart';
 import 'package:judoseclin/ui/adherents/bloc/adherents_bloc.dart';
 import 'package:judoseclin/ui/adherents/bloc/adherents_event.dart';
 import 'package:judoseclin/ui/adherents/interactor/adherents_interactor.dart';
@@ -83,9 +83,13 @@ void main() {
             BlocProvider<AccountBloc>(
               create: (context) {
                 UsersRepository userRepository = ConcretedUserRepository();
+                var userId = '';
+                var accountInteractor =
+                    AccountInteractor(userRepository, userId);
                 return AccountBloc(
-                    accountInteractor: AccountInteractor(userRepository), userId: '');
+                    accountInteractor: accountInteractor, userId: userId);
               },
+              child: const AccountPage(),
             ),
             BlocProvider<AdherentsBloc>(
               create: (context) {
