@@ -40,9 +40,12 @@ class ConnexionButton extends StatelessWidget {
                   final state = userBloc.state;
 
                   if (state is UserDataLoadedState) {
+                    debugPrint('User is connected, navigateto /account');
                     // L'utilisateur est connecté, redirigez-le vers la page de compte
                     context.go("/account");
                   } else {
+                    debugPrint(
+                        'User is not connected navigate to/account/login');
                     // L'utilisateur n'est pas connecté, redirigez-le vers la page de connexion
                     context.go("/account/login");
                   }

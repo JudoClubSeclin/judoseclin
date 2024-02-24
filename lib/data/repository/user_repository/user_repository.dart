@@ -98,13 +98,21 @@ class ConcretedUserRepository extends UsersRepository {
 
   @override
   Future<void> checkAuthenticationStatus() async {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user != null) {
-        debugPrint('User is currently signed out!');
-      } else {
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        // L'utilisateur est connecté
         debugPrint('User is signed in!');
+        // Faites ce que vous devez faire lorsque l'utilisateur est connecté
+      } else {
+        // L'utilisateur n'est pas connecté
+        debugPrint('User is currently signed out!');
+        // Faites ce que vous devez faire lorsque l'utilisateur n'est pas connecté
       }
-    });
+    } catch (error) {
+      debugPrint('Error checking authentication status: $error');
+      rethrow;
+    }
   }
 
   @override
