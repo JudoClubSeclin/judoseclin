@@ -17,9 +17,7 @@ class AccountPage extends StatelessWidget {
     context.read<AccountBloc>().add(LoadUserInfo());
 
     return Scaffold(
-      appBar: MediaQuery.of(context).size.width > 750
-          ? const CustomAppBar(title: '')
-          : AppBar(title: const Text('')), // Utilisez un titre de substitution
+      appBar: const CustomAppBar(title: ''),
       drawer: MediaQuery.of(context).size.width <= 750
           ? const CustomDrawer()
           : null,

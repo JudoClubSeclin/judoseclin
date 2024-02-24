@@ -27,7 +27,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         title,
         textAlign: TextAlign.center,
       ),
-      leading: context.canPop()
+      leading: MediaQuery.sizeOf(context).width >750 ? context.canPop()
           ? IconButton(
               icon: const Icon(
                 Icons.arrow_back,
@@ -35,7 +35,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               onPressed: () => context.pop(),
             )
-          : null,
+          : null : IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
       actions: <Widget>[
         if (actions != null)
           ...actions!.map((action) => Padding(
@@ -67,7 +67,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         FutureBuilder<bool>(
           future: hasAccess(),
           builder: (context, snapshot) {
-            final bool hasAccess = snapshot.data ?? false;
+            final bool hasAccess = snapshot.data != null && MediaQuery.sizeOf(context).width > 750;
             debugPrint('hasAccess: $hasAccess');
             if (hasAccess) {
               return Row(
@@ -146,8 +146,12 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      backgroundColor: Colors.red[400],
+    return Scaffold(
+      appBar:  AppBar(
+        title: const Text(''),
+        backgroundColor: Colors.red[400],
+      ),
+    drawer:Drawer(
       elevation: 0,
       child: ListView(
         padding: EdgeInsets.zero,
@@ -211,6 +215,7 @@ class CustomDrawer extends StatelessWidget {
           ),
         ],
       ),
+    )
     );
   }
 }

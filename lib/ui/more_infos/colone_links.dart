@@ -52,9 +52,9 @@ class FileListButtons extends StatelessWidget {
   final List<File> files;
 
   const FileListButtons({
-    Key? key,
+    super.key,
     required this.files,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,10 @@ class FileListButtons extends StatelessWidget {
         fillColor: Colors.red,
         color: Colors.red[400],
         isSelected: files.map((e) => true).toList(),
-        children: files.map((e) => PaddedText(text: e.fileTitle.substring(0, e.fileTitle.length - 4))).toList(),
+        children: files
+            .map((e) => PaddedText(
+                text: e.fileTitle.substring(0, e.fileTitle.length - 4)))
+            .toList(),
       ),
     );
   }
@@ -112,7 +115,6 @@ class ColonneLinks extends StatefulWidget {
 class _ColonneLinksState extends State<ColonneLinks> {
   final FirebaseStorage storage = FirebaseStorage.instance;
 
-
   Future<List<File>> getFiles(String folderName) async {
     final Reference folderRef = storage.ref().child(folderName);
     final ListResult result = await folderRef.listAll();
@@ -134,62 +136,33 @@ class _ColonneLinksState extends State<ColonneLinks> {
       fraction: widget.fraction,
       child: Card(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Column(children: [
-              FittedBox(
-                fit: BoxFit
-                    .scaleDown, // Utilisez BoxFit.contain si vous voulez conserver les proportions
-                child: Text(
-                  "Documents",
-                  style: titleStyle,
-                ),
-              ),
-              FutureBuilder(
-                future: getFiles("documents"),
-                builder:
-                    (BuildContext context, AsyncSnapshot<List<File>> snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.none:
-                    case ConnectionState.waiting:
-                      return const CircularProgressIndicator();
-                    case ConnectionState.done:
-                      if (snapshot.hasError) {
-                        return const Text(
-                            "Erreur lors de la récupération des documents");
-                      } else if (snapshot.hasData) {
-                        List<File> files = snapshot.data ?? [];
-                        if (files.isEmpty) {
-                          return const Text(
-                              "Vous retrouverez l'ensemble des documents à cet endroit");
-                        } else {
-                          return FileListButtons(files: files);
-                        }
-                      }
-                      break;
-                    default:
-                      return const Text(
-                          "En attente de données..."); // Ajoutez une valeur par défaut ici
-                  }
-                  return const SizedBox(); // Une valeur de retour par défaut si aucun cas n'est atteint
-                },
-              ),
-              FittedBox(
-                fit: BoxFit
-                    .scaleDown, // Utilisez BoxFit.contain si vous voulez conserver les proportions
-                child: Text(
-                  "Ceinture Noire",
-                  style: titleStyle,
-                ),
-              ),
-              FutureBuilder(
-                future: getFiles("ceinture_noire"),
-                builder:
-                    (BuildContext context, AsyncSnapshot<List<File>> snapshot) {
-                  if (snapshot.hasData) {
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+        child: Column(children: [
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            // Utilisez BoxFit.contain si vous voulez conserver les proportions
+            child: Text(
+              "Documents",
+              style: titleStyle,
+            ),
+          ),
+          FutureBuilder(
+            future: getFiles("documents"),
+            builder:
+                (BuildContext context, AsyncSnapshot<List<File>> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                  return const CircularProgressIndicator();
+                case ConnectionState.done:
+                  if (snapshot.hasError) {
+                    return const Text(
+                        "Erreur lors de la récupération des documents");
+                  } else if (snapshot.hasData) {
                     List<File> files = snapshot.data ?? [];
                     if (files.isEmpty) {
                       return const Text(
-                          "Vous retrouverez l'ensemble des documents sur le passage de la ceinture noire à cet endroit");
+                          "Vous retrouverez l'ensemble des documents à cet endroit");
                     } else {
                       return FileListButtons(files: files);
                     }
@@ -203,8 +176,32 @@ class _ColonneLinksState extends State<ColonneLinks> {
             },
           ),
           FittedBox(
-            fit: BoxFit
-                .scaleDown, // Utilisez BoxFit.contain si vous voulez conserver les proportions
+            fit: BoxFit.scaleDown,
+            // Utilisez BoxFit.contain si vous voulez conserver les proportions
+            child: Text(
+              "Ceinture Noire",
+              style: titleStyle,
+            ),
+          ),
+          FutureBuilder(
+            future: getFiles("ceinture_noire"),
+            builder:
+                (BuildContext context, AsyncSnapshot<List<File>> snapshot) {
+              if (snapshot.hasData) {
+                List<File> files = snapshot.data ?? [];
+                if (files.isEmpty) {
+                  return const Text(
+                      "Vous retrouverez l'ensemble des documents sur le passage de la ceinture noire à cet endroit");
+                } else {
+                  return FileListButtons(files: files);
+                }
+              }
+              return const SizedBox(); // Une valeur de retour par défaut si aucun cas n'est atteint
+            },
+          ),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            // Utilisez BoxFit.contain si vous voulez conserver les proportions
             child: Text(
               "Ceinture Noire",
               style: titleStyle,
@@ -270,56 +267,64 @@ class _ColonneLinksState extends State<ColonneLinks> {
                       return CompetitionListButtons(competitions: competitions);
                     }
                   }
-                },
-              ),
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  "Compétitions",
-                  style: titleStyle,
-                ),
-              ),
-              FutureBuilder<QuerySnapshot>(
-                future: FirebaseFirestore.instance.collection('competition').get(),
-                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.none:
-                    case ConnectionState.waiting:
-                      debugPrint('la je passe');
-                      return const CircularProgressIndicator();
-                    case ConnectionState.done:
-                      debugPrint('Data received: ${snapshot.data}');
-                      if (snapshot.hasError) {
-                        debugPrint('Erreur: ${snapshot.error}');
-                        return const Text(
-                          "Erreur lors de la récupération des compétitions",
-                        );
-                      } else if (snapshot.hasData) {
-                        List<Competition> competitions = snapshot.data!.docs.map((doc) {
-                          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-                          return Competition.fromMap(data, doc.id);
-                        }).toList();
 
-                        debugPrint('Data received: ${snapshot.data}');
-                        if (competitions.isEmpty) {
-                          return const Text(
-                            "Aucune compétition disponible pour le moment",
-                          );
-                        } else {
-                          return CompetitionListButtons(competitions: competitions);
-                        }
-                      }
-                      break;
-                    default:
-                      return const Text("En attente de données...");
+                  break;
+                default:
+                  return const Text(
+                      "En attente de données..."); // Ajoutez une valeur par défaut ici
+              }
+              return const SizedBox(height: 0,);
+            },
+          ),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              "Compétitions",
+              style: titleStyle,
+            ),
+          ),
+          FutureBuilder<QuerySnapshot>(
+            future: FirebaseFirestore.instance.collection('competition').get(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                  debugPrint('la je passe');
+                  return const CircularProgressIndicator();
+                case ConnectionState.done:
+                  debugPrint('Data received: ${snapshot.data}');
+                  if (snapshot.hasError) {
+                    debugPrint('Erreur: ${snapshot.error}');
+                    return const Text(
+                      "Erreur lors de la récupération des compétitions",
+                    );
+                  } else if (snapshot.hasData) {
+                    List<Competition> competitions =
+                        snapshot.data!.docs.map((doc) {
+                      Map<String, dynamic> data =
+                          doc.data() as Map<String, dynamic>;
+                      return Competition.fromMap(data, doc.id);
+                    }).toList();
+
+                    debugPrint('Data received: ${snapshot.data}');
+                    if (competitions.isEmpty) {
+                      return const Text(
+                        "Aucune compétition disponible pour le moment",
+                      );
+                    } else {
+                      return CompetitionListButtons(competitions: competitions);
+                    }
                   }
-                  return const SizedBox();
-                },
-
-              ),
-
-              ]),
-          )),
+                  break;
+                default:
+                  return const Text("En attente de données...");
+              }
+              return const SizedBox();
+            },
+          ),
+        ]),
+      )),
     );
   }
 }
