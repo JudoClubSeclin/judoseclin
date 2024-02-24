@@ -42,18 +42,18 @@ class ConcretedUserRepository extends UsersRepository {
   }
 
   @override
-  Future<void> registerUser(Users users) async {
+  Future<void> registerUser(Users userId) async {
     try {
       UserCredential result = await auth.createUserWithEmailAndPassword(
-        email: users.email,
-        password: users.password,
+        email: userId.email,
+        password: userId.password,
       );
       //Enregistrez l'utilisateur dans la collection 'User'
       await firestore.collection('Users').doc(result.user!.uid).set({
-        'email': users.email,
-        'firstName': users.firstName,
-        'lastName': users.lastName,
-        'dateOfBirth': users.dateOfBirth
+        'email': userId.email,
+        'firstName': userId.firstName,
+        'lastName': userId.lastName,
+        'dateOfBirth': userId.dateOfBirth
       });
     } catch (error) {
       debugPrint('Error registering user : $error');

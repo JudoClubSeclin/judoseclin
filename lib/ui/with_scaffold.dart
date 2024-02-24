@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 extension WithScaffold on Widget {
   Widget withScaffold() => Scaffold(
-    body: this,
-  );
+        body: this,
+      );
 }
 
-class test extends StatelessWidget {
-  const test({super.key});
+class Test extends StatelessWidget {
+  const Test({super.key});
 
   @override
   Widget build(BuildContext context) {

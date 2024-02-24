@@ -6,7 +6,7 @@ import '../../common/widgets/images/image_fond_ecran.dart';
 class AccountView extends StatelessWidget {
   final Map<String, dynamic> userData;
 
-  const AccountView({Key? key, required this.userData}) : super(key: key);
+  const AccountView({super.key, required this.userData});
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +45,5 @@ class AccountView extends StatelessWidget {
         ),
       ),
     );
-
-
-
-
-
   }
 }
