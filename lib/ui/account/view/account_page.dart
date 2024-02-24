@@ -23,15 +23,12 @@ class AccountPage extends StatelessWidget {
           : null,
       body: BlocBuilder<AccountBloc, AccountState>(
         builder: (context, state) {
-          if (state is AccountError) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              // Utilisez addPostFrameCallback pour afficher le SnackBar après la construction
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.message)),
-              );
-            });
-            return const Center(child: Text('Une erreur est survenue.'));
-          } else if (state is AccountLoading) {
+          if (state is AccountLoaded) {
+            return AccountView(userData: state.userData);
+          } else {
+            if (state is! AccountLoading) {
+              context.read<AccountBloc>().add(LoadUserInfo());
+            }
             return const Center(
               child: SizedBox(
                 width: 50.0,
@@ -39,10 +36,6 @@ class AccountPage extends StatelessWidget {
                 child: CircularProgressIndicator(),
               ),
             );
-          } else if (state is AccountLoaded) {
-            return AccountView(userData: state.userData);
-          } else {
-            return const Center(child: Text('Une erreur est survenue.'));
           }
         },
       ),

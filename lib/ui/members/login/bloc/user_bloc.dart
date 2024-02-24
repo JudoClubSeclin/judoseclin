@@ -14,7 +14,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<FetchUserDataEvent>((event, emit) async {
       try {
         Map<String, dynamic> userData =
-        await usersInteractor.fetchUserData(userId);
+            await usersInteractor.fetchUserData(userId);
         emit(UserDataLoadedState(userData));
       } catch (e) {
         emit(AuthenticationErrorState());
@@ -25,10 +25,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(UserLoading());
       try {
         await usersInteractor.login(event.email, event.password);
-        event.navigateToAccount();
         Map<String, dynamic> userData =
-        await usersInteractor.fetchUserData(userId);
+            await usersInteractor.fetchUserData(userId);
         emit(UserDataLoadedState(userData));
+        event.navigateToAccount();
       } catch (error) {
         emit(LoginFailure(error: error.toString()));
       }

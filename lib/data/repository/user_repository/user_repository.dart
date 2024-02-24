@@ -75,10 +75,7 @@ class ConcretedUserRepository extends UsersRepository {
       return userCredential.user;
     } catch (e) {
       debugPrint("Erreur d'authentification : $e");
-      if (e is FirebaseAuthException) {
-        throw Exception("Échec de l'authentification : ${e.message}");
-      }
-      rethrow;
+      throw Exception("Échec de l'authentification : ${e}");
     }
   }
 

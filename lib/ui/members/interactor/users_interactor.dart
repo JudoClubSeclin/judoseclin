@@ -41,6 +41,7 @@ class UsersInteractor {
       await userRepository.login(email, password);
     } catch (error) {
       debugPrint('Error de connection : $error');
+      rethrow;
     }
   }
 
