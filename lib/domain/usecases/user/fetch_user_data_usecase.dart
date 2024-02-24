@@ -7,9 +7,10 @@ class FetchUserDataUseCase {
   FetchUserDataUseCase(this.usersRepository, this.userId);
 
   Future<Map<String, dynamic>> invoke() async {
-    return await usersRepository.fetchUserData( userId);
+    return await usersRepository.fetchUserData(userId);
   }
-  Future <void> checkAuthenticationStatus() async {
-    return await usersRepository.checkAuthenticationStatus();
+
+  Future<void> checkAuthenticationStatus() async {
+    await usersRepository.checkAuthenticationStatus();
   }
 }

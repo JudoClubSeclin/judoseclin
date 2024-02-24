@@ -6,8 +6,7 @@ import '../../../../domain/entities/users.dart';
 class UsersInteractor {
   final UsersRepository userRepository;
 
-
-  UsersInteractor( {required this.userRepository});
+  UsersInteractor({required this.userRepository});
 
   Future<void> registerUser(Users users) async {
     try {
@@ -24,12 +23,14 @@ class UsersInteractor {
       rethrow;
     }
   }
+
   Future<Map<String, dynamic>> fetchUserData(String userId) async {
     try {
       final user = await userRepository.fetchUserData(userId);
       return user; // Ajoutez cette ligne pour renvoyer les données de l'utilisateur
     } catch (error) {
-      debugPrint('Erreur lors de la récupération des données utilisateur : $error');
+      debugPrint(
+          'Erreur lors de la récupération des données utilisateur : $error');
       rethrow;
     }
   }
@@ -61,7 +62,7 @@ class UsersInteractor {
     }
   }
 
- Future<void> logOut() async {
+  Future<void> logOut() async {
     await userRepository.logOut();
- }
+  }
 }

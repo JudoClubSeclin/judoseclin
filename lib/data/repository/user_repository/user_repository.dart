@@ -25,7 +25,7 @@ class ConcretedUserRepository extends UsersRepository {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
-  Future<Map<String, dynamic>> fetchUserData(userId) async {
+  Future<Map<String, dynamic>> fetchUserData(String userId) async {
     try {
       User? currentUser = auth.currentUser;
       if (currentUser != null) {
@@ -99,7 +99,7 @@ class ConcretedUserRepository extends UsersRepository {
   @override
   Future<void> checkAuthenticationStatus() async {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
+      if (user != null) {
         debugPrint('User is currently signed out!');
       } else {
         debugPrint('User is signed in!');
