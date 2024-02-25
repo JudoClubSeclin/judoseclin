@@ -1,47 +1,39 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
+import '../../../data/repository/competition_repository/competition_repository.dart';
 import '../../entities/competition.dart';
 
 class FetchCompetitionDataUseCase {
-  final firestore = FirebaseFirestore.instance;
+  final CompetitionRepository competitionRepository;
+
+  FetchCompetitionDataUseCase(this.competitionRepository);
 
   Future<List<Competition>> getCompetition() async {
     try {
       debugPrint("Fetching competition data from Firestore...");
+      Stream<Iterable<Competition>> competitionStream =
+          competitionRepository.getCompetitionStream();
 
-      QuerySnapshot snapshot = await firestore.collection('competition').get();
-      debugPrint("Competition data fetched successfully.");
+      // Utilisez 'await for' pour consommer le Stream
+      List<Competition> competitionList = [];
+      await for (var competitionIterable in competitionStream) {
+        competitionList.addAll(competitionIterable);
+      }
 
-      List<Competition> competition = snapshot.docs
-          .map((doc) => Competition.fromFirestore(
-              doc as DocumentSnapshot<Map<String, dynamic>>))
-          .toList();
-      return competition; // Renvoyez les données de la compétition
+      return competitionList;
     } catch (e) {
       debugPrint(e.toString());
-      rethrow; // Lancez l'erreur pour que la partie appelante puisse la gérer
+      rethrow;
     }
   }
 
   Future<Competition?> getCompetitionById(String competitionId) async {
     try {
       debugPrint("Fetching competition data from Firestore...");
+      Map<String, dynamic>? competitionData =
+          await competitionRepository.getById(competitionId);
 
-      // Utilisez le .doc(competitionId) pour récupérer une compétition spécifique par son ID
-      DocumentSnapshot<Map<String, dynamic>> competitionSnapshot =
-          await firestore.collection('competition').doc(competitionId).get();
-
-      if (competitionSnapshot.exists) {
-        // Si la compétition existe, créez une instance de Competition à partir des données
-        Competition competition =
-            Competition.fromFirestore(competitionSnapshot);
-
-        return competition;
-      } else {
-        // La compétition n'existe pas
-        return null;
-      }
+      return Competition.fromMap(competitionData, competitionId);
     } catch (e) {
       debugPrint(e.toString());
       rethrow;

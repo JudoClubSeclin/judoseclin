@@ -1,43 +1,38 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:judoseclin/data/repository/adherents_repository/adherents_repository.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 
 class FetchAdherentsDataUseCase {
-  final firestore = FirebaseFirestore.instance;
+  final AdherentsRepository adherentsRepository;
+
+  FetchAdherentsDataUseCase(this.adherentsRepository);
 
   Future<Iterable<Adherents>> getAdherents() async {
     try {
-      debugPrint("Fetching adherents data from Firestore...");
+      debugPrint('Fetching adherents data');
+      Stream<Iterable<Adherents>> adherentsStream =
+          adherentsRepository.getAdherentsStream();
 
-      QuerySnapshot snapshot = await firestore.collection('adherents').get();
-      debugPrint("Adherents data fetched successfully.");
-
-      Iterable<Adherents> adherents = snapshot.docs
-          .map((doc) => Adherents.fromFirestore(
-              doc as DocumentSnapshot<Map<String, dynamic>>))
-          .toList();
-      return adherents;
+      return await adherentsStream.first;
     } catch (e) {
-      debugPrint(e.toString());
-      rethrow;
+      debugPrint('Error fetching adherents data: $e');
+      return [];
     }
   }
 
   Future<Adherents?> getAdherentsById(String adherentsId) async {
     try {
-      debugPrint("Fetching adherents data from Firestore...");
+      debugPrint("Fetching adherents data...");
 
-      DocumentSnapshot<Map<String, dynamic>> adherentsSnapshot =
-          await firestore.collection('adherents').doc(adherentsId).get();
+      Map<String, dynamic>? adherentsData =
+          await adherentsRepository.getById(adherentsId);
 
-      if (adherentsSnapshot.exists) {
-        Adherents adherents = Adherents.fromFirestore(adherentsSnapshot);
-        return adherents;
-      } else {
-        return null;
-      }
+      // Utiliser la méthode fromMap pour créer une instance Adherents
+      return adherentsData != null
+          ? Adherents.fromMap(adherentsData, adherentsId)
+          : null;
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('Error fetching adherents by ID: $e');
       rethrow;
     }
   }

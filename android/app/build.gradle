@@ -21,6 +21,7 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+
 apply plugin: 'com.android.application'
 // START: FlutterFire Configuration
 apply plugin: 'com.google.gms.google-services'
@@ -46,15 +47,19 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        // TODO: Spécifiez votre propre identifiant d'application unique (https://developer.android.com/studio/build/application-id.html).
         applicationId "fr.benoitfontaine.judoseclin"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion localProperties.getProperty('flutter.minSdkVersion').toInteger()
+        // Vous pouvez mettre à jour les valeurs suivantes pour correspondre aux besoins de votre application.
+        // Pour plus d'informations, consultez : https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
+
+        def minSdk = localProperties.getProperty('flutter.minSdkVersion')
+        minSdkVersion minSdk != null ? minSdk.toInteger() : 21
+
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
+
 
     buildTypes {
         release {

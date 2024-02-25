@@ -1,15 +1,14 @@
-import 'dart:core';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+import 'package:judoseclin/ui/common/functions/date_converter.dart';
 
 class Adherents {
   final String id;
   final String firstName;
   final String lastName;
   final String email;
-  final String dateOfBirth;
+  final DateTime dateOfBirth;
   final String licence;
-  final String belt;
+  final String blet;
   final String discipline;
   final String category;
   final String tutor;
@@ -19,7 +18,6 @@ class Adherents {
   final String sante;
   final String medicalCertificate;
   final String invoice;
-  final List<String> payement;
 
   Adherents({
     required this.id,
@@ -28,7 +26,7 @@ class Adherents {
     required this.email,
     required this.dateOfBirth,
     required this.licence,
-    required this.belt,
+    required this.blet,
     required this.discipline,
     required this.category,
     required this.tutor,
@@ -38,33 +36,30 @@ class Adherents {
     required this.sante,
     required this.medicalCertificate,
     required this.invoice,
-    required this.payement,
   });
 
-  factory Adherents.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
-    final data = doc.data();
-    if (data != null) {
-      return Adherents(
-        id: doc.id,
-        firstName: data['firstName'] ?? '',
-        lastName: data['lastName'] ?? '',
-        email: data['email'] ?? '',
-        dateOfBirth: data['dateOfBirth'] ?? '',
-        licence: data['licence'] ?? '',
-        belt: data['belt'] ?? '',
-        discipline: data['discipline'] ?? '',
-        category: data['category'] ?? '',
-        tutor: data['tutor'] ?? '',
-        phone: data['phone'] ?? '',
-        address: data['address'] ?? '',
-        image: data['image'] ?? '',
-        sante: data['sante'] ?? '',
-        medicalCertificate: data['medicalCertificate'] ?? '',
-        invoice: data['invoice'] ?? '',
-        payement: List<String>.from(data['payement'] ?? []),
-      );
-    } else {
-      throw Exception('Document non trouver');
-    }
+  String get formattedDateOfBirth {
+    return DateFormat('dd/MM/yyyy').format(dateOfBirth);
+  }
+
+  factory Adherents.fromMap(Map<String, dynamic> data, String id) {
+    return Adherents(
+      id: id,
+      firstName: data['firstName'] ?? '',
+      lastName: data['lastName'] ?? '',
+      email: data['email'] ?? '',
+      dateOfBirth: DateConverter.convertToDateTime(data['dateOfBirth']),
+      licence: data['licence'] ?? '',
+      blet: data['blet'] ?? '',
+      discipline: data['discipline'] ?? '',
+      category: data['category'] ?? '',
+      tutor: data['tutor'] ?? '',
+      phone: data['phone'] ?? '',
+      address: data['address'] ?? '',
+      image: data['image'] ?? '',
+      sante: data['sante'] ?? '',
+      medicalCertificate: data['medicalCertificate'] ?? '',
+      invoice: data['invoice'] ?? '',
+    );
   }
 }
