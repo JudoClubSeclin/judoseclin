@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:judoseclin/data/repository/user_repository/user_repository.dart';
 
 class FetchUserDataUseCase {
@@ -11,8 +12,8 @@ class FetchUserDataUseCase {
       return await usersRepository.fetchUserData(userId);
     } catch (e) {
       // Gérer l'erreur selon les besoins
-      print("Erreur lors de la récupération des données utilisateur: $e");
-      throw e; // Vous pouvez choisir de relancer l'erreur ou de retourner une valeur par défaut
+      debugPrint("Erreur lors de la récupération des données utilisateur: $e");
+      rethrow; // Vous pouvez choisir de relancer l'erreur ou de retourner une valeur par défaut
     }
   }
 

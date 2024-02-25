@@ -75,7 +75,7 @@ class ConcretedUserRepository extends UsersRepository {
       return userCredential.user;
     } catch (e) {
       debugPrint("Erreur d'authentification : $e");
-      throw Exception("Échec de l'authentification : ${e}");
+      throw Exception("Échec de l'authentification : $e");
     }
   }
 
