@@ -19,6 +19,26 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
 
+  Widget? getLeading(BuildContext context) {
+    if (MediaQuery.sizeOf(context).width > 750) {
+      return context.canPop()
+          ? IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              onPressed: () => context.pop(),
+            )
+          : null;
+    } else {
+      return IconButton(
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+          icon: const Icon(Icons.menu));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -27,15 +47,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         title,
         textAlign: TextAlign.center,
       ),
-      leading: MediaQuery.sizeOf(context).width >750 ? context.canPop()
-          ? IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
-              onPressed: () => context.pop(),
-            )
-          : null : IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+      leading: getLeading(context),
       actions: <Widget>[
         if (actions != null)
           ...actions!.map((action) => Padding(
@@ -67,7 +79,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         FutureBuilder<bool>(
           future: hasAccess(),
           builder: (context, snapshot) {
-            final bool hasAccess = snapshot.data != null && MediaQuery.sizeOf(context).width > 750;
+            final bool hasAccess =
+                snapshot.data != null && MediaQuery.sizeOf(context).width > 750;
             debugPrint('hasAccess: $hasAccess');
             if (hasAccess) {
               return Row(
@@ -146,12 +159,7 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:  AppBar(
-        title: const Text(''),
-        backgroundColor: Colors.red[400],
-      ),
-    drawer:Drawer(
+    return Drawer(
       elevation: 0,
       child: ListView(
         padding: EdgeInsets.zero,
@@ -215,7 +223,6 @@ class CustomDrawer extends StatelessWidget {
           ),
         ],
       ),
-    )
     );
   }
 }
