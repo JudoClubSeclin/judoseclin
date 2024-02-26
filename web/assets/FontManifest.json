@@ -1,17 +1,17 @@
 [
   {
-    "family": "Hiromisake",
+    "family": "MaterialIcons",
     "fonts": [
       {
-        "asset": "fonts/Hiromisake-Regular.ttf"
+        "asset": "fonts/MaterialIcons-Regular.otf"
       }
     ]
   },
   {
-    "family": "MaterialIcons",
+    "family": "Hiromisake",
     "fonts": [
       {
-        "asset": "fonts/MaterialIcons-Regular.ttf"
+        "asset": "fonts/Hiromisake-Regular.ttf"
       }
     ]
   }
