@@ -1,5 +1,5 @@
 # Judo Club Seclin
-[![Website](https://github.com/JudoClubSeclin/judoseclin/actions/workflows/website-deploy.yml/badge.svg?branch=main)](https://github.com/JudoClubSeclin/judoseclin/actions/workflows/website-deploy.yml) 
+[![Website](https://github.com/JudoClubSeclin/judoseclin/actions/workflows/website-deploy.yml/badge.svg?branch=main)](https://github.com/JudoClubSeclin/judoseclin/actions/workflows/website-deploy.yml)
 [![Analysis](https://github.com/JudoClubSeclin/judoseclin/actions/workflows/code-analysis.yml/badge.svg?branch=main)](https://github.com/JudoClubSeclin/judoseclin/actions/workflows/code-analysis.yml)
 [![codecov](https://codecov.io/github/JudoClubSeclin/judoseclin/branch/main/graph/badge.svg?token=YH9ZPC2F6S)](https://codecov.io/github/JudoClubSeclin/judoseclin)
 
@@ -35,4 +35,4 @@ L'objectif de cette application est de présenter le Club, informer et permettre
 
 ---
 
-![Logo](./assets/images/logo-fond-blanc.png)
+![Logo](./app/assets/images/logo-fond-blanc.png)
