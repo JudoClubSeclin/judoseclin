@@ -4,21 +4,21 @@ Le Judo club de Seclin, qui a vu le jour en 1973, a été créer par le Docteur 
 
 # Les membres du bureau
 
-- Président : Steeve VANDENSTORME
-- Vice-président : Benoît FONTAINE
+- Président : Ludovic SPYSSCHAERT
 - Trésorière : Béatrice SPYSSCHAERT
 - Secrétaire : Coralie DORCHIES
-- Secrétaire adjointe : Ombeline LAPENDRY
-- Responsable compétition : Ludovic SPYSSCHAERT
-- membre actif : Pierre MERLEVEDE
-- Responsable comunication : Manon SPYSSCHAERT
+- Trésorière adjointe : Ombeline LAPENDRY
+- Secrétaire adjointe : Manon SPYSSCHAERT
+- membre actif : Steeve VANDENSTORME
+- Membre actif : Steeve VANDENSTORME
 - Site web : Benoît FONTAINE et Ludovic SPYSSCHAERT
 
 # Les enseignants
 
-Maitre [Gerard DUCROCQ](http://gerardducrocq.com/) 6ieme Dan, diplomé d'état (DE), conseiller technique
-Emmanuelle VANDENSTORME 3ieme Dan diplôme CQP
-Ludovic SPYSSCHAERT 1iere Dan diplôme CFEB
+Maitre [Gerard DUCROCQ](http://gerardducrocq.com/) 6ieme Dan, diplomé d'état (DE), directeur technique et professeur de judo
+Pierre MERLEVEDE, professeur de Taïso
+Ludovic SPYSSCHAERT 1iere Dan diplôme CFEB, professeur des babys-judo
+
 
 # Nous contacter
 
