@@ -26,10 +26,12 @@ extension GetItInjectableX on _i1.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i3.UserInfoRepository>(() => _i3.UserInfoRepositoryImpl());
-    gh.singleton<_i4.AuthUserRepository>(() => _i4.AuthUserRepositoryImpl());
+    gh.singleton<_i3.AuthUserRepository>(_i3.AuthUserRepositoryImpl()
+        as _i1.FactoryFunc<_i3.AuthUserRepository>);
+    gh.factory<_i4.UserInfoRepository>(() => _i4.UserInfoRepositoryImpl());
     gh.singleton<_i5.UserIsConnectedRepository>(
-        () => _i5.UserIsConnectedRepositoryImpl());
+        _i5.UserIsConnectedRepositoryImpl()
+            as _i1.FactoryFunc<_i5.UserIsConnectedRepository>);
     return this;
   }
 }

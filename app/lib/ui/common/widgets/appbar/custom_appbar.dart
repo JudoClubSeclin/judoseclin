@@ -79,8 +79,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         FutureBuilder<bool>(
           future: hasAccess(),
           builder: (context, snapshot) {
-            final bool hasAccess =
-                snapshot.data != null && MediaQuery.sizeOf(context).width > 750;
+            final bool hasAccess = snapshot.data != false &&
+                MediaQuery.sizeOf(context).width > 750;
             debugPrint('hasAccess: $hasAccess');
             if (hasAccess) {
               return Row(
