@@ -1,11 +1,12 @@
-class News {
+
+class NewsDto {
   final String titre;
-  final DateTime? datePublication;
+  final DateTime datePublication;
   final String details;
 
-  News({
+  NewsDto({
     required this.titre,
     required this.datePublication,
     required this.details,
-  });
+});
 }

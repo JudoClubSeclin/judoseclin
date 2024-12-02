@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 import 'package:judoseclin/data/repository/user_repository/user_repository.dart';
 
+
+@injectable
 class FetchUserDataUseCase {
   final UsersRepository usersRepository;
   final String userId;

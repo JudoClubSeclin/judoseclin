@@ -1,8 +1,5 @@
-abstract class AdherentsEvent {}
-
-class AddAdherentsSignUpEvent extends AdherentsEvent {
+class AdherentsDto {
   final String id;
-  final String adherentId;
   final String firstName;
   final String lastName;
   final String email;
@@ -19,9 +16,8 @@ class AddAdherentsSignUpEvent extends AdherentsEvent {
   final String medicalCertificate;
   final String invoice;
 
-  AddAdherentsSignUpEvent({
+  AdherentsDto({
     required this.id,
-    required this.adherentId,
     required this.firstName,
     required this.lastName,
     required this.email,
@@ -37,10 +33,5 @@ class AddAdherentsSignUpEvent extends AdherentsEvent {
     required this.sante,
     required this.medicalCertificate,
     required this.invoice,
-  });
-}
-
-class AddCotisationEvent extends AdherentsEvent {
-  final String adherentId;
-  AddCotisationEvent(this.adherentId) : super();
+});
 }

@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../domain/entities/competition.dart';
-import '../common/theme/theme.dart';
+import '../../theme.dart';
 import 'oriented_size_box.dart';
 
 class File {

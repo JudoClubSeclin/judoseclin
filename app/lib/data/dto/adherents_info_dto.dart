@@ -1,8 +1,5 @@
-abstract class AdherentsEvent {}
-
-class AddAdherentsSignUpEvent extends AdherentsEvent {
+class AdherentsInfoDto {
   final String id;
-  final String adherentId;
   final String firstName;
   final String lastName;
   final String email;
@@ -19,9 +16,8 @@ class AddAdherentsSignUpEvent extends AdherentsEvent {
   final String medicalCertificate;
   final String invoice;
 
-  AddAdherentsSignUpEvent({
+  AdherentsInfoDto({
     required this.id,
-    required this.adherentId,
     required this.firstName,
     required this.lastName,
     required this.email,
@@ -37,10 +33,27 @@ class AddAdherentsSignUpEvent extends AdherentsEvent {
     required this.sante,
     required this.medicalCertificate,
     required this.invoice,
-  });
-}
+});
 
-class AddCotisationEvent extends AdherentsEvent {
-  final String adherentId;
-  AddCotisationEvent(this.adherentId) : super();
+  factory AdherentsInfoDto.fromJson(Map<String, dynamic> json) {
+    return AdherentsInfoDto(
+        id: json['id'],
+        firstName:json ['firstName'],
+        lastName: json ['lastName'],
+        email: json ['email'],
+        dateOfBirth:json ['dateOfBirth'],
+        licence: json ['licence'],
+        belt: json ['belt'],
+        discipline: json ['discipline'],
+        category: json ['category'],
+        tutor: json ['tutor'],
+        phone: json ['phone'],
+        address: json ['address'],
+        image: json ['image'],
+        sante: json ['sante'],
+        medicalCertificate: json ['medicalCertificate'],
+        invoice: json ['invoice']
+    );
+
+  }
 }

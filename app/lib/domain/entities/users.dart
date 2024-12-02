@@ -1,11 +1,11 @@
 import 'package:intl/intl.dart';
-import 'package:judoseclin/ui/common/functions/date_converter.dart';
+import 'package:judoseclin/core/utils/date_converter.dart';
 
 class Users {
   final String id;
   final String firstName;
   final String lastName;
-  final DateTime dateOfBirth;
+  final DateTime? dateOfBirth;
   final String email;
   final String password;
 
@@ -18,7 +18,7 @@ class Users {
       required this.password});
 
   String get formattedDateOfBirth {
-    return DateFormat('dd/MM/yyyy').format(dateOfBirth);
+    return DateFormat('dd/MM/yyyy').format(dateOfBirth!);
   }
 
   factory Users.fromMap(Map<String, dynamic> data, String id) {

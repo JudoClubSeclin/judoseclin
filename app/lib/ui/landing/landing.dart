@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:judoseclin/core/di/api/firestore_service.dart';
+import 'package:judoseclin/data/repository/repository_competititon_impl.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/connexion_button.dart';
 
 import '../../configuration_locale.dart';
-import '../../data/repository/competition_repository/competition_repository.dart';
+import '../../data/repository/competition_repository.dart';
+import '../../injection.dart';
 import '../landing_page/landing_home.dart';
 import '../landing_page/landing_news.dart';
 import '../landing_page/landing_show_button.dart';
@@ -10,7 +13,7 @@ import '../more_infos/more_info.dart';
 
 class Landing extends StatelessWidget {
   final CompetitionRepository competitionRepository =
-      ConcretedCompetitionRepository();
+      CompetitionRepositoryImpl(getIt<FirestoreService>());
 
   Landing({
     super.key,

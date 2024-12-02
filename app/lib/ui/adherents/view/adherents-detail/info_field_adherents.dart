@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 
-import '../../../common/theme/theme.dart';
+import '../../../../theme.dart';
 import '../../../common/widgets/infos_fields/infos_fields.dart';
 import '../../interactor/adherents_interactor.dart';
 
@@ -105,7 +105,7 @@ class InfoFieldAdherents extends StatelessWidget {
                           ),
                           InfoField(
                             label: 'Ceinture:',
-                            value: adherent.blet,
+                            value: adherent.belt,
                             field: 'blet',
                             adherentsInteractor: adherentsInteractor,
                             adherent: adherent,

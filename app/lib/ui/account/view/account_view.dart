@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../common/theme/theme.dart';
+import '../../../theme.dart';
 import '../../common/widgets/images/image_fond_ecran.dart';
 
 class AccountView extends StatelessWidget {

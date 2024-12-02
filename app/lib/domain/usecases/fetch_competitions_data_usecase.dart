@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
+import 'package:injectable/injectable.dart';
 
-import '../../../data/repository/competition_repository/competition_repository.dart';
-import '../../entities/competition.dart';
+import '../../data/repository/competition_repository.dart';
+import '../entities/competition.dart';
 
+@injectable
 class FetchCompetitionDataUseCase {
   final CompetitionRepository competitionRepository;
 

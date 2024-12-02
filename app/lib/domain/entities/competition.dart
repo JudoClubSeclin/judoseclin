@@ -1,13 +1,13 @@
 import 'package:intl/intl.dart';
 
-import '../../ui/common/functions/date_converter.dart';
+import '../../core/utils/date_converter.dart';
 
 class Competition {
   final String id;
   final String address;
   final String title;
   final String subtitle;
-  final DateTime date;
+  final DateTime? date;
   final DateTime publishDate;
   final String poussin;
   final String benjamin;
@@ -20,7 +20,7 @@ class Competition {
     required this.address,
     required this.title,
     required this.subtitle,
-    required this.date,
+     this.date,
     required this.publishDate,
     required this.poussin,
     required this.benjamin,
@@ -35,8 +35,8 @@ class Competition {
   }
 
   // vérifie si la date est bien dans le futur
-  bool get isInFuture {
-    return date.isAfter(DateTime.now());
+  bool? get isInFuture {
+    return date?.isAfter(DateTime.now());
   }
 
   // Constructeur de la classe à partir d'une map

@@ -4,14 +4,14 @@ class InscriptionCompetition {
   final String id;
   final String userId;
   final String competitionId;
-  final DateTime timestamp;
+  final DateTime? timestamp;
   final bool validated;
 
   InscriptionCompetition(
       {required this.id,
       required this.userId,
       required this.competitionId,
-      required this.timestamp,
+       this.timestamp,
       this.validated = false});
 
   factory InscriptionCompetition.fromFirestore(DocumentSnapshot doc) {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:judoseclin/ui/common/theme/theme.dart';
+import 'package:judoseclin/theme.dart';
 import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/custom_buttom.dart';
 
@@ -70,7 +70,7 @@ class CompetitionDetailView extends StatelessWidget {
                     height: 20,
                   ),
                   Text(
-                    DateFormat('dd/MM/yyyy').format(competition.date),
+                    DateFormat('dd/MM/yyyy').format(competition.date!),
                     style: titleStyleSmall(context),
                     textAlign: TextAlign.center,
                   ),

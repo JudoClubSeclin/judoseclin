@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../configuration_locale.dart';
-import '../../../common/theme/theme.dart';
+import '../../../../theme.dart';
 import '../../../common/widgets/appbar/custom_appbar.dart';
 import '../../../common/widgets/buttons/custom_buttom.dart';
 import '../../../common/widgets/images/image_fond_ecran.dart';

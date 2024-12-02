@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:judoseclin/ui/common/theme/theme.dart';
+import 'package:judoseclin/theme.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 import 'package:judoseclin/ui/common/widgets/inputs/custom_textfield.dart';
 
@@ -17,7 +17,7 @@ class AddAdherentsView extends StatelessWidget {
   final emailController = TextEditingController();
   final dateOfBirthController = TextEditingController();
   final licenceController = TextEditingController();
-  final bletController = TextEditingController();
+  final beltController = TextEditingController();
   final disciplineController = TextEditingController();
   final categoryController = TextEditingController();
   final tutorController = TextEditingController();
@@ -105,7 +105,7 @@ class AddAdherentsView extends StatelessWidget {
                         const SizedBox(width: 40),
                         CustomTextField(
                           labelText: 'Ceinture',
-                          controller: bletController,
+                          controller: beltController,
                         ),
                         const SizedBox(height: 20),
                         CustomTextField(
@@ -169,7 +169,7 @@ class AddAdherentsView extends StatelessWidget {
                                 email: emailController.text.trim(),
                                 dateOfBirth: parsedDate,
                                 licence: licenceController.text.trim(),
-                                blet: bletController.text.trim(),
+                                belt: beltController.text.trim(),
                                 discipline: disciplineController.text.trim(),
                                 category: categoryController.text.trim(),
                                 tutor: tutorController.text.trim(),
@@ -190,7 +190,7 @@ class AddAdherentsView extends StatelessWidget {
                         emailController.clear();
                         dateOfBirthController.clear();
                         licenceController.clear();
-                        bletController.clear();
+                        beltController.clear();
                         disciplineController.clear();
                         categoryController.clear();
                         tutorController.clear();

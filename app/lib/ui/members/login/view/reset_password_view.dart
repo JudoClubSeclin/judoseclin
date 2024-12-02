@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/custom_buttom.dart';
 import 'package:judoseclin/ui/common/widgets/inputs/custom_textfield.dart';
 
-import '../../../common/theme/theme.dart';
+import '../../../../theme.dart';
 import '../../../common/widgets/images/image_fond_ecran.dart';
 import '../bloc/user_bloc.dart';
 import '../bloc/user_event.dart';

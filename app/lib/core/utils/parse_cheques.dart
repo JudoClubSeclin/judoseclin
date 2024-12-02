@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../domain/entities/cotisation.dart';
+import '../../domain/entities/cotisation.dart';
 
 List<Cheque> parseCheques(String chequesInput) {
   List<Cheque> cheques = [];

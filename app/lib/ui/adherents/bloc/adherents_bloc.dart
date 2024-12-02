@@ -24,7 +24,7 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
             email: event.email,
             dateOfBirth: parsedDate,
             licence: event.licence,
-            blet: event.blet,
+            belt: event.belt,
             discipline: event.discipline,
             category: event.category,
             tutor: event.tutor,

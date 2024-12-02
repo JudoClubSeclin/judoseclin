@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/domain/entities/cotisation.dart';
 
+import '../../../../core/utils/show_edit_text_fiel_dialog.dart';
 import '../../../adherents/interactor/adherents_interactor.dart';
 import '../../../cotisations/interactor/cotisation_interactor.dart';
-import '../../functions/show_edit_text_fiel_dialog.dart';
 
 class InfoField extends StatelessWidget {
   final String label;

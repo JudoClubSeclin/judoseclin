@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:judoseclin/domain/usecases/competitions/fetch_competitions_data_usecase.dart';
+import 'package:judoseclin/domain/usecases/fetch_competitions_data_usecase.dart';
 
 import '../../../../../domain/entities/competition.dart';
-import '../../../../data/repository/competition_repository/competition_repository.dart';
+import '../../../../data/repository/competition_repository.dart';
 
 class CompetitionInteractor {
   final FetchCompetitionDataUseCase fetchCompetitionDataUseCase;
