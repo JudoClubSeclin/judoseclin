@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:judoseclin/core/di/api/firestore_service.dart';
-import 'package:judoseclin/data/repository/repository_competititon_impl.dart';
+import 'package:judoseclin/data/repository/competititon_repository_impl.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/connexion_button.dart';
 
 import '../../configuration_locale.dart';

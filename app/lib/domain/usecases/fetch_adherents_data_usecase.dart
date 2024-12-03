@@ -3,11 +3,13 @@ import 'package:injectable/injectable.dart';
 import 'package:judoseclin/data/repository/adherents_repository.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 
+import '../../injection.dart';
+
 @injectable
 class FetchAdherentsDataUseCase {
-  final AdherentsRepository adherentsRepository;
+  final adherentsRepository = getIt<AdherentsRepository>();
 
-  FetchAdherentsDataUseCase(this.adherentsRepository);
+  FetchAdherentsDataUseCase();
 
   Future<Iterable<Adherents>> getAdherents() async {
     try {

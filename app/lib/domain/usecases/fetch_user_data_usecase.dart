@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:judoseclin/data/repository/user_repository/user_repository.dart';
-
+import 'package:judoseclin/data/repository/user_repository/auth_state_repository.dart';
+import '../../data/repository/user_repository/user_data_repository.dart';
 
 @injectable
 class FetchUserDataUseCase {
-  final UsersRepository usersRepository;
-  final String userId;
+  final UserDataRepository _usersDataRepository;
+  final AuthStateRepository _authStateRepository;
 
-  FetchUserDataUseCase(this.usersRepository, this.userId);
+  FetchUserDataUseCase(this._usersDataRepository, this._authStateRepository);
 
-  Future<Map<String, dynamic>> invoke() async {
+  /// Récupère les données de l'utilisateur pour un ID donné.
+  Future<Map<String, dynamic>> fetchUserData(String userId) async {
     try {
-      return await usersRepository.fetchUserData(userId);
+      return await _usersDataRepository.fetchUserData(userId);
     } catch (e) {
-      // Gérer l'erreur selon les besoins
       debugPrint("Erreur lors de la récupération des données utilisateur: $e");
-      rethrow; // Vous pouvez choisir de relancer l'erreur ou de retourner une valeur par défaut
+      rethrow;
     }
   }
 
-  Future<void> checkAuthenticationStatus() async {
-    await usersRepository.checkAuthenticationStatus();
+  /// Vérifie l'état d'authentification.
+  Future<void> isUserConnected() async {
+    try {
+      await _authStateRepository.isUserConnected;
+    } catch (e) {
+      debugPrint("Erreur lors de la vérification de l'état d'authentification: $e");
+      rethrow;
+    }
   }
 }

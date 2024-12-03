@@ -19,15 +19,19 @@ import 'core/di/api/firebase_client.dart' as _i403;
 import 'core/di/api/firestore_service.dart' as _i16;
 import 'core/di/api/storage_service.dart' as _i343;
 import 'core/di/injection_module.dart' as _i571;
-import 'data/repository/adherents_repository.dart' as _i648;
 import 'data/repository/adherents_repository_impl.dart' as _i492;
 import 'data/repository/competition_repository.dart' as _i803;
+import 'data/repository/competititon_repository_impl.dart' as _i921;
 import 'data/repository/cotisation_repository.dart' as _i601;
-import 'data/repository/repository_competititon_impl.dart' as _i641;
-import 'data/repository/user_repository/auth_user.dart' as _i1066;
-import 'data/repository/user_repository/user_info.dart' as _i207;
-import 'data/repository/user_repository/user_is_connected.dart' as _i192;
-import 'data/repository/user_repository/user_repository.dart' as _i1019;
+import 'data/repository/user_repository/auth_state_repository.dart' as _i875;
+import 'data/repository/user_repository/auth_state_repository_impl.dart'
+    as _i604;
+import 'data/repository/user_repository/auth_user_repository.dart' as _i643;
+import 'data/repository/user_repository/auth_user_repository_impl.dart'
+    as _i292;
+import 'data/repository/user_repository/user_data_repository.dart' as _i821;
+import 'data/repository/user_repository/user_data_repository_impl.dart'
+    as _i354;
 import 'domain/usecases/fetch_adherents_data_usecase.dart' as _i775;
 import 'domain/usecases/fetch_competitions_data_usecase.dart' as _i108;
 import 'domain/usecases/fetch_cotisation_data_usecase.dart' as _i813;
@@ -49,6 +53,8 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final injectionModule = _$InjectionModule();
     gh.factory<_i403.FirebaseClient>(() => _i403.FirebaseClient());
+    gh.factory<_i775.FetchAdherentsDataUseCase>(
+        () => _i775.FetchAdherentsDataUseCase());
     gh.factory<_i82.FetchInscriptionCompetitionDataUseCase>(
         () => _i82.FetchInscriptionCompetitionDataUseCase());
     gh.singleton<_i887.AppRouter>(() => _i887.AppRouter());
@@ -56,29 +62,28 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i457.FirebaseStorage>(() => injectionModule.firebaseStorage);
     gh.singleton<_i974.FirebaseFirestore>(
         () => injectionModule.firebaseFireStore);
-    gh.factory<_i207.UserInfoRepository>(() => _i207.UserInfoRepositoryImpl());
-    gh.factory<_i775.FetchAdherentsDataUseCase>(
-        () => _i775.FetchAdherentsDataUseCase(gh<_i648.AdherentsRepository>()));
     gh.factory<_i813.FetchCotisationDataUseCase>(() =>
         _i813.FetchCotisationDataUseCase(gh<_i601.CotisationRepository>()));
-    gh.singleton<_i1066.AuthUserRepository>(
-        () => _i1066.AuthUserRepositoryImpl());
-    gh.singleton<_i192.UserIsConnectedRepository>(
-        () => _i192.UserIsConnectedRepositoryImpl());
     gh.factory<_i108.FetchCompetitionDataUseCase>(() =>
         _i108.FetchCompetitionDataUseCase(gh<_i803.CompetitionRepository>()));
-    gh.factory<_i908.FetchUserDataUseCase>(() => _i908.FetchUserDataUseCase(
-          gh<_i1019.UsersRepository>(),
-          gh<String>(),
-        ));
     gh.lazySingleton<_i954.AuthService>(
         () => _i954.AuthService(gh<_i59.FirebaseAuth>()));
+    gh.factory<_i821.UserDataRepository>(
+        () => _i354.UserDataRepositoryImpl(gh<_i974.FirebaseFirestore>()));
+    gh.factory<_i643.AuthUserRepository>(
+        () => _i292.AuthUserRepositoryImpl(gh<_i59.FirebaseAuth>()));
     gh.factory<_i16.FirestoreService>(
         () => _i16.FirestoreService(gh<_i974.FirebaseFirestore>()));
+    gh.factory<_i875.AuthStateRepository>(
+        () => _i604.AuthStateRepositoryImpl(gh<_i59.FirebaseAuth>()));
     gh.factory<_i492.AdherentsRepositoryImpl>(
         () => _i492.AdherentsRepositoryImpl(gh<_i16.FirestoreService>()));
-    gh.factory<_i641.CompetitionRepositoryImpl>(
-        () => _i641.CompetitionRepositoryImpl(gh<_i16.FirestoreService>()));
+    gh.factory<_i921.CompetitionRepositoryImpl>(
+        () => _i921.CompetitionRepositoryImpl(gh<_i16.FirestoreService>()));
+    gh.factory<_i908.FetchUserDataUseCase>(() => _i908.FetchUserDataUseCase(
+          gh<_i821.UserDataRepository>(),
+          gh<_i875.AuthStateRepository>(),
+        ));
     gh.factory<_i343.StorageService>(
         () => _i343.StorageService(gh<_i457.FirebaseStorage>()));
     return this;
