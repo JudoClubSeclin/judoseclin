@@ -1,7 +1,5 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
-import 'package:judoseclin/data/dto/user_dto.dart';
 
 @LazySingleton()
 class AuthService {
@@ -9,25 +7,37 @@ class AuthService {
 
   AuthService(this._auth);
 
-  Future<User?>signIn(String email, String password) async {
+  // Connexion utilisateur
+  Future<User?> signIn(String email, String password) async {
     UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password
+      email: email,
+      password: password,
     );
     return userCredential.user;
   }
 
-  Future<void>signOut() async {
+  // Création d'un utilisateur
+  Future<User?> createUserWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    return userCredential.user;
+  }
+
+  // Déconnexion utilisateur
+  Future<void> signOut() async {
     await _auth.signOut();
   }
-  Stream<bool> get isConnected => _auth.authStateChanges().map((user) => user != null);
 
-  Stream<UserDto?> get authUser => _auth.authStateChanges().map((user) => user != null
-  ? UserDto(
-      id: user.uid,
-      name: user.displayName ?? user.email ?? "",
-      email: user.email ?? "",
-  )
-      : null
-  );
+  // Envoi d'un e-mail de réinitialisation de mot de passe
+  Future<void> sendPasswordResetEmail(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
+  }
+
+  // Récupérer l'utilisateur actuel
+  User? get currentUser => _auth.currentUser;
 }
