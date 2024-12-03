@@ -1,15 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/utils/function_admin.dart';
-import '../../../../main.dart';
+import '../../../../domain/entities/entity_module.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;
   final VoidCallback? onNavigate;
+  final auth = getIt<FirebaseAuth>();
 
-  const CustomAppBar({
+  CustomAppBar({
     super.key,
     required this.title,
     this.actions,
@@ -155,7 +157,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({super.key});
+  final auth = getIt<FirebaseAuth>();
+
+  CustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {

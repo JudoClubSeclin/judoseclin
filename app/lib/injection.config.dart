@@ -21,9 +21,7 @@ import 'core/di/api/storage_service.dart' as _i343;
 import 'core/di/injection_module.dart' as _i571;
 import 'core/router/router_config.dart' as _i1024;
 import 'data/repository/adherents_repository_impl.dart' as _i492;
-import 'data/repository/competition_repository.dart' as _i803;
 import 'data/repository/competititon_repository_impl.dart' as _i921;
-import 'data/repository/cotisation_repository.dart' as _i601;
 import 'data/repository/user_repository/auth_state_repository.dart' as _i875;
 import 'data/repository/user_repository/auth_state_repository_impl.dart'
     as _i604;
@@ -38,7 +36,7 @@ import 'domain/usecases/fetch_cotisation_data_usecase.dart' as _i813;
 import 'domain/usecases/fetch_inscription_competition_data_usecase.dart'
     as _i82;
 import 'domain/usecases/fetch_user_data_usecase.dart' as _i908;
-import 'ui/landing_page/landing_module.dart' as _i1014;
+import 'ui/landing/landing_module.dart' as _i112;
 import 'ui/ui_module.dart' as _i887;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -54,8 +52,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final injectionModule = _$InjectionModule();
     gh.factory<_i403.FirebaseClient>(() => _i403.FirebaseClient());
+    gh.factory<_i813.FetchCotisationDataUseCase>(
+        () => _i813.FetchCotisationDataUseCase());
     gh.factory<_i775.FetchAdherentsDataUseCase>(
         () => _i775.FetchAdherentsDataUseCase());
+    gh.factory<_i108.FetchCompetitionDataUseCase>(
+        () => _i108.FetchCompetitionDataUseCase());
     gh.factory<_i82.FetchInscriptionCompetitionDataUseCase>(
         () => _i82.FetchInscriptionCompetitionDataUseCase());
     gh.singleton<_i887.AppRouter>(() => _i887.AppRouter());
@@ -68,20 +70,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i909.UserAuthRepository>(() => _i26.UserAuthRepositoryImpl());
     gh.factory<_i875.AuthStateRepository>(
         () => _i604.AuthStateRepositoryImpl());
-    gh.factory<_i813.FetchCotisationDataUseCase>(() =>
-        _i813.FetchCotisationDataUseCase(gh<_i601.CotisationRepository>()));
-    gh.factory<_i108.FetchCompetitionDataUseCase>(() =>
-        _i108.FetchCompetitionDataUseCase(gh<_i803.CompetitionRepository>()));
     gh.lazySingleton<_i954.AuthService>(
         () => _i954.AuthService(gh<_i59.FirebaseAuth>()));
     gh.factory<_i16.FirestoreService>(
         () => _i16.FirestoreService(gh<_i974.FirebaseFirestore>()));
-    gh.singleton<_i1014.LandingModule>(
-        () => _i1014.LandingModule(gh<_i887.AppRouter>()));
-    gh.factory<_i492.AdherentsRepositoryImpl>(
-        () => _i492.AdherentsRepositoryImpl(gh<_i16.FirestoreService>()));
+    gh.singleton<_i112.LandingModule>(
+        () => _i112.LandingModule(gh<_i887.AppRouter>()));
     gh.factory<_i921.CompetitionRepositoryImpl>(
         () => _i921.CompetitionRepositoryImpl(gh<_i16.FirestoreService>()));
+    gh.factory<_i492.AdherentsRepositoryImpl>(
+        () => _i492.AdherentsRepositoryImpl(gh<_i16.FirestoreService>()));
     gh.factory<_i908.FetchUserDataUseCase>(() => _i908.FetchUserDataUseCase(
           gh<_i821.UserDataRepository>(),
           gh<_i875.AuthStateRepository>(),

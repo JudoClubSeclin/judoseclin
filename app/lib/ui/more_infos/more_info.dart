@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:judoseclin/core/utils/size_extensions.dart';
 
 import '../../data/repository/competition_repository.dart';
+import '../../domain/entities/entity_module.dart';
 import 'colone_links.dart';
 import 'colonne_page.dart';
 import 'orientation_stack.dart';
 
 class MoreInfo extends StatelessWidget {
-  final CompetitionRepository competitionRepository;
+  final competitionRepository = getIt<CompetitionRepository>();
 
-  const MoreInfo({super.key, required this.competitionRepository});
+  MoreInfo({super.key});
 
   @override
   Widget build(BuildContext context) {

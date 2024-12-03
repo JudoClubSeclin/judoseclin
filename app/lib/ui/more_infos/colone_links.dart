@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../domain/entities/competition.dart';
+import '../../domain/entities/entity_module.dart';
 import '../../theme.dart';
 import 'oriented_size_box.dart';
 
@@ -102,7 +103,7 @@ class ColonneLinks extends StatefulWidget {
   final double fraction;
   final Size size;
 
-  const ColonneLinks({
+  ColonneLinks({
     super.key,
     required this.fraction,
     required this.size,
@@ -113,7 +114,8 @@ class ColonneLinks extends StatefulWidget {
 }
 
 class _ColonneLinksState extends State<ColonneLinks> {
-  final FirebaseStorage storage = FirebaseStorage.instance;
+  final storage = getIt<FirebaseStorage>();
+  final firestore = getIt<FirebaseFirestore>();
 
   Future<List<File>> getFiles(String folderName) async {
     final Reference folderRef = storage.ref().child(folderName);
@@ -183,7 +185,6 @@ class _ColonneLinksState extends State<ColonneLinks> {
               style: titleStyle,
             ),
           ),
-
           FutureBuilder(
             future: getFiles("ceinture_noire"),
             builder:
@@ -204,7 +205,6 @@ class _ColonneLinksState extends State<ColonneLinks> {
               }
             },
           ),
-
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
@@ -213,7 +213,7 @@ class _ColonneLinksState extends State<ColonneLinks> {
             ),
           ),
           FutureBuilder<QuerySnapshot>(
-            future: FirebaseFirestore.instance.collection('competition').get(),
+            future: firestore.collection('competition').get(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               switch (snapshot.connectionState) {

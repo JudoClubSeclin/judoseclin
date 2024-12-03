@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
-import 'package:judoseclin/ui/landing_page/landing_module.dart';
+import 'package:judoseclin/ui/landing/landing_module.dart';
 
 import '../../domain/entities/entity_module.dart';
 

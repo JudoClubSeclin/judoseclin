@@ -1,29 +1,22 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:get_it/get_it.dart';
 import 'package:judoseclin/core/router/router_config.dart';
+import 'package:judoseclin/data/repository/repository_module.dart';
 import 'package:judoseclin/firebase_options.dart';
 import 'package:judoseclin/injection.dart';
 import 'package:judoseclin/theme.dart';
 
-
-
-FirebaseAuth auth = FirebaseAuth.instance;
-final firestore = FirebaseFirestore.instance;
-
-void main() {
-  usePathUrlStrategy();
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
   );
 
   configureDependencies();
-
+  setupDataModule();
   runApp(const MyApp());
-
 }
 
 class MyApp extends StatelessWidget {
@@ -31,7 +24,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  final appRouterConfig = GetIt.I<AppRouterConfig>();
+    final appRouterConfig = GetIt.I<AppRouterConfig>();
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Le cocon.ssbe',

@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:judoseclin/data/repository/cotisation_repository.dart';
 import 'package:judoseclin/domain/entities/cotisation.dart';
-
+import 'package:judoseclin/injection.dart';
 
 @injectable
 class FetchCotisationDataUseCase {
-  final CotisationRepository cotisationRepository;
-
-  FetchCotisationDataUseCase(this.cotisationRepository);
+  final cotisationRepository = getIt<CotisationRepository>();
 
   Future<Iterable<Cotisation>> getCotisation() async {
     try {

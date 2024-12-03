@@ -17,10 +17,8 @@ class AccountPage extends StatelessWidget {
     context.read<AccountBloc>().add(LoadUserInfo());
 
     return Scaffold(
-      appBar: const CustomAppBar(title: ''),
-      drawer: MediaQuery.of(context).size.width <= 750
-          ? const CustomDrawer()
-          : null,
+      appBar: CustomAppBar(title: ''),
+      drawer: MediaQuery.of(context).size.width <= 750 ? CustomDrawer() : null,
       body: BlocBuilder<AccountBloc, AccountState>(
         builder: (context, state) {
           if (state is AccountLoaded) {

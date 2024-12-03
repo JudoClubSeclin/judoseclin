@@ -2,13 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/repository/competition_repository.dart';
+import '../../injection.dart';
 import '../entities/competition.dart';
 
 @injectable
 class FetchCompetitionDataUseCase {
-  final CompetitionRepository competitionRepository;
-
-  FetchCompetitionDataUseCase(this.competitionRepository);
+  final competitionRepository = getIt<CompetitionRepository>();
 
   Future<List<Competition>> getCompetition() async {
     try {

@@ -51,10 +51,8 @@ class AddAdherentsView extends StatelessWidget {
 
   Widget _buildForm(BuildContext context, String adherentId) {
     return Scaffold(
-        appBar: const CustomAppBar(title: ''),
-        drawer: MediaQuery.sizeOf(context).width > 750
-            ? null
-            : const CustomDrawer(),
+        appBar: CustomAppBar(title: ''),
+        drawer: MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
         body: DecoratedBox(
           decoration: const BoxDecoration(
             image: DecorationImage(

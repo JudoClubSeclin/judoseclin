@@ -34,9 +34,8 @@ class FormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: ''),
-      drawer:
-          MediaQuery.sizeOf(context).width > 750 ? null : const CustomDrawer(),
+      appBar: CustomAppBar(title: ''),
+      drawer: MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
       body: DecoratedBox(
         decoration: const BoxDecoration(
             image: DecorationImage(
