@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:get_it/get_it.dart';
+import 'package:judoseclin/core/router/router_config.dart';
 import 'package:judoseclin/firebase_options.dart';
 import 'package:judoseclin/injection.dart';
 import 'package:judoseclin/theme.dart';
@@ -29,11 +31,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+  final appRouterConfig = GetIt.I<AppRouterConfig>();
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Le cocon.ssbe',
       theme: theme,
+      routerConfig: appRouterConfig.router,
     );
   }
 }

@@ -1,18 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../domain/entities/entity_module.dart';
 import 'auth_state_repository.dart';
 
 @Injectable(as: AuthStateRepository)
 class AuthStateRepositoryImpl implements AuthStateRepository {
-  final FirebaseAuth _firebaseAuth;
+  final  firebaseAuth = getIt<FirebaseAuth>();
 
-  AuthStateRepositoryImpl(this._firebaseAuth);
 
   @override
-  Stream<User?> get currentUser => _firebaseAuth.authStateChanges();
+  Stream<User?> get currentUser => firebaseAuth.authStateChanges();
 
   @override
   Stream<bool> get isUserConnected =>
-      _firebaseAuth.authStateChanges().map((user) => user != null);
+      firebaseAuth.authStateChanges().map((user) => user != null);
 }

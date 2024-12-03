@@ -1,4 +1,3 @@
-
 import 'package:injectable/injectable.dart';
 import 'package:judoseclin/core/di/api/firestore_service.dart';
 import 'package:flutter/material.dart';
