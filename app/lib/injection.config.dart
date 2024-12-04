@@ -52,12 +52,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final injectionModule = _$InjectionModule();
     gh.factory<_i403.FirebaseClient>(() => _i403.FirebaseClient());
-    gh.factory<_i813.FetchCotisationDataUseCase>(
-        () => _i813.FetchCotisationDataUseCase());
-    gh.factory<_i775.FetchAdherentsDataUseCase>(
-        () => _i775.FetchAdherentsDataUseCase());
     gh.factory<_i108.FetchCompetitionDataUseCase>(
         () => _i108.FetchCompetitionDataUseCase());
+    gh.factory<_i775.FetchAdherentsDataUseCase>(
+        () => _i775.FetchAdherentsDataUseCase());
+    gh.factory<_i813.FetchCotisationDataUseCase>(
+        () => _i813.FetchCotisationDataUseCase());
     gh.factory<_i82.FetchInscriptionCompetitionDataUseCase>(
         () => _i82.FetchInscriptionCompetitionDataUseCase());
     gh.singleton<_i887.AppRouter>(() => _i887.AppRouter());
