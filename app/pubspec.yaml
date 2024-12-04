@@ -15,11 +15,11 @@ dependencies:
   cupertino_icons: ^1.0.8
   freelance: ^1.0.2
   flutter_markdown: ^0.7.3
-  carousel_slider: ^4.2.1
+  carousel_slider: ^5.0.0
   flutter_bloc: ^8.1.6
   equatable: ^2.0.5
   freezed: ^2.5.2
-  flutter_hooks: ^0.18.6
+  flutter_hooks: ^0.20.5
   firebase_core: ^3.3.0
   firebase_auth: ^5.1.4
   firebase_storage: ^12.1.3
@@ -37,7 +37,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
   build_runner: ^2.4.11
   json_serializable: ^6.8.0
   injectable_generator: ^2.6.2
