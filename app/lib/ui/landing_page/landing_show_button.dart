@@ -22,8 +22,8 @@ class ShowButton extends StatelessWidget {
               duration: const Duration(seconds: 1), curve: Curves.easeOut);
         },
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.red[400]),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          backgroundColor: WidgetStateProperty.all(Colors.red[400]),
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30.0),
               side: const BorderSide(color: Colors.red),

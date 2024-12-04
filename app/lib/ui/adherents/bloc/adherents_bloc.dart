@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 
 import '../interactor/adherents_interactor.dart';

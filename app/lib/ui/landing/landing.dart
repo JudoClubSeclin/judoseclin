@@ -11,7 +11,7 @@ import '../more_infos/more_info.dart';
 class Landing extends StatelessWidget {
   final CompetitionRepository competitionRepository;
 
-  Landing({
+  const Landing({
     super.key,
     required this.competitionRepository,
   });

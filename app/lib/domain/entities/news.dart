@@ -1,3 +1,4 @@
+
 class News {
   final String titre;
   final DateTime? datePublication;
@@ -9,3 +10,4 @@ class News {
     required this.details,
   });
 }
+

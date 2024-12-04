@@ -1,5 +1,5 @@
 // user_bloc.dart
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:judoseclin/ui/members/interactor/users_interactor.dart';
 
 import 'user_event.dart';

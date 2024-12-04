@@ -36,6 +36,7 @@ import 'domain/usecases/fetch_cotisation_data_usecase.dart' as _i813;
 import 'domain/usecases/fetch_inscription_competition_data_usecase.dart'
     as _i82;
 import 'domain/usecases/fetch_user_data_usecase.dart' as _i908;
+import 'ui/account/account_module.dart' as _i917;
 import 'ui/landing/landing_module.dart' as _i112;
 import 'ui/ui_module.dart' as _i887;
 
@@ -76,6 +77,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i16.FirestoreService(gh<_i974.FirebaseFirestore>()));
     gh.singleton<_i112.LandingModule>(
         () => _i112.LandingModule(gh<_i887.AppRouter>()));
+    gh.singleton<_i917.AccountModule>(
+        () => _i917.AccountModule(gh<_i887.AppRouter>()));
     gh.factory<_i921.CompetitionRepositoryImpl>(
         () => _i921.CompetitionRepositoryImpl(gh<_i16.FirestoreService>()));
     gh.factory<_i492.AdherentsRepositoryImpl>(

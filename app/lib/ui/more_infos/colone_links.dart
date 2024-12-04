@@ -103,7 +103,7 @@ class ColonneLinks extends StatefulWidget {
   final double fraction;
   final Size size;
 
-  ColonneLinks({
+  const ColonneLinks({
     super.key,
     required this.fraction,
     required this.size,
