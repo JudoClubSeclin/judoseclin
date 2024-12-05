@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "judoseclin-e4b0f"
-  }
+    "default": "judoseclin-e4b0f",
+    "judo_seclin": "judoseclin-e4b0f"
+  },
+  "targets": {},
+  "etags": {}
 }
