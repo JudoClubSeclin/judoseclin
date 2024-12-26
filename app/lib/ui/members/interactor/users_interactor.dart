@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:judoseclin/data/repository/user_repository/auth_state_repository.dart';
-import 'package:judoseclin/data/repository/user_repository/user_auth_repository.dart';
-import 'package:judoseclin/data/repository/user_repository/user_data_repository.dart';
+import 'package:injectable/injectable.dart';
+import 'package:judoseclin/data/repository/user_repository/auth_state_repository_impl.dart';
+import 'package:judoseclin/data/repository/user_repository/user_data_repository_impl.dart';
+
 import '../../../../domain/entities/users.dart';
-import '../../../domain/entities/entity_module.dart';
+import '../../../data/repository/user_repository/user_auth_repository_impl.dart';
 
+@singleton
 class UsersInteractor {
-  final authUserRepository = getIt<UserAuthRepository>();
-  final userData = getIt<UserDataRepository>();
-  final stateRepository = getIt<AuthStateRepository>();
-
+  final authUserRepository = UserAuthRepositoryImpl();
+  final userData = UserDataRepositoryImpl();
+  final stateRepository = AuthStateRepositoryImpl();
 
   Future<void> registerUser(Users user) async {
     try {

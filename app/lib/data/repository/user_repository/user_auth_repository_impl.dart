@@ -1,23 +1,18 @@
-
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:judoseclin/data/repository/user_repository/user_auth_repository.dart';
 
-import '../../../domain/entities/entity_module.dart';
-
 @Singleton(as: UserAuthRepository)
 class UserAuthRepositoryImpl implements UserAuthRepository {
-  final  auth = getIt<FirebaseAuth>();
-  final  firestore = getIt<FirebaseFirestore>();
-
+  final auth = FirebaseAuth.instance;
+  final firestore = FirebaseFirestore.instance;
 
   @override
   Future<User?> login(String email, String password) async {
     try {
-      final result = await auth.signInWithEmailAndPassword(email: email, password: password);
+      final result = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
       return result.user;
     } catch (e) {
       rethrow;
@@ -25,9 +20,11 @@ class UserAuthRepositoryImpl implements UserAuthRepository {
   }
 
   @override
-  Future<void> register(String email, String password, Map<String, dynamic> userInfo) async {
+  Future<void> register(
+      String email, String password, Map<String, dynamic> userInfo) async {
     try {
-      final result = await auth.createUserWithEmailAndPassword(email: email, password: password);
+      final result = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       // Ajoutez des données utilisateur supplémentaires ici
       if (result.user != null) {
         final uid = result.user!.uid;

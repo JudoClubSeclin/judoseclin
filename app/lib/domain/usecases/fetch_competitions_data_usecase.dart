@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../core/di/injection.dart';
 import '../../data/repository/competition_repository.dart';
-import '../../injection.dart';
 import '../entities/competition.dart';
 
 @injectable

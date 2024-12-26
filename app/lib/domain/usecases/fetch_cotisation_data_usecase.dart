@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:judoseclin/core/di/injection.dart';
 import 'package:judoseclin/data/repository/cotisation_repository.dart';
 import 'package:judoseclin/domain/entities/cotisation.dart';
-import 'package:judoseclin/injection.dart';
 
 @injectable
 class FetchCotisationDataUseCase {

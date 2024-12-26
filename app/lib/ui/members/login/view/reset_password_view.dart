@@ -6,9 +6,9 @@ import 'package:judoseclin/ui/common/widgets/inputs/custom_textfield.dart';
 
 import '../../../../theme.dart';
 import '../../../common/widgets/images/image_fond_ecran.dart';
-import '../bloc/user_bloc.dart';
-import '../bloc/user_event.dart';
-import '../bloc/user_state.dart';
+import '../user_bloc.dart';
+import '../user_event.dart';
+import '../user_state.dart';
 
 class ResetPasswordView extends StatelessWidget {
   final emailController = TextEditingController();

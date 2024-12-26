@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../members/login/bloc/user_bloc.dart';
-import '../../../members/login/bloc/user_state.dart';
+import '../../../members/login/user_bloc.dart';
+import '../../../members/login/user_state.dart';
 
 class ConnexionButton extends StatelessWidget {
   const ConnexionButton({
@@ -44,10 +44,9 @@ class ConnexionButton extends StatelessWidget {
                     // L'utilisateur est connecté, redirigez-le vers la page de compte
                     context.go("/account");
                   } else {
-                    debugPrint(
-                        'User is not connected navigate to/account/login');
+                    debugPrint('User is not connected navigate to /login');
                     // L'utilisateur n'est pas connecté, redirigez-le vers la page de connexion
-                    context.go("/account/login");
+                    context.go("/login");
                   }
                 },
               ),

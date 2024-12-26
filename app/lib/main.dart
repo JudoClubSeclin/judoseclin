@@ -2,10 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:judoseclin/core/router/router_config.dart';
-import 'package:judoseclin/data/repository/repository_module.dart';
 import 'package:judoseclin/firebase_options.dart';
-import 'package:judoseclin/injection.dart';
 import 'package:judoseclin/theme.dart';
+
+import 'core/di/injection.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +15,6 @@ void main() async {
   );
 
   configureDependencies();
-  setupDataModule();
   runApp(const MyApp());
 }
 

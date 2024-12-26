@@ -5,6 +5,7 @@ import '../interactor/account_interactor.dart';
 import 'account_event.dart';
 import 'account_state.dart';
 
+
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final AccountInteractor accountInteractor;
   final String userId;

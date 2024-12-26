@@ -2,12 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:judoseclin/data/repository/user_repository/user_data_repository.dart';
 
-import '../../../domain/entities/entity_module.dart';
-
 @Injectable(as: UserDataRepository)
 class UserDataRepositoryImpl implements UserDataRepository {
-  final  firestore = getIt<FirebaseFirestore>();
-
+  final firestore = FirebaseFirestore.instance;
 
   @override
   Future<Map<String, dynamic>> fetchUserData(String userId) async {
@@ -18,16 +15,19 @@ class UserDataRepositoryImpl implements UserDataRepository {
       }
       throw Exception('Utilisateur non trouvé');
     } catch (e) {
-      throw Exception('Erreur lors de la récupération des données utilisateur : $e');
+      throw Exception(
+          'Erreur lors de la récupération des données utilisateur : $e');
     }
   }
 
   @override
-  Future<void> updateUserData(String userId, Map<String, dynamic> newData) async {
+  Future<void> updateUserData(
+      String userId, Map<String, dynamic> newData) async {
     try {
       await firestore.collection('Users').doc(userId).update(newData);
     } catch (e) {
-      throw Exception('Erreur lors de la mise à jour des données utilisateur : $e');
+      throw Exception(
+          'Erreur lors de la mise à jour des données utilisateur : $e');
     }
   }
 }

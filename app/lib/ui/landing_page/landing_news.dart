@@ -5,7 +5,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:judoseclin/core/utils/size_extensions.dart';
 
-import '../../domain/entities/entity_module.dart';
 import '../../theme.dart';
 
 class LandingNews extends HookWidget {
@@ -16,7 +15,7 @@ class LandingNews extends HookWidget {
     final mesNews = useState<List<News>>([]);
 
     useEffect(() {
-      var db = getIt<FirebaseFirestore>();
+      var db = FirebaseFirestore.instance;
       db
           .collection("news")
           .orderBy("date_publication", descending: true)

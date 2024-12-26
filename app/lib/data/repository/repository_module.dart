@@ -11,9 +11,9 @@ import 'package:judoseclin/data/repository/user_repository/user_auth_repository.
 import 'package:judoseclin/data/repository/user_repository/user_auth_repository_impl.dart';
 import 'package:judoseclin/data/repository/user_repository/user_data_repository.dart';
 import 'package:judoseclin/data/repository/user_repository/user_data_repository_impl.dart';
-import 'package:judoseclin/injection.dart';
 
 import '../../core/di/api/firestore_service.dart';
+import '../../core/di/injection.dart';
 
 void setupDataModule() {
   if (!getIt.isRegistered<FirebaseFirestore>()) {
