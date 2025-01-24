@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:judoseclin/core/utils/size_extensions.dart';
+import 'package:judoseclin/theme.dart';
 
 class LandingHome extends StatelessWidget {
   const LandingHome({super.key});
@@ -38,17 +39,7 @@ class LandingHome extends StatelessWidget {
             ),
             child: Text(
               "JUDO CLUB SECLIN",
-              style: TextStyle(
-                fontFamily: 'Hiromisake',
-                fontSize: titlefont,
-                color: Colors.black,
-                shadows: const [
-                  Shadow(
-                      offset: Offset(1.0, 1.0),
-                      blurRadius: 3.0,
-                      color: Colors.white)
-                ],
-              ),
+              style: titleStyleLarge(context)
             ),
           )
         ],

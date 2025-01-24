@@ -209,7 +209,7 @@ class _ColonneLinksState extends State<ColonneLinks> {
             fit: BoxFit.scaleDown,
             child: Text(
               "Compétitions",
-              style: titleStyle,
+              style: titleStyleSmall(context),
             ),
           ),
           FutureBuilder<QuerySnapshot>(
@@ -219,12 +219,12 @@ class _ColonneLinksState extends State<ColonneLinks> {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
                 case ConnectionState.waiting:
-                  debugPrint('la je passe');
+
                   return const CircularProgressIndicator();
                 case ConnectionState.done:
-                  debugPrint('Data received: ${snapshot.data}');
+                 // debugPrint('Data received: ${snapshot.data}');
                   if (snapshot.hasError) {
-                    debugPrint('Erreur: ${snapshot.error}');
+                  //  debugPrint('Erreur: ${snapshot.error}');
                     return const Text(
                       "Erreur lors de la récupération des compétitions",
                     );

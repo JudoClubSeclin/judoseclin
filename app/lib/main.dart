@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     final appRouterConfig = GetIt.I<AppRouterConfig>();
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Le cocon.ssbe',
+      title: 'Judo club Seclin',
       theme: theme,
       routerConfig: appRouterConfig.router,
     );
