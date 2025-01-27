@@ -239,7 +239,7 @@ class _ColonneLinksState extends State<ColonneLinks> {
                     debugPrint('Data received: ${snapshot.data}');
                     if (competitions.isEmpty) {
                       return const Text(
-                        "Aucunes compétitions disponible pour le moment",
+                        "Aucune compétition disponible pour le moment",
                       );
                     } else {
                       return CompetitionListButtons(competitions: competitions);
