@@ -21,11 +21,16 @@ class AccountView extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: ListView(
           children: [
-            Text(
-              "Bienvenue sur votre espace",
-              style: titleStyleMedium(context),
-              textAlign: TextAlign.center,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Bonjour',style: titleStyleMedium(context),),
+                const SizedBox(width: 15,),
+                Text(userData['lastName'] ?? 'Not available',style: titleStyleMedium(context),),
+              ],
             ),
+
+
             ListTile(
               title: const Text('Email: ',
                   style: TextStyle(fontWeight: FontWeight.bold)),

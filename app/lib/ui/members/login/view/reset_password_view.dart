@@ -24,7 +24,7 @@ class ResetPasswordView extends StatelessWidget {
             const SnackBar(content: Text("Lien de réinitialisation envoyé!")),
           );
           // Redirection vers la page de connexion après l'envoi réussi
-          context.go('/account/login');
+          context.go('/login');
         } else if (state is PasswordResetFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.error)),
@@ -67,7 +67,7 @@ class ResetPasswordView extends StatelessWidget {
                 ),
                 const SizedBox(height: 80),
                 TextButton(
-                    onPressed: () => context.go('/account/login'),
+                    onPressed: () => context.go('/login'),
                     child: Text(
                       "Connexion",
                       style: TextStyle(color: Colors.red[400]),

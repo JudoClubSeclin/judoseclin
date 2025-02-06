@@ -23,7 +23,7 @@ class CustomTextField extends StatelessWidget {
 
     double maxWidth = 400.0;
 
-    //calculez la largeur souhaitée en fonction de la taille de l'écran
+    // Calculez la largeur souhaitée en fonction de la taille de l'écran
     double textFieldWidth = screenWidth * 0.8;
     if (screenWidth > 800) {
       textFieldWidth = maxWidth;
@@ -41,25 +41,25 @@ class CustomTextField extends StatelessWidget {
           child: TextField(
             controller: controller,
             style: TextStyle(
-              fontSize: 15 * scaleFactor,
+              fontSize: 14 * scaleFactor, // Réduire la taille du texte
             ),
             decoration: InputDecoration(
               labelText: labelText,
               labelStyle: textStyleInput(context, labelText),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(15.0), // Réduire la taille du rayon
                 borderSide: BorderSide(
                   color: borderColor,
                 ),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(15.0), // Réduire la taille du rayon
                 borderSide: BorderSide(
                   color: borderColor,
                 ),
               ),
               contentPadding: EdgeInsets.symmetric(
-                vertical: 8 * scaleFactor,
+                vertical: 3 * scaleFactor, // Réduire la hauteur verticale
                 horizontal: 10 * scaleFactor,
               ),
             ),

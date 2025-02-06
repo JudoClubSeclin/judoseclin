@@ -1,17 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/utils/function_admin.dart';
-import '../../../../domain/entities/entity_module.dart';
+import '../../../../theme.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;
   final VoidCallback? onNavigate;
-  final auth = getIt<FirebaseAuth>();
 
-  CustomAppBar({
+  const CustomAppBar({
     super.key,
     required this.title,
     this.actions,
@@ -21,212 +18,113 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
 
-  Widget? getLeading(BuildContext context) {
-    if (MediaQuery.sizeOf(context).width > 750) {
+  Widget getLeading(BuildContext context) {
+    final isWideScreen = MediaQuery.of(context).size.width > 749;
+
+    if (!isWideScreen) {
+      return Builder(
+        builder: (BuildContext context) {
+          return IconButton(
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            icon: Icon(
+              Icons.menu,
+              color: theme.colorScheme.onPrimary,
+            ),
+          );
+        },
+      );
+    } else {
       return context.canPop()
           ? IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
-              onPressed: () => context.pop(),
-            )
-          : null;
-    } else {
-      return IconButton(
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
-          icon: const Icon(Icons.menu));
+        icon:  Icon(Icons.arrow_back, color:theme.colorScheme.secondary),
+        onPressed: () => context.pop(),
+      )
+          : Container(); // Retourne un widget vide si on ne peut pas revenir en arrière
     }
+  }
+
+  List<Widget> generateNavActions(BuildContext context) {
+    final List<Map<String, String>> navItems = [
+      {'label': 'Accueil', 'route': '/'},
+
+    ];
+
+    return navItems.map((item) {
+      return GestureDetector(
+        onTap: () => GoRouter.of(context).go(item['route']!),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Center(
+            child: Text(
+              item['label']!,
+              style: textStyleTextAppBar(context),
+            ),
+          ),
+        ),
+      );
+    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    final isWideScreen = MediaQuery.of(context).size.width > 749;
+
     return AppBar(
-      backgroundColor: Colors.red[400],
+      backgroundColor: theme.colorScheme.primary,
       title: Text(
         title,
         textAlign: TextAlign.center,
       ),
       leading: getLeading(context),
-      actions: <Widget>[
+      actions: [
         if (actions != null)
           ...actions!.map((action) => Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: action,
-              )),
+            padding: const EdgeInsets.only(right: 8.0),
+            child: action,
+          )),
         if (onNavigate != null)
           IconButton(
-            icon: const Icon(
-              Icons.new_releases,
-              color: Colors.white,
-            ),
+            icon:  Icon(Icons.new_releases, color: theme.colorScheme.surface),
             onPressed: onNavigate!,
           ),
-        GestureDetector(
-          onTap: () {
-            GoRouter.of(context).go('/competitions');
-          },
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Center(
-              child: Text(
-                'Compétition',
-                style: TextStyle(fontSize: 16.0, color: Colors.white),
-              ),
-            ),
-          ),
-        ),
-        FutureBuilder<bool>(
-          future: hasAccess(),
-          builder: (context, snapshot) {
-            final bool hasAccess = snapshot.data != false &&
-                MediaQuery.sizeOf(context).width > 750;
-            debugPrint('hasAccess: $hasAccess');
-            if (hasAccess) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      GoRouter.of(context).go('/admin/list/adherents');
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Center(
-                        child: Text(
-                          'Liste des adhérents',
-                          style: TextStyle(fontSize: 16.0, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      GoRouter.of(context).go('/admin/add/adherents');
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Center(
-                        child: Text(
-                          'Ajouter un adhérent',
-                          style: TextStyle(fontSize: 16.0, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      GoRouter.of(context).go('/admin/add/competition');
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Center(
-                        child: Text(
-                          'Ajouter une compétition',
-                          style: TextStyle(fontSize: 16.0, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.logout,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      auth.signOut().then((_) {
-                        debugPrint('Déconnexion réussie');
-                        context.go('/');
-                      }).catchError((error) {
-                        debugPrint('Erreur lors de la déconnexion: $error');
-                      });
-                    },
-                  ),
-                ],
-              );
-            } else {
-              return Container();
-            }
-          },
-        ),
+        if (isWideScreen) ...generateNavActions(context),
       ],
     );
   }
 }
 
 class CustomDrawer extends StatelessWidget {
-  final auth = getIt<FirebaseAuth>();
+  const CustomDrawer({super.key});
 
-  CustomDrawer({super.key});
+  // Méthode pour générer les éléments du drawer
+  List<Widget> generateDrawerItems(BuildContext context) {
+    final List<Map<String, String>> drawerItems = [
+      {'label': 'Accueil', 'route': '/'},
+
+
+    ];
+
+    return drawerItems.map((item) {
+      return ListTile(
+        title: Text(item['label']!, style: textStyleTextAppBar(context),),
+        onTap: () {
+          GoRouter.of(context).go(item['route']!);
+          Navigator.pop(context); // Fermer le drawer après la navigation
+        },
+      );
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.red[400],
+      backgroundColor: theme.colorScheme.onSurface,
       elevation: 0,
       child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          IconButton(
-            icon: const Icon(
-              Icons.logout,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              auth.signOut().then((_) {
-                debugPrint('Déconnexion réussie');
-                context.go('/');
-              }).catchError((error) {
-                debugPrint('Erreur lors de la déconnexion: $error');
-              });
-            },
-          ),
-          ListTile(
-            title: const Text('Compétitions'),
-            onTap: () {
-              GoRouter.of(context).go('/competitions');
-              Navigator.pop(context);
-            },
-          ),
-          FutureBuilder<bool>(
-            future: hasAccess(),
-            builder: (context, snapshot) {
-              final bool hasAccess = snapshot.data ?? false;
-              debugPrint('hasAccess: $hasAccess');
-              if (hasAccess) {
-                return Column(
-                  children: [
-                    ListTile(
-                      title: const Text('Liste adhérents'),
-                      onTap: () {
-                        GoRouter.of(context).go('/admin/list/adherents');
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('Ajouter un adhérent'),
-                      onTap: () {
-                        GoRouter.of(context).go('/admin/add/adherents');
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('Ajouter une compétition'),
-                      onTap: () {
-                        GoRouter.of(context).go('/admin/add/competition');
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                );
-              } else {
-                return Container();
-              }
-            },
-          ),
-        ],
+        padding: const EdgeInsets.fromLTRB(10, 25, 0, 0),
+        children: generateDrawerItems(context),
       ),
     );
   }

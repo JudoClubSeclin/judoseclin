@@ -3,8 +3,18 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 
 ThemeData theme = ThemeData(
   primarySwatch: Colors.red,
-  secondaryHeaderColor: Colors.blueGrey,
-  primaryColor: Colors.black
+    colorScheme: const ColorScheme(
+        brightness: Brightness.light,
+        primary: Color(0xffef5350),
+        onPrimary: Color(0xff000000),
+        secondary: Color(0xffffffff),
+      onSecondary: Color(0xffffffff),
+      error: Color(0xffffffff),
+      onError: Color(0xffffffff),
+      surface: Color(0xffffffff),
+      onSurface: Color(0xffffffff),
+    )
+
 );
 
 MarkdownStyleSheet getMDTheme(BuildContext context, Color fontColor) =>
@@ -36,7 +46,7 @@ TextStyle titleStyle(BuildContext context) {
   double titlefont = size.width / 10; // Correction : suppression de la nullabilité
   return TextStyle(
     fontSize: titlefont,
-    color: Theme.of(context).primaryColor, // Correction : accès au thème via Theme.of
+    color: theme.colorScheme.onPrimary, // Correction : accès au thème via Theme.of
     fontFamily: "Hiromisake",
     shadows: [
       Shadow(
@@ -54,7 +64,7 @@ TextStyle titleStyleLarge(BuildContext context) {
   double titlefont = size.width / 10; // Correction : suppression de la nullabilité
   return TextStyle(
     fontSize: titlefont,
-    color: Theme.of(context).primaryColor, // Correction : utilisation de Theme.of
+    color: theme.colorScheme.onPrimary, // Correction : utilisation de Theme.of
     fontFamily: "Hiromisake",
     shadows: [
       Shadow(
@@ -72,7 +82,7 @@ TextStyle titleStyleMedium(BuildContext context) {
   double titlefont = size.width / 18; // Correction : suppression de la nullabilité
   return TextStyle(
     fontSize: titlefont,
-    color: Theme.of(context).primaryColor, // Correction : utilisation de Theme.of
+    color: theme.colorScheme.onPrimary, // Correction : utilisation de Theme.of
     fontFamily: "Hiromisake",
     shadows: [
       Shadow(
@@ -89,7 +99,7 @@ TextStyle titleStyleSmall(BuildContext context) {
   double titlefont = size.width / 30; // Correction : suppression de la nullabilité
   return TextStyle(
     fontSize: titlefont,
-    color: Theme.of(context).primaryColor, // Correction : utilisation de Theme.of
+    color: theme.colorScheme.onPrimary, // Correction : utilisation de Theme.of
     fontFamily: "Hiromisake",
     shadows: [
       Shadow(
@@ -103,10 +113,10 @@ TextStyle titleStyleSmall(BuildContext context) {
 
 TextStyle textStyleText(BuildContext context) {
   Size size = MediaQuery.of(context).size; // Correction : utilisation de MediaQuery.of
-  double titlefont = size.width / 10; // Correction : suppression de la nullabilité
+  double titlefont = size.width / 65; // Correction : suppression de la nullabilité
   return TextStyle(
     fontSize: titlefont,
-    color: Theme.of(context).primaryColor, // Correction : utilisation de Theme.of
+    color: theme.colorScheme.onPrimary, // Correction : utilisation de Theme.of
     fontFamily: "Hiromisake",
     shadows: [
       Shadow(
@@ -125,9 +135,23 @@ TextStyle? textStyleInput(BuildContext context, String inputText) {
 
   return Theme.of(context).textTheme.headlineLarge?.copyWith(
             fontSize: textFontSize,
-            color: Colors.black,
-            fontFamily: "robot",
+            color: theme.colorScheme.onPrimary,
+            fontFamily: "Hiromisake",
             // Ajoute d'autres propriétés de style si nécessaire
           ) ??
       const TextStyle();
 }
+
+TextStyle textStyleTextAppBar(BuildContext context) {
+  Size size = MediaQuery
+      .of(context)
+      .size; // Correction : utilisation de MediaQuery.of
+  double titlefont = size.width /
+      10; // Correction : suppression de la nullabilité
+  return TextStyle(
+    fontSize: titlefont,
+    color: theme.colorScheme.onPrimary,
+    fontFamily: "Hiromisake",
+  );
+}
+

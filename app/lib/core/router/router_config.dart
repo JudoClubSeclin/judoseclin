@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:judoseclin/ui/account/account_module.dart';
 import 'package:judoseclin/ui/landing/landing_module.dart';
+import 'package:judoseclin/ui/members/inscription/inscription_module.dart';
 import 'package:judoseclin/ui/members/login/login_module.dart';
 
 import '../../domain/entities/entity_module.dart';
@@ -13,7 +14,8 @@ class AppRouterConfig {
         routes: [
           ...getIt<LandingModule>().getRoutes(),
           ...getIt<AccountModule>().getRoutes(),
-          ...getIt<LoginModule>().getRoutes()
+          ...getIt<LoginModule>().getRoutes(),
+          ...getIt<InscriptionModule>().getRoutes()
         ],
         errorBuilder: (context, state) => const ErrorPage(),
       );

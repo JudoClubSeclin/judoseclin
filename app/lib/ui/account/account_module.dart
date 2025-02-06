@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:judoseclin/ui/account/bloc/account_bloc.dart';
 import 'package:judoseclin/ui/account/interactor/account_interactor.dart';
 import 'package:judoseclin/ui/account/view/account_page.dart';
+import 'package:judoseclin/ui/members/interactor/users_interactor.dart';
 import 'package:judoseclin/ui/ui_module.dart';
 
 import '../../domain/entities/entity_module.dart';
@@ -54,7 +55,7 @@ class AccountModule implements UIModule {
       );
     } else {
       return BlocProvider<UserBloc>(
-        create: (context) => getIt<UserBloc>(),
+        create: (_)=> UserBloc( getIt<UsersInteractor>()),
         child: LoginView(),
       );
     }

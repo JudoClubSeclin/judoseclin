@@ -55,4 +55,5 @@ void setupDataModule() {
     getIt.registerLazySingleton<CotisationRepository>(
         () => CotisationRepositoryImpl(getIt<FirestoreService>()));
   }
+
 }

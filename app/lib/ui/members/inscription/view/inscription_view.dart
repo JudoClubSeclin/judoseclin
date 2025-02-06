@@ -115,7 +115,7 @@ class InscriptionView extends StatelessWidget {
                 height: 25,
               ),
               TextButton(
-                  onPressed: () => context.go('/account/login'),
+                  onPressed: () => context.go('/login'),
                   child: Text(
                     "Connexion",
                     style: TextStyle(color: Colors.red[400]),

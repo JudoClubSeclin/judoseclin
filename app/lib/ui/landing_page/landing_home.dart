@@ -8,7 +8,6 @@ class LandingHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    double? titlefont = size.width / 10;
     return Container(
       height: size.headerHeight(),
       width: double.infinity,
