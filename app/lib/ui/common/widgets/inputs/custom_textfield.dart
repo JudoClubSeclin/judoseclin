@@ -19,7 +19,7 @@ class CustomTextField extends StatelessWidget {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double scaleFactor = screenWidth > 600 ? screenWidth / 600 : 1;
 
-    final borderColor = Colors.red[400] ?? Colors.transparent;
+    final borderColor = theme.colorScheme.onPrimary ;
 
     double maxWidth = 400.0;
 
@@ -40,9 +40,7 @@ class CustomTextField extends StatelessWidget {
           ),
           child: TextField(
             controller: controller,
-            style: TextStyle(
-              fontSize: 14 * scaleFactor, // Réduire la taille du texte
-            ),
+            style: textStyleInput(context, labelText),
             decoration: InputDecoration(
               labelText: labelText,
               labelStyle: textStyleInput(context, labelText),

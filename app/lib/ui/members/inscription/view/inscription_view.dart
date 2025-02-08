@@ -53,7 +53,7 @@ class InscriptionView extends StatelessWidget {
               const HomeButton(),
               Text(
                 "Inscription",
-                style: titleStyle(context),
+                style: titleStyleMedium(context),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 40),

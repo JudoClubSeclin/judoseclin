@@ -37,10 +37,15 @@ import '../../domain/usecases/fetch_inscription_competition_data_usecase.dart'
 import '../../domain/usecases/fetch_user_data_usecase.dart' as _i656;
 import '../../ui/account/account_module.dart' as _i692;
 import '../../ui/account/interactor/account_interactor.dart' as _i84;
+import '../../ui/competition/list_competition/detail_competition_module.dart'
+    as _i409;
+import '../../ui/competition/list_competition/list_competition_module.dart'
+    as _i606;
 import '../../ui/landing/landing_module.dart' as _i483;
 import '../../ui/members/inscription/inscription_module.dart' as _i734;
 import '../../ui/members/interactor/users_interactor.dart' as _i497;
 import '../../ui/members/login/login_module.dart' as _i63;
+import '../../ui/members/reset_password/reset_password_module.dart' as _i878;
 import '../../ui/ui_module.dart' as _i573;
 import '../router/router_config.dart' as _i718;
 import 'api/auth_service.dart' as _i977;
@@ -97,8 +102,14 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i746.FirestoreService(gh<_i974.FirebaseFirestore>()));
     gh.singleton<_i483.LandingModule>(
         () => _i483.LandingModule(gh<_i573.AppRouter>()));
+    gh.singleton<_i878.ResetPasswordModule>(
+        () => _i878.ResetPasswordModule(gh<_i573.AppRouter>()));
     gh.singleton<_i692.AccountModule>(
         () => _i692.AccountModule(gh<_i573.AppRouter>()));
+    gh.singleton<_i606.ListCompetitionModule>(
+        () => _i606.ListCompetitionModule(gh<_i573.AppRouter>()));
+    gh.singleton<_i409.CompetitionDetailModule>(
+        () => _i409.CompetitionDetailModule(gh<_i573.AppRouter>()));
     gh.factory<_i1004.CompetitionRepositoryImpl>(
         () => _i1004.CompetitionRepositoryImpl(gh<_i746.FirestoreService>()));
     gh.factory<_i463.AdherentsRepositoryImpl>(

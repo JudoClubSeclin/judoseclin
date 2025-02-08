@@ -147,7 +147,7 @@ TextStyle textStyleTextAppBar(BuildContext context) {
       .of(context)
       .size; // Correction : utilisation de MediaQuery.of
   double titlefont = size.width /
-      10; // Correction : suppression de la nullabilité
+      70; // Correction : suppression de la nullabilité
   return TextStyle(
     fontSize: titlefont,
     color: theme.colorScheme.onPrimary,

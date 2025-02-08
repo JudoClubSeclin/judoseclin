@@ -38,16 +38,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     } else {
       return context.canPop()
           ? IconButton(
-        icon:  Icon(Icons.arrow_back, color:theme.colorScheme.secondary),
+        icon: Icon(Icons.arrow_back, color: theme.colorScheme.onPrimary),
         onPressed: () => context.pop(),
       )
-          : Container(); // Retourne un widget vide si on ne peut pas revenir en arrière
+          : Container();
     }
   }
 
   List<Widget> generateNavActions(BuildContext context) {
     final List<Map<String, String>> navItems = [
       {'label': 'Accueil', 'route': '/'},
+      {'label' : 'mon compte' ,'route' : '/account'},
+      {'label' : 'Compétitions', 'route' : '/competition'},
 
     ];
 
@@ -86,10 +88,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           )),
         if (onNavigate != null)
           IconButton(
-            icon:  Icon(Icons.new_releases, color: theme.colorScheme.surface),
+            icon: Icon(Icons.new_releases, color: theme.colorScheme.surface),
             onPressed: onNavigate!,
           ),
         if (isWideScreen) ...generateNavActions(context),
+        IconButton(
+          icon: Icon(Icons.logout, color: theme.colorScheme.onPrimary),
+          onPressed: () {
+            GoRouter.of(context).go('/'); // Redirection après déconnexion
+          },
+        ),
+
       ],
     );
   }
@@ -98,20 +107,22 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
-  // Méthode pour générer les éléments du drawer
   List<Widget> generateDrawerItems(BuildContext context) {
     final List<Map<String, String>> drawerItems = [
       {'label': 'Accueil', 'route': '/'},
-
-
+      {'label' : 'mon compte' ,'route' : '/account'},
+      {'label' : 'Compétitions', 'route' : '/competition'}
     ];
 
     return drawerItems.map((item) {
       return ListTile(
-        title: Text(item['label']!, style: textStyleTextAppBar(context),),
+        title: Text(
+          item['label']!,
+          style: textStyleTextAppBar(context),
+        ),
         onTap: () {
           GoRouter.of(context).go(item['route']!);
-          Navigator.pop(context); // Fermer le drawer après la navigation
+          Navigator.pop(context);
         },
       );
     }).toList();

@@ -11,7 +11,7 @@ import 'competition_repository.dart';
 class CompetitionRepositoryImpl extends CompetitionRepository {
   final  FirestoreService _firestoreService;
 
-CompetitionRepositoryImpl(this._firestoreService);
+  CompetitionRepositoryImpl(this._firestoreService);
 
 
   @override
@@ -44,4 +44,6 @@ CompetitionRepositoryImpl(this._firestoreService);
         .doc(competitionId)
         .update({fieldName: newValue});
   }
+
+
 }

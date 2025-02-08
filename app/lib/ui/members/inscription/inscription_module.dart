@@ -5,7 +5,6 @@ import 'package:injectable/injectable.dart';
 import 'package:judoseclin/core/di/injection.dart';
 import 'package:judoseclin/ui/members/inscription/view/inscription_page.dart';
 import 'package:judoseclin/ui/members/login/user_bloc.dart';
-import 'package:judoseclin/ui/members/login/view/login_view.dart';
 import 'package:judoseclin/ui/ui_module.dart';
 
 import '../interactor/users_interactor.dart';

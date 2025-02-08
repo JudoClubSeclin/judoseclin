@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:judoseclin/theme.dart';
 
 class CustomButton extends StatelessWidget {
   final String label;
@@ -38,7 +39,7 @@ class CustomButton extends StatelessWidget {
           onPressed: onPressed,
           child: Text(
             label,
-            style: const TextStyle(fontSize: 18, color: Colors.white),
+            style: textStyleText(context),
           ),
         ),
       ),

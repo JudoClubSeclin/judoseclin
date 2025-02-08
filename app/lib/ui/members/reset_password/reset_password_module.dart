@@ -3,18 +3,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:judoseclin/core/di/injection.dart';
-import 'package:judoseclin/ui/members/login/user_bloc.dart';
-import 'package:judoseclin/ui/members/login/view/login_page.dart';
+import 'package:judoseclin/ui/members/reset_password/reset_password_bloc.dart';
+
+import 'package:judoseclin/ui/members/reset_password/view/reset_password_view.dart';
 import 'package:judoseclin/ui/ui_module.dart';
 
 import '../interactor/users_interactor.dart';
 
 @singleton
-class LoginModule implements UIModule {
+class ResetPasswordModule implements UIModule {
   final AppRouter _appRouter;
-  final UsersInteractor _usersInteractor; // Injecté via le constructeur
 
-  LoginModule(this._appRouter, this._usersInteractor);
+
+  ResetPasswordModule(this._appRouter);
 
   @override
   void configure() {
@@ -25,7 +26,7 @@ class LoginModule implements UIModule {
   List<RouteBase> getRoutes() {
     return [
       GoRoute(
-        path: '/login',
+        path: '/reset_password',
         pageBuilder: (context, state) {
           return MaterialPage(
             child: _buildLoginPage(),
@@ -36,9 +37,10 @@ class LoginModule implements UIModule {
   }
 
   Widget _buildLoginPage() {
-    return BlocProvider<UserBloc>(
-      create: (_) => UserBloc(getIt<UsersInteractor>()), // Utilisation correcte de UsersInteractor injecté
-      child: LoginPage(),
+    return BlocProvider<ResetPasswordBloc>(
+      create: (_) => ResetPasswordBloc(getIt<
+          UsersInteractor>()), // Utilisation correcte de UsersInteractor injecté
+      child: ResetPasswordView(),
     );
   }
 
@@ -47,4 +49,3 @@ class LoginModule implements UIModule {
     return {};
   }
 }
-

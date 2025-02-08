@@ -35,7 +35,7 @@ class CompetitionListButtons extends StatelessWidget {
       child: ToggleButtons(
         direction: Axis.vertical,
         onPressed: (int index) {
-          context.go('/competitions/${competitions[index].id}');
+          context.go('/competition/${competitions[index].id}');
         },
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         selectedBorderColor: Colors.red[700],

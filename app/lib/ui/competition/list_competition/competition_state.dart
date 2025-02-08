@@ -1,4 +1,4 @@
-import '../../../../../domain/entities/competition.dart';
+import '../../../../domain/entities/competition.dart';
 
 abstract class CompetitionState {}
 

@@ -101,16 +101,16 @@ class LoginView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Expanded(
+                   /* Expanded(
                       child: TextButton(
-                        onPressed: () => context.go('/ResetPassword'),
+                        onPressed: () => context.go('/reset_password'),
                         child: Text(
                           "Mot de passe oublié ?",
                           style: textStyleText(context),
                           textAlign: TextAlign.center,
                         ),
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
               ],

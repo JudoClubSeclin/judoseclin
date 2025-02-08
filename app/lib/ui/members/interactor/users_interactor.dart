@@ -18,6 +18,7 @@ class UsersInteractor {
         'firstName': user.firstName,
         'lastName': user.lastName,
         'dateOfBirth': user.dateOfBirth,
+        'email': user.email
       };
 
       await authUserRepository.register(user.email, user.password, userInfo);
