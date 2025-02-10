@@ -32,5 +32,8 @@ class FirestoreService {
   Future<void> deleteData(String collectionPath, String documentId) async {
     await _firestore.collection(collectionPath).doc(documentId).delete();
   }
+  CollectionReference getCollection(String collectionPath) {
+    return _firestore.collection(collectionPath);
+  }
 
 }

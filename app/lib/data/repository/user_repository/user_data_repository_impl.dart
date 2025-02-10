@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:judoseclin/data/repository/user_repository/user_data_repository.dart';
 
+import '../../../domain/entities/competition.dart';
+
 @Injectable(as: UserDataRepository)
 class UserDataRepositoryImpl implements UserDataRepository {
   final firestore = FirebaseFirestore.instance;
@@ -30,4 +32,37 @@ class UserDataRepositoryImpl implements UserDataRepository {
           'Erreur lors de la mise à jour des données utilisateur : $e');
     }
   }
+Future<List<Competition>> fetchUserCompetitions(String userId) async {
+  final registrationsSnapshot = await firestore
+      .collection('competition-registration')
+      .where('userId', isEqualTo: userId)
+      .get();
+
+  List<Competition> competitions = [];
+
+  for (var doc in registrationsSnapshot.docs) {
+    String competitionId = doc['competitionId'];
+
+    final competitionSnapshot = await firestore
+        .collection('competition')
+        .doc(competitionId)
+        .get();
+
+    if (competitionSnapshot.exists) {
+      competitions.add(Competition.fromMap(competitionSnapshot.data(), competitionSnapshot.id));
+    }
+  }
+
+  return competitions;
 }
+
+  @override
+  Future<void> fetchUserCompetition(String userId) {
+    // TODO: implement fetchUserCompetition
+    throw UnimplementedError();
+  }
+
+}
+
+
+

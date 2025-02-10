@@ -24,3 +24,9 @@ class InscriptionCompetitionSuccess extends InscriptionCompetitionEvent {
 
   InscriptionCompetitionSuccess({this.context});
 }
+
+class LoadUserInscriptions extends InscriptionCompetitionEvent {
+  final String userId;
+
+  LoadUserInscriptions(this.userId);
+}

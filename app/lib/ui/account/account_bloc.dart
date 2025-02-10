@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../interactor/account_interactor.dart';
+import 'account_interactor.dart';
 import 'account_event.dart';
 import 'account_state.dart';
 

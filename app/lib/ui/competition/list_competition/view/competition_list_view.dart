@@ -1,35 +1,27 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:judoseclin/theme.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
-import 'package:judoseclin/ui/competition/inscription_competition/inscription_competition_bloc.dart';
+
+import '../../../../core/utils/competition-provider.dart'; // Import de la classe
 
 class CompetitionsListView extends StatefulWidget {
-  const CompetitionsListView({Key? key}) : super(key: key);
+  const CompetitionsListView({super.key});
 
   @override
-  _CompetitionsListViewState createState() => _CompetitionsListViewState();
+  CompetitionsListViewState createState() => CompetitionsListViewState();
 }
 
-class _CompetitionsListViewState extends State<CompetitionsListView> {
+class CompetitionsListViewState extends State<CompetitionsListView> {
   late Future<List<String>> _userInscriptionsFuture;
 
   @override
   void initState() {
     super.initState();
-    final String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
-    _userInscriptionsFuture = loadUserInscriptions(userId);
-  }
-
-  Future<List<String>> loadUserInscriptions(String userId) async {
-    return await context
-        .read<InscriptionCompetitionBloc>()
-        .getInscriptionForUser(userId);
+    _userInscriptionsFuture = UserCompetitionsProvider().getUserInscriptions();
   }
 
   @override
@@ -62,7 +54,6 @@ class _CompetitionsListViewState extends State<CompetitionsListView> {
 
             return Scaffold(
               appBar: CustomAppBar(title: ''),
-              drawer: MediaQuery.of(context).size.width > 750 ? null : CustomDrawer(),
               body: Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
@@ -127,7 +118,6 @@ class _CompetitionsListViewState extends State<CompetitionsListView> {
                               ),
                               onTap: () {
                                 String competitionId = competition.id;
-                                debugPrint("Navigating to /competition/$competitionId");
                                 if (competitionId.isNotEmpty) {
                                   context.go('/competition/$competitionId');
                                 } else {

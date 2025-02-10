@@ -1,5 +1,6 @@
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../core/di/api/firestore_service.dart';
@@ -44,6 +45,41 @@ class CompetitionRepositoryImpl extends CompetitionRepository {
         .doc(competitionId)
         .update({fieldName: newValue});
   }
+
+  @override
+  Future<List<String>> getUserCompetitionIds(String userId) async {
+    try {
+      QuerySnapshot registrationsSnapshot = await _firestoreService
+          .collection('competition-registration')
+          .where('userId', isEqualTo: userId)
+          .get();
+
+      return registrationsSnapshot.docs
+          .map((doc) => doc['competitionId'] as String)
+          .toList();
+    } catch (e) {
+      // Gérer l'erreur de manière appropriée
+      throw Exception('Erreur lors de la récupération des IDs de compétition');
+    }
+  }
+
+  @override
+  Future<Map<String, String>> getCompetitionTitles(List<String> competitionIds) async {
+    try {
+      Map<String, String> titles = {};
+      for (String id in competitionIds) {
+        DocumentSnapshot competitionDoc = await _firestoreService.collection('competition').doc(id).get();
+        if (competitionDoc.exists) {
+          titles[id] = competitionDoc['title'] as String;
+        }
+      }
+      return titles;
+    } catch (e) {
+      // Gérer l'erreur de manière appropriée
+      throw Exception('Erreur lors de la récupération des titres de compétition');
+    }
+  }
+
 
 
 }

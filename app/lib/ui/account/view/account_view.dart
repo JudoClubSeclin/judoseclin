@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:judoseclin/ui/account/competition_inscrites/competition_inscrite.dart';
+import 'package:judoseclin/ui/account/donnees_user/donnees_user.dart';
 import '../../../theme.dart';
 import '../../common/widgets/images/image_fond_ecran.dart';
 
@@ -17,36 +18,32 @@ class AccountView extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: ListView(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Bonjour',style: titleStyleMedium(context),),
-                const SizedBox(width: 15,),
-                Text(userData['lastName'] ?? 'Not available',style: titleStyleMedium(context),),
-              ],
-            ),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start, // Aligne tout le contenu à gauche
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Bonjour',
+                    style: titleStyleMedium(context),
+                  ),
+                  const SizedBox(width: 15),
+                  Text(
+                    userData['lastName'] ?? 'Not available',
+                    style: titleStyleMedium(context),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20), // Espace entre le titre et DonneesUser
+              DonneesUser(userData: userData),
 
-
-            ListTile(
-              title:  Text('Email: ',
-                  style: textStyleText(context)),
-              subtitle: Text(userData['email'] ?? 'Not available',style: textStyleText(context)),
-            ),
-            ListTile(
-              title:  Text('Nom: ',
-                  style: textStyleText(context)),
-              subtitle: Text(userData['firstName'] ?? 'Not available',style: textStyleText(context)),
-            ),
-            ListTile(
-              title:  Text('Prénom: ',
-                  style: textStyleText(context)),
-              subtitle: Text(userData['lastName'] ?? 'Not available',style: textStyleText(context)),
-            ),
-          ],
+              const CompetitionsInscrites(),
+            ],
+          ),
         ),
       ),
     );

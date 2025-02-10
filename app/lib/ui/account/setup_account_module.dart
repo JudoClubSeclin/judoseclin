@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 
 import '../../data/repository/user_repository/user_data_repository.dart';
-import 'interactor/account_interactor.dart';
+import 'account_interactor.dart';
 
 final getIt = GetIt.instance;
 

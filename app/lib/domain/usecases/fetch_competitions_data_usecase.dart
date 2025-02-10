@@ -40,4 +40,10 @@ class FetchCompetitionDataUseCase {
       rethrow;
     }
   }
+
+  Future<List<String>> execute(String userId) async {
+    final competitionIds = await competitionRepository.getUserCompetitionIds(userId);
+    final competitionTitles = await competitionRepository.getCompetitionTitles(competitionIds);
+    return competitionTitles.values.toList();
+  }
 }

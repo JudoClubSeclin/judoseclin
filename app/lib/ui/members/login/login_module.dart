@@ -12,9 +12,8 @@ import '../interactor/users_interactor.dart';
 @singleton
 class LoginModule implements UIModule {
   final AppRouter _appRouter;
-  final UsersInteractor _usersInteractor; // Injecté via le constructeur
 
-  LoginModule(this._appRouter, this._usersInteractor);
+  LoginModule(this._appRouter);
 
   @override
   void configure() {
