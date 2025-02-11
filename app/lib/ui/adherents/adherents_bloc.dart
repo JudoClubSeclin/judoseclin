@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 
-import '../interactor/adherents_interactor.dart';
-import 'adherents_event.dart';
 import 'adherents_state.dart';
+import 'interactor/adherents_interactor.dart';
+import 'adherents_event.dart';
 
 class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
   final AdherentsInteractor adherentsInteractor;

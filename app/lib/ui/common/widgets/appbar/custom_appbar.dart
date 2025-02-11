@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:judoseclin/core/utils/function_admin.dart';
 
 import '../../../../theme.dart';
 
@@ -48,27 +49,54 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   List<Widget> generateNavActions(BuildContext context) {
     final List<Map<String, String>> navItems = [
       {'label': 'Accueil', 'route': '/'},
-      {'label' : 'mon compte' ,'route' : '/account'},
-      {'label' : 'Compétitions', 'route' : '/competition'},
+      {'label': 'mon compte', 'route': '/account'},
+      {'label': 'Compétitions', 'route': '/competition'},
+
 
     ];
+    return [
+      FutureBuilder<bool>(
+        future: hasAccess(),
+        builder: (context, snapshot) {
+          final bool hasAccess = snapshot.data == true && MediaQuery
+              .sizeOf(context)
+              .width > 749;
 
-    return navItems.map((item) {
-      return GestureDetector(
-        onTap: () => GoRouter.of(context).go(item['route']!),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Center(
-            child: Text(
-              item['label']!,
-              style: textStyleTextAppBar(context),
+          debugPrint('hasAccess: $hasAccess');
+
+          if (hasAccess) {
+            return GestureDetector(
+              onTap: () => GoRouter.of(context).go('/admin/add/adherents'),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  'Add Adhérents',
+                  style: textStyleTextAppBar(context),
+                ),
+              ),
+            );
+          }
+
+          return const SizedBox
+              .shrink(); // Retourne un widget vide si pas d'accès
+        },
+      ),
+      ...navItems.map((item) {
+        return GestureDetector(
+          onTap: () => GoRouter.of(context).go(item['route']!),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Center(
+              child: Text(
+                item['label']!,
+                style: textStyleTextAppBar(context),
+              ),
             ),
           ),
-        ),
-      );
-    }).toList();
+        );
+      }).toList(),
+    ];
   }
-
   @override
   Widget build(BuildContext context) {
     final isWideScreen = MediaQuery.of(context).size.width > 749;
@@ -98,6 +126,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             GoRouter.of(context).go('/'); // Redirection après déconnexion
           },
         ),
+
 
       ],
     );

@@ -19,7 +19,7 @@ class CustomTextField extends StatelessWidget {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double scaleFactor = screenWidth > 600 ? screenWidth / 600 : 1;
 
-    final borderColor = theme.colorScheme.onPrimary ;
+    final borderColor = theme.colorScheme.primary ;
 
     double maxWidth = 400.0;
 

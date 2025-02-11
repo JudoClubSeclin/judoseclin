@@ -6,6 +6,7 @@ import '../../data/repository/repository_module.dart';
 import '../../ui/account/setup_account_module.dart';
 import '../../ui/competition/setup_competition_module.dart';
 import '../../ui/members/setup_user_module.dart';
+import '../../ui/setup_admin_module.dart';
 import 'injection.config.dart';
 
 final getIt = GetIt.instance;
@@ -26,4 +27,6 @@ void configureDependencies() {
   setupAccountModule();
 
   setupCompetitionModule();
+
+  setupAdminModule();
 }

@@ -22,7 +22,8 @@ class AccountView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start, // Aligne tout le contenu à gauche
+            crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -39,8 +40,7 @@ class AccountView extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20), // Espace entre le titre et DonneesUser
-              DonneesUser(userData: userData),
-
+              DonneesUser(),
               const CompetitionsInscrites(),
             ],
           ),

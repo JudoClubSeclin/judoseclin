@@ -3,9 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 
-import '../../../common/widgets/buttons/custom_buttom.dart';
-import '../../../cotisations/interactor/cotisation_interactor.dart';
-import '../../interactor/adherents_interactor.dart';
+
+import '../../common/widgets/buttons/custom_buttom.dart';
+import '../../cotisations/interactor/cotisation_interactor.dart';
+import '../interactor/adherents_interactor.dart';
 import 'info_field_adherents.dart';
 import 'info_field_adherents_cotisation.dart';
 

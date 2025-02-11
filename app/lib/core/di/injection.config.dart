@@ -37,6 +37,7 @@ import '../../domain/usecases/fetch_inscription_competition_data_usecase.dart'
 import '../../domain/usecases/fetch_user_data_usecase.dart' as _i656;
 import '../../ui/account/account_interactor.dart' as _i830;
 import '../../ui/account/account_module.dart' as _i692;
+import '../../ui/adherents/add_adherents_module.dart' as _i776;
 import '../../ui/competition/list_competition/detail_competition_module.dart'
     as _i409;
 import '../../ui/competition/list_competition/list_competition_module.dart'
@@ -96,6 +97,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i977.AuthService(gh<_i59.FirebaseAuth>()));
     gh.factory<_i746.FirestoreService>(
         () => _i746.FirestoreService(gh<_i974.FirebaseFirestore>()));
+    gh.singleton<_i776.AddAdherentsModule>(
+        () => _i776.AddAdherentsModule(gh<_i573.AppRouter>()));
     gh.singleton<_i606.ListCompetitionModule>(
         () => _i606.ListCompetitionModule(gh<_i573.AppRouter>()));
     gh.singleton<_i409.CompetitionDetailModule>(

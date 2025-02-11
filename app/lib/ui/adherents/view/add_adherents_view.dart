@@ -7,9 +7,9 @@ import 'package:judoseclin/ui/common/widgets/inputs/custom_textfield.dart';
 
 import '../../common/widgets/appbar/custom_appbar.dart';
 import '../../common/widgets/buttons/custom_buttom.dart';
-import '../bloc/adherents_bloc.dart';
-import '../bloc/adherents_event.dart';
-import '../bloc/adherents_state.dart';
+import '../adherents_bloc.dart';
+import '../adherents_event.dart';
+import '../adherents_state.dart';
 
 class AddAdherentsView extends StatelessWidget {
   final firstNameController = TextEditingController();
@@ -28,7 +28,7 @@ class AddAdherentsView extends StatelessWidget {
   final medicalCertificateController = TextEditingController();
   final invoiceController = TextEditingController();
 
-  AddAdherentsView({super.key, required adherentsRepository});
+  AddAdherentsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +147,7 @@ class AddAdherentsView extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         CustomTextField(
-                          labelText: 'Adresse)',
+                          labelText: 'Adresse',
                           controller: addressController,
                         ),
                       ]),
@@ -155,7 +155,7 @@ class AddAdherentsView extends StatelessWidget {
                   CustomButton(
                     onPressed: () async {
                       try {
-                        //Convertir la chainede date en objet DateTime
+                        //Convertir la chaine de date en objet DateTime
                         DateTime parsedDate = DateFormat('dd/MM/yyyy')
                             .parse(dateOfBirthController.text.trim());
                         // Save adherent and get the adherentId
