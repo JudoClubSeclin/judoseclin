@@ -39,9 +39,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     } else {
       return context.canPop()
           ? IconButton(
-        icon: Icon(Icons.arrow_back, color: theme.colorScheme.onPrimary),
-        onPressed: () => context.pop(),
-      )
+              icon: Icon(Icons.arrow_back, color: theme.colorScheme.onPrimary),
+              onPressed: () => context.pop(),
+            )
           : Container();
     }
   }
@@ -51,29 +51,40 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       {'label': 'Accueil', 'route': '/'},
       {'label': 'mon compte', 'route': '/account'},
       {'label': 'Compétitions', 'route': '/competition'},
-
-
     ];
     return [
       FutureBuilder<bool>(
         future: hasAccess(),
         builder: (context, snapshot) {
-          final bool hasAccess = snapshot.data == true && MediaQuery
-              .sizeOf(context)
-              .width > 749;
+          final bool hasAccess =
+              snapshot.data == true && MediaQuery.sizeOf(context).width > 749;
 
           debugPrint('hasAccess: $hasAccess');
 
           if (hasAccess) {
-            return GestureDetector(
-              onTap: () => GoRouter.of(context).go('/admin/add/adherents'),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text(
-                  'Add Adhérents',
-                  style: textStyleTextAppBar(context),
+            return Row(
+              children: [
+                GestureDetector(
+                  onTap: () => GoRouter.of(context).go('/admin/add/adherents'),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Add Adhérents',
+                      style: textStyleTextAppBar(context),
+                    ),
+                  ),
                 ),
-              ),
+                GestureDetector(
+                  onTap: () => GoRouter.of(context).go('/admin/list/adherents'),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Liste Adhérents',
+                      style: textStyleTextAppBar(context),
+                    ),
+                  ),
+                )
+              ],
             );
           }
 
@@ -97,6 +108,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       }).toList(),
     ];
   }
+
   @override
   Widget build(BuildContext context) {
     final isWideScreen = MediaQuery.of(context).size.width > 749;
@@ -111,9 +123,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         if (actions != null)
           ...actions!.map((action) => Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: action,
-          )),
+                padding: const EdgeInsets.only(right: 8.0),
+                child: action,
+              )),
         if (onNavigate != null)
           IconButton(
             icon: Icon(Icons.new_releases, color: theme.colorScheme.surface),
@@ -126,8 +138,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             GoRouter.of(context).go('/'); // Redirection après déconnexion
           },
         ),
-
-
       ],
     );
   }
@@ -139,8 +149,8 @@ class CustomDrawer extends StatelessWidget {
   List<Widget> generateDrawerItems(BuildContext context) {
     final List<Map<String, String>> drawerItems = [
       {'label': 'Accueil', 'route': '/'},
-      {'label' : 'mon compte' ,'route' : '/account'},
-      {'label' : 'Compétitions', 'route' : '/competition'}
+      {'label': 'mon compte', 'route': '/account'},
+      {'label': 'Compétitions', 'route': '/competition'}
     ];
 
     return drawerItems.map((item) {

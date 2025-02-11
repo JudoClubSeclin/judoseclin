@@ -9,8 +9,6 @@ import '../../ui_module.dart';
 import 'competition_bloc.dart';
 import 'competition_interactor.dart';
 
-
-
 @singleton
 class CompetitionDetailModule implements UIModule {
   final AppRouter _appRouter;
@@ -30,11 +28,13 @@ class CompetitionDetailModule implements UIModule {
         pageBuilder: (context, state) {
           final competitionId = state.pathParameters['id'] ?? '';
           return MaterialPage(
-            child: CompetitionDetailView(competitionId: competitionId, competitionInteractor: getIt<CompetitionInteractor>(),),
+            child: CompetitionDetailView(
+              competitionId: competitionId,
+              competitionInteractor: getIt<CompetitionInteractor>(),
+            ),
           );
         },
       ),
-
     ];
   }
 
@@ -44,12 +44,15 @@ class CompetitionDetailModule implements UIModule {
   }
 
   Widget _buildDetailPage(String competitionId) {
+    final interactor = getIt<CompetitionInteractor>();
     return BlocProvider<CompetitionBloc>(
       create: (context) {
-        final interactor = getIt<CompetitionInteractor>();
         return CompetitionBloc(interactor, competitionId: competitionId);
       },
-      child:  CompetitionDetailView(competitionId: '', competitionInteractor: getIt<CompetitionInteractor>(),),
+      child: CompetitionDetailView(
+        competitionId: '',
+        competitionInteractor: interactor,
+      ),
     );
   }
 }

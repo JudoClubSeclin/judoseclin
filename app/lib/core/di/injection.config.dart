@@ -38,6 +38,7 @@ import '../../domain/usecases/fetch_user_data_usecase.dart' as _i656;
 import '../../ui/account/account_interactor.dart' as _i830;
 import '../../ui/account/account_module.dart' as _i692;
 import '../../ui/adherents/add_adherents_module.dart' as _i776;
+import '../../ui/adherents/list_adherents_module.dart' as _i1062;
 import '../../ui/competition/list_competition/detail_competition_module.dart'
     as _i409;
 import '../../ui/competition/list_competition/list_competition_module.dart'
@@ -68,21 +69,21 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final injectionModule = _$InjectionModule();
     gh.factory<_i703.FirebaseClient>(() => _i703.FirebaseClient());
-    gh.factory<_i846.FetchCompetitionDataUseCase>(
-        () => _i846.FetchCompetitionDataUseCase());
-    gh.factory<_i155.FetchAdherentsDataUseCase>(
-        () => _i155.FetchAdherentsDataUseCase());
     gh.factory<_i23.FetchCotisationDataUseCase>(
         () => _i23.FetchCotisationDataUseCase());
+    gh.factory<_i155.FetchAdherentsDataUseCase>(
+        () => _i155.FetchAdherentsDataUseCase());
+    gh.factory<_i846.FetchCompetitionDataUseCase>(
+        () => _i846.FetchCompetitionDataUseCase());
     gh.factory<_i680.FetchInscriptionCompetitionDataUseCase>(
         () => _i680.FetchInscriptionCompetitionDataUseCase());
     gh.singleton<_i573.AppRouter>(() => _i573.AppRouter());
     gh.singleton<_i497.UsersInteractor>(() => _i497.UsersInteractor());
-    gh.singleton<_i718.AppRouterConfig>(() => _i718.AppRouterConfig());
     gh.singleton<_i59.FirebaseAuth>(() => injectionModule.firebaseAuth);
     gh.singleton<_i457.FirebaseStorage>(() => injectionModule.firebaseStorage);
     gh.singleton<_i974.FirebaseFirestore>(
         () => injectionModule.firebaseFireStore);
+    gh.singleton<_i718.AppRouterConfig>(() => _i718.AppRouterConfig());
     gh.factory<_i94.UserDataRepository>(() => _i686.UserDataRepositoryImpl());
     gh.singleton<_i208.UserAuthRepository>(
         () => _i131.UserAuthRepositoryImpl());
@@ -97,18 +98,20 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i977.AuthService(gh<_i59.FirebaseAuth>()));
     gh.factory<_i746.FirestoreService>(
         () => _i746.FirestoreService(gh<_i974.FirebaseFirestore>()));
-    gh.singleton<_i776.AddAdherentsModule>(
-        () => _i776.AddAdherentsModule(gh<_i573.AppRouter>()));
-    gh.singleton<_i606.ListCompetitionModule>(
-        () => _i606.ListCompetitionModule(gh<_i573.AppRouter>()));
-    gh.singleton<_i409.CompetitionDetailModule>(
-        () => _i409.CompetitionDetailModule(gh<_i573.AppRouter>()));
     gh.singleton<_i483.LandingModule>(
         () => _i483.LandingModule(gh<_i573.AppRouter>()));
+    gh.singleton<_i1062.ListAdherentsModule>(
+        () => _i1062.ListAdherentsModule(gh<_i573.AppRouter>()));
+    gh.singleton<_i776.AddAdherentsModule>(
+        () => _i776.AddAdherentsModule(gh<_i573.AppRouter>()));
     gh.singleton<_i878.ResetPasswordModule>(
         () => _i878.ResetPasswordModule(gh<_i573.AppRouter>()));
     gh.singleton<_i63.LoginModule>(
         () => _i63.LoginModule(gh<_i573.AppRouter>()));
+    gh.singleton<_i409.CompetitionDetailModule>(
+        () => _i409.CompetitionDetailModule(gh<_i573.AppRouter>()));
+    gh.singleton<_i606.ListCompetitionModule>(
+        () => _i606.ListCompetitionModule(gh<_i573.AppRouter>()));
     gh.singleton<_i692.AccountModule>(
         () => _i692.AccountModule(gh<_i573.AppRouter>()));
     gh.factory<_i1004.CompetitionRepositoryImpl>(

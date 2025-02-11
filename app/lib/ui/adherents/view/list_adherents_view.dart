@@ -72,21 +72,30 @@ class ListAdherentsView extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                                 side: BorderSide(
-                                  color: Colors.red[400]!,
+                                  color: theme.colorScheme.primary,
                                   width: 2.0,
                                 ),
                               ),
                               child: ListTile(
                                 title: Row(
                                   children: [
-                                    Text(adherent.firstName),
+                                    Text(
+                                      adherent.firstName,
+                                      style: textStyleText(context),
+                                    ),
                                     const SizedBox(
                                         width:
                                             8.0), // Espace entre le prénom et le nom
-                                    Text(adherent.lastName),
+                                    Text(
+                                      adherent.lastName,
+                                      style: textStyleText(context),
+                                    ),
                                   ],
                                 ),
-                                subtitle: Text(adherent.email),
+                                subtitle: Text(
+                                  adherent.email,
+                                  style: textStyleText(context),
+                                ),
                                 onTap: () {
                                   String adherentsId = adherent.id;
                                   if (adherentsId.isNotEmpty) {
