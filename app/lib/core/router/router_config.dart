@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:judoseclin/ui/account/account_module.dart';
 import 'package:judoseclin/ui/adherents/add_adherents_module.dart';
+import 'package:judoseclin/ui/adherents/adherents-detail/adherents_detail_module.dart';
 import 'package:judoseclin/ui/adherents/list_adherents_module.dart';
 import 'package:judoseclin/ui/competition/list_competition/detail_competition_module.dart';
 import 'package:judoseclin/ui/competition/list_competition/list_competition_module.dart';
@@ -25,7 +26,8 @@ class AppRouterConfig {
           ...getIt<ListCompetitionModule>().getRoutes(),
           ...getIt<CompetitionDetailModule>().getRoutes(),
           ...getIt<AddAdherentsModule>().getRoutes(),
-          ...getIt<ListAdherentsModule>().getRoutes()
+          ...getIt<ListAdherentsModule>().getRoutes(),
+          ...getIt<AdherentsDetailModule>().getRoutes()
         ],
         errorBuilder: (context, state) => const ErrorPage(),
       );

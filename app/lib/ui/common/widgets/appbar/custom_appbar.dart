@@ -83,7 +83,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       style: textStyleTextAppBar(context),
                     ),
                   ),
-                )
+                ),
               ],
             );
           }
