@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../theme.dart';
-import '../../../domain/entities/adherents.dart';
 import '../../common/widgets/infos_fields/infos_fields.dart';
 import '../interactor/adherents_interactor.dart';
 
@@ -28,7 +27,7 @@ class InfoFieldAdherents extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Text('Erreur: ${snapshot.error}');
           } else {
-            final adherent = snapshot.data as Adherents;
+            final adherent = snapshot.data!;
 
             return Padding(
               padding: const EdgeInsets.all(10.0),

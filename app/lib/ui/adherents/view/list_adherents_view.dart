@@ -99,7 +99,8 @@ class ListAdherentsView extends StatelessWidget {
                                 onTap: () {
                                   String adherentsId = adherent.id;
                                   if (adherentsId.isNotEmpty) {
-                                    context.go('/admin/add/adherents/:id');
+                                    context.goNamed('adherents_detail', pathParameters: {'id': adherentsId});
+
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
