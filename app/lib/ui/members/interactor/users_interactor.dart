@@ -15,9 +15,6 @@ class UsersInteractor {
   Future<void> registerUser(Users user) async {
     try {
       final userInfo = {
-        'firstName': user.firstName,
-        'lastName': user.lastName,
-        'dateOfBirth': user.dateOfBirth,
         'email': user.email
       };
 

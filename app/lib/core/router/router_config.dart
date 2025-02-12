@@ -5,6 +5,7 @@ import 'package:judoseclin/ui/account/account_module.dart';
 import 'package:judoseclin/ui/adherents/add_adherents_module.dart';
 import 'package:judoseclin/ui/adherents/adherents-detail/adherents_detail_module.dart';
 import 'package:judoseclin/ui/adherents/list_adherents_module.dart';
+import 'package:judoseclin/ui/competition/add_competition/add_competiton_module.dart';
 import 'package:judoseclin/ui/competition/list_competition/detail_competition_module.dart';
 import 'package:judoseclin/ui/competition/list_competition/list_competition_module.dart';
 import 'package:judoseclin/ui/landing/landing_module.dart';
@@ -27,7 +28,8 @@ class AppRouterConfig {
           ...getIt<CompetitionDetailModule>().getRoutes(),
           ...getIt<AddAdherentsModule>().getRoutes(),
           ...getIt<ListAdherentsModule>().getRoutes(),
-          ...getIt<AdherentsDetailModule>().getRoutes()
+          ...getIt<AdherentsDetailModule>().getRoutes(),
+          ...getIt<AddCompetitionModule>().getRoutes()
         ],
         errorBuilder: (context, state) => const ErrorPage(),
       );

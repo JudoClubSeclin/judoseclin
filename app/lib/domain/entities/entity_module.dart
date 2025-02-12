@@ -77,9 +77,6 @@ void setupEntityModule() {
   ///Enregistrement de Users entity
   getIt.registerFactory<Users>(() => Users(
       id: '',
-      firstName: '',
-      lastName: '',
-      dateOfBirth: null,
       email: '',
       password: ''
   ));

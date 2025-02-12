@@ -8,8 +8,8 @@ import '../../../common/widgets/appbar/custom_appbar.dart';
 import '../../../common/widgets/buttons/custom_buttom.dart';
 import '../../../common/widgets/images/image_fond_ecran.dart';
 import '../../../common/widgets/inputs/custom_textfield.dart';
-import '../bloc/add_competition_bloc.dart';
-import '../bloc/add_competition_event.dart';
+import '../add_competition_bloc.dart';
+import '../add_competition_event.dart';
 
 class FormWidget extends StatelessWidget {
   final addressController = TextEditingController();

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:judoseclin/domain/entities/competition.dart';
 
-import '../../list_competition/competition_interactor.dart';
+import '../list_competition/competition_interactor.dart';
 import 'add_competition_event.dart';
 import 'add_competition_state.dart';
 

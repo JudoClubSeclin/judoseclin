@@ -48,7 +48,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   List<Widget> generateNavActions(BuildContext context) {
     final List<Map<String, String>> navItems = [
-      {'label': 'Accueil', 'route': '/'},
       {'label': 'mon compte', 'route': '/account'},
       {'label': 'Compétitions', 'route': '/competition'},
     ];
@@ -80,6 +79,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
                       'Liste Adhérents',
+                      style: textStyleTextAppBar(context),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => GoRouter.of(context).go('/admin/add/competition'),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Ajouté une compétition',
                       style: textStyleTextAppBar(context),
                     ),
                   ),
@@ -148,7 +157,6 @@ class CustomDrawer extends StatelessWidget {
 
   List<Widget> generateDrawerItems(BuildContext context) {
     final List<Map<String, String>> drawerItems = [
-      {'label': 'Accueil', 'route': '/'},
       {'label': 'mon compte', 'route': '/account'},
       {'label': 'Compétitions', 'route': '/competition'}
     ];

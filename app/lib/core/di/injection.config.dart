@@ -41,6 +41,8 @@ import '../../ui/adherents/add_adherents_module.dart' as _i776;
 import '../../ui/adherents/adherents-detail/adherents_detail_module.dart'
     as _i10;
 import '../../ui/adherents/list_adherents_module.dart' as _i1062;
+import '../../ui/competition/add_competition/add_competiton_module.dart'
+    as _i944;
 import '../../ui/competition/list_competition/detail_competition_module.dart'
     as _i409;
 import '../../ui/competition/list_competition/list_competition_module.dart'
@@ -118,6 +120,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1062.ListAdherentsModule(gh<_i573.AppRouter>()));
     gh.singleton<_i10.AdherentsDetailModule>(
         () => _i10.AdherentsDetailModule(gh<_i573.AppRouter>()));
+    gh.singleton<_i944.AddCompetitionModule>(
+        () => _i944.AddCompetitionModule(gh<_i573.AppRouter>()));
     gh.factory<_i1004.CompetitionRepositoryImpl>(
         () => _i1004.CompetitionRepositoryImpl(gh<_i746.FirestoreService>()));
     gh.factory<_i463.AdherentsRepositoryImpl>(

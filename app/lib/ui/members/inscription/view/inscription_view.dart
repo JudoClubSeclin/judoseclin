@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/home_button.dart';
 
 import '../../../../theme.dart';
 import '../../../common/widgets/buttons/custom_buttom.dart';
 import '../../../common/widgets/images/image_fond_ecran.dart';
 import '../../../common/widgets/inputs/custom_textfield.dart';
-import '../bloc/inscription_bloc.dart';
-import '../bloc/inscription_event.dart';
-import '../bloc/inscription_state.dart';
+import '../inscription_bloc.dart';
+import '../inscription_event.dart';
+import '../inscription_state.dart';
 
 class InscriptionView extends StatelessWidget {
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final dateOfBirthController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -61,21 +57,10 @@ class InscriptionView extends StatelessWidget {
                   alignment: WrapAlignment.center,
                   spacing: 40.0,
                   runSpacing: 20.0, children: [
-                CustomTextField(
-                    labelText: 'NOM', controller: firstNameController),
-                const SizedBox(width: 40),
-                CustomTextField(
-                    labelText: 'PRENOM', controller: lastNameController),
 
-              const SizedBox(height: 25),
-
-                  CustomTextField(
-                    labelText: 'Date de naissance (JJ/MM/AAAA)',
-                    controller: dateOfBirthController,
-                  ),
                   const SizedBox(width: 40),
                   CustomTextField(
-                      labelText: 'E-mail', controller: emailController),
+                      labelText: "E-mail : Celui  donner au club ", controller: emailController),
 
               const SizedBox(height: 25),
               CustomTextField(
@@ -89,17 +74,10 @@ class InscriptionView extends StatelessWidget {
               CustomButton(
                 onPressed: () async {
                   try {
-                    String firstNameInput = firstNameController.text.trim();
-                    DateTime parseDate = DateFormat('dd/MM/yyyy')
-                        .parse(dateOfBirthController.text.trim());
-                    debugPrint('valeur de firstName $firstNameInput');
 
                     context.read<InscriptionBloc>().add(
                           InscriptionSignUpEvent(
                               id: '',
-                              firstName: firstNameController.text.trim(),
-                              lastName: lastNameController.text.trim(),
-                              dateOfBirth: parseDate,
                               email: emailController.text.trim(),
                               password: passwordController.text.trim(),
                               navigateToAccount: () =>
