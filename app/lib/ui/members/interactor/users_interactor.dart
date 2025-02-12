@@ -14,9 +14,7 @@ class UsersInteractor {
 
   Future<void> registerUser(Users user) async {
     try {
-      final userInfo = {
-        'email': user.email
-      };
+      final userInfo = {'email': user.email};
 
       await authUserRepository.register(user.email, user.password, userInfo);
     } catch (error) {
@@ -58,7 +56,7 @@ class UsersInteractor {
   Future<void> checkAuthenticationStatus() async {
     try {
       //Utilisez le repository pour la redirection
-      await stateRepository.isUserConnected;
+      stateRepository.isUserConnected;
     } catch (error) {
       debugPrint('redirection échoué : $error');
     }

@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:judoseclin/theme.dart';
-import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
+import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 
-import '../../../../core/utils/competition-provider.dart'; // Import de la classe
+import '../../../../core/utils/competition_provider.dart'; // Import de la classe
 
 class CompetitionsListView extends StatefulWidget {
   const CompetitionsListView({super.key});
@@ -36,7 +36,8 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
         final userInscriptions = inscriptionsSnapshot.data ?? [];
 
         return StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('competition').snapshots(),
+          stream:
+              FirebaseFirestore.instance.collection('competition').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -65,7 +66,8 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
                   itemCount: competitions.length,
                   itemBuilder: (context, index) {
                     final competition = competitions[index];
-                    bool isUserInscribed = userInscriptions.contains(competition.id);
+                    bool isUserInscribed =
+                        userInscriptions.contains(competition.id);
 
                     dynamic dateField = competition['date'];
                     DateTime date;
@@ -75,10 +77,12 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
                     } else if (dateField is String) {
                       date = DateTime.parse(dateField);
                     } else {
-                      throw Exception('Type de date inattendu : ${dateField.runtimeType}');
+                      throw Exception(
+                          'Type de date inattendu : ${dateField.runtimeType}');
                     }
 
-                    String formattedDate = DateFormat('dd/MM/yyyy').format(date);
+                    String formattedDate =
+                        DateFormat('dd/MM/yyyy').format(date);
 
                     return Padding(
                       padding: const EdgeInsets.all(20),
@@ -91,7 +95,8 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
-                              side: BorderSide(color: Colors.red[400]!, width: 2.0),
+                              side: BorderSide(
+                                  color: Colors.red[400]!, width: 2.0),
                             ),
                             child: ListTile(
                               title: Wrap(
@@ -101,17 +106,17 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
                                     style: textStyleText(context),
                                   ),
                                   const SizedBox(width: 15),
-                                  Text(
-                                      formattedDate,
-                                      style: textStyleText(context)
-                                  ),
+                                  Text(formattedDate,
+                                      style: textStyleText(context)),
                                   const SizedBox(width: 50),
                                   Text(
                                     isUserInscribed
                                         ? 'Je suis inscrit à cette compétition'
                                         : 'Je ne suis pas inscrit à cette compétition',
                                     style: TextStyle(
-                                      color: isUserInscribed ? Colors.green : Colors.redAccent,
+                                      color: isUserInscribed
+                                          ? Colors.green
+                                          : Colors.redAccent,
                                     ),
                                   )
                                 ],
@@ -122,7 +127,9 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
                                   context.go('/competition/$competitionId');
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Compétition introuvable')),
+                                    const SnackBar(
+                                        content:
+                                            Text('Compétition introuvable')),
                                   );
                                 }
                               },

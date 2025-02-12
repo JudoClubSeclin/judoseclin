@@ -20,7 +20,7 @@ class Competition {
     required this.address,
     required this.title,
     required this.subtitle,
-     this.date,
+    this.date,
     required this.publishDate,
     required this.poussin,
     required this.benjamin,
@@ -83,4 +83,6 @@ class Competition {
       juniorSenior: juniorSenior,
     );
   }
+
+  toMap() {}
 }

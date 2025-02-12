@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:judoseclin/theme.dart';
 
 class DonneesUser extends StatefulWidget {
+  const DonneesUser({super.key});
+
   @override
-  _DonneesUserState createState() => _DonneesUserState();
+  State<DonneesUser> createState() => _DonneesUserState();
 }
 
 class _DonneesUserState extends State<DonneesUser> {
@@ -19,16 +21,16 @@ class _DonneesUserState extends State<DonneesUser> {
   }
 
   Future<void> fetchUserData() async {
-    print("🔍 Fonction fetchUserData exécutée");
+    debugPrint("🔍 Fonction fetchUserData exécutée");
 
     try {
       String? userEmail = FirebaseAuth.instance.currentUser?.email;
       if (userEmail == null || userEmail.isEmpty) {
-        print("❌ Aucun email trouvé !");
+        debugPrint("❌ Aucun email trouvé !");
         return;
       }
 
-      print("🔍 Email utilisateur trouvé : $userEmail");
+      debugPrint("🔍 Email utilisateur trouvé : $userEmail");
 
       var querySnapshot = await FirebaseFirestore.instance
           .collection("adherents")
@@ -36,7 +38,7 @@ class _DonneesUserState extends State<DonneesUser> {
           .get();
 
       if (querySnapshot.docs.isEmpty) {
-        print("❌ Aucun adhérent trouvé pour cet email.");
+        debugPrint("❌ Aucun adhérent trouvé pour cet email.");
         return;
       }
 
@@ -45,9 +47,9 @@ class _DonneesUserState extends State<DonneesUser> {
         isLoading = false; // Fin du chargement
       });
 
-      print("✅ Données récupérées : $userData");
+      debugPrint("✅ Données récupérées : $userData");
     } catch (e) {
-      print("❌ Erreur lors de la récupération des données : $e");
+      debugPrint("❌ Erreur lors de la récupération des données : $e");
       setState(() {
         isLoading = false;
       });
@@ -144,7 +146,7 @@ class _DonneesUserState extends State<DonneesUser> {
                   width: 10,
                 ),
                 Text(
-                  " N° de lricence: ${userData!['licence'] ?? 'Non disponible'}, ",
+                  " N° de licence: ${userData!['licence'] ?? 'Non disponible'}, ",
                   style: textStyleText(context),
                 ),
               ],

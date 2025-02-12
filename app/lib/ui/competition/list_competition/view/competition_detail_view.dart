@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/theme.dart';
 import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
 
@@ -13,11 +14,13 @@ class CompetitionDetailView extends StatelessWidget {
   final String competitionId;
   final CompetitionInteractor competitionInteractor;
   final userId = FirebaseAuth.instance.currentUser?.uid;
+  final Adherents adherents;
 
   CompetitionDetailView({
     required this.competitionId,
     required this.competitionInteractor,
     super.key,
+    required this.adherents,
   });
 
   @override
@@ -37,10 +40,13 @@ class CompetitionDetailView extends StatelessWidget {
             future: competitionInteractor.getCompetitionById(competitionId),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                debugPrint('je passe -1');
+                //debugPrint('je passe -1');
                 return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
-                return Text('Erreur : ${snapshot.error}',style: textStyleText(context),);
+                return Text(
+                  'Erreur : ${snapshot.error}',
+                  style: textStyleText(context),
+                );
               }
 
               final competition = snapshot.data;
@@ -108,7 +114,13 @@ class CompetitionDetailView extends StatelessWidget {
                   ),
                   // ConfigurationLocale.instance.peutSeConnecter &&
 
-                      InscriptionButton(competitionId: competitionId),
+                  InscriptionButton(
+                    competitionId: competition.id,
+                    competitionData:
+                        competition.toMap(), // Convertir l'objet en Map
+                    adherentCategorie: adherents
+                        .category, // Récupérer la catégorie de l'adhérent
+                  ),
                 ]));
               } else {
                 return const Text('Détails de la compétition introuvables.');

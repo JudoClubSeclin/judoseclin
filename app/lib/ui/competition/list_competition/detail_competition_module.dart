@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/ui/competition/list_competition/view/competition_detail_view.dart';
 
 import '../../../core/di/injection.dart';
@@ -27,10 +28,12 @@ class CompetitionDetailModule implements UIModule {
         path: '/competition/:id',
         pageBuilder: (context, state) {
           final competitionId = state.pathParameters['id'] ?? '';
+          final adherents = getIt<Adherents>();
           return MaterialPage(
             child: CompetitionDetailView(
               competitionId: competitionId,
               competitionInteractor: getIt<CompetitionInteractor>(),
+              adherents: adherents,
             ),
           );
         },
@@ -45,13 +48,17 @@ class CompetitionDetailModule implements UIModule {
 
   Widget _buildDetailPage(String competitionId) {
     final interactor = getIt<CompetitionInteractor>();
+    final adherents = getIt<
+        Adherents>(); // Assure-toi que cette ligne ne retourne jamais `null`
+
     return BlocProvider<CompetitionBloc>(
       create: (context) {
         return CompetitionBloc(interactor, competitionId: competitionId);
       },
       child: CompetitionDetailView(
-        competitionId: '',
+        competitionId: competitionId,
         competitionInteractor: interactor,
+        adherents: adherents, // Toujours défini
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/repository/repository_module.dart';
+import '../../domain/domain_module.dart';
 import '../../ui/account/setup_account_module.dart';
 import '../../ui/competition/setup_competition_module.dart';
 import '../../ui/members/setup_user_module.dart';
@@ -29,4 +30,6 @@ void configureDependencies() {
   setupCompetitionModule();
 
   setupAdminModule();
+
+  setupDomainModule();
 }

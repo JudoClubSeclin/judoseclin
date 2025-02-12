@@ -23,14 +23,14 @@ class AdherentsDetailModule implements UIModule {
 
   @override
   List<RouteBase> getRoutes() {
-    print("🚀 Route générée : /admin/adherents/:id");
+    debugPrint("🚀 Route générée : /admin/adherents/:id");
     return [
       GoRoute(
         name: 'adherents_detail',
         path: '/admin/adherents/:id',
         pageBuilder: (context, state) {
           final adherentId = state.pathParameters['id'];
-          print("🛠 ID après GoRouter (named route) : $adherentId");
+          debugPrint("🛠 ID après GoRouter (named route) : $adherentId");
 
           if (adherentId == null || adherentId.isEmpty) {
             return const MaterialPage(
@@ -52,7 +52,7 @@ class AdherentsDetailModule implements UIModule {
 
   /// ✅ Correction : `_buildDetailPage` retourne une `Page<dynamic>` et non un `Widget`
   Page<dynamic> _buildDetailPage(String adherentId) {
-    print("✅ ID reçu dans AdherentsDetailModule: $adherentId");
+    debugPrint("✅ ID reçu dans AdherentsDetailModule: $adherentId");
     final interactor = getIt<AdherentsInteractor>();
     final cotisationInteractor = getIt<CotisationInteractor>();
 
