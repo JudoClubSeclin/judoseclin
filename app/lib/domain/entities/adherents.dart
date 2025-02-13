@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 import 'package:judoseclin/core/utils/date_converter.dart';
 
-@singleton
+
 class Adherents {
   final String id;
   final String firstName;

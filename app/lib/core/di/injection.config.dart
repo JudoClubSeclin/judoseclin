@@ -29,7 +29,6 @@ import '../../data/repository/user_repository/user_data_repository.dart'
     as _i94;
 import '../../data/repository/user_repository/user_data_repository_impl.dart'
     as _i686;
-import '../../domain/entities/adherents.dart' as _i235;
 import '../../domain/usecases/fetch_adherents_data_usecase.dart' as _i155;
 import '../../domain/usecases/fetch_competitions_data_usecase.dart' as _i846;
 import '../../domain/usecases/fetch_cotisation_data_usecase.dart' as _i23;
@@ -74,21 +73,21 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final injectionModule = _$InjectionModule();
     gh.factory<_i703.FirebaseClient>(() => _i703.FirebaseClient());
-    gh.factory<_i23.FetchCotisationDataUseCase>(
-        () => _i23.FetchCotisationDataUseCase());
-    gh.factory<_i155.FetchAdherentsDataUseCase>(
-        () => _i155.FetchAdherentsDataUseCase());
     gh.factory<_i846.FetchCompetitionDataUseCase>(
         () => _i846.FetchCompetitionDataUseCase());
+    gh.factory<_i155.FetchAdherentsDataUseCase>(
+        () => _i155.FetchAdherentsDataUseCase());
+    gh.factory<_i23.FetchCotisationDataUseCase>(
+        () => _i23.FetchCotisationDataUseCase());
     gh.factory<_i680.FetchInscriptionCompetitionDataUseCase>(
         () => _i680.FetchInscriptionCompetitionDataUseCase());
     gh.singleton<_i573.AppRouter>(() => _i573.AppRouter());
     gh.singleton<_i497.UsersInteractor>(() => _i497.UsersInteractor());
+    gh.singleton<_i718.AppRouterConfig>(() => _i718.AppRouterConfig());
     gh.singleton<_i59.FirebaseAuth>(() => injectionModule.firebaseAuth);
     gh.singleton<_i457.FirebaseStorage>(() => injectionModule.firebaseStorage);
     gh.singleton<_i974.FirebaseFirestore>(
         () => injectionModule.firebaseFireStore);
-    gh.singleton<_i718.AppRouterConfig>(() => _i718.AppRouterConfig());
     gh.factory<_i94.UserDataRepository>(() => _i686.UserDataRepositoryImpl());
     gh.singleton<_i208.UserAuthRepository>(
         () => _i131.UserAuthRepositoryImpl());
@@ -103,44 +102,26 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i977.AuthService(gh<_i59.FirebaseAuth>()));
     gh.factory<_i746.FirestoreService>(
         () => _i746.FirestoreService(gh<_i974.FirebaseFirestore>()));
-    gh.singleton<_i483.LandingModule>(
-        () => _i483.LandingModule(gh<_i573.AppRouter>()));
-    gh.singleton<_i1062.ListAdherentsModule>(
-        () => _i1062.ListAdherentsModule(gh<_i573.AppRouter>()));
     gh.singleton<_i776.AddAdherentsModule>(
         () => _i776.AddAdherentsModule(gh<_i573.AppRouter>()));
+    gh.singleton<_i1062.ListAdherentsModule>(
+        () => _i1062.ListAdherentsModule(gh<_i573.AppRouter>()));
+    gh.singleton<_i10.AdherentsDetailModule>(
+        () => _i10.AdherentsDetailModule(gh<_i573.AppRouter>()));
+    gh.singleton<_i606.ListCompetitionModule>(
+        () => _i606.ListCompetitionModule(gh<_i573.AppRouter>()));
+    gh.singleton<_i409.CompetitionDetailModule>(
+        () => _i409.CompetitionDetailModule(gh<_i573.AppRouter>()));
+    gh.singleton<_i944.AddCompetitionModule>(
+        () => _i944.AddCompetitionModule(gh<_i573.AppRouter>()));
+    gh.singleton<_i483.LandingModule>(
+        () => _i483.LandingModule(gh<_i573.AppRouter>()));
     gh.singleton<_i878.ResetPasswordModule>(
         () => _i878.ResetPasswordModule(gh<_i573.AppRouter>()));
     gh.singleton<_i63.LoginModule>(
         () => _i63.LoginModule(gh<_i573.AppRouter>()));
-    gh.singleton<_i409.CompetitionDetailModule>(
-        () => _i409.CompetitionDetailModule(gh<_i573.AppRouter>()));
-    gh.singleton<_i606.ListCompetitionModule>(
-        () => _i606.ListCompetitionModule(gh<_i573.AppRouter>()));
     gh.singleton<_i692.AccountModule>(
         () => _i692.AccountModule(gh<_i573.AppRouter>()));
-    gh.singleton<_i10.AdherentsDetailModule>(
-        () => _i10.AdherentsDetailModule(gh<_i573.AppRouter>()));
-    gh.singleton<_i944.AddCompetitionModule>(
-        () => _i944.AddCompetitionModule(gh<_i573.AppRouter>()));
-    gh.singleton<_i235.Adherents>(() => _i235.Adherents(
-          id: gh<String>(),
-          firstName: gh<String>(),
-          lastName: gh<String>(),
-          email: gh<String>(),
-          dateOfBirth: gh<DateTime>(),
-          licence: gh<String>(),
-          belt: gh<String>(),
-          discipline: gh<String>(),
-          category: gh<String>(),
-          tutor: gh<String>(),
-          phone: gh<String>(),
-          address: gh<String>(),
-          image: gh<String>(),
-          sante: gh<String>(),
-          medicalCertificate: gh<String>(),
-          invoice: gh<String>(),
-        ));
     gh.factory<_i1004.CompetitionRepositoryImpl>(
         () => _i1004.CompetitionRepositoryImpl(gh<_i746.FirestoreService>()));
     gh.factory<_i463.AdherentsRepositoryImpl>(
