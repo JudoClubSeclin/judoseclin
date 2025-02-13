@@ -16,11 +16,11 @@ class InscriptionButton extends StatelessWidget {
   final String? adherentCategorie;
 
   const InscriptionButton({
-    Key? key,
+    super.key,
     required this.competitionId,
     required this.competitionData,
     required this.adherentCategorie,
-  }) : super(key: key);
+  });
 
   bool estEligibilePourCompetition(String? adherentCategorie) {
     if (competitionData.isEmpty ||
