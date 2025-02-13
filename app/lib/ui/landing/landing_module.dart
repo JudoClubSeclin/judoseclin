@@ -5,7 +5,7 @@ import 'package:judoseclin/core/di/api/firestore_service.dart';
 import 'package:judoseclin/data/repository/competititon_repository_impl.dart';
 import 'package:judoseclin/ui/ui_module.dart';
 
-import '../../domain/entities/entity_module.dart';
+import '../../domain/entities/setup_entity_module.dart';
 import 'landing.dart';
 
 @singleton

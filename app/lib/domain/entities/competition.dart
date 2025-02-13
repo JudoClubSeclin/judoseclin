@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-
 import '../../core/utils/date_converter.dart';
 
 class Competition {
@@ -35,24 +34,27 @@ class Competition {
   }
 
   // vérifie si la date est bien dans le futur
-  bool? get isInFuture {
-    return date?.isAfter(DateTime.now());
+  bool get isInFuture {
+    return date?.isAfter(DateTime.now()) ?? false;
   }
 
   // Constructeur de la classe à partir d'une map
   factory Competition.fromMap(Map<String, dynamic>? data, String id) {
+    if (data == null) {
+      throw ArgumentError('data map cannot be null');
+    }
     return Competition(
       id: id,
-      address: data?['address'] ?? '',
-      title: data?['title'] ?? '',
-      subtitle: data?['subtitle'] ?? '',
-      date: DateConverter.convertToDateTime(data?['date']),
-      publishDate: DateConverter.convertToDateTime(data?['publishDate']),
-      poussin: data?['poussin'] ?? '',
-      benjamin: data?['benjamin'] ?? '',
-      minime: data?['minime'] ?? '',
-      cadet: data?['cadet'] ?? '',
-      juniorSenior: data?['juniorSenior'] ?? '',
+      address: data['address'] ?? '',
+      title: data['title'] ?? '',
+      subtitle: data['subtitle'] ?? '',
+      date: DateConverter.convertToDateTime(data['date']),
+      publishDate: DateConverter.convertToDateTime(data['publishDate']) ?? DateTime.now(),
+      poussin: data['poussin'] ?? '',
+      benjamin: data['benjamin'] ?? '',
+      minime: data['minime'] ?? '',
+      cadet: data['cadet'] ?? '',
+      juniorSenior: data['juniorSenior'] ?? '',
     );
   }
 
@@ -74,7 +76,7 @@ class Competition {
       address: address,
       title: title,
       subtitle: subtitle,
-      date: DateConverter.convertToDateTime(date),
+      date: date,
       publishDate: DateTime.now(),
       poussin: poussin,
       benjamin: benjamin,
@@ -84,5 +86,20 @@ class Competition {
     );
   }
 
-  toMap() {}
+  // Implement toMap method
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'address': address,
+      'title': title,
+      'subtitle': subtitle,
+      'date': date?.toIso8601String(),
+      'publishDate': publishDate.toIso8601String(),
+      'poussin': poussin,
+      'benjamin': benjamin,
+      'minime': minime,
+      'cadet': cadet,
+      'juniorSenior': juniorSenior,
+    };
+  }
 }

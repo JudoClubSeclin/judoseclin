@@ -11,18 +11,34 @@ import 'fetch_competitions_data_usecase.dart';
 final GetIt getIt = GetIt.instance;
 
 void setupDataUseCaseModule() {
-  getIt.registerLazySingleton<FetchAdherentsDataUseCase>(
-      () => FetchAdherentsDataUseCase());
+  if (!getIt.isRegistered<FetchAdherentsDataUseCase>()) {
+    getIt.registerLazySingleton<FetchAdherentsDataUseCase>(
+          () => FetchAdherentsDataUseCase(),
+    );
+  }
 
-  getIt.registerLazySingleton<FetchCompetitionDataUseCase>(
-      () => FetchCompetitionDataUseCase());
+  if(!getIt.isRegistered<FetchCompetitionDataUseCase>()) {
+    getIt.registerLazySingleton<FetchCompetitionDataUseCase>(
+            () => FetchCompetitionDataUseCase()
+    );
+  }
+  if(!getIt.isRegistered<FetchCotisationDataUseCase>()) {
+    getIt.registerLazySingleton<FetchCotisationDataUseCase>(
+            () => FetchCotisationDataUseCase()
+    );
+  }
 
-  getIt.registerLazySingleton<FetchCotisationDataUseCase>(
-      () => FetchCotisationDataUseCase());
+  if(!getIt.isRegistered<FetchInscriptionCompetitionDataUseCase>()) {
+    getIt.registerLazySingleton<FetchInscriptionCompetitionDataUseCase>(
+            () => FetchInscriptionCompetitionDataUseCase()
+    );
+  }
 
-  getIt.registerLazySingleton<FetchInscriptionCompetitionDataUseCase>(
-      () => FetchInscriptionCompetitionDataUseCase());
+  if(!getIt.isRegistered<FetchUserDataUseCase>()) {
+    getIt.registerLazySingleton<FetchUserDataUseCase>(() =>
+        FetchUserDataUseCase(
+            getIt<UserDataRepository>(), getIt<AuthStateRepository>())
+    );
+  }
+  }
 
-  getIt.registerLazySingleton<FetchUserDataUseCase>(() => FetchUserDataUseCase(
-      getIt<UserDataRepository>(), getIt<AuthStateRepository>()));
-}

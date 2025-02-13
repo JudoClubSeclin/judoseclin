@@ -13,7 +13,7 @@ import 'package:judoseclin/ui/members/inscription/inscription_module.dart';
 import 'package:judoseclin/ui/members/login/login_module.dart';
 import 'package:judoseclin/ui/members/reset_password/reset_password_module.dart';
 
-import '../../domain/entities/entity_module.dart';
+import '../../domain/entities/setup_entity_module.dart';
 
 @singleton
 class AppRouterConfig {
