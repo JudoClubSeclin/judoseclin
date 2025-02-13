@@ -23,17 +23,24 @@ class InscriptionButton extends StatelessWidget {
   }) : super(key: key);
 
   bool estEligibilePourCompetition(String? adherentCategorie) {
-    if (competitionData.isEmpty || adherentCategorie == null || adherentCategorie.isEmpty) {
+    if (competitionData.isEmpty ||
+        adherentCategorie == null ||
+        adherentCategorie.isEmpty) {
       return false;
     }
 
     String categorieNormalisee = adherentCategorie.toLowerCase();
 
-    return (categorieNormalisee == 'poussin' && competitionData['poussin']?.isNotEmpty == true) ||
-        (categorieNormalisee == 'benjamin' && competitionData['benjamin']?.isNotEmpty == true) ||
-        (categorieNormalisee == 'minime' && competitionData['minime']?.isNotEmpty == true) ||
-        (categorieNormalisee == 'cadet' && competitionData['cadet']?.isNotEmpty == true) ||
-        ((categorieNormalisee == 'junior' || categorieNormalisee == 'senior') && competitionData['juniorSenior']?.isNotEmpty == true);
+    return (categorieNormalisee == 'poussin' &&
+            competitionData['poussin']?.isNotEmpty == true) ||
+        (categorieNormalisee == 'benjamin' &&
+            competitionData['benjamin']?.isNotEmpty == true) ||
+        (categorieNormalisee == 'minime' &&
+            competitionData['minime']?.isNotEmpty == true) ||
+        (categorieNormalisee == 'cadet' &&
+            competitionData['cadet']?.isNotEmpty == true) ||
+        ((categorieNormalisee == 'junior' || categorieNormalisee == 'senior') &&
+            competitionData['juniorSenior']?.isNotEmpty == true);
   }
 
   void _showDialog(BuildContext context, String title, String content) {
@@ -59,13 +66,17 @@ class InscriptionButton extends StatelessWidget {
     return BlocProvider<InscriptionCompetitionBloc>(
       create: (context) => getIt<InscriptionCompetitionBloc>(),
       child: Builder(
-        builder: (context) => BlocListener<InscriptionCompetitionBloc, InscriptionCompetitionState>(
+        builder: (context) => BlocListener<InscriptionCompetitionBloc,
+            InscriptionCompetitionState>(
           listener: (context, state) {
             if (state is InscriptionCompetitionSuccess) {
-              _showDialog(context, 'Inscription réussie', 'Votre inscription a été validée avec succès !');
+              _showDialog(context, 'Inscription réussie',
+                  'Votre inscription a été validée avec succès !');
             } else if (state is InscriptionCompetitionError) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Échec de l\'inscription: ${state.errorMessage}')),
+                SnackBar(
+                    content:
+                        Text('Échec de l\'inscription: ${state.errorMessage}')),
               );
             }
           },
@@ -83,7 +94,7 @@ class InscriptionButton extends StatelessWidget {
                 _showDialog(
                   context,
                   'Erreur',
-                  'Votre catégorie n\'est pas définie. Veuillez mettre à jour votre profil.',
+                  'Votre catégories n\'est pas définie. Veuillez mettre à jour votre profil.',
                 );
                 return;
               }
@@ -98,11 +109,11 @@ class InscriptionButton extends StatelessWidget {
               }
 
               context.read<InscriptionCompetitionBloc>().add(
-                RegisterForCompetition(
-                  competitionId: competitionId,
-                  userId: user.uid,
-                ),
-              );
+                    RegisterForCompetition(
+                      competitionId: competitionId,
+                      userId: user.uid,
+                    ),
+                  );
             },
           ),
         ),
