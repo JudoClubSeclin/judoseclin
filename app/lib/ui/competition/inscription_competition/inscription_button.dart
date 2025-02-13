@@ -13,7 +13,7 @@ import 'inscription_competition_state.dart';
 class InscriptionButton extends StatelessWidget {
   final String competitionId;
   final Map<String, dynamic> competitionData;
-  final String adherentCategorie;
+  final String? adherentCategorie;
 
   const InscriptionButton({
     Key? key,
@@ -22,14 +22,18 @@ class InscriptionButton extends StatelessWidget {
     required this.adherentCategorie,
   }) : super(key: key);
 
-  bool estEligibilePourCompetition(String adherentCategorie) {
-    if (competitionData.isEmpty) return false;
-    final categoriesDisponibles = [
-      'poussin', 'benjamin', 'minime', 'cadet', 'junior', 'senior'
-    ];
-    return categoriesDisponibles.any((categorie) =>
-    competitionData.containsKey(categorie) &&
-        adherentCategorie.toLowerCase() == categorie);
+  bool estEligibilePourCompetition(String? adherentCategorie) {
+    if (competitionData.isEmpty || adherentCategorie == null || adherentCategorie.isEmpty) {
+      return false;
+    }
+
+    String categorieNormalisee = adherentCategorie.toLowerCase();
+
+    return (categorieNormalisee == 'poussin' && competitionData['poussin']?.isNotEmpty == true) ||
+        (categorieNormalisee == 'benjamin' && competitionData['benjamin']?.isNotEmpty == true) ||
+        (categorieNormalisee == 'minime' && competitionData['minime']?.isNotEmpty == true) ||
+        (categorieNormalisee == 'cadet' && competitionData['cadet']?.isNotEmpty == true) ||
+        ((categorieNormalisee == 'junior' || categorieNormalisee == 'senior') && competitionData['juniorSenior']?.isNotEmpty == true);
   }
 
   void _showDialog(BuildContext context, String title, String content) {
@@ -72,6 +76,15 @@ class InscriptionButton extends StatelessWidget {
 
               if (user == null) {
                 context.go('/login');
+                return;
+              }
+
+              if (adherentCategorie == null || adherentCategorie!.isEmpty) {
+                _showDialog(
+                  context,
+                  'Erreur',
+                  'Votre catégorie n\'est pas définie. Veuillez mettre à jour votre profil.',
+                );
                 return;
               }
 

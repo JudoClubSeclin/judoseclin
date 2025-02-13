@@ -102,8 +102,8 @@ class CompetitionDetailView extends StatelessWidget {
           InscriptionButton(
             competitionId: competition.id,
             competitionData: competition.toMap(),
-            adherentCategorie: adherents.category,
-          ),
+            adherentCategorie: adherents?.category, // Make sure this is not null
+          )
         ],
       ),
     );
