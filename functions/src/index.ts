@@ -1,44 +1,49 @@
 import * as functions from "firebase-functions/v2";
 import * as nodemailer from "nodemailer";
 import {HttpsError} from "firebase-functions/v2/https";
+import {defineSecret} from "firebase-functions/params";
 
 interface EmailData {
-  to: string;
-  subject: string;
-  text: string;
+to: string;
+subject: string;
+text: string;
 }
 
-// Configurer le transporteur SMTP (exemple avec Gmail)
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "votre_adresse@gmail.com", // Remplacez par votre adresse Gmail
-    pass: "votre_mot_de_passe",
-    // Remplacez par votre mot de passe ou un mot de passe d'application
-  },
-});
+const smtpUser = defineSecret("SMTP_USER");
+const smtpPass = defineSecret("SMTP_PASS");
 
-// Définir la fonction Firebase
+// Fonction Firebase pour envoyer un e-mail
 export const sendEmail = functions.https
   .onCall(async (request: functions.https.CallableRequest<EmailData>) => {
     const data = request.data;
     const {to, subject, text} = data;
 
+    // Configurer le transporteur SMTP pour Outlook à l'intérieur de la fonction
+    const transporter = nodemailer.createTransport({
+      host: "smtp.office365.com", // Serveur SMTP d'Outlook
+      port: 587, // Port SMTP pour Outlook
+      secure: true, // `true` car on utilise STARTTLS
+      auth: {
+        user: smtpUser.value(), // Adresse e-mail Outlook
+        pass: smtpPass.value(), // Mot de passe Outlook
+      },
+    });
+
     const mailOptions = {
-      from: "votre_adresse@gmail.com",
-      to,
-      subject,
-      text,
+      from: smtpUser.value(), // Expéditeur
+      to, // Destinataire
+      subject, // Sujet de l'e-mail
+      text, // Corps de l'e-mail
     };
 
     try {
       await transporter.sendMail(mailOptions);
-      return {success: true, message: "E-mail envoyé avec succès !"};
+      return {success: true, message: "E-mail envoyé avec succès!"};
     } catch (error) {
       console.error("Erreur lors de l'envoi de l'e-mail :", error);
       throw new HttpsError(
         "internal",
-        "Erreur lors de l'envoi de l'e-mail",
+        "Erreur lors de l'envoi del'e-mail"
       );
     }
   });
