@@ -156,31 +156,34 @@ class AddAdherentsView extends StatelessWidget {
                     onPressed: () async {
                       try {
                         //Convertir la chaine de date en objet DateTime
-                        DateTime parsedDate = DateFormat('dd/MM/yyyy')
-                            .parse(dateOfBirthController.text.trim());
+                        // Convert the date string to a DateTime object
+                        DateTime parsedDate = DateFormat('dd/MM/yyyy').parse(dateOfBirthController.text.trim());
+
+                        // Convert the DateTime object back to a String in the desired format
+                        String formattedDate = DateFormat('dd/MM/yyyy').format(parsedDate);
                         // Save adherent and get the adherentId
                         context.read<AdherentsBloc>().add(
-                              AddAdherentsSignUpEvent(
-                                id: '',
-                                firstName: firstNameController.text.trim(),
-                                lastName: lastNameController.text.trim(),
-                                email: emailController.text.trim(),
-                                dateOfBirth: parsedDate,
-                                licence: licenceController.text.trim(),
-                                belt: beltController.text.trim(),
-                                discipline: disciplineController.text.trim(),
-                                category: categoryController.text.trim(),
-                                tutor: tutorController.text.trim(),
-                                phone: phoneController.text.trim(),
-                                address: addressController.text.trim(),
-                                image: imageController.text.trim(),
-                                sante: santeController.text.trim(),
-                                medicalCertificate:
-                                    medicalCertificateController.text.trim(),
-                                invoice: invoiceController.text.trim(),
-                                adherentId: '',
-                              ),
-                            );
+                          AddAdherentsSignUpEvent(
+                            id: '',
+                            firstName: firstNameController.text.trim(),
+                            lastName: lastNameController.text.trim(),
+                            email: emailController.text.trim(),
+                            dateOfBirth: formattedDate,
+                            licence: licenceController.text.trim(),
+                            belt: beltController.text.trim(),
+                            discipline: disciplineController.text.trim(),
+                            category: categoryController.text.trim(),
+                            tutor: tutorController.text.trim(),
+                            phone: phoneController.text.trim(),
+                            address: addressController.text.trim(),
+                            image: imageController.text.trim(),
+                            sante: santeController.text.trim(),
+                            medicalCertificate: medicalCertificateController.text.trim(),
+                            invoice: invoiceController.text.trim(),
+                            adherentId: '',
+                            userExists: false, // Ajout du paramètre manquant
+                          ),
+                        );
 
                         // Reset text controllers
                         firstNameController.clear();

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import 'package:judoseclin/core/di/api/auth_service.dart';
+import 'package:judoseclin/core/di/api/firestore_service.dart';
 import 'package:judoseclin/ui/adherents/adherents_bloc.dart';
 import 'package:judoseclin/ui/adherents/interactor/adherents_interactor.dart';
 import 'package:judoseclin/ui/adherents/view/add_adherents_view.dart';
@@ -42,8 +44,10 @@ class AddAdherentsModule implements UIModule {
     return BlocProvider<AdherentsBloc>(
       create: (context) {
         final interactor = getIt<AdherentsInteractor>();
+        final auth = getIt<AuthService>();
+        final firestoreService = getIt<FirestoreService>();
 
-        return AdherentsBloc(interactor, adherentId: '');
+        return AdherentsBloc(interactor,auth, firestoreService, adherentId: '');
       },
       child: AddAdherentsView(),
     );

@@ -6,7 +6,7 @@ class AddAdherentsSignUpEvent extends AdherentsEvent {
   final String firstName;
   final String lastName;
   final String email;
-  final DateTime dateOfBirth;
+  final String dateOfBirth;
   final String licence;
   final String belt;
   final String discipline;
@@ -18,6 +18,7 @@ class AddAdherentsSignUpEvent extends AdherentsEvent {
   final String sante;
   final String medicalCertificate;
   final String invoice;
+  final bool userExists; // Ajout de cette ligne
 
   AddAdherentsSignUpEvent({
     required this.id,
@@ -37,9 +38,9 @@ class AddAdherentsSignUpEvent extends AdherentsEvent {
     required this.sante,
     required this.medicalCertificate,
     required this.invoice,
+    required this.userExists, // Ajout de cette ligne
   });
 }
-
 class AddCotisationEvent extends AdherentsEvent {
   final String adherentId;
   AddCotisationEvent(this.adherentId) : super();

@@ -8,7 +8,9 @@ class SignUpLoadingState extends AdherentsState {}
 
 class SignUpSuccessState extends AdherentsState {
   final String adherentId;
-  SignUpSuccessState({required this.adherentId});
+  final bool isNewUser;
+
+  SignUpSuccessState(this.isNewUser, this.adherentId);
 }
 
 class SignUpErrorState extends AdherentsState {

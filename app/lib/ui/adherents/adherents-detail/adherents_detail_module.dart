@@ -7,6 +7,8 @@ import 'package:judoseclin/ui/adherents/adherents_bloc.dart';
 import 'package:judoseclin/ui/adherents/interactor/adherents_interactor.dart';
 import 'package:judoseclin/ui/cotisations/interactor/cotisation_interactor.dart';
 
+import '../../../core/di/api/auth_service.dart';
+import '../../../core/di/api/firestore_service.dart';
 import '../../../core/di/injection.dart';
 import '../../ui_module.dart';
 
@@ -55,11 +57,14 @@ class AdherentsDetailModule implements UIModule {
     debugPrint("✅ ID reçu dans AdherentsDetailModule: $adherentId");
     final interactor = getIt<AdherentsInteractor>();
     final cotisationInteractor = getIt<CotisationInteractor>();
+    final auth = getIt<AuthService>();
+    final firestoreService = getIt<FirestoreService>();
 
     return CustomTransitionPage(
       child: BlocProvider<AdherentsBloc>(
         create: (context) => AdherentsBloc(
-          interactor,
+          interactor,auth,
+          firestoreService,
           adherentId: adherentId,
         ),
         child: AdherentsDetailView(

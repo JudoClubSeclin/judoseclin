@@ -98,8 +98,6 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i573.AppRouter>(),
           gh<_i497.UsersInteractor>(),
         ));
-    gh.lazySingleton<_i977.AuthService>(
-        () => _i977.AuthService(gh<_i59.FirebaseAuth>()));
     gh.factory<_i746.FirestoreService>(
         () => _i746.FirestoreService(gh<_i974.FirebaseFirestore>()));
     gh.singleton<_i776.AddAdherentsModule>(
@@ -132,6 +130,10 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i717.StorageService>(
         () => _i717.StorageService(gh<_i457.FirebaseStorage>()));
+    gh.lazySingleton<_i977.AuthService>(() => _i977.AuthService(
+          gh<_i59.FirebaseAuth>(),
+          gh<_i746.FirestoreService>(),
+        ));
     return this;
   }
 }

@@ -8,6 +8,8 @@ import 'package:judoseclin/ui/adherents/view/list_adherents_view.dart';
 import 'package:judoseclin/ui/ui_module.dart';
 
 import '../../../core/di/injection.dart';
+import '../../core/di/api/auth_service.dart';
+import '../../core/di/api/firestore_service.dart';
 
 @singleton
 class ListAdherentsModule implements UIModule {
@@ -40,9 +42,11 @@ class ListAdherentsModule implements UIModule {
 
   Widget _buildAccountPage() {
     final interactor = getIt<AdherentsInteractor>();
+    final auth = getIt<AuthService>();
+    final firestoreService = getIt<FirestoreService>();
     return BlocProvider<AdherentsBloc>(
       create: (context) {
-        return AdherentsBloc(interactor, adherentId: '');
+        return AdherentsBloc(interactor,auth, firestoreService, adherentId: '');
       },
       child: ListAdherentsView(interactor: interactor),
     );
