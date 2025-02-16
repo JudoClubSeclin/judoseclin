@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:judoseclin/core/di/api/auth_service.dart';
 import 'package:judoseclin/core/di/api/firestore_service.dart';
 
+import '../../core/utils/envoyer_email_invitation.dart';
 import 'adherents_state.dart';
 import 'interactor/adherents_interactor.dart';
 import 'adherents_event.dart';
@@ -51,22 +52,15 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
       bool accountExists = event.userExists;
 
       if (!accountExists) {
-        // Création du compte utilisateur
-        User? newUser = await _authService.createUserWithEmailAndPassword(
-          event.email,
-          'TemporaryPassword123!', // À remplacer par un mot de passe temporaire sécurisé
-        );
-        if (newUser != null) {
-          await _authService.sendInformationEmail(event.email, false);
-        }
+        // Envoyer un e-mail d'invitation
+        await envoyerEmailInvitation(email: event.email, nom: event.firstName, prenom: event.lastName);
       } else {
         User? user = _authService.currentUser;
         if (user != null) {
           await _authService.linkUserToAdherent(user);
         } else {
           await _authService.sendInformationEmail(event.email, true);
-        }
-      }
+        }}
 
       emit(SignUpSuccessState(!accountExists, adherentRef.id));
       // Correction ici

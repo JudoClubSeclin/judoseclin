@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:judoseclin/theme.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 import 'package:judoseclin/ui/common/widgets/inputs/custom_textfield.dart';
-
+import '../../../core/utils/envoyer_email_invitation.dart';
 import '../../common/widgets/appbar/custom_appbar.dart';
 import '../../common/widgets/buttons/custom_buttom.dart';
 import '../adherents_bloc.dart';
@@ -155,37 +155,40 @@ class AddAdherentsView extends StatelessWidget {
                   CustomButton(
                     onPressed: () async {
                       try {
-                        //Convertir la chaine de date en objet DateTime
-                        // Convert the date string to a DateTime object
-                        DateTime parsedDate = DateFormat('dd/MM/yyyy').parse(dateOfBirthController.text.trim());
+                        // Convertir la chaîne de date en objet DateTime
+                        DateTime parsedDate = DateFormat('dd/MM/yyyy')
+                            .parse(dateOfBirthController.text.trim());
 
-                        // Convert the DateTime object back to a String in the desired format
-                        String formattedDate = DateFormat('dd/MM/yyyy').format(parsedDate);
-                        // Save adherent and get the adherentId
+                        // Convertir l'objet DateTime en chaîne de caractères formatée
+                        String formattedDate =
+                            DateFormat('dd/MM/yyyy').format(parsedDate);
+
+                        // Enregistrer l'adhérent dans Firestore
                         context.read<AdherentsBloc>().add(
-                          AddAdherentsSignUpEvent(
-                            id: '',
-                            firstName: firstNameController.text.trim(),
-                            lastName: lastNameController.text.trim(),
-                            email: emailController.text.trim(),
-                            dateOfBirth: formattedDate,
-                            licence: licenceController.text.trim(),
-                            belt: beltController.text.trim(),
-                            discipline: disciplineController.text.trim(),
-                            category: categoryController.text.trim(),
-                            tutor: tutorController.text.trim(),
-                            phone: phoneController.text.trim(),
-                            address: addressController.text.trim(),
-                            image: imageController.text.trim(),
-                            sante: santeController.text.trim(),
-                            medicalCertificate: medicalCertificateController.text.trim(),
-                            invoice: invoiceController.text.trim(),
-                            adherentId: '',
-                            userExists: false, // Ajout du paramètre manquant
-                          ),
-                        );
+                              AddAdherentsSignUpEvent(
+                                id: '',
+                                firstName: firstNameController.text.trim(),
+                                lastName: lastNameController.text.trim(),
+                                email: emailController.text.trim(),
+                                dateOfBirth: formattedDate,
+                                licence: licenceController.text.trim(),
+                                belt: beltController.text.trim(),
+                                discipline: disciplineController.text.trim(),
+                                category: categoryController.text.trim(),
+                                tutor: tutorController.text.trim(),
+                                phone: phoneController.text.trim(),
+                                address: addressController.text.trim(),
+                                image: imageController.text.trim(),
+                                sante: santeController.text.trim(),
+                                medicalCertificate:
+                                    medicalCertificateController.text.trim(),
+                                invoice: invoiceController.text.trim(),
+                                adherentId: '',
+                                userExists: false,
+                              ),
+                            );
 
-                        // Reset text controllers
+                        // Réinitialiser les contrôleurs de texte
                         firstNameController.clear();
                         lastNameController.clear();
                         emailController.clear();
@@ -202,8 +205,13 @@ class AddAdherentsView extends StatelessWidget {
                         medicalCertificateController.clear();
                         invoiceController.clear();
                       } catch (e) {
-                        debugPrint('Error processing data: $e');
-                        // Handle the error as needed, e.g., show a message to the user
+                        debugPrint(
+                            'Erreur lors de l\'enregistrement ou de l\'envoi de l\'e-mail : $e');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text(
+                                  'Erreur lors du traitement des données: $e')),
+                        );
                       }
                     },
                     label: "Enregistrer",

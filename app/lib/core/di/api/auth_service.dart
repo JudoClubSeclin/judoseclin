@@ -1,19 +1,20 @@
-import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 import 'package:flutter/material.dart';
 
 import 'firestore_service.dart';
 
 @LazySingleton()
-class AuthService {
+class AuthService extends ChangeNotifier {
+  AuthService(this._auth, this._firestore) {
+    // Initialisation si nécessaire
+  }
   final FirebaseAuth _auth;
   final FirestoreService _firestore;
 
-  AuthService(this._auth, this._firestore);
 
   // Connexion utilisateur
   Future<User?> signIn(String email, String password) async {
@@ -56,11 +57,6 @@ class AuthService {
   Future<void> sendInformationEmail(String? email, bool accountExists) async {
     if (email == null) return;
 
-    const String apiKey = String.fromEnvironment(
-        'SENDGRID_API_KEY'); // Utilisation sécurisée de la clé API
-    const String fromEmail =
-        "votre_email@example.com"; // Adresse d'expédition autorisée
-
     String subject = accountExists
         ? "Votre compte a été lié à votre profil adhérent"
         : "Activation de votre compte";
@@ -69,37 +65,21 @@ class AuthService {
         ? "Votre compte utilisateur existant a été lié à votre profil adhérent. Vous pouvez maintenant vous connecter à l'application."
         : "Un compte a été créé pour vous. Veuillez cliquer sur le lien suivant pour activer votre compte et définir votre mot de passe : https://votre-site.com/activation";
 
-    final url = Uri.parse("https://api.sendgrid.com/v3/mail/send");
-    try {
-      final response = await http.post(
-        url,
-        headers: {
-          "Authorization": "Bearer $apiKey",
-          "Content-Type": "application/json",
-        },
-        body: jsonEncode({
-          "personalizations": [
-            {
-              "to": [
-                {"email": email}
-              ],
-              "subject": subject,
-            }
-          ],
-          "from": {"email": fromEmail},
-          "content": [
-            {"type": "text/plain", "value": body}
-          ]
-        }),
-      );
+    final FirebaseFunctions functions = FirebaseFunctions.instance;
+    final HttpsCallable callable = functions.httpsCallable('sendEmail');
 
-      if (response.statusCode == 202) {
-        debugPrint("Email envoyé avec succès !");
-      } else {
-        debugPrint("Erreur d'envoi d'email : ${response.body}");
-      }
+    try {
+      final response = await callable.call(<String, dynamic>{
+        'to': email, // E-mail de l'adhérent
+        'subject': subject, // Sujet de l'e-mail
+        'text': body,
+      });
+
+      debugPrint('E-mail envoyé : ${response.data}');
+    } on FirebaseFunctionsException catch (e) {
+      debugPrint('Erreur lors de l\'envoi de l\'e-mail : ${e.message}');
     } catch (e) {
-      debugPrint("Exception lors de l'envoi de l'email: $e");
+      debugPrint('Erreur lors de l\'envoi de l\'e-mail : $e');
     }
   }
 

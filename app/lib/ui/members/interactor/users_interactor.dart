@@ -53,14 +53,6 @@ class UsersInteractor {
     }
   }
 
-  Future<void> checkAuthenticationStatus() async {
-    try {
-      //Utilisez le repository pour la redirection
-      stateRepository.isUserConnected;
-    } catch (error) {
-      debugPrint('redirection échoué : $error');
-    }
-  }
 
   Future<void> logOut() async {
     await authUserRepository.logOut();

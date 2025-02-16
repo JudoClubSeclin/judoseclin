@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:judoseclin/core/utils/function_admin.dart';
-
+import 'package:provider/provider.dart';
 import '../../../../theme.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -52,11 +52,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       {'label': 'Compétitions', 'route': '/competition'},
     ];
     return [
-      FutureBuilder<bool>(
-        future: hasAccess(),
-        builder: (context, snapshot) {
-          final bool hasAccess =
-              snapshot.data == true && MediaQuery.sizeOf(context).width > 749;
+      Consumer<FunctionAdminService>(
+        builder: (context, authService, child) {
+          final bool hasAccess = authService.isAdmin && MediaQuery.sizeOf(context).width > 749;
 
           debugPrint('hasAccess: $hasAccess');
 

@@ -21,6 +21,9 @@ abstract class UIModule {
    Map<String, WidgetBuilder> getShareWidgets() {
      return {};
    }
+
+   /// Nouvelle méthode pour envelopper un widget avec les providers nécessaires
+   Widget wrapWithProviders(BuildContext context, Widget child);
  }
 
  /// class pour gérer les routes de l'application

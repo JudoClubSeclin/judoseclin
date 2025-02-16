@@ -4,8 +4,10 @@ import 'package:get_it/get_it.dart';
 import 'package:judoseclin/core/router/router_config.dart';
 import 'package:judoseclin/firebase_options.dart';
 import 'package:judoseclin/theme.dart';
+import 'package:provider/provider.dart';
 
 import 'core/di/injection.dart';
+import 'core/utils/function_admin.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,8 +17,15 @@ void main() async {
   );
 
   configureDependencies();
-  runApp(const MyApp());
-}
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => FunctionAdminService()),
+        // Ajoute d'autres providers ici si nécessaire
+      ],
+      child: MyApp(),
+    ),
+  );}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
