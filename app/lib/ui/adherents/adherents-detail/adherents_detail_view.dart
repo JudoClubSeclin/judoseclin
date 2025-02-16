@@ -67,7 +67,7 @@ class AdherentsDetailView extends StatelessWidget {
                   CustomButton(
                       label: "Télécharger la fiche PDF",
                       onPressed: () {
-                        generateAndDownloadPdf(adherent);
+                        generateAndDownloadPdf( adherentId, adherentsInteractor);
 
                       },
               )

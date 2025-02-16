@@ -65,5 +65,5 @@ flutter:
         - asset: fonts/Hiromisake-Regular.ttf
     - family: Roboto
       fonts:
-        - asset: fonts/Roboto-Regular.ttf
-        - asset: font/Roboto-Bold.ttf
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
