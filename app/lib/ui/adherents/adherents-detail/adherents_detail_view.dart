@@ -3,9 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
-
-
-import '../../../core/di/injection.dart';
 import '../../../core/utils/generete_and_download_pdf.dart';
 import '../../common/widgets/buttons/custom_buttom.dart';
 import '../../cotisations/interactor/cotisation_interactor.dart';
@@ -67,7 +64,7 @@ class AdherentsDetailView extends StatelessWidget {
                   CustomButton(
                       label: "Télécharger la fiche PDF",
                       onPressed: () {
-                        generateAndDownloadPdf( adherentId, adherentsInteractor);
+                        generateAndPrintPdf( adherentId, adherentsInteractor);
 
                       },
               )

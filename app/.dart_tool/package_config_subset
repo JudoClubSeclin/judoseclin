@@ -386,6 +386,10 @@ pdf
 2.19
 file:///home/ludo/.pub-cache/hosted/pub.dev/pdf-3.11.3/
 file:///home/ludo/.pub-cache/hosted/pub.dev/pdf-3.11.3/lib/
+pdf_widget_wrapper
+2.18
+file:///home/ludo/.pub-cache/hosted/pub.dev/pdf_widget_wrapper-1.0.4/
+file:///home/ludo/.pub-cache/hosted/pub.dev/pdf_widget_wrapper-1.0.4/lib/
 petitparser
 3.5
 file:///home/ludo/.pub-cache/hosted/pub.dev/petitparser-6.1.0/
@@ -402,6 +406,10 @@ posix
 3.0
 file:///home/ludo/.pub-cache/hosted/pub.dev/posix-6.0.1/
 file:///home/ludo/.pub-cache/hosted/pub.dev/posix-6.0.1/lib/
+printing
+3.3
+file:///home/ludo/.pub-cache/hosted/pub.dev/printing-5.14.2/
+file:///home/ludo/.pub-cache/hosted/pub.dev/printing-5.14.2/lib/
 provider
 2.12
 file:///home/ludo/.pub-cache/hosted/pub.dev/provider-6.1.2/

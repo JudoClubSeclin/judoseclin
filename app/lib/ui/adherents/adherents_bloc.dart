@@ -5,6 +5,7 @@ import 'package:judoseclin/core/di/api/auth_service.dart';
 import 'package:judoseclin/core/di/api/firestore_service.dart';
 
 import '../../core/utils/envoyer_email_invitation.dart';
+import '../../core/utils/generete_and_download_pdf.dart';
 import 'adherents_state.dart';
 import 'interactor/adherents_interactor.dart';
 import 'adherents_event.dart';
@@ -18,6 +19,7 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
   AdherentsBloc(this.adherentsInteractor, this._authService, this._firestoreService, {required this.adherentId})
       : super(SignUpInitialState()) {
     on<AddAdherentsSignUpEvent>(_onAddAdherentsSignUp);
+    on<GeneratePdfEvent>(_onGeneratePdf);
   }
 
   Future<void> _onAddAdherentsSignUp(
@@ -52,7 +54,6 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
       bool accountExists = event.userExists;
 
       if (!accountExists) {
-        // Envoyer un e-mail d'invitation
         await envoyerEmailInvitation(email: event.email, nom: event.firstName, prenom: event.lastName);
       } else {
         User? user = _authService.currentUser;
@@ -60,12 +61,28 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
           await _authService.linkUserToAdherent(user);
         } else {
           await _authService.sendInformationEmail(event.email, true);
-        }}
+        }
+      }
 
       emit(SignUpSuccessState(!accountExists, adherentRef.id));
-      // Correction ici
+
+      // Déclencher la génération du PDF après l'enregistrement réussi
+      add(GeneratePdfEvent(adherentId: adherentRef.id));
     } catch (e) {
       emit(SignUpErrorState("Erreur lors de l'ajout de l'adhérent : ${e.toString()}"));
+    }
+  }
+
+  Future<void> _onGeneratePdf(
+      GeneratePdfEvent event,
+      Emitter<AdherentsState> emit,
+      ) async {
+    emit(PdfGenerationState(isGenerating: true));
+    try {
+      await generateAndPrintPdf(event.adherentId, adherentsInteractor);
+      emit(PdfGenerationState(isGenerating: false));
+    } catch (e) {
+      emit(PdfGenerationState(isGenerating: false, error: e.toString()));
     }
   }
 }

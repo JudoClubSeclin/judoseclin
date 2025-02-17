@@ -37,7 +37,7 @@ class ListAdherentsView extends StatelessWidget {
         return Scaffold(
           appBar: CustomAppBar(title: ''),
           drawer:
-              MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
+          MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
           body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -85,7 +85,7 @@ class ListAdherentsView extends StatelessWidget {
                                     ),
                                     const SizedBox(
                                         width:
-                                            8.0), // Espace entre le prénom et le nom
+                                        8.0), // Espace entre le prénom et le nom
                                     Text(
                                       adherent.lastName,
                                       style: textStyleText(context),
@@ -105,7 +105,7 @@ class ListAdherentsView extends StatelessWidget {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                           content:
-                                              Text('Adhérent introuvable')),
+                                          Text('Adhérent introuvable')),
                                     );
                                   }
                                 },

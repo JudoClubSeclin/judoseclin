@@ -161,32 +161,32 @@ class AddAdherentsView extends StatelessWidget {
 
                         // Convertir l'objet DateTime en chaîne de caractères formatée
                         String formattedDate =
-                            DateFormat('dd/MM/yyyy').format(parsedDate);
+                        DateFormat('dd/MM/yyyy').format(parsedDate);
 
                         // Enregistrer l'adhérent dans Firestore
                         context.read<AdherentsBloc>().add(
-                              AddAdherentsSignUpEvent(
-                                id: '',
-                                firstName: firstNameController.text.trim(),
-                                lastName: lastNameController.text.trim(),
-                                email: emailController.text.trim(),
-                                dateOfBirth: formattedDate,
-                                licence: licenceController.text.trim(),
-                                belt: beltController.text.trim(),
-                                discipline: disciplineController.text.trim(),
-                                category: categoryController.text.trim(),
-                                tutor: tutorController.text.trim(),
-                                phone: phoneController.text.trim(),
-                                address: addressController.text.trim(),
-                                image: imageController.text.trim(),
-                                sante: santeController.text.trim(),
-                                medicalCertificate:
-                                    medicalCertificateController.text.trim(),
-                                invoice: invoiceController.text.trim(),
-                                adherentId: '',
-                                userExists: false,
-                              ),
-                            );
+                          AddAdherentsSignUpEvent(
+                            id: '',
+                            firstName: firstNameController.text.trim(),
+                            lastName: lastNameController.text.trim(),
+                            email: emailController.text.trim(),
+                            dateOfBirth: formattedDate,
+                            licence: licenceController.text.trim(),
+                            belt: beltController.text.trim(),
+                            discipline: disciplineController.text.trim(),
+                            category: categoryController.text.trim(),
+                            tutor: tutorController.text.trim(),
+                            phone: phoneController.text.trim(),
+                            address: addressController.text.trim(),
+                            image: imageController.text.trim(),
+                            sante: santeController.text.trim(),
+                            medicalCertificate:
+                            medicalCertificateController.text.trim(),
+                            invoice: invoiceController.text.trim(),
+                            adherentId: '',
+                            userExists: false,
+                          ),
+                        );
 
                         // Réinitialiser les contrôleurs de texte
                         firstNameController.clear();

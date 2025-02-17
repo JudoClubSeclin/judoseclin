@@ -6,14 +6,11 @@ import 'package:injectable/injectable.dart';
 import 'package:judoseclin/ui/account/account_bloc.dart';
 import 'package:judoseclin/ui/account/account_interactor.dart';
 import 'package:judoseclin/ui/account/view/account_page.dart';
-import 'package:judoseclin/ui/members/interactor/users_interactor.dart';
 import 'package:judoseclin/ui/ui_module.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/di/api/auth_service.dart';
 import '../../domain/entities/setup_entity_module.dart';
-import '../members/login/user_bloc.dart';
-import '../members/login/view/login_view.dart';
 
 @singleton
 class AccountModule implements UIModule {

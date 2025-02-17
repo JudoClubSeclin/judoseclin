@@ -24,7 +24,7 @@ class CompetitionDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Détails de la compétition'),
+      appBar: const CustomAppBar(title: ''),
       drawer: MediaQuery.of(context).size.width > 750 ? null : const CustomDrawer(),
       body: DecoratedBox(
         position: DecorationPosition.background,

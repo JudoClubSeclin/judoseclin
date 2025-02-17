@@ -1,23 +1,19 @@
-import 'dart:typed_data';
-import 'package:judoseclin/domain/entities/adherents.dart';
+import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'dart:html' as html;
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show Uint8List, rootBundle;
 
 import '../../ui/adherents/interactor/adherents_interactor.dart';
 
-
-
-Future<void> generateAndDownloadPdf(String adherentId, AdherentsInteractor adherentsInteractor) async {
+Future<void> generateAndPrintPdf(String adherentId, AdherentsInteractor adherentsInteractor) async {
   if (adherentId.isEmpty) {
     print("Erreur : L'ID de l'adhérent est vide !");
     return;
   }
 
   try {
-    print("Fetching adherents data...");
+    print("Fetching adherent data...");
     final adherent = await adherentsInteractor.getAdherentsById(adherentId);
 
     if (adherent == null) {
@@ -30,6 +26,19 @@ Future<void> generateAndDownloadPdf(String adherentId, AdherentsInteractor adher
     // Chargement des polices
     final regularFont = pw.Font.ttf(await rootBundle.load("assets/fonts/Roboto-Regular.ttf"));
     final boldFont = pw.Font.ttf(await rootBundle.load("assets/fonts/Roboto-Bold.ttf"));
+    // Chargement d'une police de symboles
+    final symbolFont = pw.Font.ttf(await rootBundle.load("assets/fonts/NotoColorEmoji-Regular.ttf"));
+
+
+    // Formatage de la date de naissance
+    String formattedDateOfBirth = "Non spécifiée";
+    if (adherent.dateOfBirth != null) {
+      if (adherent.dateOfBirth is DateTime) {
+        formattedDateOfBirth = DateFormat('dd/MM/yyyy').format(adherent.dateOfBirth!);
+      } else if (adherent.dateOfBirth is String) {
+        formattedDateOfBirth = adherent.dateOfBirth as String;
+      }
+    }
 
     pdf.addPage(
       pw.Page(
@@ -38,23 +47,32 @@ Future<void> generateAndDownloadPdf(String adherentId, AdherentsInteractor adher
           return pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
-              pw.Text("Fiche Adhérent", style: pw.TextStyle(fontSize: 24, font: boldFont)),
+              pw.Center(
+                child: pw.Text(
+                  "Fiche Adhérent",
+                  textAlign: pw.TextAlign.center,
+                  style: pw.TextStyle(
+                    fontSize: 20,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                ),
+              ),
               pw.SizedBox(height: 20),
-              pw.Text("Nom : ${adherent.firstName}", style: pw.TextStyle(fontSize: 18, font: regularFont)),
-              pw.Text("Prénom : ${adherent.lastName}", style: pw.TextStyle(fontSize: 18, font: regularFont)),
-              pw.Text("Responsable légal : ${adherent.tutor}", style: pw.TextStyle(fontSize: 18, font: regularFont)),
-              pw.Text("Email : ${adherent.email}", style: pw.TextStyle(fontSize: 18, font: regularFont)),
-              pw.Text("Téléphone : ${adherent.phone}", style: pw.TextStyle(fontSize: 18, font: regularFont)),
-              pw.Text("Adresse : ${adherent.address}", style: pw.TextStyle(fontSize: 18, font: regularFont)),
-              pw.Text("Date de naissance : ${adherent.dateOfBirth}", style: pw.TextStyle(fontSize: 18, font: regularFont)),
-              pw.Text("Ceinture : ${adherent.belt}", style: pw.TextStyle(fontSize: 18, font: regularFont)),
-              pw.Text("Catégorie : ${adherent.category}", style: pw.TextStyle(fontSize: 18, font: regularFont)),
-              pw.Text("Discipline : ${adherent.discipline}", style: pw.TextStyle(fontSize: 18, font: regularFont)),
-              pw.Text("Licence : ${adherent.licence}", style: pw.TextStyle(fontSize: 18, font: regularFont)),
-              pw.Text("Droit à l'image : ${adherent.image}", style: pw.TextStyle(fontSize: 18, font: regularFont)),
-              pw.Text("Certificat médical : ${adherent.medicalCertificate}", style: pw.TextStyle(fontSize: 18, font: regularFont)),
-              pw.Text("Décharge médicale : ${adherent.sante}", style: pw.TextStyle(fontSize: 18, font: regularFont)),
-              pw.Text("Facture : ${adherent.invoice}", style: pw.TextStyle(fontSize: 18, font: regularFont)),
+              _buildRow("\u2709 Date de naissance :", formattedDateOfBirth, boldFont, regularFont),
+              _buildRow("\u2022 Nom :", adherent.firstName ?? "Non spécifié", boldFont, regularFont),
+              _buildRow("\u2022 Prénom :", adherent.lastName ?? "Non spécifié", boldFont, regularFont),
+              _buildRow("\u2022 Responsable légal :", adherent.tutor ?? "Non spécifié", boldFont, regularFont),
+              _buildRow("\u2709 Email :", adherent.email ?? "Non spécifié", boldFont, regularFont),
+              _buildRow("\u260E Téléphone :", adherent.phone ?? "Non spécifié", boldFont, regularFont),
+              _buildRow("\u2302 Adresse:", adherent.address ?? "Non spécifiée", boldFont, regularFont),
+              _buildRow("\u2691 Ceinture  :", adherent.belt ?? "Non spécifiée", boldFont, regularFont),
+              _buildRow("\u2606 Catégorie:", adherent.category ?? "Non spécifiée", boldFont, regularFont),
+              _buildRow("\u2605 Discipline :", adherent.discipline ?? "Non spécifiée", boldFont, regularFont),
+              _buildRow("\u2713 Licence :", adherent.licence ?? "Non spécifiée", boldFont, regularFont),
+              _buildRow("\u2315 Droit à l'image :", adherent.image ?? "Non spécifié", boldFont, regularFont),
+              _buildRow("\u2695 Certificat médical  :", adherent.medicalCertificate ?? "Non spécifié", boldFont, regularFont),
+              _buildRow("\u26A0 Décharge médicale :", adherent.sante ?? "Non spécifiée", boldFont, regularFont),
+              _buildRow("\u2611 Facture  :", adherent.invoice ?? "Non spécifiée", boldFont, regularFont),
             ],
           );
         },
@@ -63,15 +81,30 @@ Future<void> generateAndDownloadPdf(String adherentId, AdherentsInteractor adher
 
     Uint8List pdfBytes = await pdf.save();
 
+    // Créer un Blob pour le PDF
     final blob = html.Blob([pdfBytes], 'application/pdf');
     final url = html.Url.createObjectUrlFromBlob(blob);
-    final anchor = html.AnchorElement(href: url)
-      ..setAttribute("download", "Fiche_Adherent_${adherent.firstName}.pdf")
-      ..click();
 
+    // Ouvrir le PDF dans un nouvel onglet
+    html.window.open(url, '_blank');
+
+    // Libérer l'URL après utilisation
     html.Url.revokeObjectUrl(url);
-    print("PDF généré et téléchargé !");
   } catch (e) {
-    print("Erreur lors de la récupération de l'adhérent ou de la génération du PDF : $e");
+    print("Erreur lors de la génération du PDF : $e");
+    throw e;
   }
+}
+
+pw.Widget _buildRow(String label, String value, pw.Font boldFont, pw.Font regularFont) {
+  return pw.Padding(
+    padding: pw.EdgeInsets.only(bottom: 10),
+    child: pw.Row(
+      children: [
+        pw.Text(label, style: pw.TextStyle(fontSize: 14, font: boldFont)),
+        pw.SizedBox(width: 5),
+        pw.Text(value, style: pw.TextStyle(fontSize: 14, font: regularFont)),
+      ],
+    ),
+  );
 }

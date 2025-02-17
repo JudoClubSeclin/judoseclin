@@ -45,3 +45,9 @@ class AddCotisationEvent extends AdherentsEvent {
   final String adherentId;
   AddCotisationEvent(this.adherentId) : super();
 }
+
+class GeneratePdfEvent extends AdherentsEvent {
+  final String adherentId;
+
+  GeneratePdfEvent({required this.adherentId});
+}
