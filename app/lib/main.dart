@@ -7,6 +7,7 @@ import 'package:judoseclin/theme.dart';
 import 'package:provider/provider.dart';
 
 import 'core/di/injection.dart';
+import 'core/utils/emojis.dart';
 import 'core/utils/function_admin.dart';
 
 void main() async {
@@ -15,6 +16,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await EmojiUtils.preloadEmojis();
 
   configureDependencies();
   runApp(

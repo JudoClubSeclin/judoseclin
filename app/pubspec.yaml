@@ -57,6 +57,7 @@ flutter:
     - assets/images/
     - assets/markdown/
     - assets/documents/
+    - assets/emojis/
   fonts:
     - family: MaterialIcons
       fonts:
@@ -68,7 +69,7 @@ flutter:
       fonts:
         - asset: assets/fonts/Roboto-Regular.ttf
         - asset: assets/fonts/Roboto-Bold.ttf
-    - family: NotoColorsEmoji
+    - family: NotoEmoji
       fonts:
-        - asset: assets/fonts/NotoColorEmoji-regular.ttf
+        - asset: assets/fonts/NotoEmoji-Regular.ttf
 
