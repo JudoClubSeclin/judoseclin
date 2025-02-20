@@ -26,40 +26,48 @@ class CompetitionDetailView extends StatelessWidget {
     return Scaffold(
       appBar: const CustomAppBar(title: ''),
       drawer: MediaQuery.of(context).size.width > 750 ? null : const CustomDrawer(),
-      body: DecoratedBox(
-        position: DecorationPosition.background,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(ImageFondEcran.imagePath),
-            fit: BoxFit.cover,
+      body: Stack(
+        children: [
+          Positioned.fill( // Assure que l'image prend tout l'écran
+            child: DecoratedBox(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(ImageFondEcran.imagePath),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
           ),
-        ),
-        child: FutureBuilder<Competition?>(
-          future: competitionInteractor.getCompetitionById(competitionId),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text(
-                  'Erreur : ${snapshot.error}',
-                  style: textStyleText(context),
-                ),
-              );
-            } else if (!snapshot.hasData || snapshot.data == null) {
-              return Center(
-                child: Text(
-                  'Détails de la compétition introuvables.',
-                  style: textStyleText(context),
-                ),
-              );
-            }
+          Positioned.fill(
+            child: FutureBuilder<Competition?>(
+              future: competitionInteractor.getCompetitionById(competitionId),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      'Erreur : ${snapshot.error}',
+                      style: textStyleText(context),
+                    ),
+                  );
+                } else if (!snapshot.hasData || snapshot.data == null) {
+                  return Center(
+                    child: Text(
+                      'Détails de la compétition introuvables.',
+                      style: textStyleText(context),
+                    ),
+                  );
+                }
 
-            final competition = snapshot.data!;
-            return _buildCompetitionDetails(context, competition);
-          },
-        ),
+                final competition = snapshot.data!;
+                return _buildCompetitionDetails(context, competition);
+              },
+            ),
+          ),
+        ],
       ),
+
     );
   }
 

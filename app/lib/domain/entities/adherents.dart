@@ -12,7 +12,7 @@ class Adherents {
   final String belt;
   final String discipline;
   final String category;
-  final String tutor;
+  final String? tutor;
   final String phone;
   final String address;
   final String image;
@@ -30,7 +30,7 @@ class Adherents {
     required this.belt,
     required this.discipline,
     required this.category,
-    required this.tutor,
+     this.tutor,
     required this.phone,
     required this.address,
     required this.image,

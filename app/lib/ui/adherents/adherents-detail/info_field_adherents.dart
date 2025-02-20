@@ -78,7 +78,7 @@ class InfoFieldAdherents extends StatelessWidget {
                           ),
                           InfoField(
                             label: 'Tuteur légal',
-                            value: adherent.tutor,
+                            value: adherent.tutor!,
                             field: 'tutor',
                             adherentsInteractor: adherentsInteractor,
                             adherent: adherent,

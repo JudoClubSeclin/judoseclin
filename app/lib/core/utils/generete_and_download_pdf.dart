@@ -28,9 +28,6 @@ Future<void> generateAndPrintPdf(String adherentId, AdherentsInteractor adherent
 
     // Chargement des polices
     final regularFont = pw.Font.ttf(await rootBundle.load("assets/fonts/Roboto-Regular.ttf"));
-    final boldFont = pw.Font.ttf(await rootBundle.load("assets/fonts/Roboto-Bold.ttf"));
-    // Chargement d'une police de symboles
-    final symbolFont = pw.Font.ttf(await rootBundle.load("assets/fonts/NotoEmoji-Regular.ttf"));
 
 
     // Formatage de la date de naissance
@@ -61,21 +58,21 @@ Future<void> generateAndPrintPdf(String adherentId, AdherentsInteractor adherent
                 ),
               ),
               pw.SizedBox(height: 20),
-              _buildRowWithIcon("personne" , "Nom :", adherent.firstName ?? "Non spécifié", regularFont),
-              _buildRowWithIcon("personne", "Prénom :", adherent.lastName ?? "Non spécifié", regularFont),
+              _buildRowWithIcon("personne" , "Nom :", adherent.firstName , regularFont),
+              _buildRowWithIcon("personne", "Prénom :", adherent.lastName , regularFont),
               _buildRowWithIcon("tuteur", "Tuteur legal :", adherent.tutor ?? "Non spécifié", regularFont),
-              _buildRowWithIcon("calandrier", "Date de naissance :", adherent.formattedDateOfBirth ?? "Non spécifié", regularFont),
-              _buildRowWithIcon("adresse", "Adresse :", adherent.address ?? "Non spécifié", regularFont),
-              _buildRowWithIcon("email", "Email :", adherent.email ?? "Non spécifié", regularFont),
-              _buildRowWithIcon("phone", "Téléphone :", adherent.phone ?? "Non spécifié", regularFont),
-              _buildRowWithIcon("ceinture", "Ceinture :", adherent.belt ?? "Non spécifié", regularFont),
-              _buildRowWithIcon("discipline", "Discipline :", adherent.discipline ?? "Non spécifié", regularFont),
-              _buildRowWithIcon("categorie", "Catégorie :", adherent.category ?? "Non spécifié", regularFont),
-              _buildRowWithIcon("certificate", "Certificat medical :", adherent.medicalCertificate ?? "Non spécifié", regularFont),
-              _buildRowWithIcon("licence", "Licence :", adherent.licence ?? "Non spécifié", regularFont),
-              _buildRowWithIcon("images", "Droit à l'image :", adherent.image ?? "Non spécifié", regularFont),
-              _buildRowWithIcon("sante", "Decharge medical :", adherent.sante ?? "Non spécifié", regularFont),
-              _buildRowWithIcon("facture", "Facture :", adherent.invoice ?? "Non spécifié", regularFont),
+              _buildRowWithIcon("calandrier", "Date de naissance :", adherent.formattedDateOfBirth , regularFont),
+              _buildRowWithIcon("adresse", "Adresse :", adherent.address , regularFont),
+              _buildRowWithIcon("email", "Email :", adherent.email , regularFont),
+              _buildRowWithIcon("phone", "Téléphone :", adherent.phone, regularFont),
+              _buildRowWithIcon("ceinture", "Ceinture :", adherent.belt, regularFont),
+              _buildRowWithIcon("discipline", "Discipline :", adherent.discipline, regularFont),
+              _buildRowWithIcon("categorie", "Catégorie :", adherent.category , regularFont),
+              _buildRowWithIcon("certificate", "Certificat medical :", adherent.medicalCertificate , regularFont),
+              _buildRowWithIcon("licence", "Licence :", adherent.licence , regularFont),
+              _buildRowWithIcon("images", "Droit à l'image :", adherent.image , regularFont),
+              _buildRowWithIcon("sante", "Decharge medical :", adherent.sante , regularFont),
+              _buildRowWithIcon("facture", "Facture :", adherent.invoice , regularFont),
 
 
 
@@ -99,7 +96,7 @@ Future<void> generateAndPrintPdf(String adherentId, AdherentsInteractor adherent
     html.Url.revokeObjectUrl(url);
   } catch (e) {
     debugPrint("Erreur lors de la génération du PDF : $e");
-    throw e;
+    rethrow;
   }
 }
 

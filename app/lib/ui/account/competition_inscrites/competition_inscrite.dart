@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import '../../../theme.dart';
 import '../../competition/inscription_competition/inscription_competition_bloc.dart';
 import '../../competition/inscription_competition/inscription_competition_event.dart';
@@ -43,21 +44,24 @@ class CompetitionsInscritesState extends State<CompetitionsInscrites> {
                 style: textStyleText(context),
               );
             }
+
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 10),
                 Text(
-                  'Je suis inscrit aux compétitions suivantes :',
+                  'Je me suis inscrit aux compétitions suivantes :',
                   style: textStyleText(context),
                 ),
                 const SizedBox(height: 5),
                 ...state.inscriptions.map((competition) {
+
                   return Padding(
                     padding: const EdgeInsets.only(left: 10, top: 5),
+
                     child: Text(
-                      "• ${competition.title}",
+                      "• ${competition.title} : ${competition.date != null ? DateFormat('dd/MM/yyyy').format(competition.date!) : 'Date non définie'}",
                       style: textStyleText(context),
                     ),
                   );

@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:judoseclin/theme.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 import 'package:judoseclin/ui/common/widgets/inputs/custom_textfield.dart';
-import '../../../core/utils/envoyer_email_invitation.dart';
 import '../../common/widgets/appbar/custom_appbar.dart';
 import '../../common/widgets/buttons/custom_buttom.dart';
 import '../adherents_bloc.dart';

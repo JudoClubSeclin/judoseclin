@@ -66,7 +66,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
-                      'Add Adhérents',
+                      'ajout-Adhérents',
                       style: textStyleTextAppBar(context),
                     ),
                   ),
@@ -76,7 +76,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
-                      'Liste Adhérents',
+                      'Liste-Adhérents',
                       style: textStyleTextAppBar(context),
                     ),
                   ),
@@ -87,7 +87,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
-                      'Ajouté une compétition',
+                      'Ajout-compétition',
                       style: textStyleTextAppBar(context),
                     ),
                   ),

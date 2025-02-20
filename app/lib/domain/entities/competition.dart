@@ -49,7 +49,7 @@ class Competition {
       title: data['title'] ?? '',
       subtitle: data['subtitle'] ?? '',
       date: DateConverter.convertToDateTime(data['date']),
-      publishDate: DateConverter.convertToDateTime(data['publishDate']) ?? DateTime.now(),
+      publishDate: DateConverter.convertToDateTime(data['publishDate']),
       poussin: data['poussin'] ?? '',
       benjamin: data['benjamin'] ?? '',
       minime: data['minime'] ?? '',
