@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:judoseclin/size_extensions.dart';
+import 'package:judoseclin/core/utils/size_extensions.dart';
 
 class OrientedStack extends StatelessWidget {
   final SizeOrientation orientation;

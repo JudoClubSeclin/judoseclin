@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:judoseclin/size_extensions.dart';
+import 'package:judoseclin/core/di/api/firestore_service.dart';
+import 'package:judoseclin/core/utils/size_extensions.dart';
+import 'package:judoseclin/data/repository/competititon_repository_impl.dart';
 
-import '../../data/repository/competition_repository/competition_repository.dart';
+import '../../domain/entities/setup_entity_module.dart';
 import 'colone_links.dart';
 import 'colonne_page.dart';
 import 'orientation_stack.dart';
 
 class MoreInfo extends StatelessWidget {
-  final CompetitionRepository competitionRepository;
+  final competitionRepository =
+      CompetitionRepositoryImpl(getIt<FirestoreService>());
 
-  const MoreInfo({super.key, required this.competitionRepository});
+  MoreInfo({super.key});
 
   @override
   Widget build(BuildContext context) {

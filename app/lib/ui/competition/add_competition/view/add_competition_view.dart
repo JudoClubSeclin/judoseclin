@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/add_competition_bloc.dart';
-import '../bloc/add_competition_state.dart';
+import '../add_competition_bloc.dart';
+import '../add_competition_state.dart';
 import 'form_widget.dart';
 
 class AddCompetitionView extends StatelessWidget {

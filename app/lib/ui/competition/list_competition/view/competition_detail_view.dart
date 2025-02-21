@@ -1,158 +1,131 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:judoseclin/ui/common/theme/theme.dart';
+import 'package:judoseclin/domain/entities/adherents.dart';
+import 'package:judoseclin/theme.dart';
 import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
-import 'package:judoseclin/ui/common/widgets/buttons/custom_buttom.dart';
+import 'package:judoseclin/domain/entities/competition.dart';
+import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
+import 'package:judoseclin/ui/competition/inscription_competition/inscription_button.dart';
 
-import '../../../../../domain/entities/competition.dart';
-import '../../../common/widgets/images/image_fond_ecran.dart';
-import '../../inscription_competition/bloc/inscription_competition_bloc.dart';
-import '../../inscription_competition/bloc/inscription_competition_event.dart';
-import '../interactor/competition_interactor.dart';
+import '../competition_interactor.dart';
 
 class CompetitionDetailView extends StatelessWidget {
   final String competitionId;
   final CompetitionInteractor competitionInteractor;
-  final userId = FirebaseAuth.instance.currentUser?.uid;
+  final Adherents adherents;
 
-  CompetitionDetailView({
+  const CompetitionDetailView({
+    super.key,
     required this.competitionId,
     required this.competitionInteractor,
-    super.key,
+    required this.adherents,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: ''),
-      drawer:
-          MediaQuery.sizeOf(context).width > 750 ? null : const CustomDrawer(),
-      body: DecoratedBox(
-        position: DecorationPosition.background,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(ImageFondEcran.imagePath),
-            fit: BoxFit.cover,
+      drawer: MediaQuery.of(context).size.width > 750 ? null : const CustomDrawer(),
+      body: Stack(
+        children: [
+          Positioned.fill( // Assure que l'image prend tout l'écran
+            child: DecoratedBox(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(ImageFondEcran.imagePath),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
           ),
-        ),
-        child: FutureBuilder<Competition?>(
-            future: competitionInteractor.getCompetitionById(competitionId),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                debugPrint('je passe -1');
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Text('Erreur : ${snapshot.error}');
-              }
+          Positioned.fill(
+            child: FutureBuilder<Competition?>(
+              future: competitionInteractor.getCompetitionById(competitionId),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      'Erreur : ${snapshot.error}',
+                      style: textStyleText(context),
+                    ),
+                  );
+                } else if (!snapshot.hasData || snapshot.data == null) {
+                  return Center(
+                    child: Text(
+                      'Détails de la compétition introuvables.',
+                      style: textStyleText(context),
+                    ),
+                  );
+                }
 
-              final competition = snapshot.data;
-
-              if (competition != null) {
-                debugPrint(competition.toString());
-
-                return Center(
-                    child: ListView(children: [
-                  Text(
-                    competition.title,
-                    style: titleStyleMedium(context),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(competition.subtitle,
-                      style: titleStyleSmall(context),
-                      textAlign: TextAlign.center),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    DateFormat('dd/MM/yyyy').format(competition.date),
-                    style: titleStyleSmall(context),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(competition.address,
-                      style: titleStyleSmall(context),
-                      textAlign: TextAlign.center),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(competition.poussin,
-                      style: titleStyleSmall(context),
-                      textAlign: TextAlign.center),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(competition.benjamin,
-                      style: titleStyleSmall(context),
-                      textAlign: TextAlign.center),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(competition.minime,
-                      style: titleStyleSmall(context),
-                      textAlign: TextAlign.center),
-                  const SizedBox(
-                    height: 20,
-                  ),
-
-                  Text(competition.cadet,
-                      style: titleStyleSmall(context),
-                      textAlign: TextAlign.center),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(competition.juniorSenior,
-                      style: titleStyleSmall(context),
-                      textAlign: TextAlign.center),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  // ConfigurationLocale.instance.peutSeConnecter &&
-
-                  CustomButton(
-                    label: 'JE M\'INSCRIS',
-                    onPressed: () async {
-                      User? user = FirebaseAuth.instance.currentUser;
-
-                      if (user != null) {
-                        final bloc = context.read<InscriptionCompetitionBloc>();
-                        bloc.add(RegisterForCompetition(
-                            competitionId: competitionId, userId: userId!));
-
-                        // Le bloc émettra l'état de succès, vous pouvez ici afficher le dialogue si nécessaire
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext dialogContext) {
-                            return AlertDialog(
-                              title: const Text('Inscription réussie'),
-                              content: const Text(
-                                  'Votre inscription a été validée avec succès !'),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(dialogContext).pop();
-                                  },
-                                  child: const Text('OK'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      } else {
-                        context.go('/account/login');
-                      }
-                    },
-                  )
-                ]));
-              } else {
-                return const Text('Détails de la compétition introuvables.');
-              }
-            }),
+                final competition = snapshot.data!;
+                return _buildCompetitionDetails(context, competition);
+              },
+            ),
+          ),
+        ],
       ),
+
+    );
+  }
+
+  Widget _buildCompetitionDetails(BuildContext context, Competition competition) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            competition.title,
+            style: titleStyleMedium(context),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          Text(
+            competition.subtitle,
+            style: titleStyleSmall(context),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          Text(
+            DateFormat('dd/MM/yyyy').format(competition.date!),
+            style: textStyleText(context),
+            textAlign: TextAlign.center,
+          ),
+          Text(
+            competition.address,
+            style: textStyleText(context),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          _buildCategoryInfo(context, 'Poussin', competition.poussin),
+          _buildCategoryInfo(context, 'Benjamin', competition.benjamin),
+          _buildCategoryInfo(context, 'Minime', competition.minime),
+          _buildCategoryInfo(context, 'Cadet', competition.cadet),
+          _buildCategoryInfo(context, 'Junior/Senior', competition.juniorSenior),
+          const SizedBox(height: 20),
+          InscriptionButton(
+            competitionId: competition.id,
+            competitionData: competition.toMap(),
+            adherentCategorie: adherents.category, // Make sure this is not null
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCategoryInfo(BuildContext context, String category, String info) {
+    return Column(
+      children: [
+        Text(
+          '$category: $info',
+          style: textStyleText(context),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 10),
+      ],
     );
   }
 }

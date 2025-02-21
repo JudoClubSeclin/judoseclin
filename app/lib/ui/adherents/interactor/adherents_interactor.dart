@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
-import 'package:judoseclin/domain/usecases/adherents/fetch_adherents_data_usecase.dart';
+import 'package:judoseclin/domain/usecases/fetch_adherents_data_usecase.dart';
 
-import '../../../data/repository/adherents_repository/adherents_repository.dart';
+import '../../../data/repository/adherents_repository.dart';
 
 class AdherentsInteractor {
   final FetchAdherentsDataUseCase fetchAdherentsDataUseCase;
@@ -18,7 +18,7 @@ class AdherentsInteractor {
         'email': adherents.email,
         'dateOfBirth': adherents.dateOfBirth,
         'licence': adherents.licence,
-        'blet': adherents.blet,
+        'belt': adherents.belt,
         'discipline': adherents.discipline,
         'category': adherents.category,
         'tutor': adherents.tutor,

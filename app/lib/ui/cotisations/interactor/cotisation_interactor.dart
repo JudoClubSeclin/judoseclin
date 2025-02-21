@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:judoseclin/domain/entities/cotisation.dart';
 
-import '../../../../domain/usecases/cotisation/fetch_cotisation_data_usecase.dart';
-import '../../../data/repository/cotisation_repository/cotisation_repository.dart';
+import '../../../domain/usecases/fetch_cotisation_data_usecase.dart';
+import '../../../data/repository/cotisation_repository.dart';
 
 class CotisationInteractor {
   final FetchCotisationDataUseCase fetchCotisationDataUseCase;

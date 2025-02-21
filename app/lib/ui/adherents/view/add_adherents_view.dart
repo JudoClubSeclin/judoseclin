@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:judoseclin/ui/common/theme/theme.dart';
+import 'package:judoseclin/theme.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 import 'package:judoseclin/ui/common/widgets/inputs/custom_textfield.dart';
-
 import '../../common/widgets/appbar/custom_appbar.dart';
 import '../../common/widgets/buttons/custom_buttom.dart';
-import '../bloc/adherents_bloc.dart';
-import '../bloc/adherents_event.dart';
-import '../bloc/adherents_state.dart';
+import '../adherents_bloc.dart';
+import '../adherents_event.dart';
+import '../adherents_state.dart';
 
 class AddAdherentsView extends StatelessWidget {
   final firstNameController = TextEditingController();
@@ -17,7 +16,7 @@ class AddAdherentsView extends StatelessWidget {
   final emailController = TextEditingController();
   final dateOfBirthController = TextEditingController();
   final licenceController = TextEditingController();
-  final bletController = TextEditingController();
+  final beltController = TextEditingController();
   final disciplineController = TextEditingController();
   final categoryController = TextEditingController();
   final tutorController = TextEditingController();
@@ -28,7 +27,7 @@ class AddAdherentsView extends StatelessWidget {
   final medicalCertificateController = TextEditingController();
   final invoiceController = TextEditingController();
 
-  AddAdherentsView({super.key, required adherentsRepository});
+  AddAdherentsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +50,8 @@ class AddAdherentsView extends StatelessWidget {
 
   Widget _buildForm(BuildContext context, String adherentId) {
     return Scaffold(
-        appBar: const CustomAppBar(title: ''),
-        drawer: MediaQuery.sizeOf(context).width > 750
-            ? null
-            : const CustomDrawer(),
+        appBar: CustomAppBar(title: ''),
+        drawer: MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
         body: DecoratedBox(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -105,7 +102,7 @@ class AddAdherentsView extends StatelessWidget {
                         const SizedBox(width: 40),
                         CustomTextField(
                           labelText: 'Ceinture',
-                          controller: bletController,
+                          controller: beltController,
                         ),
                         const SizedBox(height: 20),
                         CustomTextField(
@@ -129,12 +126,12 @@ class AddAdherentsView extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         CustomTextField(
-                          labelText: 'droit à l\'mage',
+                          labelText: 'droit à l\'image',
                           controller: imageController,
                         ),
                         const SizedBox(width: 40),
                         CustomTextField(
-                          labelText: 'Droit medical',
+                          labelText: 'Décharge medicale',
                           controller: santeController,
                         ),
                         const SizedBox(height: 20),
@@ -149,7 +146,7 @@ class AddAdherentsView extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         CustomTextField(
-                          labelText: 'Adresse)',
+                          labelText: 'Adresse',
                           controller: addressController,
                         ),
                       ]),
@@ -157,40 +154,46 @@ class AddAdherentsView extends StatelessWidget {
                   CustomButton(
                     onPressed: () async {
                       try {
-                        //Convertir la chainede date en objet DateTime
+                        // Convertir la chaîne de date en objet DateTime
                         DateTime parsedDate = DateFormat('dd/MM/yyyy')
                             .parse(dateOfBirthController.text.trim());
-                        // Save adherent and get the adherentId
-                        context.read<AdherentsBloc>().add(
-                              AddAdherentsSignUpEvent(
-                                id: '',
-                                firstName: firstNameController.text.trim(),
-                                lastName: lastNameController.text.trim(),
-                                email: emailController.text.trim(),
-                                dateOfBirth: parsedDate,
-                                licence: licenceController.text.trim(),
-                                blet: bletController.text.trim(),
-                                discipline: disciplineController.text.trim(),
-                                category: categoryController.text.trim(),
-                                tutor: tutorController.text.trim(),
-                                phone: phoneController.text.trim(),
-                                address: addressController.text.trim(),
-                                image: imageController.text.trim(),
-                                sante: santeController.text.trim(),
-                                medicalCertificate:
-                                    medicalCertificateController.text.trim(),
-                                invoice: invoiceController.text.trim(),
-                                adherentId: '',
-                              ),
-                            );
 
-                        // Reset text controllers
+                        // Convertir l'objet DateTime en chaîne de caractères formatée
+                        String formattedDate =
+                        DateFormat('dd/MM/yyyy').format(parsedDate);
+
+                        // Enregistrer l'adhérent dans Firestore
+                        context.read<AdherentsBloc>().add(
+                          AddAdherentsSignUpEvent(
+                            id: '',
+                            firstName: firstNameController.text.trim(),
+                            lastName: lastNameController.text.trim(),
+                            email: emailController.text.trim(),
+                            dateOfBirth: formattedDate,
+                            licence: licenceController.text.trim(),
+                            belt: beltController.text.trim(),
+                            discipline: disciplineController.text.trim(),
+                            category: categoryController.text.trim(),
+                            tutor: tutorController.text.trim(),
+                            phone: phoneController.text.trim(),
+                            address: addressController.text.trim(),
+                            image: imageController.text.trim(),
+                            sante: santeController.text.trim(),
+                            medicalCertificate:
+                            medicalCertificateController.text.trim(),
+                            invoice: invoiceController.text.trim(),
+                            adherentId: '',
+                            userExists: false,
+                          ),
+                        );
+
+                        // Réinitialiser les contrôleurs de texte
                         firstNameController.clear();
                         lastNameController.clear();
                         emailController.clear();
                         dateOfBirthController.clear();
                         licenceController.clear();
-                        bletController.clear();
+                        beltController.clear();
                         disciplineController.clear();
                         categoryController.clear();
                         tutorController.clear();
@@ -201,8 +204,13 @@ class AddAdherentsView extends StatelessWidget {
                         medicalCertificateController.clear();
                         invoiceController.clear();
                       } catch (e) {
-                        debugPrint('Error processing data: $e');
-                        // Handle the error as needed, e.g., show a message to the user
+                        debugPrint(
+                            'Erreur lors de l\'enregistrement ou de l\'envoi de l\'e-mail : $e');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text(
+                                  'Erreur lors du traitement des données: $e')),
+                        );
                       }
                     },
                     label: "Enregistrer",

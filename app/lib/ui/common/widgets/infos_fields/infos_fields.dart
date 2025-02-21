@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/domain/entities/cotisation.dart';
 
+import '../../../../core/utils/show_edit_text_field_dialog.dart';
+import '../../../../theme.dart';
 import '../../../adherents/interactor/adherents_interactor.dart';
 import '../../../cotisations/interactor/cotisation_interactor.dart';
-import '../../functions/show_edit_text_fiel_dialog.dart';
 
 class InfoField extends StatelessWidget {
   final String label;
   final String value;
   final String field;
   final AdherentsInteractor adherentsInteractor;
-  final Adherents adherent; // Ajoutez le paramètre adherent ici
+  final Adherents adherent;
 
   const InfoField({
     super.key,
@@ -19,34 +20,37 @@ class InfoField extends StatelessWidget {
     required this.value,
     required this.field,
     required this.adherentsInteractor,
-    required this.adherent, // Ajoutez cette ligne pour recevoir l'adhérent
+    required this.adherent,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _buildLabel(label),
-        _buildValue(value),
+        _buildLabel(context, label),
+        _buildValue(context, value),
         _buildEditButton(context),
       ],
     );
   }
 
-  Widget _buildLabel(String text) {
+  Widget _buildLabel(BuildContext context, String text) {
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: Text(
         text,
-        style: const TextStyle(fontWeight: FontWeight.bold),
+        style: textStyleText(context).copyWith(fontWeight: FontWeight.bold),
       ),
     );
   }
 
-  Widget _buildValue(String text) {
+  Widget _buildValue(BuildContext context, String text) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text(text),
+      child: Text(
+        text,
+        style: textStyleText(context),
+      ),
     );
   }
 
@@ -55,8 +59,9 @@ class InfoField extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: IconButton(
         icon: const Icon(Icons.edit),
+        color: Theme.of(context).colorScheme.onPrimary,
         onPressed: () async {
-          String? editedValue = await showEditTextFieldDialog(
+          String? editedValue = await myShowEditTextFieldDialog(
             context: context,
             initialValue: value,
             labelText: field,
@@ -70,7 +75,6 @@ class InfoField extends StatelessWidget {
               );
             } catch (e) {
               debugPrint('Erreur lors de la mise à jour de $field: $e');
-              // Gérez l'erreur selon vos besoins
             }
           }
         },
@@ -78,6 +82,9 @@ class InfoField extends StatelessWidget {
     );
   }
 }
+
+
+
 
 class CotisationInfoField extends StatelessWidget {
   final String label;
@@ -99,27 +106,30 @@ class CotisationInfoField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _buildLabel(label),
-        _buildValue(value),
+        _buildLabel(context, label),
+        _buildValue(context, value),
         _buildEditButton(context),
       ],
     );
   }
 
-  Widget _buildLabel(String text) {
+  Widget _buildLabel(BuildContext context, String text) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
         text,
-        style: const TextStyle(fontWeight: FontWeight.bold),
+        style: textStyleText(context).copyWith(fontWeight: FontWeight.bold), // 🔥 Style du thème + gras
       ),
     );
   }
 
-  Widget _buildValue(String text) {
+  Widget _buildValue(BuildContext context, String text) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text(text),
+      child: Text(
+        text,
+        style: textStyleText(context), // 🔥 Style du thème
+      ),
     );
   }
 
@@ -129,14 +139,13 @@ class CotisationInfoField extends StatelessWidget {
       child: IconButton(
         icon: const Icon(Icons.edit),
         onPressed: () async {
-          String? editedValue = await showEditTextFieldDialog(
+          String? editedValue = await myShowEditTextFieldDialog(
             context: context,
             initialValue: value,
             labelText: field,
           );
           if (editedValue != null) {
             try {
-              // Convertissez le montant du chèque en String ici si nécessaire
               if (field == 'montant' && cotisation.cheques.isNotEmpty) {
                 editedValue = int.parse(editedValue).toString();
               }
@@ -148,7 +157,6 @@ class CotisationInfoField extends StatelessWidget {
               );
             } catch (e) {
               debugPrint('Erreur lors de la mise à jour de $field: $e');
-              // Gérez l'erreur selon vos besoins
             }
           }
         },

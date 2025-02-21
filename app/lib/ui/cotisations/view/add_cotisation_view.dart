@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:judoseclin/ui/common/functions/parse_cheques.dart';
-import 'package:judoseclin/ui/common/theme/theme.dart';
+import 'package:judoseclin/theme.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/custom_buttom.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 import 'package:judoseclin/ui/common/widgets/inputs/custom_textfield.dart';
 
+import '../../../core/utils/parse_cheques.dart';
 import '../../../domain/entities/cotisation.dart';
 import '../../common/widgets/appbar/custom_appbar.dart';
 import '../bloc/cotisation_bloc.dart';
@@ -39,9 +39,8 @@ class AddCotisationView extends StatelessWidget {
 
   Widget _buildForm(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: ''),
-      drawer:
-          MediaQuery.sizeOf(context).width > 750 ? null : const CustomDrawer(),
+      appBar: CustomAppBar(title: ''),
+      drawer: MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
       body: DecoratedBox(
         decoration: const BoxDecoration(
             image: DecorationImage(

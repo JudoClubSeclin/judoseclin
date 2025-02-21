@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:judoseclin/theme.dart';
 
 class CustomButton extends StatelessWidget {
   final String label;
@@ -25,10 +26,10 @@ class CustomButton extends StatelessWidget {
         width: buttonWidth,
         child: ElevatedButton(
           style: ButtonStyle(
-            padding: MaterialStateProperty.all<EdgeInsets>(
-                const EdgeInsets.symmetric(vertical: 30)),
-            backgroundColor: MaterialStateProperty.all(Colors.red[400]),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            padding: WidgetStateProperty.all<EdgeInsets>(
+                const EdgeInsets.symmetric(vertical: 15)),
+            backgroundColor: WidgetStateProperty.all(Colors.red[400]),
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),
                 side: const BorderSide(color: Colors.red),
@@ -38,7 +39,7 @@ class CustomButton extends StatelessWidget {
           onPressed: onPressed,
           child: Text(
             label,
-            style: const TextStyle(fontSize: 18, color: Colors.white),
+            style: textStyleText(context),
           ),
         ),
       ),

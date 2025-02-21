@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:judoseclin/ui/account/competition_inscrites/competition_inscrite.dart';
+import 'package:judoseclin/ui/account/donnees_user/donnees_user.dart';
 
-import '../../common/theme/theme.dart';
+import '../../../theme.dart';
 import '../../common/widgets/images/image_fond_ecran.dart';
 
 class AccountView extends StatelessWidget {
@@ -17,31 +19,37 @@ class AccountView extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: ListView(
-          children: [
-            Text(
-              "Bienvenue sur votre espace",
-              style: titleStyleMedium(context),
-              textAlign: TextAlign.center,
+      child: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Bonjour',
+                      style: titleStyleMedium(context),
+                    ),
+                    const SizedBox(width: 15),
+                    Text(
+                      userData['lastName'] ?? 'Not available',
+                      style: titleStyleMedium(context),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                DonneesUser(),
+                const SizedBox(height: 55),
+                const CompetitionsInscrites(),
+              ],
             ),
-            ListTile(
-              title: const Text('Email: ',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: Text(userData['email'] ?? 'Not available'),
-            ),
-            ListTile(
-              title: const Text('Nom: ',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: Text(userData['firstName'] ?? 'Not available'),
-            ),
-            ListTile(
-              title: const Text('Prénom: ',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: Text(userData['lastName'] ?? 'Not available'),
-            ),
-          ],
+          ),
         ),
       ),
     );

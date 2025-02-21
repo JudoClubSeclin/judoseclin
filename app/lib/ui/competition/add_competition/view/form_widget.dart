@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../configuration_locale.dart';
-import '../../../common/theme/theme.dart';
+import '../../../../theme.dart';
 import '../../../common/widgets/appbar/custom_appbar.dart';
 import '../../../common/widgets/buttons/custom_buttom.dart';
 import '../../../common/widgets/images/image_fond_ecran.dart';
 import '../../../common/widgets/inputs/custom_textfield.dart';
-import '../bloc/add_competition_bloc.dart';
-import '../bloc/add_competition_event.dart';
+import '../add_competition_bloc.dart';
+import '../add_competition_event.dart';
 
 class FormWidget extends StatelessWidget {
   final addressController = TextEditingController();
@@ -34,9 +34,8 @@ class FormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: ''),
-      drawer:
-          MediaQuery.sizeOf(context).width > 750 ? null : const CustomDrawer(),
+      appBar: CustomAppBar(title: ''),
+      drawer: MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
       body: DecoratedBox(
         decoration: const BoxDecoration(
             image: DecorationImage(

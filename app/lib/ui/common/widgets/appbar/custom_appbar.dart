@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../../main.dart';
-import '../../functions/function_admin.dart';
+import 'package:judoseclin/core/utils/function_admin.dart';
+import 'package:provider/provider.dart';
+import '../../../../theme.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -19,36 +19,116 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
 
-  Widget? getLeading(BuildContext context) {
-    if (MediaQuery.sizeOf(context).width > 750) {
+  Widget getLeading(BuildContext context) {
+    final isWideScreen = MediaQuery.of(context).size.width > 749;
+
+    if (!isWideScreen) {
+      return Builder(
+        builder: (BuildContext context) {
+          return IconButton(
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            icon: Icon(
+              Icons.menu,
+              color: theme.colorScheme.onPrimary,
+            ),
+          );
+        },
+      );
+    } else {
       return context.canPop()
           ? IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
+              icon: Icon(Icons.arrow_back, color: theme.colorScheme.onPrimary),
               onPressed: () => context.pop(),
             )
-          : null;
-    } else {
-      return IconButton(
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
-          icon: const Icon(Icons.menu));
+          : Container();
     }
+  }
+
+  List<Widget> generateNavActions(BuildContext context) {
+    final List<Map<String, String>> navItems = [
+      {'label': 'mon compte', 'route': '/account'},
+      {'label': 'Compétitions', 'route': '/competition'},
+    ];
+    return [
+      Consumer<FunctionAdminService>(
+        builder: (context, authService, child) {
+          final bool hasAccess = authService.isAdmin && MediaQuery.sizeOf(context).width > 749;
+
+          debugPrint('hasAccess: $hasAccess');
+
+          if (hasAccess) {
+            return Row(
+              children: [
+                GestureDetector(
+                  onTap: () => GoRouter.of(context).go('/admin/add/adherents'),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'ajout-Adhérents',
+                      style: textStyleTextAppBar(context),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => GoRouter.of(context).go('/admin/list/adherents'),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Liste-Adhérents',
+                      style: textStyleTextAppBar(context),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () =>
+                      GoRouter.of(context).go('/admin/add/competition'),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Ajout-compétition',
+                      style: textStyleTextAppBar(context),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+
+          return const SizedBox
+              .shrink(); // Retourne un widget vide si pas d'accès
+        },
+      ),
+      ...navItems.map((item) {
+        return GestureDetector(
+          onTap: () => GoRouter.of(context).go(item['route']!),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Center(
+              child: Text(
+                item['label']!,
+                style: textStyleTextAppBar(context),
+              ),
+            ),
+          ),
+        );
+      })
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
+    final isWideScreen = MediaQuery.of(context).size.width > 749;
+
     return AppBar(
-      backgroundColor: Colors.red[400],
+      backgroundColor: theme.colorScheme.primary,
       title: Text(
         title,
         textAlign: TextAlign.center,
       ),
       leading: getLeading(context),
-      actions: <Widget>[
+      actions: [
         if (actions != null)
           ...actions!.map((action) => Padding(
                 padding: const EdgeInsets.only(right: 8.0),
@@ -56,97 +136,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               )),
         if (onNavigate != null)
           IconButton(
-            icon: const Icon(
-              Icons.new_releases,
-              color: Colors.white,
-            ),
+            icon: Icon(Icons.new_releases, color: theme.colorScheme.surface),
             onPressed: onNavigate!,
           ),
-        GestureDetector(
-          onTap: () {
-            GoRouter.of(context).go('/competitions');
-          },
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Center(
-              child: Text(
-                'Compétition',
-                style: TextStyle(fontSize: 16.0, color: Colors.white),
-              ),
-            ),
-          ),
-        ),
-        FutureBuilder<bool>(
-          future: hasAccess(),
-          builder: (context, snapshot) {
-            final bool hasAccess = snapshot.data != false &&
-                MediaQuery.sizeOf(context).width > 750;
-            debugPrint('hasAccess: $hasAccess');
-            if (hasAccess) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      GoRouter.of(context).go('/admin/list/adherents');
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Center(
-                        child: Text(
-                          'Liste des adhérents',
-                          style: TextStyle(fontSize: 16.0, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      GoRouter.of(context).go('/admin/add/adherents');
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Center(
-                        child: Text(
-                          'Ajouter un adhérent',
-                          style: TextStyle(fontSize: 16.0, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      GoRouter.of(context).go('/admin/add/competition');
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Center(
-                        child: Text(
-                          'Ajouter une compétition',
-                          style: TextStyle(fontSize: 16.0, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.logout,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      auth.signOut().then((_) {
-                        debugPrint('Déconnexion réussie');
-                        context.go('/');
-                      }).catchError((error) {
-                        debugPrint('Erreur lors de la déconnexion: $error');
-                      });
-                    },
-                  ),
-                ],
-              );
-            } else {
-              return Container();
-            }
+        if (isWideScreen) ...generateNavActions(context),
+        IconButton(
+          icon: Icon(Icons.logout, color: theme.colorScheme.onPrimary),
+          onPressed: () {
+            GoRouter.of(context).go('/'); // Redirection après déconnexion
           },
         ),
       ],
@@ -157,72 +154,34 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
+  List<Widget> generateDrawerItems(BuildContext context) {
+    final List<Map<String, String>> drawerItems = [
+      {'label': 'mon compte', 'route': '/account'},
+      {'label': 'Compétitions', 'route': '/competition'}
+    ];
+
+    return drawerItems.map((item) {
+      return ListTile(
+        title: Text(
+          item['label']!,
+          style: textStyleTextAppBar(context),
+        ),
+        onTap: () {
+          GoRouter.of(context).go(item['route']!);
+          Navigator.pop(context);
+        },
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.red[400],
+      backgroundColor: theme.colorScheme.onSurface,
       elevation: 0,
       child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          IconButton(
-            icon: const Icon(
-              Icons.logout,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              auth.signOut().then((_) {
-                debugPrint('Déconnexion réussie');
-                context.go('/');
-              }).catchError((error) {
-                debugPrint('Erreur lors de la déconnexion: $error');
-              });
-            },
-          ),
-          ListTile(
-            title: const Text('Compétitions'),
-            onTap: () {
-              GoRouter.of(context).go('/competitions');
-              Navigator.pop(context);
-            },
-          ),
-          FutureBuilder<bool>(
-            future: hasAccess(),
-            builder: (context, snapshot) {
-              final bool hasAccess = snapshot.data ?? false;
-              debugPrint('hasAccess: $hasAccess');
-              if (hasAccess) {
-                return Column(
-                  children: [
-                    ListTile(
-                      title: const Text('Liste adhérents'),
-                      onTap: () {
-                        GoRouter.of(context).go('/admin/list/adherents');
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('Ajouter un adhérent'),
-                      onTap: () {
-                        GoRouter.of(context).go('/admin/add/adherents');
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('Ajouter une compétition'),
-                      onTap: () {
-                        GoRouter.of(context).go('/admin/add/competition');
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                );
-              } else {
-                return Container();
-              }
-            },
-          ),
-        ],
+        padding: const EdgeInsets.fromLTRB(10, 25, 0, 0),
+        children: generateDrawerItems(context),
       ),
     );
   }

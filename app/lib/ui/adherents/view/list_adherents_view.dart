@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:judoseclin/ui/common/theme/theme.dart';
+import 'package:judoseclin/theme.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 
 import '../../../domain/entities/adherents.dart';
@@ -35,10 +35,9 @@ class ListAdherentsView extends StatelessWidget {
         final adherents = snapshot.data!;
 
         return Scaffold(
-          appBar: const CustomAppBar(title: ''),
-          drawer: MediaQuery.sizeOf(context).width > 750
-              ? null
-              : const CustomDrawer(),
+          appBar: CustomAppBar(title: ''),
+          drawer:
+          MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
           body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -73,31 +72,40 @@ class ListAdherentsView extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                                 side: BorderSide(
-                                  color: Colors.red[400]!,
+                                  color: theme.colorScheme.primary,
                                   width: 2.0,
                                 ),
                               ),
                               child: ListTile(
                                 title: Row(
                                   children: [
-                                    Text(adherent.firstName),
+                                    Text(
+                                      adherent.firstName,
+                                      style: textStyleText(context),
+                                    ),
                                     const SizedBox(
                                         width:
-                                            8.0), // Espace entre le prénom et le nom
-                                    Text(adherent.lastName),
+                                        8.0), // Espace entre le prénom et le nom
+                                    Text(
+                                      adherent.lastName,
+                                      style: textStyleText(context),
+                                    ),
                                   ],
                                 ),
-                                subtitle: Text(adherent.email),
+                                subtitle: Text(
+                                  adherent.email,
+                                  style: textStyleText(context),
+                                ),
                                 onTap: () {
                                   String adherentsId = adherent.id;
                                   if (adherentsId.isNotEmpty) {
-                                    context.go(
-                                        '/admin/list/adherents/$adherentsId');
+                                    context.goNamed('adherents_detail', pathParameters: {'id': adherentsId});
+
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                           content:
-                                              Text('Adhérent introuvable')),
+                                          Text('Adhérent introuvable')),
                                     );
                                   }
                                 },

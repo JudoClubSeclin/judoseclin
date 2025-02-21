@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/home_button.dart';
-import '../../../common/theme/theme.dart';
+
+import '../../../../theme.dart';
 import '../../../common/widgets/buttons/custom_buttom.dart';
 import '../../../common/widgets/images/image_fond_ecran.dart';
 import '../../../common/widgets/inputs/custom_textfield.dart';
-import '../bloc/user_bloc.dart';
-import '../bloc/user_event.dart';
-import '../bloc/user_state.dart';
+import '../user_bloc.dart';
+import '../user_event.dart';
+import '../user_state.dart';
 
 class LoginView extends StatelessWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-
-
-  LoginView({super.key, });
+  LoginView({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -76,42 +77,40 @@ class LoginView extends StatelessWidget {
                   child: CustomButton(
                     label: 'Connexion',
                     onPressed: () {
-                     BlocProvider.of<UserBloc>(context).add(
+                      BlocProvider.of<UserBloc>(context).add(
                         LoginWithEmailPassword(
                             email: emailController.text,
                             password: passwordController.text,
-                            navigateToAccount: ()  {
+                            navigateToAccount: () {
                               GoRouter.of(context).go('/account');
-
-
                             }),
                       );
                     },
                   ),
                 ),
-                const SizedBox(height: 22),
+                const SizedBox(height: 50),
                 Row(
                   children: [
                     Expanded(
                       child: TextButton(
-                        onPressed: () => context.go('/account/inscription'),
+                        onPressed: () => context.go('/inscription'),
                         child: Text(
                           "Créer un compte",
-                          style: TextStyle(color: Colors.red[400]),
+                          style: textStyleText(context),
                           textAlign: TextAlign.center,
                         ),
                       ),
                     ),
-                    Expanded(
+                   /* Expanded(
                       child: TextButton(
-                        onPressed: () => context.go('/account/ResetPassword'),
+                        onPressed: () => context.go('/reset_password'),
                         child: Text(
-                          "Mot de passe oublié?",
-                          style: TextStyle(color: Colors.red[400]),
+                          "Mot de passe oublié ?",
+                          style: textStyleText(context),
                           textAlign: TextAlign.center,
                         ),
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
               ],

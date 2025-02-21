@@ -5,7 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../domain/entities/competition.dart';
-import '../common/theme/theme.dart';
+import '../../domain/entities/setup_entity_module.dart';
+import '../../theme.dart';
 import 'oriented_size_box.dart';
 
 class File {
@@ -34,7 +35,7 @@ class CompetitionListButtons extends StatelessWidget {
       child: ToggleButtons(
         direction: Axis.vertical,
         onPressed: (int index) {
-          context.go('/competitions/${competitions[index].id}');
+          context.go('/competition/${competitions[index].id}');
         },
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         selectedBorderColor: Colors.red[700],
@@ -113,7 +114,8 @@ class ColonneLinks extends StatefulWidget {
 }
 
 class _ColonneLinksState extends State<ColonneLinks> {
-  final FirebaseStorage storage = FirebaseStorage.instance;
+  final storage = getIt<FirebaseStorage>();
+  final firestore = getIt<FirebaseFirestore>();
 
   Future<List<File>> getFiles(String folderName) async {
     final Reference folderRef = storage.ref().child(folderName);
@@ -183,7 +185,6 @@ class _ColonneLinksState extends State<ColonneLinks> {
               style: titleStyle,
             ),
           ),
-
           FutureBuilder(
             future: getFiles("ceinture_noire"),
             builder:
@@ -204,27 +205,26 @@ class _ColonneLinksState extends State<ColonneLinks> {
               }
             },
           ),
-
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
               "Compétitions",
-              style: titleStyle,
+              style: titleStyleSmall(context),
             ),
           ),
           FutureBuilder<QuerySnapshot>(
-            future: FirebaseFirestore.instance.collection('competition').get(),
+            future: firestore.collection('competition').get(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
                 case ConnectionState.waiting:
-                  debugPrint('la je passe');
+
                   return const CircularProgressIndicator();
                 case ConnectionState.done:
-                  debugPrint('Data received: ${snapshot.data}');
+                 // debugPrint('Data received: ${snapshot.data}');
                   if (snapshot.hasError) {
-                    debugPrint('Erreur: ${snapshot.error}');
+                  //  debugPrint('Erreur: ${snapshot.error}');
                     return const Text(
                       "Erreur lors de la récupération des compétitions",
                     );

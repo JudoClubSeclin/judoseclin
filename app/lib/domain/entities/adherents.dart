@@ -1,17 +1,18 @@
 import 'package:intl/intl.dart';
-import 'package:judoseclin/ui/common/functions/date_converter.dart';
+import 'package:judoseclin/core/utils/date_converter.dart';
+
 
 class Adherents {
   final String id;
   final String firstName;
   final String lastName;
   final String email;
-  final DateTime dateOfBirth;
+  final DateTime? dateOfBirth;
   final String licence;
-  final String blet;
+  final String belt;
   final String discipline;
   final String category;
-  final String tutor;
+  final String? tutor;
   final String phone;
   final String address;
   final String image;
@@ -24,12 +25,12 @@ class Adherents {
     required this.firstName,
     required this.lastName,
     required this.email,
-    required this.dateOfBirth,
+    this.dateOfBirth,
     required this.licence,
-    required this.blet,
+    required this.belt,
     required this.discipline,
     required this.category,
-    required this.tutor,
+     this.tutor,
     required this.phone,
     required this.address,
     required this.image,
@@ -39,7 +40,7 @@ class Adherents {
   });
 
   String get formattedDateOfBirth {
-    return DateFormat('dd/MM/yyyy').format(dateOfBirth);
+    return DateFormat('dd/MM/yyyy').format(dateOfBirth!);
   }
 
   factory Adherents.fromMap(Map<String, dynamic> data, String id) {
@@ -50,7 +51,7 @@ class Adherents {
       email: data['email'] ?? '',
       dateOfBirth: DateConverter.convertToDateTime(data['dateOfBirth']),
       licence: data['licence'] ?? '',
-      blet: data['blet'] ?? '',
+      belt: data['belt'] ?? '',
       discipline: data['discipline'] ?? '',
       category: data['category'] ?? '',
       tutor: data['tutor'] ?? '',

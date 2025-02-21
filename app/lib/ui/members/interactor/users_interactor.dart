@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
+import 'package:judoseclin/data/repository/user_repository/auth_state_repository_impl.dart';
+import 'package:judoseclin/data/repository/user_repository/user_data_repository_impl.dart';
 
-import '../../../../data/repository/user_repository/user_repository.dart';
 import '../../../../domain/entities/users.dart';
+import '../../../data/repository/user_repository/user_auth_repository_impl.dart';
 
+@singleton
 class UsersInteractor {
-  final UsersRepository userRepository;
+  final authUserRepository = UserAuthRepositoryImpl();
+  final userData = UserDataRepositoryImpl();
+  final stateRepository = AuthStateRepositoryImpl();
 
-  UsersInteractor({required this.userRepository});
-
-  Future<void> registerUser(Users users) async {
+  Future<void> registerUser(Users user) async {
     try {
-      //Utilisez le repository pour enregistrer l'utilisateur
-      await userRepository.registerUser(Users(
-          id: (users.id),
-          firstName: users.firstName,
-          lastName: users.lastName,
-          dateOfBirth: users.dateOfBirth,
-          email: users.email,
-          password: users.password));
+      final userInfo = {'email': user.email};
+
+      await authUserRepository.register(user.email, user.password, userInfo);
     } catch (error) {
-      debugPrint('Erreur lors de l\'enregistrement de user: $error');
+      debugPrint('Erreur lors de l\'enregistrement de l\'utilisateur: $error');
       rethrow;
     }
   }
 
   Future<Map<String, dynamic>> fetchUserData(String userId) async {
     try {
-      final user = await userRepository.fetchUserData(userId);
+      final user = await userData.fetchUserData(userId);
       return user; // Ajoutez cette ligne pour renvoyer les données de l'utilisateur
     } catch (error) {
       debugPrint(
@@ -38,7 +37,7 @@ class UsersInteractor {
   Future<void> login(String email, String password) async {
     try {
       //Utilise le repository pour géger la connexion
-      await userRepository.login(email, password);
+      await authUserRepository.login(email, password);
     } catch (error) {
       debugPrint('Error de connection : $error');
       rethrow;
@@ -48,22 +47,14 @@ class UsersInteractor {
   Future<void> resetPassword(String email) async {
     try {
       //utilisez le repository pour la réinitialisation du password
-      await userRepository.resetPassword(email);
+      await authUserRepository.resetPassword(email);
     } catch (error) {
       debugPrint('$error');
     }
   }
 
-  Future<void> checkAuthenticationStatus() async {
-    try {
-      //Utilisez le repository pour la redirection
-      await userRepository.checkAuthenticationStatus();
-    } catch (error) {
-      debugPrint('redirection échoué : $error');
-    }
-  }
 
   Future<void> logOut() async {
-    await userRepository.logOut();
+    await authUserRepository.logOut();
   }
 }
