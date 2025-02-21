@@ -26,12 +26,13 @@ class AddAdherentsModule implements UIModule {
   List<RouteBase> getRoutes() {
     return [
       GoRoute(
-          path: '/admin/add/adherents',
-          pageBuilder: (context, state) {
-            return MaterialPage(
-              child: _buildAccountPage(),
-            );
-          })
+        path: '/admin/add/adherents',
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: _buildAccountPage(),
+          );
+        },
+      ),
     ];
   }
 
@@ -47,9 +48,16 @@ class AddAdherentsModule implements UIModule {
         final auth = getIt<AuthService>();
         final firestoreService = getIt<FirestoreService>();
 
-        return AdherentsBloc(interactor,auth, firestoreService, adherentId: '');
+        return AdherentsBloc(
+          interactor,
+          auth,
+          firestoreService,
+          adherentId: '', // Remplacez par une valeur valide si nécessaire
+        );
       },
       child: AddAdherentsView(),
+        // Assurez-vous que `AdherentsRepository` est correctement défini dans `getIt`
+
     );
   }
 }
