@@ -126,12 +126,12 @@ class AddAdherentsView extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         CustomTextField(
-                          labelText: 'droit à l\'mage',
+                          labelText: 'droit à l\'image',
                           controller: imageController,
                         ),
                         const SizedBox(width: 40),
                         CustomTextField(
-                          labelText: 'Droit medical',
+                          labelText: 'Décharge medicale',
                           controller: santeController,
                         ),
                         const SizedBox(height: 20),
