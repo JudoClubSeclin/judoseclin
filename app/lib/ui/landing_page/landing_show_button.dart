@@ -3,10 +3,7 @@ import 'package:judoseclin/core/utils/size_extensions.dart';
 
 class ShowButton extends StatelessWidget {
   final ScrollController scrollController;
-  const ShowButton({
-    super.key,
-    required this.scrollController,
-  });
+  const ShowButton({super.key, required this.scrollController});
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +15,11 @@ class ShowButton extends StatelessWidget {
       ),
       child: ElevatedButton(
         onPressed: () {
-          scrollController.animateTo(size.height,
-              duration: const Duration(seconds: 1), curve: Curves.easeOut);
+          scrollController.animateTo(
+            size.height,
+            duration: const Duration(seconds: 1),
+            curve: Curves.easeOut,
+          );
         },
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all(Colors.red[400]),

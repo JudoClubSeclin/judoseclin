@@ -1,4 +1,3 @@
-
 class NewsDto {
   final String titre;
   final DateTime datePublication;
@@ -8,5 +7,5 @@ class NewsDto {
     required this.titre,
     required this.datePublication,
     required this.details,
-});
+  });
 }

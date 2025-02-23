@@ -5,11 +5,7 @@ class CustomButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
 
-  const CustomButton({
-    required this.label,
-    required this.onPressed,
-    super.key,
-  });
+  const CustomButton({required this.label, required this.onPressed, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +23,8 @@ class CustomButton extends StatelessWidget {
         child: ElevatedButton(
           style: ButtonStyle(
             padding: WidgetStateProperty.all<EdgeInsets>(
-                const EdgeInsets.symmetric(vertical: 15)),
+              const EdgeInsets.symmetric(vertical: 15),
+            ),
             backgroundColor: WidgetStateProperty.all(Colors.red[400]),
             shape: WidgetStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
@@ -37,10 +34,7 @@ class CustomButton extends StatelessWidget {
             ),
           ),
           onPressed: onPressed,
-          child: Text(
-            label,
-            style: textStyleText(context),
-          ),
+          child: Text(label, style: textStyleText(context)),
         ),
       ),
     );

@@ -11,11 +11,12 @@ class ColonnePage extends HookWidget {
   final String docUrl;
   final double fraction;
   final Size size;
-  const ColonnePage(
-      {super.key,
-      required this.docUrl,
-      required this.fraction,
-      required this.size});
+  const ColonnePage({
+    super.key,
+    required this.docUrl,
+    required this.fraction,
+    required this.size,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +32,14 @@ class ColonnePage extends HookWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
           child: MarkdownBody(
-              data: contenu.value,
-              styleSheet: getMDTheme(context, Colors.black),
-              onTapLink: (text, url, title) {
-                if (url != null) {
-                  launchUrl(Uri.parse(url));
-                }
-              }),
+            data: contenu.value,
+            styleSheet: getMDTheme(context, Colors.black),
+            onTapLink: (text, url, title) {
+              if (url != null) {
+                launchUrl(Uri.parse(url));
+              }
+            },
+          ),
         ),
       ),
     );

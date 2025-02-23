@@ -13,7 +13,8 @@ class FunctionAdminService extends ChangeNotifier {
   bool get isAdmin => _isAdmin;
   bool get isInitialized => _isInitialized;
 
-  FunctionAdminService() { // <-- Correction ici
+  FunctionAdminService() {
+    // <-- Correction ici
     _auth.authStateChanges().listen(_onAuthStateChanged);
   }
 
@@ -32,7 +33,8 @@ class FunctionAdminService extends ChangeNotifier {
   Future<void> _checkAdminStatus() async {
     if (_user != null) {
       try {
-        final userDoc = await _firestore.collection('Users').doc(_user!.uid).get();
+        final userDoc =
+            await _firestore.collection('Users').doc(_user!.uid).get();
         _isAdmin = userDoc.data()?['admin'] == true;
       } catch (e) {
         debugPrint('Erreur lors de la vérification du statut admin: $e');

@@ -1,4 +1,3 @@
-
 class CompetitionDto {
   final String id;
   final String address;
@@ -24,6 +23,5 @@ class CompetitionDto {
     required this.minime,
     required this.cadet,
     required this.juniorSenior,
-});
-
+  });
 }

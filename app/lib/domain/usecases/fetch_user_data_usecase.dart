@@ -27,7 +27,8 @@ class FetchUserDataUseCase {
       _authStateRepository.isUserConnected;
     } catch (e) {
       debugPrint(
-          "Erreur lors de la vérification de l'état d'authentification: $e");
+        "Erreur lors de la vérification de l'état d'authentification: $e",
+      );
       rethrow;
     }
   }

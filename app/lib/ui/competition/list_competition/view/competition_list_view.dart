@@ -66,8 +66,9 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
                   itemCount: competitions.length,
                   itemBuilder: (context, index) {
                     final competition = competitions[index];
-                    bool isUserInscribed =
-                        userInscriptions.contains(competition.id);
+                    bool isUserInscribed = userInscriptions.contains(
+                      competition.id,
+                    );
 
                     dynamic dateField = competition['date'];
                     DateTime date;
@@ -78,11 +79,13 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
                       date = DateTime.parse(dateField);
                     } else {
                       throw Exception(
-                          'Type de date inattendu : ${dateField.runtimeType}');
+                        'Type de date inattendu : ${dateField.runtimeType}',
+                      );
                     }
 
-                    String formattedDate =
-                        DateFormat('dd/MM/yyyy').format(date);
+                    String formattedDate = DateFormat(
+                      'dd/MM/yyyy',
+                    ).format(date);
 
                     return Padding(
                       padding: const EdgeInsets.all(20),
@@ -96,7 +99,9 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               side: BorderSide(
-                                  color: Colors.red[400]!, width: 2.0),
+                                color: Colors.red[400]!,
+                                width: 2.0,
+                              ),
                             ),
                             child: ListTile(
                               title: Wrap(
@@ -106,19 +111,22 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
                                     style: textStyleText(context),
                                   ),
                                   const SizedBox(width: 15),
-                                  Text(formattedDate,
-                                      style: textStyleText(context)),
+                                  Text(
+                                    formattedDate,
+                                    style: textStyleText(context),
+                                  ),
                                   const SizedBox(width: 50),
                                   Text(
                                     isUserInscribed
                                         ? 'Je suis inscrit à cette compétition'
                                         : 'Je ne suis pas inscrit à cette compétition',
                                     style: TextStyle(
-                                      color: isUserInscribed
-                                          ? Colors.green
-                                          : Colors.redAccent,
+                                      color:
+                                          isUserInscribed
+                                              ? Colors.green
+                                              : Colors.redAccent,
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                               onTap: () {
@@ -128,8 +136,8 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                        content:
-                                            Text('Compétition introuvable')),
+                                      content: Text('Compétition introuvable'),
+                                    ),
                                   );
                                 }
                               },

@@ -6,10 +6,7 @@ import '../../theme.dart';
 class MarkdownedNews extends StatelessWidget {
   final String text;
 
-  const MarkdownedNews({
-    super.key,
-    required this.text,
-  });
+  const MarkdownedNews({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {

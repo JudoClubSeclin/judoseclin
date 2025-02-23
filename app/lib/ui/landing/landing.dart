@@ -11,10 +11,7 @@ import '../more_infos/more_info.dart';
 class Landing extends StatelessWidget {
   final CompetitionRepository competitionRepository;
 
-  const Landing({
-    super.key,
-    required this.competitionRepository,
-  });
+  const Landing({super.key, required this.competitionRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +27,13 @@ class Landing extends StatelessWidget {
               children: [const LandingHome(), const LandingNews(), MoreInfo()],
             ),
             Positioned(
-                top: 40.0, // Ajustez la position verticale
-                right: 10.0, // Ajustez la position horizontale
-                child: ConfigurationLocale.instance.peutSeConnecter
-                    ? const ConnexionButton()
-                    : const SizedBox()),
+              top: 40.0, // Ajustez la position verticale
+              right: 10.0, // Ajustez la position horizontale
+              child:
+                  ConfigurationLocale.instance.peutSeConnecter
+                      ? const ConnexionButton()
+                      : const SizedBox(),
+            ),
             ShowButton(scrollController: controller),
           ],
         ),

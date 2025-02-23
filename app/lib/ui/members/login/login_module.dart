@@ -26,9 +26,7 @@ class LoginModule implements UIModule {
       GoRoute(
         path: '/login',
         pageBuilder: (context, state) {
-          return MaterialPage(
-            child: _buildLoginPage(),
-          );
+          return MaterialPage(child: _buildLoginPage());
         },
       ),
     ];
@@ -36,7 +34,10 @@ class LoginModule implements UIModule {
 
   Widget _buildLoginPage() {
     return BlocProvider<UserBloc>(
-      create: (_) => UserBloc(getIt<UsersInteractor>()), // Utilisation correcte de UsersInteractor injecté
+      create:
+          (_) => UserBloc(
+            getIt<UsersInteractor>(),
+          ), // Utilisation correcte de UsersInteractor injecté
       child: LoginPage(),
     );
   }
@@ -46,4 +47,3 @@ class LoginModule implements UIModule {
     return {};
   }
 }
-

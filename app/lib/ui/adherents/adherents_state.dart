@@ -18,6 +18,7 @@ class SignUpErrorState extends AdherentsState {
 
   SignUpErrorState(this.error);
 }
+
 class PdfGenerationState extends AdherentsState {
   final bool isGenerating;
   final String? error;

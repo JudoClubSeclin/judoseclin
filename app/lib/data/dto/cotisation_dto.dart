@@ -1,4 +1,3 @@
-
 import '../../domain/entities/cotisation.dart';
 
 class CotisationDto {
@@ -16,5 +15,5 @@ class CotisationDto {
     required this.date,
     required this.cheques,
     required this.bankName,
-});
+  });
 }

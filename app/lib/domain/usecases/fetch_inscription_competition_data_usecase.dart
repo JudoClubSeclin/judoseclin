@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
-
 @injectable
 class FetchInscriptionCompetitionDataUseCase {
   final firestore = FirebaseFirestore.instance;
@@ -10,7 +9,9 @@ class FetchInscriptionCompetitionDataUseCase {
   FetchInscriptionCompetitionDataUseCase();
 
   Future<void> registerForCompetition(
-      String userId, String competitionId) async {
+    String userId,
+    String competitionId,
+  ) async {
     try {
       await firestore.collection('competition-registration').add({
         'userId': userId,

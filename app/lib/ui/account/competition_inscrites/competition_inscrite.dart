@@ -32,8 +32,10 @@ class CompetitionsInscritesState extends State<CompetitionsInscrites> {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: _bloc,
-      child:
-          BlocBuilder<InscriptionCompetitionBloc, InscriptionCompetitionState>(
+      child: BlocBuilder<
+        InscriptionCompetitionBloc,
+        InscriptionCompetitionState
+      >(
         builder: (context, state) {
           if (state is InscriptionCompetitionLoading) {
             return const Center(child: CircularProgressIndicator());
@@ -56,7 +58,6 @@ class CompetitionsInscritesState extends State<CompetitionsInscrites> {
                 ),
                 const SizedBox(height: 5),
                 ...state.inscriptions.map((competition) {
-
                   return Padding(
                     padding: const EdgeInsets.only(left: 10, top: 5),
 

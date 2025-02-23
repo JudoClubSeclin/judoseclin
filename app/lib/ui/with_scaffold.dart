@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 extension WithScaffold on Widget {
-  Widget withScaffold() => Scaffold(
-        body: this,
-      );
+  Widget withScaffold() => Scaffold(body: this);
 }
 
 class Test extends StatelessWidget {

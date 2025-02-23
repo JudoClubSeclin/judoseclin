@@ -26,12 +26,13 @@ class Cotisation {
           cheques.add(Cheque.fromMap(chequeData));
         }
         return Cotisation(
-            id: id,
-            adherentId: data['adherentId'] ?? '',
-            amount: (data['amount'] as int?)?.toInt() ?? 0,
-            date: data['date'] ?? '',
-            cheques: cheques,
-            bankName: data['bankName'] ?? '');
+          id: id,
+          adherentId: data['adherentId'] ?? '',
+          amount: (data['amount'] as int?)?.toInt() ?? 0,
+          date: data['date'] ?? '',
+          cheques: cheques,
+          bankName: data['bankName'] ?? '',
+        );
       } else {
         throw Exception('Données nul dans le document');
       }
@@ -46,16 +47,10 @@ class Cheque {
   final String numeroCheque;
   final int montantCheque;
 
-  Cheque({
-    required this.numeroCheque,
-    required this.montantCheque,
-  });
+  Cheque({required this.numeroCheque, required this.montantCheque});
 
   Map<String, dynamic> toMap() {
-    return {
-      'numeroCheque': numeroCheque,
-      'montantCheque': montantCheque,
-    };
+    return {'numeroCheque': numeroCheque, 'montantCheque': montantCheque};
   }
 
   factory Cheque.fromMap(Map<String, dynamic> map) {

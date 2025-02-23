@@ -8,8 +8,16 @@ import '../data/repository/cotisation_repository.dart';
 import '../domain/usecases/fetch_cotisation_data_usecase.dart';
 
 void setupAdminModule() {
-  getIt.registerFactory(() => AdherentsInteractor(
-      getIt<FetchAdherentsDataUseCase>(), getIt<AdherentsRepositoryImpl>()));
-  getIt.registerFactory(() => CotisationInteractor(
-      getIt<FetchCotisationDataUseCase>(), getIt<CotisationRepository>()));
+  getIt.registerFactory(
+    () => AdherentsInteractor(
+      getIt<FetchAdherentsDataUseCase>(),
+      getIt<AdherentsRepositoryImpl>(),
+    ),
+  );
+  getIt.registerFactory(
+    () => CotisationInteractor(
+      getIt<FetchCotisationDataUseCase>(),
+      getIt<CotisationRepository>(),
+    ),
+  );
 }

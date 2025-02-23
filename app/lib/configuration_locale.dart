@@ -4,7 +4,7 @@ class ConfigurationLocale {
   final bool _peutSeConnecter;
 
   const ConfigurationLocale({bool peutSeConnecter = true})
-      : _peutSeConnecter = peutSeConnecter;
+    : _peutSeConnecter = peutSeConnecter;
 
   bool get peutSeConnecter => _peutSeConnecter;
   static bool canConnect() => _instance._peutSeConnecter;

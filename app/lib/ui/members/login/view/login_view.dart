@@ -15,9 +15,7 @@ class LoginView extends StatelessWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  LoginView({
-    super.key,
-  });
+  LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +24,19 @@ class LoginView extends StatelessWidget {
         if (state is LoginFailure) {
           showDialog(
             context: context,
-            builder: (context) => AlertDialog(
-              title: const Text("Erreur de connexion"),
-              content: Text(state.error),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    GoRouter.of(context).pop();
-                  },
-                  child: const Text("OK"),
+            builder:
+                (context) => AlertDialog(
+                  title: const Text("Erreur de connexion"),
+                  content: Text(state.error),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        GoRouter.of(context).pop();
+                      },
+                      child: const Text("OK"),
+                    ),
+                  ],
                 ),
-              ],
-            ),
           );
         }
         // Ajoutez d'autres réactions pour différents états si nécessaire
@@ -79,11 +78,12 @@ class LoginView extends StatelessWidget {
                     onPressed: () {
                       BlocProvider.of<UserBloc>(context).add(
                         LoginWithEmailPassword(
-                            email: emailController.text,
-                            password: passwordController.text,
-                            navigateToAccount: () {
-                              GoRouter.of(context).go('/account');
-                            }),
+                          email: emailController.text,
+                          password: passwordController.text,
+                          navigateToAccount: () {
+                            GoRouter.of(context).go('/account');
+                          },
+                        ),
                       );
                     },
                   ),
@@ -101,7 +101,7 @@ class LoginView extends StatelessWidget {
                         ),
                       ),
                     ),
-                   /* Expanded(
+                    /* Expanded(
                       child: TextButton(
                         onPressed: () => context.go('/reset_password'),
                         child: Text(

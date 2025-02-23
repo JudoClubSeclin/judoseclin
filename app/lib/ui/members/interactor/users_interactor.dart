@@ -29,7 +29,8 @@ class UsersInteractor {
       return user; // Ajoutez cette ligne pour renvoyer les données de l'utilisateur
     } catch (error) {
       debugPrint(
-          'Erreur lors de la récupération des données utilisateur : $error');
+        'Erreur lors de la récupération des données utilisateur : $error',
+      );
       rethrow;
     }
   }
@@ -52,7 +53,6 @@ class UsersInteractor {
       debugPrint('$error');
     }
   }
-
 
   Future<void> logOut() async {
     await authUserRepository.logOut();

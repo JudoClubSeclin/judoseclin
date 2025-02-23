@@ -18,8 +18,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       }
 
       try {
-        Map<String, dynamic> userData =
-        await usersInteractor.fetchUserData(userId!);
+        Map<String, dynamic> userData = await usersInteractor.fetchUserData(
+          userId!,
+        );
         emit(UserDataLoadedState(userData));
       } catch (e) {
         emit(AuthenticationErrorState());
@@ -38,8 +39,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           return;
         }
 
-        Map<String, dynamic> userData =
-        await usersInteractor.fetchUserData(userId!);
+        Map<String, dynamic> userData = await usersInteractor.fetchUserData(
+          userId!,
+        );
         emit(UserDataLoadedState(userData));
 
         // Rediriger vers /account après connexion

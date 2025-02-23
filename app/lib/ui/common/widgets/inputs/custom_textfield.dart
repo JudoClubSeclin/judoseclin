@@ -19,7 +19,7 @@ class CustomTextField extends StatelessWidget {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double scaleFactor = screenWidth > 600 ? screenWidth / 600 : 1;
 
-    final borderColor = theme.colorScheme.primary ;
+    final borderColor = theme.colorScheme.primary;
 
     double maxWidth = 400.0;
 
@@ -45,16 +45,16 @@ class CustomTextField extends StatelessWidget {
               labelText: labelText,
               labelStyle: textStyleInput(context, labelText),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.0), // Réduire la taille du rayon
-                borderSide: BorderSide(
-                  color: borderColor,
-                ),
+                borderRadius: BorderRadius.circular(
+                  15.0,
+                ), // Réduire la taille du rayon
+                borderSide: BorderSide(color: borderColor),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.0), // Réduire la taille du rayon
-                borderSide: BorderSide(
-                  color: borderColor,
-                ),
+                borderRadius: BorderRadius.circular(
+                  15.0,
+                ), // Réduire la taille du rayon
+                borderSide: BorderSide(color: borderColor),
               ),
               contentPadding: EdgeInsets.symmetric(
                 vertical: 3 * scaleFactor, // Réduire la hauteur verticale

@@ -13,32 +13,33 @@ final GetIt getIt = GetIt.instance;
 void setupDataUseCaseModule() {
   if (!getIt.isRegistered<FetchAdherentsDataUseCase>()) {
     getIt.registerLazySingleton<FetchAdherentsDataUseCase>(
-          () => FetchAdherentsDataUseCase(),
+      () => FetchAdherentsDataUseCase(),
     );
   }
 
-  if(!getIt.isRegistered<FetchCompetitionDataUseCase>()) {
+  if (!getIt.isRegistered<FetchCompetitionDataUseCase>()) {
     getIt.registerLazySingleton<FetchCompetitionDataUseCase>(
-            () => FetchCompetitionDataUseCase()
+      () => FetchCompetitionDataUseCase(),
     );
   }
-  if(!getIt.isRegistered<FetchCotisationDataUseCase>()) {
+  if (!getIt.isRegistered<FetchCotisationDataUseCase>()) {
     getIt.registerLazySingleton<FetchCotisationDataUseCase>(
-            () => FetchCotisationDataUseCase()
+      () => FetchCotisationDataUseCase(),
     );
   }
 
-  if(!getIt.isRegistered<FetchInscriptionCompetitionDataUseCase>()) {
+  if (!getIt.isRegistered<FetchInscriptionCompetitionDataUseCase>()) {
     getIt.registerLazySingleton<FetchInscriptionCompetitionDataUseCase>(
-            () => FetchInscriptionCompetitionDataUseCase()
+      () => FetchInscriptionCompetitionDataUseCase(),
     );
   }
 
-  if(!getIt.isRegistered<FetchUserDataUseCase>()) {
-    getIt.registerLazySingleton<FetchUserDataUseCase>(() =>
-        FetchUserDataUseCase(
-            getIt<UserDataRepository>(), getIt<AuthStateRepository>())
+  if (!getIt.isRegistered<FetchUserDataUseCase>()) {
+    getIt.registerLazySingleton<FetchUserDataUseCase>(
+      () => FetchUserDataUseCase(
+        getIt<UserDataRepository>(),
+        getIt<AuthStateRepository>(),
+      ),
     );
   }
-  }
-
+}

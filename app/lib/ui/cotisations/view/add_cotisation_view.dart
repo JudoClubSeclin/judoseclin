@@ -24,17 +24,16 @@ class AddCotisationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CotisationBloc, CotisationState>(
-        builder: (context, state) {
-      if (state is CotisationSignUpLoadingState) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      } else if (state is CotisationSignUpErrorState) {
-        return Text(state.error);
-      } else {
-        return _buildForm(context);
-      }
-    });
+      builder: (context, state) {
+        if (state is CotisationSignUpLoadingState) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is CotisationSignUpErrorState) {
+          return Text(state.error);
+        } else {
+          return _buildForm(context);
+        }
+      },
+    );
   }
 
   Widget _buildForm(BuildContext context) {
@@ -43,10 +42,11 @@ class AddCotisationView extends StatelessWidget {
       drawer: MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
       body: DecoratedBox(
         decoration: const BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage(ImageFondEcran.imagePath),
-          fit: BoxFit.cover,
-        )),
+          image: DecorationImage(
+            image: AssetImage(ImageFondEcran.imagePath),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
@@ -56,9 +56,7 @@ class AddCotisationView extends StatelessWidget {
                 style: titleStyleMedium(context),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(
-                height: 40,
-              ),
+              const SizedBox(height: 40),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -73,9 +71,7 @@ class AddCotisationView extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 35,
-              ),
+              const SizedBox(height: 35),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -97,34 +93,39 @@ class AddCotisationView extends StatelessWidget {
                     debugPrint('bouton appuyer');
 
                     String amountInput = amountController.text.trim();
-                    int amount = amountInput.isNotEmpty
-                        ? int.parse(amountInput)
-                        : 0; // Valeur par défaut si la chaîne est vide
+                    int amount =
+                        amountInput.isNotEmpty
+                            ? int.parse(amountInput)
+                            : 0; // Valeur par défaut si la chaîne est vide
 
                     String chequesInput = chequesController.text.trim();
-                    List<Cheque> cheques = chequesInput.isNotEmpty
-                        ? parseCheques(chequesInput)
-                        : [];
+                    List<Cheque> cheques =
+                        chequesInput.isNotEmpty
+                            ? parseCheques(chequesInput)
+                            : [];
 
                     debugPrint('Valeur de amountController: $amountInput');
                     debugPrint('Valeur de chequesController: $chequesInput');
                     debugPrint(
-                        'Valeur de chequesController (avant parseCheques): $chequesInput');
+                      'Valeur de chequesController (avant parseCheques): $chequesInput',
+                    );
 
-                    context.read<CotisationBloc>().add(AddCotisationSignUpEvent(
-                          id: 'adherentId',
-                          adherentId: adherentId,
-                          amount: amount,
-                          date: dateController.text.trim(),
-                          cheques: cheques,
-                          bankName: bankNameController.text.trim(),
-                        ));
+                    context.read<CotisationBloc>().add(
+                      AddCotisationSignUpEvent(
+                        id: 'adherentId',
+                        adherentId: adherentId,
+                        amount: amount,
+                        date: dateController.text.trim(),
+                        cheques: cheques,
+                        bankName: bankNameController.text.trim(),
+                      ),
+                    );
                   } catch (e) {
                     debugPrint('Erreur inattendue: $e');
                   }
                 },
                 label: 'Enregistrer la cotisation',
-              )
+              ),
             ],
           ),
         ),

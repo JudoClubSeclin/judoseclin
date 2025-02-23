@@ -11,7 +11,7 @@ class AddCompetitionBloc
   final CompetitionInteractor competitionInteractor;
 
   AddCompetitionBloc(this.competitionInteractor)
-      : super(AddCompetitionSignUpInitialState()) {
+    : super(AddCompetitionSignUpInitialState()) {
     on<AddCompetitionEvent>((event, emit) async {
       if (event is AddCompetitionSignUpEvent) {
         emit(AddCompetitionSignUpLoadingState());
@@ -21,8 +21,9 @@ class AddCompetitionBloc
 
           // Convertir les dates au besoin
           DateTime parsedDate = DateTime.parse(event.date.toString());
-          DateTime parsedPublishDate =
-              DateTime.parse(event.publishDate.toString());
+          DateTime parsedPublishDate = DateTime.parse(
+            event.publishDate.toString(),
+          );
 
           debugPrint('Date après conversion: $parsedDate');
           debugPrint('Publish Date après conversion: $parsedPublishDate');

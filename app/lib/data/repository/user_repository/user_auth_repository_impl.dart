@@ -12,7 +12,9 @@ class UserAuthRepositoryImpl implements UserAuthRepository {
   Future<User?> login(String email, String password) async {
     try {
       final result = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
       return result.user;
     } catch (e) {
       rethrow;
@@ -21,10 +23,15 @@ class UserAuthRepositoryImpl implements UserAuthRepository {
 
   @override
   Future<void> register(
-      String email, String password, Map<String, dynamic> userInfo) async {
+    String email,
+    String password,
+    Map<String, dynamic> userInfo,
+  ) async {
     try {
       final result = await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
       // Ajoutez des données utilisateur supplémentaires ici
       if (result.user != null) {
         final uid = result.user!.uid;

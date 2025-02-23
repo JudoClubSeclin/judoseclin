@@ -25,10 +25,12 @@ class CompetitionDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: ''),
-      drawer: MediaQuery.of(context).size.width > 750 ? null : const CustomDrawer(),
+      drawer:
+          MediaQuery.of(context).size.width > 750 ? null : const CustomDrawer(),
       body: Stack(
         children: [
-          Positioned.fill( // Assure que l'image prend tout l'écran
+          Positioned.fill(
+            // Assure que l'image prend tout l'écran
             child: DecoratedBox(
               decoration: const BoxDecoration(
                 image: DecorationImage(
@@ -67,11 +69,13 @@ class CompetitionDetailView extends StatelessWidget {
           ),
         ],
       ),
-
     );
   }
 
-  Widget _buildCompetitionDetails(BuildContext context, Competition competition) {
+  Widget _buildCompetitionDetails(
+    BuildContext context,
+    Competition competition,
+  ) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -104,19 +108,27 @@ class CompetitionDetailView extends StatelessWidget {
           _buildCategoryInfo(context, 'Benjamin', competition.benjamin),
           _buildCategoryInfo(context, 'Minime', competition.minime),
           _buildCategoryInfo(context, 'Cadet', competition.cadet),
-          _buildCategoryInfo(context, 'Junior/Senior', competition.juniorSenior),
+          _buildCategoryInfo(
+            context,
+            'Junior/Senior',
+            competition.juniorSenior,
+          ),
           const SizedBox(height: 20),
           InscriptionButton(
             competitionId: competition.id,
             competitionData: competition.toMap(),
             adherentCategorie: adherents.category, // Make sure this is not null
-          )
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildCategoryInfo(BuildContext context, String category, String info) {
+  Widget _buildCategoryInfo(
+    BuildContext context,
+    String category,
+    String info,
+  ) {
     return Column(
       children: [
         Text(

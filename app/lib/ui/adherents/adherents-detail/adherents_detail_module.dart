@@ -37,14 +37,15 @@ class AdherentsDetailModule implements UIModule {
 
           if (adherentId == null || adherentId.isEmpty) {
             return const MaterialPage(
-              child: Scaffold(body: Center(child: Text("⚠️ Erreur: ID manquant"))),
+              child: Scaffold(
+                body: Center(child: Text("⚠️ Erreur: ID manquant")),
+              ),
             );
           }
 
           return _buildDetailPage(adherentId);
         },
       ),
-
     ];
   }
 
@@ -64,12 +65,13 @@ class AdherentsDetailModule implements UIModule {
 
     return CustomTransitionPage(
       child: BlocProvider<AdherentsBloc>(
-        create: (context) => AdherentsBloc(
-          interactor,auth,
-          firestoreService,
-          adherentId: adherentId,
-
-        ),
+        create:
+            (context) => AdherentsBloc(
+              interactor,
+              auth,
+              firestoreService,
+              adherentId: adherentId,
+            ),
         child: AdherentsDetailView(
           adherentId: adherentId,
           adherentsInteractor: interactor,

@@ -13,9 +13,7 @@ import 'core/utils/function_admin.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await EmojiUtils.preloadEmojis();
 
   configureDependencies();
@@ -27,7 +25,8 @@ void main() async {
       ],
       child: MyApp(),
     ),
-  );}
+  );
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

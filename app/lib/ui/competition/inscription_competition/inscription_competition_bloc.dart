@@ -14,7 +14,7 @@ class InscriptionCompetitionBloc
   final FirebaseFirestore _firestore;
 
   InscriptionCompetitionBloc(this._firestore)
-      : super(InscriptionCompetitionInitial()) {
+    : super(InscriptionCompetitionInitial()) {
     on<LoadInscriptionCompetition>(_loadInscriptionCompetition);
     on<ValidationInscription>(_validationInscription);
     on<RegisterForCompetition>(_registerForCompetition);
@@ -38,23 +38,26 @@ class InscriptionCompetitionBloc
     }
   }
 
-  Future<void> registerForCompetition(String userId,
-      String competitionId) async {}
+  Future<void> registerForCompetition(
+    String userId,
+    String competitionId,
+  ) async {}
 
   Future<bool> _canRegisterForCompetition(String competitionId) async {
     DocumentSnapshot competitionDoc =
-    await _firestore.collection('competition').doc(competitionId).get();
+        await _firestore.collection('competition').doc(competitionId).get();
 
     if (!competitionDoc.exists) {
       throw Exception('Document no found');
     }
 
     final Map<String, dynamic> data =
-    competitionDoc.data() as Map<String, dynamic>;
+        competitionDoc.data() as Map<String, dynamic>;
 
     if (!data.containsKey('date') || !data.containsKey('publishDate')) {
       throw Exception(
-          'Required fields date or publishDate not found in the document');
+        'Required fields date or publishDate not found in the document',
+      );
     }
 
     DateTime now = DateTime.now();
@@ -62,8 +65,9 @@ class InscriptionCompetitionBloc
     DateTime publishDate = (data['publishDate'] as Timestamp).toDate();
 
     //Calculate registration by subtracting 7 day from competitionDate
-    DateTime registrationEnd =
-    competitionDate.subtract(const Duration(days: 2));
+    DateTime registrationEnd = competitionDate.subtract(
+      const Duration(days: 2),
+    );
 
     //For registrationStart, let's consider it as the moment when the competition was published.
     DateTime registrationStart = publishDate;
@@ -78,10 +82,11 @@ class InscriptionCompetitionBloc
 
   Future<InscriptionCompetition?> getInscription(String inscriptionId) async {
     try {
-      DocumentSnapshot doc = await _firestore
-          .collection('competition-registration')
-          .doc(inscriptionId)
-          .get();
+      DocumentSnapshot doc =
+          await _firestore
+              .collection('competition-registration')
+              .doc(inscriptionId)
+              .get();
       return InscriptionCompetition.fromFirestore(doc);
     } catch (e) {
       debugPrint('Erreur lors de la recuperation de l\'inscription: $e');
@@ -91,10 +96,11 @@ class InscriptionCompetitionBloc
 
   Future<List<String>> getInscriptionForUser(String userId) async {
     try {
-      QuerySnapshot querySnapshot = await _firestore
-          .collection('competition-registration')
-          .where('userId', isEqualTo: userId)
-          .get();
+      QuerySnapshot querySnapshot =
+          await _firestore
+              .collection('competition-registration')
+              .where('userId', isEqualTo: userId)
+              .get();
       // Utilisez un Set pour éliminer les doublons
       Set<String> competitionIds = {};
       for (var doc in querySnapshot.docs) {
@@ -107,11 +113,15 @@ class InscriptionCompetitionBloc
     }
   }
 
-  FutureOr<void> _loadInscriptionCompetition(LoadInscriptionCompetition event,
-      Emitter<InscriptionCompetitionState> emit) {}
+  FutureOr<void> _loadInscriptionCompetition(
+    LoadInscriptionCompetition event,
+    Emitter<InscriptionCompetitionState> emit,
+  ) {}
 
-  FutureOr<void> _validationInscription(ValidationInscription event,
-      Emitter<InscriptionCompetitionState> emit) async {
+  FutureOr<void> _validationInscription(
+    ValidationInscription event,
+    Emitter<InscriptionCompetitionState> emit,
+  ) async {
     try {
       await _firestore
           .collection('competition-registration')
@@ -123,8 +133,10 @@ class InscriptionCompetitionBloc
     }
   }
 
-  FutureOr<void> _registerForCompetition(RegisterForCompetition event,
-      Emitter<InscriptionCompetitionState> emit) async {
+  FutureOr<void> _registerForCompetition(
+    RegisterForCompetition event,
+    Emitter<InscriptionCompetitionState> emit,
+  ) async {
     debugPrint('Trying to register for competition');
     emit((InscriptionCompetitionProgress()));
 
@@ -149,18 +161,20 @@ class InscriptionCompetitionBloc
   }
 
   FutureOr<void> _inscriptionCompetitionSuccess(
-      InscriptionCompetitionSuccess event,
-      Emitter<InscriptionCompetitionState> emit,) {
+    InscriptionCompetitionSuccess event,
+    Emitter<InscriptionCompetitionState> emit,
+  ) {
     // Émettre l'état de succès
     emit(InscriptionCompetitionSuccessState());
   }
 
   Future<List<String>> getUserCompetitionIds(String userId) async {
     try {
-      QuerySnapshot querySnapshot = await _firestore
-          .collection('competition-registration')
-          .where('userId', isEqualTo: userId)
-          .get();
+      QuerySnapshot querySnapshot =
+          await _firestore
+              .collection('competition-registration')
+              .where('userId', isEqualTo: userId)
+              .get();
       List<String> competitionIds = [];
       for (var doc in querySnapshot.docs) {
         competitionIds.add(doc['competitionId']);
@@ -174,30 +188,35 @@ class InscriptionCompetitionBloc
   }
 
   Future<List<Competition>> getCompetitionsDetails(
-      List<String> competitionIds) async {
+    List<String> competitionIds,
+  ) async {
     try {
       List<Competition> competitions = [];
       for (String id in competitionIds) {
-        DocumentSnapshot competitionDoc = await _firestore.collection(
-            'competition').doc(id).get();
+        DocumentSnapshot competitionDoc =
+            await _firestore.collection('competition').doc(id).get();
         if (competitionDoc.exists) {
           competitions.add(
-              Competition.fromMap(competitionDoc.data() as Map<String, dynamic>,
-                  competitionDoc.id));
+            Competition.fromMap(
+              competitionDoc.data() as Map<String, dynamic>,
+              competitionDoc.id,
+            ),
+          );
         }
       }
       return competitions;
     } catch (e) {
       debugPrint(
-          'Erreur lors de la récupération des détails des compétitions: $e');
+        'Erreur lors de la récupération des détails des compétitions: $e',
+      );
       return [];
     }
   }
 
   FutureOr<void> _loadUserInscriptions(
-      LoadUserInscriptions event,
-      Emitter<InscriptionCompetitionState> emit,
-      ) async {
+    LoadUserInscriptions event,
+    Emitter<InscriptionCompetitionState> emit,
+  ) async {
     emit(InscriptionCompetitionLoading());
     try {
       final competitionIds = await getInscriptionForUser(event.userId);

@@ -32,10 +32,7 @@ class AccountView extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Bonjour',
-                      style: titleStyleMedium(context),
-                    ),
+                    Text('Bonjour', style: titleStyleMedium(context)),
                     const SizedBox(width: 15),
                     Text(
                       userData['lastName'] ?? 'Not available',

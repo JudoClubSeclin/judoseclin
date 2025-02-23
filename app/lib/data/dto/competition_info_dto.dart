@@ -1,5 +1,3 @@
-
-
 class CompetitionInfoDto {
   final String id;
   final String address;
@@ -25,22 +23,21 @@ class CompetitionInfoDto {
     required this.minime,
     required this.cadet,
     required this.juniorSenior,
-});
+  });
 
   factory CompetitionInfoDto.fromJson(Map<String, dynamic> json) {
     return CompetitionInfoDto(
-        id: json ['id'],
-        address: json ['address'],
-        title: json ['title'],
-        subtitle: json ['subtitle'],
-        date: json ['date'],
-        publishDate: json ['publishDate'],
-        poussin: json ['poussin'],
-        benjamin: json ['benjamin'],
-        minime: json ['minime'],
-        cadet:json ['cadet'],
-        juniorSenior:json ['juniorSenior']
+      id: json['id'],
+      address: json['address'],
+      title: json['title'],
+      subtitle: json['subtitle'],
+      date: json['date'],
+      publishDate: json['publishDate'],
+      poussin: json['poussin'],
+      benjamin: json['benjamin'],
+      minime: json['minime'],
+      cadet: json['cadet'],
+      juniorSenior: json['juniorSenior'],
     );
   }
-
 }

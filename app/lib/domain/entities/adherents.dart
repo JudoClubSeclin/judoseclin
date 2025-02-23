@@ -1,7 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:judoseclin/core/utils/date_converter.dart';
 
-
 class Adherents {
   final String id;
   final String firstName;
@@ -30,7 +29,7 @@ class Adherents {
     required this.belt,
     required this.discipline,
     required this.category,
-     this.tutor,
+    this.tutor,
     required this.phone,
     required this.address,
     required this.image,

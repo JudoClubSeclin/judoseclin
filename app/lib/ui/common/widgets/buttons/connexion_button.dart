@@ -27,22 +27,26 @@ class ConnexionButton extends StatelessWidget {
             child: Material(
               color: Colors.transparent,
               child: IconButton(
-                icon: const Icon(
-                  Icons.person,
-                  color: Colors.white,
-                ),
+                icon: const Icon(Icons.person, color: Colors.white),
                 onPressed: () {
                   // Récupère le UserBloc depuis GetIt
-                  final userBloc = getIt<UserBloc>(); // GetIt récupère l'instance du UserBloc
+                  final userBloc =
+                      getIt<
+                        UserBloc
+                      >(); // GetIt récupère l'instance du UserBloc
 
                   final state = userBloc.state;
 
                   if (state is UserDataLoadedState) {
                     debugPrint('User is connected, navigate to /account');
-                    context.go("/account"); // L'utilisateur est connecté, redirige vers /account
+                    context.go(
+                      "/account",
+                    ); // L'utilisateur est connecté, redirige vers /account
                   } else {
                     debugPrint('User is not connected, navigate to /login');
-                    context.go("/login"); // L'utilisateur n'est pas connecté, redirige vers /login
+                    context.go(
+                      "/login",
+                    ); // L'utilisateur n'est pas connecté, redirige vers /login
                   }
                 },
               ),
@@ -53,4 +57,3 @@ class ConnexionButton extends StatelessWidget {
     );
   }
 }
-

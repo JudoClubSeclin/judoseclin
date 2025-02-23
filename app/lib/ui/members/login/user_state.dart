@@ -23,10 +23,10 @@ class PasswordResetFailure extends UserState {
 
   PasswordResetFailure({required this.error});
 }
+
 class AuthenticationErrorState extends UserState {}
 
 class UserDataLoadedState extends UserState {
   final Map<String, dynamic> userData;
-  UserDataLoadedState( this.userData);
+  UserDataLoadedState(this.userData);
 }
-

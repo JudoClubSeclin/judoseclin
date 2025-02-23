@@ -7,12 +7,13 @@ class InscriptionCompetition {
   final DateTime? timestamp;
   final bool validated;
 
-  InscriptionCompetition(
-      {required this.id,
-      required this.userId,
-      required this.competitionId,
-       this.timestamp,
-      this.validated = false});
+  InscriptionCompetition({
+    required this.id,
+    required this.userId,
+    required this.competitionId,
+    this.timestamp,
+    this.validated = false,
+  });
 
   factory InscriptionCompetition.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;

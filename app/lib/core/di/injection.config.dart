@@ -61,79 +61,102 @@ import 'api/storage_service.dart' as _i717;
 import 'injection_module.dart' as _i212;
 
 extension GetItInjectableX on _i174.GetIt {
-// initializes the registration of main-scope dependencies inside of GetIt
+  // initializes the registration of main-scope dependencies inside of GetIt
   _i174.GetIt init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
   }) {
-    final gh = _i526.GetItHelper(
-      this,
-      environment,
-      environmentFilter,
-    );
+    final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final injectionModule = _$InjectionModule();
     gh.factory<_i703.FirebaseClient>(() => _i703.FirebaseClient());
-    gh.factory<_i846.FetchCompetitionDataUseCase>(
-        () => _i846.FetchCompetitionDataUseCase());
-    gh.factory<_i155.FetchAdherentsDataUseCase>(
-        () => _i155.FetchAdherentsDataUseCase());
     gh.factory<_i23.FetchCotisationDataUseCase>(
-        () => _i23.FetchCotisationDataUseCase());
+      () => _i23.FetchCotisationDataUseCase(),
+    );
+    gh.factory<_i155.FetchAdherentsDataUseCase>(
+      () => _i155.FetchAdherentsDataUseCase(),
+    );
+    gh.factory<_i846.FetchCompetitionDataUseCase>(
+      () => _i846.FetchCompetitionDataUseCase(),
+    );
     gh.factory<_i680.FetchInscriptionCompetitionDataUseCase>(
-        () => _i680.FetchInscriptionCompetitionDataUseCase());
+      () => _i680.FetchInscriptionCompetitionDataUseCase(),
+    );
     gh.singleton<_i573.AppRouter>(() => _i573.AppRouter());
     gh.singleton<_i497.UsersInteractor>(() => _i497.UsersInteractor());
-    gh.singleton<_i718.AppRouterConfig>(() => _i718.AppRouterConfig());
     gh.singleton<_i59.FirebaseAuth>(() => injectionModule.firebaseAuth);
     gh.singleton<_i457.FirebaseStorage>(() => injectionModule.firebaseStorage);
     gh.singleton<_i974.FirebaseFirestore>(
-        () => injectionModule.firebaseFireStore);
+      () => injectionModule.firebaseFireStore,
+    );
+    gh.singleton<_i718.AppRouterConfig>(() => _i718.AppRouterConfig());
     gh.factory<_i94.UserDataRepository>(() => _i686.UserDataRepositoryImpl());
     gh.singleton<_i208.UserAuthRepository>(
-        () => _i131.UserAuthRepositoryImpl());
+      () => _i131.UserAuthRepositoryImpl(),
+    );
     gh.factory<_i48.AuthStateRepository>(() => _i515.AuthStateRepositoryImpl());
     gh.singleton<_i830.AccountInteractor>(
-        () => _i830.AccountInteractor(gh<_i94.UserDataRepository>()));
-    gh.singleton<_i734.InscriptionModule>(() => _i734.InscriptionModule(
-          gh<_i573.AppRouter>(),
-          gh<_i497.UsersInteractor>(),
-        ));
+      () => _i830.AccountInteractor(gh<_i94.UserDataRepository>()),
+    );
+    gh.singleton<_i734.InscriptionModule>(
+      () => _i734.InscriptionModule(
+        gh<_i573.AppRouter>(),
+        gh<_i497.UsersInteractor>(),
+      ),
+    );
     gh.factory<_i746.FirestoreService>(
-        () => _i746.FirestoreService(gh<_i974.FirebaseFirestore>()));
-    gh.singleton<_i776.AddAdherentsModule>(
-        () => _i776.AddAdherentsModule(gh<_i573.AppRouter>()));
-    gh.singleton<_i1062.ListAdherentsModule>(
-        () => _i1062.ListAdherentsModule(gh<_i573.AppRouter>()));
-    gh.singleton<_i10.AdherentsDetailModule>(
-        () => _i10.AdherentsDetailModule(gh<_i573.AppRouter>()));
-    gh.singleton<_i606.ListCompetitionModule>(
-        () => _i606.ListCompetitionModule(gh<_i573.AppRouter>()));
-    gh.singleton<_i409.CompetitionDetailModule>(
-        () => _i409.CompetitionDetailModule(gh<_i573.AppRouter>()));
-    gh.singleton<_i944.AddCompetitionModule>(
-        () => _i944.AddCompetitionModule(gh<_i573.AppRouter>()));
+      () => _i746.FirestoreService(gh<_i974.FirebaseFirestore>()),
+    );
     gh.singleton<_i483.LandingModule>(
-        () => _i483.LandingModule(gh<_i573.AppRouter>()));
+      () => _i483.LandingModule(gh<_i573.AppRouter>()),
+    );
+    gh.singleton<_i1062.ListAdherentsModule>(
+      () => _i1062.ListAdherentsModule(gh<_i573.AppRouter>()),
+    );
+    gh.singleton<_i10.AdherentsDetailModule>(
+      () => _i10.AdherentsDetailModule(gh<_i573.AppRouter>()),
+    );
+    gh.singleton<_i776.AddAdherentsModule>(
+      () => _i776.AddAdherentsModule(gh<_i573.AppRouter>()),
+    );
     gh.singleton<_i878.ResetPasswordModule>(
-        () => _i878.ResetPasswordModule(gh<_i573.AppRouter>()));
+      () => _i878.ResetPasswordModule(gh<_i573.AppRouter>()),
+    );
     gh.singleton<_i63.LoginModule>(
-        () => _i63.LoginModule(gh<_i573.AppRouter>()));
+      () => _i63.LoginModule(gh<_i573.AppRouter>()),
+    );
+    gh.singleton<_i409.CompetitionDetailModule>(
+      () => _i409.CompetitionDetailModule(gh<_i573.AppRouter>()),
+    );
+    gh.singleton<_i606.ListCompetitionModule>(
+      () => _i606.ListCompetitionModule(gh<_i573.AppRouter>()),
+    );
+    gh.singleton<_i944.AddCompetitionModule>(
+      () => _i944.AddCompetitionModule(gh<_i573.AppRouter>()),
+    );
     gh.singleton<_i692.AccountModule>(
-        () => _i692.AccountModule(gh<_i573.AppRouter>()));
+      () => _i692.AccountModule(gh<_i573.AppRouter>()),
+    );
     gh.factory<_i1004.CompetitionRepositoryImpl>(
-        () => _i1004.CompetitionRepositoryImpl(gh<_i746.FirestoreService>()));
+      () => _i1004.CompetitionRepositoryImpl(gh<_i746.FirestoreService>()),
+    );
     gh.factory<_i463.AdherentsRepositoryImpl>(
-        () => _i463.AdherentsRepositoryImpl(gh<_i746.FirestoreService>()));
-    gh.factory<_i656.FetchUserDataUseCase>(() => _i656.FetchUserDataUseCase(
-          gh<_i94.UserDataRepository>(),
-          gh<_i48.AuthStateRepository>(),
-        ));
+      () => _i463.AdherentsRepositoryImpl(gh<_i746.FirestoreService>()),
+    );
+    gh.factory<_i656.FetchUserDataUseCase>(
+      () => _i656.FetchUserDataUseCase(
+        gh<_i94.UserDataRepository>(),
+        gh<_i48.AuthStateRepository>(),
+      ),
+    );
     gh.factory<_i717.StorageService>(
-        () => _i717.StorageService(gh<_i457.FirebaseStorage>()));
-    gh.lazySingleton<_i977.AuthService>(() => _i977.AuthService(
-          gh<_i59.FirebaseAuth>(),
-          gh<_i746.FirestoreService>(),
-        ));
+      () => _i717.StorageService(gh<_i457.FirebaseStorage>()),
+    );
+    gh.lazySingleton<_i977.AuthService>(
+      () => _i977.AuthService(
+        gh<_i59.FirebaseAuth>(),
+        gh<_i746.FirestoreService>(),
+      ),
+    );
     return this;
   }
 }

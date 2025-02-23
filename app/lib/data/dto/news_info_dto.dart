@@ -1,4 +1,3 @@
-
 class NewsInfoDto {
   final String titre;
   final DateTime datePublication;
@@ -12,9 +11,9 @@ class NewsInfoDto {
 
   factory NewsInfoDto.fromJson(Map<String, dynamic> json) {
     return NewsInfoDto(
-        titre: json ['titre'],
-        datePublication: json ['datePublication'],
-        details: json ['details']
+      titre: json['titre'],
+      datePublication: json['datePublication'],
+      details: json['details'],
     );
   }
 }

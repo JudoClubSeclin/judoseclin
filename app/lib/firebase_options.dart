@@ -70,7 +70,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '285971971611',
     projectId: 'judoseclin-e4b0f',
     storageBucket: 'judoseclin-e4b0f.appspot.com',
-    iosClientId: '285971971611-1c2u3fnd5orf8edpm7hles4u3neeqgrf.apps.googleusercontent.com',
+    iosClientId:
+        '285971971611-1c2u3fnd5orf8edpm7hles4u3neeqgrf.apps.googleusercontent.com',
     iosBundleId: 'fr.benoitfontaine.judoseclin',
   );
 }

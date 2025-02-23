@@ -18,51 +18,56 @@ class UserDataRepositoryImpl implements UserDataRepository {
       throw Exception('Utilisateur non trouvé');
     } catch (e) {
       throw Exception(
-          'Erreur lors de la récupération des données utilisateur : $e');
+        'Erreur lors de la récupération des données utilisateur : $e',
+      );
     }
   }
 
   @override
   Future<void> updateUserData(
-      String userId, Map<String, dynamic> newData) async {
+    String userId,
+    Map<String, dynamic> newData,
+  ) async {
     try {
       await firestore.collection('Users').doc(userId).update(newData);
     } catch (e) {
       throw Exception(
-          'Erreur lors de la mise à jour des données utilisateur : $e');
-    }
-  }
-Future<List<Competition>> fetchUserCompetitions(String userId) async {
-  final registrationsSnapshot = await firestore
-      .collection('competition-registration')
-      .where('userId', isEqualTo: userId)
-      .get();
-
-  List<Competition> competitions = [];
-
-  for (var doc in registrationsSnapshot.docs) {
-    String competitionId = doc['competitionId'];
-
-    final competitionSnapshot = await firestore
-        .collection('competition')
-        .doc(competitionId)
-        .get();
-
-    if (competitionSnapshot.exists) {
-      competitions.add(Competition.fromMap(competitionSnapshot.data(), competitionSnapshot.id));
+        'Erreur lors de la mise à jour des données utilisateur : $e',
+      );
     }
   }
 
-  return competitions;
-}
+  Future<List<Competition>> fetchUserCompetitions(String userId) async {
+    final registrationsSnapshot =
+        await firestore
+            .collection('competition-registration')
+            .where('userId', isEqualTo: userId)
+            .get();
+
+    List<Competition> competitions = [];
+
+    for (var doc in registrationsSnapshot.docs) {
+      String competitionId = doc['competitionId'];
+
+      final competitionSnapshot =
+          await firestore.collection('competition').doc(competitionId).get();
+
+      if (competitionSnapshot.exists) {
+        competitions.add(
+          Competition.fromMap(
+            competitionSnapshot.data(),
+            competitionSnapshot.id,
+          ),
+        );
+      }
+    }
+
+    return competitions;
+  }
 
   @override
   Future<void> fetchUserCompetition(String userId) {
     // TODO: implement fetchUserCompetition
     throw UnimplementedError();
   }
-
 }
-
-
-

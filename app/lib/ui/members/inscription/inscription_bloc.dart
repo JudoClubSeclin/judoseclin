@@ -9,10 +9,8 @@ class InscriptionBloc extends Bloc<InscriptionEvent, InscriptionState> {
   final UsersInteractor usersInteractor;
   final String userId;
 
-  InscriptionBloc(
-    this.usersInteractor, {
-    required this.userId,
-  }) : super(SignUpInitialState()) {
+  InscriptionBloc(this.usersInteractor, {required this.userId})
+    : super(SignUpInitialState()) {
     on<InscriptionSignUpEvent>((event, emit) async {
       emit(SignUpLoadingState());
       try {

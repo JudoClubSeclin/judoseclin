@@ -1,5 +1,3 @@
-
-
 import 'package:get_it/get_it.dart';
 import 'package:judoseclin/core/utils/parse_cheques.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
@@ -13,9 +11,9 @@ import 'competition.dart';
 final GetIt getIt = GetIt.instance;
 
 void setupEntityModule() {
-
   ///enregistrement Adherents entity
-  getIt.registerFactory<Adherents>(() => Adherents(
+  getIt.registerFactory<Adherents>(
+    () => Adherents(
       id: '',
       firstName: '',
       lastName: '',
@@ -31,11 +29,13 @@ void setupEntityModule() {
       image: '',
       sante: '',
       medicalCertificate: '',
-      invoice: ''
-  ));
+      invoice: '',
+    ),
+  );
 
   ///enregistrement Competition entity
-  getIt.registerFactory<Competition>(() => Competition(
+  getIt.registerFactory<Competition>(
+    () => Competition(
       id: '',
       address: '',
       title: '',
@@ -46,39 +46,37 @@ void setupEntityModule() {
       benjamin: '',
       minime: '',
       cadet: '',
-      juniorSenior: ''
-  ));
+      juniorSenior: '',
+    ),
+  );
 
   ///Enregistrement cotisation entity
-  getIt.registerFactory<Cotisation>(() => Cotisation(
+  getIt.registerFactory<Cotisation>(
+    () => Cotisation(
       id: '',
       adherentId: '',
-      amount:0 ,
+      amount: 0,
       date: '',
-      cheques: parseCheques('') ,
-      bankName: ''
-  ));
+      cheques: parseCheques(''),
+      bankName: '',
+    ),
+  );
 
   ///Enregistrement inscription_competition entity
-  getIt.registerFactory<InscriptionCompetition>(() => InscriptionCompetition(
+  getIt.registerFactory<InscriptionCompetition>(
+    () => InscriptionCompetition(
       id: '',
       userId: '',
       competitionId: '',
-      timestamp: null
-  ));
+      timestamp: null,
+    ),
+  );
 
   ///Enregistrement news entity
-  getIt.registerFactory<News>(() => News(
-      titre: '',
-      datePublication: DateTime.now(),
-      details: ''
-  ));
+  getIt.registerFactory<News>(
+    () => News(titre: '', datePublication: DateTime.now(), details: ''),
+  );
 
   ///Enregistrement de Users entity
-  getIt.registerFactory<Users>(() => Users(
-      id: '',
-      email: '',
-      password: ''
-  ));
-
+  getIt.registerFactory<Users>(() => Users(id: '', email: '', password: ''));
 }

@@ -12,10 +12,7 @@ class InscriptionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => InscriptionBloc(
-        usersInteractor,
-        userId: '',
-      ),
+      create: (context) => InscriptionBloc(usersInteractor, userId: ''),
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(16.0),

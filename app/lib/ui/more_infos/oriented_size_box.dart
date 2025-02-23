@@ -19,10 +19,7 @@ class OrientedSizedBox extends StatelessWidget {
     return SizedBox(
       width: size.width * (fullHeight ? fraction : 1),
       //height: fullHeight ? double.infinity : null,
-      child: Padding(
-        padding: const EdgeInsets.all(5),
-        child: child,
-      ),
+      child: Padding(padding: const EdgeInsets.all(5), child: child),
     );
   }
 }

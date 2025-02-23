@@ -1,4 +1,3 @@
-
 class InscriptionCompetitionDto {
   final String id;
   final String userId;
@@ -11,6 +10,6 @@ class InscriptionCompetitionDto {
     required this.userId,
     required this.competitionId,
     required this.timestamp,
-    this.validated = false
-});
+    this.validated = false,
+  });
 }

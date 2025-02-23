@@ -7,7 +7,6 @@ import 'package:judoseclin/ui/landing_page/markdowned_news_list.dart';
 
 import '../../domain/entities/news.dart';
 
-
 class LandingNews extends HookWidget {
   const LandingNews({super.key});
 
@@ -23,8 +22,9 @@ class LandingNews extends HookWidget {
           .limit(3)
           .get()
           .then((event) {
-        mesNews.value = event.docs.map((e) => News.fromFirestore(e)).toList();
-      });
+            mesNews.value =
+                event.docs.map((e) => News.fromFirestore(e)).toList();
+          });
 
       return () {
         // Clean up any resources or subscriptions here, if needed.

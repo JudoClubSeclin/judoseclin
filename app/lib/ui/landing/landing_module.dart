@@ -24,11 +24,13 @@ class LandingModule implements UIModule {
     return [
       GoRoute(
         path: '/',
-        builder: (context, state) => Landing(
-          competitionRepository:
-              CompetitionRepositoryImpl(getIt<FirestoreService>()),
-        ),
-      )
+        builder:
+            (context, state) => Landing(
+              competitionRepository: CompetitionRepositoryImpl(
+                getIt<FirestoreService>(),
+              ),
+            ),
+      ),
     ];
   }
 

@@ -26,8 +26,9 @@ class FetchCotisationDataUseCase {
   Future<Cotisation?> getCotisationById(String cotisationId) async {
     try {
       debugPrint("Fetching cotisation data from Firestore...");
-      Map<String, dynamic>? cotisationData =
-          await cotisationRepository.getById(cotisationId);
+      Map<String, dynamic>? cotisationData = await cotisationRepository.getById(
+        cotisationId,
+      );
       return cotisationData != null
           ? Cotisation.fromFMap(cotisationData, cotisationId)
           : null;

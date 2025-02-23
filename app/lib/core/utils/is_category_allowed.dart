@@ -1,15 +1,19 @@
 import 'package:judoseclin/core/di/api/firestore_service.dart';
 import 'package:flutter/material.dart';
 
-
-
-Future<bool> isCategoryAllowed(String userEmail, String competitionId, FirestoreService firestore) async {
+Future<bool> isCategoryAllowed(
+  String userEmail,
+  String competitionId,
+  FirestoreService firestore,
+) async {
   try {
     // 🔍 Recherche l'adhérent correspondant à l'email
-    final adherentsSnapshot = await firestore.getCollection('adherents')
-        .where('email', isEqualTo: userEmail)
-        .limit(1)
-        .get();
+    final adherentsSnapshot =
+        await firestore
+            .getCollection('adherents')
+            .where('email', isEqualTo: userEmail)
+            .limit(1)
+            .get();
 
     if (adherentsSnapshot.docs.isEmpty) {
       debugPrint("❌ Adhérent non trouvé pour l'email : $userEmail");
@@ -17,7 +21,8 @@ Future<bool> isCategoryAllowed(String userEmail, String competitionId, Firestore
     }
 
     // ✅ Récupération des données sous forme de Map<String, dynamic>
-    final adherentData = adherentsSnapshot.docs.first.data() as Map<String, dynamic>?;
+    final adherentData =
+        adherentsSnapshot.docs.first.data() as Map<String, dynamic>?;
 
     if (adherentData == null || !adherentData.containsKey('category')) {
       debugPrint("❌ Données adhérent incorrectes ou catégorie absente");
@@ -27,7 +32,8 @@ Future<bool> isCategoryAllowed(String userEmail, String competitionId, Firestore
     final adherentCategory = adherentData['category'];
 
     // 🔍 Récupération des données de la compétition
-    final competitionDoc = await firestore.getCollection('competition').doc(competitionId).get();
+    final competitionDoc =
+        await firestore.getCollection('competition').doc(competitionId).get();
 
     if (!competitionDoc.exists) {
       debugPrint("❌ Compétition non trouvée pour ID : $competitionId");
@@ -42,16 +48,18 @@ Future<bool> isCategoryAllowed(String userEmail, String competitionId, Firestore
     }
 
     // ✅ Vérification que la catégorie de l'adhérent existe bien dans la compétition
-    if (competitionData.containsKey(adherentCategory) && competitionData[adherentCategory] != null) {
+    if (competitionData.containsKey(adherentCategory) &&
+        competitionData[adherentCategory] != null) {
       debugPrint("✅ L'adhérent peut participer à la compétition !");
       return true;
     } else {
       debugPrint("❌ Catégorie non autorisée : $adherentCategory");
-      throw Exception("Votre catégorie ne fait pas partie de cette compétition");
+      throw Exception(
+        "Votre catégorie ne fait pas partie de cette compétition",
+      );
     }
   } catch (e) {
     debugPrint("🚨 Erreur vérification catégorie : $e");
     return false;
   }
 }
-

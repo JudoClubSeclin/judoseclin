@@ -28,8 +28,9 @@ class FetchAdherentsDataUseCase {
     try {
       debugPrint("Fetching adherents data...");
 
-      Map<String, dynamic>? adherentsData =
-          await adherentsRepository.getById(adherentsId);
+      Map<String, dynamic>? adherentsData = await adherentsRepository.getById(
+        adherentsId,
+      );
 
       // Utiliser la méthode fromMap pour créer une instance Adherents
       return adherentsData != null

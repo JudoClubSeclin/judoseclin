@@ -18,21 +18,21 @@ import '../../domain/entities/setup_entity_module.dart';
 @singleton
 class AppRouterConfig {
   GoRouter get router => GoRouter(
-        routes: [
-          ...getIt<LandingModule>().getRoutes(),
-          ...getIt<AccountModule>().getRoutes(),
-          ...getIt<LoginModule>().getRoutes(),
-          ...getIt<InscriptionModule>().getRoutes(),
-          ...getIt<ResetPasswordModule>().getRoutes(),
-          ...getIt<ListCompetitionModule>().getRoutes(),
-          ...getIt<CompetitionDetailModule>().getRoutes(),
-          ...getIt<AddAdherentsModule>().getRoutes(),
-          ...getIt<ListAdherentsModule>().getRoutes(),
-          ...getIt<AdherentsDetailModule>().getRoutes(),
-          ...getIt<AddCompetitionModule>().getRoutes()
-        ],
-        errorBuilder: (context, state) => const ErrorPage(),
-      );
+    routes: [
+      ...getIt<LandingModule>().getRoutes(),
+      ...getIt<AccountModule>().getRoutes(),
+      ...getIt<LoginModule>().getRoutes(),
+      ...getIt<InscriptionModule>().getRoutes(),
+      ...getIt<ResetPasswordModule>().getRoutes(),
+      ...getIt<ListCompetitionModule>().getRoutes(),
+      ...getIt<CompetitionDetailModule>().getRoutes(),
+      ...getIt<AddAdherentsModule>().getRoutes(),
+      ...getIt<ListAdherentsModule>().getRoutes(),
+      ...getIt<AdherentsDetailModule>().getRoutes(),
+      ...getIt<AddCompetitionModule>().getRoutes(),
+    ],
+    errorBuilder: (context, state) => const ErrorPage(),
+  );
 }
 
 class ErrorPage extends StatelessWidget {
@@ -40,10 +40,6 @@ class ErrorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Page not found'),
-      ),
-    );
+    return const Scaffold(body: Center(child: Text('Page not found')));
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,7 +14,6 @@ class AuthService extends ChangeNotifier {
   final FirebaseAuth _auth;
   final FirestoreService _firestore;
 
-
   // Connexion utilisateur
   Future<User?> signIn(String email, String password) async {
     UserCredential userCredential = await _auth.signInWithEmailAndPassword(
@@ -27,13 +25,12 @@ class AuthService extends ChangeNotifier {
 
   // Création d'un utilisateur
   Future<User?> createUserWithEmailAndPassword(
-      String email, String password) async {
+    String email,
+    String password,
+  ) async {
     try {
-      UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
       return userCredential.user;
     } catch (e) {
       debugPrint("Erreur lors de la création du compte : $e");
@@ -57,13 +54,15 @@ class AuthService extends ChangeNotifier {
   Future<void> sendInformationEmail(String? email, bool accountExists) async {
     if (email == null) return;
 
-    String subject = accountExists
-        ? "Votre compte a été lié à votre profil adhérent"
-        : "Activation de votre compte";
+    String subject =
+        accountExists
+            ? "Votre compte a été lié à votre profil adhérent"
+            : "Activation de votre compte";
 
-    String body = accountExists
-        ? "Votre compte utilisateur existant a été lié à votre profil adhérent. Vous pouvez maintenant vous connecter à l'application."
-        : "Un compte a été créé pour vous. Veuillez cliquer sur le lien suivant pour activer votre compte et définir votre mot de passe : https://votre-site.com/activation";
+    String body =
+        accountExists
+            ? "Votre compte utilisateur existant a été lié à votre profil adhérent. Vous pouvez maintenant vous connecter à l'application."
+            : "Un compte a été créé pour vous. Veuillez cliquer sur le lien suivant pour activer votre compte et définir votre mot de passe : https://votre-site.com/activation";
 
     final FirebaseFunctions functions = FirebaseFunctions.instance;
     final HttpsCallable callable = functions.httpsCallable('sendEmail');
@@ -87,11 +86,12 @@ class AuthService extends ChangeNotifier {
     try {
       if (user.email == null) return;
 
-      QuerySnapshot adherentQuery = await _firestore
-          .collection('adherents')
-          .where('email', isEqualTo: user.email)
-          .limit(1)
-          .get();
+      QuerySnapshot adherentQuery =
+          await _firestore
+              .collection('adherents')
+              .where('email', isEqualTo: user.email)
+              .limit(1)
+              .get();
 
       if (adherentQuery.docs.isNotEmpty) {
         String adherentId = adherentQuery.docs.first.id;

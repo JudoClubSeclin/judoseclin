@@ -5,12 +5,12 @@ import 'account_interactor.dart';
 import 'account_event.dart';
 import 'account_state.dart';
 
-
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final AccountInteractor accountInteractor;
   final String userId;
 
-  AccountBloc(  {required this.accountInteractor, required this.userId}) : super(AccountInitial()) {
+  AccountBloc({required this.accountInteractor, required this.userId})
+    : super(AccountInitial()) {
     on<LoadUserInfo>((event, emit) async {
       emit(AccountLoading());
       try {

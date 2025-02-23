@@ -1,4 +1,4 @@
-import'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:judoseclin/theme.dart';
 
 Future<String?> myShowEditTextFieldDialog({
@@ -13,13 +13,8 @@ Future<String?> myShowEditTextFieldDialog({
     builder: (context) {
       return Theme(
         data: Theme.of(context).copyWith(
-            dialogTheme: DialogTheme(
-              backgroundColor: Colors.white,
-            ),
-          textTheme: Theme
-              .of(context)
-              .textTheme
-              .apply(
+          dialogTheme: DialogTheme(backgroundColor: Colors.white),
+          textTheme: Theme.of(context).textTheme.apply(
             bodyColor: Colors.black,
             displayColor: Colors.black,
           ),
@@ -38,12 +33,21 @@ Future<String?> myShowEditTextFieldDialog({
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child:  Text(
-                  "Annuler", style: textStyleText(context).copyWith(color: theme.colorScheme.primary)),
+              child: Text(
+                "Annuler",
+                style: textStyleText(
+                  context,
+                ).copyWith(color: theme.colorScheme.primary),
+              ),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context, controller.text),
-              child:  Text("OK", style: textStyleText(context).copyWith(color: theme.colorScheme.primary)),
+              child: Text(
+                "OK",
+                style: textStyleText(
+                  context,
+                ).copyWith(color: theme.colorScheme.primary),
+              ),
             ),
           ],
         ),

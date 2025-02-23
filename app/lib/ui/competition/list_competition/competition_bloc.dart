@@ -7,9 +7,8 @@ import 'competition_state.dart';
 class CompetitionBloc extends Bloc<CompetitionEvent, CompetitionState> {
   final CompetitionInteractor competitionInteractor;
 
-
   CompetitionBloc(this.competitionInteractor, {required String competitionId})
-      : super(CompetitionSignUpLoadingState());
+    : super(CompetitionSignUpLoadingState());
 
   Stream<CompetitionState> mapEventToState(CompetitionEvent event) async* {
     if (event is LoadCompetitions) {
@@ -23,7 +22,8 @@ class CompetitionBloc extends Bloc<CompetitionEvent, CompetitionState> {
         yield CompetitionSignUpLoadedState(competitionData: competitionList);
       } catch (e) {
         yield CompetitionSignUpErrorState(
-            message: 'Une erreur s\'est produite : $e');
+          message: 'Une erreur s\'est produite : $e',
+        );
       }
     }
   }

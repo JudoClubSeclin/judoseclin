@@ -9,7 +9,9 @@ class CompetitionInteractor {
   final CompetitionRepository competitionRepository;
 
   CompetitionInteractor(
-      this.fetchCompetitionDataUseCase, this.competitionRepository);
+    this.fetchCompetitionDataUseCase,
+    this.competitionRepository,
+  );
 
   Future<Iterable<Competition>> fetchCompetitionData() async {
     try {
@@ -23,11 +25,13 @@ class CompetitionInteractor {
 
   Future<Competition?> getCompetitionById(String competitionId) async {
     try {
-      return await fetchCompetitionDataUseCase
-          .getCompetitionById(competitionId);
+      return await fetchCompetitionDataUseCase.getCompetitionById(
+        competitionId,
+      );
     } catch (e) {
       debugPrint(
-          'Erreur lors de la récupération de la compétition par ID : $e');
+        'Erreur lors de la récupération de la compétition par ID : $e',
+      );
       rethrow;
     }
   }

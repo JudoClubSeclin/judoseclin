@@ -41,6 +41,7 @@ class AddAdherentsSignUpEvent extends AdherentsEvent {
     required this.userExists, // Ajout de cette ligne
   });
 }
+
 class AddCotisationEvent extends AdherentsEvent {
   final String adherentId;
   AddCotisationEvent(this.adherentId) : super();

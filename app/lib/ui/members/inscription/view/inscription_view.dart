@@ -23,7 +23,10 @@ class InscriptionView extends StatelessWidget {
       builder: (context, state) {
         if (state is SignUpLoadingState) {
           return const SizedBox(
-              width: 60, height: 60, child: CircularProgressIndicator());
+            width: 60,
+            height: 60,
+            child: CircularProgressIndicator(),
+          );
         } else if (state is SignUpErrorState) {
           return Text(state.error);
         } else {
@@ -43,64 +46,66 @@ class InscriptionView extends StatelessWidget {
         ),
       ),
       child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: ListView(
-            children: [
-              const HomeButton(),
-              Text(
-                "Inscription",
-                style: titleStyleMedium(context),
+        padding: const EdgeInsets.all(10.0),
+        child: ListView(
+          children: [
+            const HomeButton(),
+            Text(
+              "Inscription",
+              style: titleStyleMedium(context),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 40),
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 40.0,
+              runSpacing: 20.0,
+              children: [
+                const SizedBox(width: 40),
+                CustomTextField(
+                  labelText: "E-mail : Celui  donner au club ",
+                  controller: emailController,
+                ),
+
+                const SizedBox(height: 25),
+                CustomTextField(
+                  labelText: 'Mot de passe',
+                  controller: passwordController,
+                  obscureText: true,
+                ),
+              ],
+            ),
+            const SizedBox(height: 25),
+            CustomButton(
+              onPressed: () async {
+                try {
+                  context.read<InscriptionBloc>().add(
+                    InscriptionSignUpEvent(
+                      id: '',
+                      email: emailController.text.trim(),
+                      password: passwordController.text.trim(),
+                      navigateToAccount:
+                          () => GoRouter.of(context).go('/account'),
+                    ),
+                  );
+                } catch (error) {
+                  debugPrint('Erreur données non transmise: $error');
+                }
+              },
+              label: "S'inscrire",
+            ),
+            const SizedBox(height: 25),
+            TextButton(
+              onPressed: () => context.go('/login'),
+              child: Text(
+                "Connexion",
+                style: textStyleText(context),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 40),
-              Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 40.0,
-                  runSpacing: 20.0, children: [
-
-                  const SizedBox(width: 40),
-                  CustomTextField(
-                      labelText: "E-mail : Celui  donner au club ", controller: emailController),
-
-              const SizedBox(height: 25),
-              CustomTextField(
-                labelText: 'Mot de passe',
-                controller: passwordController,
-                obscureText: true,
-              ),
-            ],
-          ),
-              const SizedBox(height: 25),
-              CustomButton(
-                onPressed: () async {
-                  try {
-
-                    context.read<InscriptionBloc>().add(
-                          InscriptionSignUpEvent(
-                              id: '',
-                              email: emailController.text.trim(),
-                              password: passwordController.text.trim(),
-                              navigateToAccount: () =>
-                                  GoRouter.of(context).go('/account')),
-                        );
-                  } catch (error) {
-                    debugPrint('Erreur données non transmise: $error');
-                  }
-                },
-                label: "S'inscrire",
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              TextButton(
-                  onPressed: () => context.go('/login'),
-                  child: Text(
-                    "Connexion",
-                    style: textStyleText(context),
-                    textAlign: TextAlign.center,
-                  )),
-            ],
-          )),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

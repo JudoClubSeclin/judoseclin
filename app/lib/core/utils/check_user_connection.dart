@@ -22,14 +22,15 @@ String? getCurrentUserEmail() {
 }
 
 Future<Map<String, dynamic>?> getAdherentDetails(String email) async {
-  final querySnapshot = await FirebaseFirestore.instance
-      .collection('adherents')
-      .where('email', isEqualTo: email.toLowerCase())
-      .get();
+  final querySnapshot =
+      await FirebaseFirestore.instance
+          .collection('adherents')
+          .where('email', isEqualTo: email.toLowerCase())
+          .get();
 
   if (querySnapshot.docs.isNotEmpty) {
-    return querySnapshot.docs.first.data(); // Retourne les détails de l'adhérent
+    return querySnapshot.docs.first
+        .data(); // Retourne les détails de l'adhérent
   }
   return null; // Aucun adhérent trouvé
 }
-

@@ -39,10 +39,8 @@ class AddCompetitionModule implements UIModule {
     ];
   }
 
-
   @override
   Map<String, WidgetBuilder> getShareWidgets() {
     return {};
   }
-
 }

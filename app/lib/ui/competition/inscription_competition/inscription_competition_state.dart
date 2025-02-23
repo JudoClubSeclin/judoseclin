@@ -17,7 +17,7 @@ class InscriptionCompetitionLoaded extends InscriptionCompetitionState {
   final List<Competition> inscriptions;
 
   InscriptionCompetitionLoaded(List<Competition> inscriptions)
-      : inscriptions = inscriptions.toSet().toList();
+    : inscriptions = inscriptions.toSet().toList();
 }
 
 class InscriptionCompetitionClosed extends InscriptionCompetitionState {}

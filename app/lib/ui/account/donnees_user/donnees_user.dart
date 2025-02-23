@@ -32,10 +32,11 @@ class _DonneesUserState extends State<DonneesUser> {
 
       debugPrint("🔍 Email utilisateur trouvé : $userEmail");
 
-      var querySnapshot = await FirebaseFirestore.instance
-          .collection("adherents")
-          .where("email", isEqualTo: userEmail)
-          .get();
+      var querySnapshot =
+          await FirebaseFirestore.instance
+              .collection("adherents")
+              .where("email", isEqualTo: userEmail)
+              .get();
 
       if (querySnapshot.docs.isEmpty) {
         debugPrint("❌ Aucun adhérent trouvé pour cet email.");
@@ -72,85 +73,65 @@ class _DonneesUserState extends State<DonneesUser> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Wrap(children: [
-              Text(
-                "Prénom: ${userData!['lastName'] ?? 'Non disponible'}, ",
-                style: textStyleText(context),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(
-                "Nom: ${userData!['firstName'] ?? 'Non disponible'}, ",
-                style: textStyleText(context),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(
-                "Email: ${userData!['email'] ?? 'Non disponible'}, ",
-                style: textStyleText(context),
-              ),
-            ]),
-            const SizedBox(
-              width: 10,
+            Wrap(
+              children: [
+                Text(
+                  "Prénom: ${userData!['lastName'] ?? 'Non disponible'}, ",
+                  style: textStyleText(context),
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  "Nom: ${userData!['firstName'] ?? 'Non disponible'}, ",
+                  style: textStyleText(context),
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  "Email: ${userData!['email'] ?? 'Non disponible'}, ",
+                  style: textStyleText(context),
+                ),
+              ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(width: 10),
+            const SizedBox(height: 20),
             Wrap(
               children: [
                 Text(
                   "Adresse: ${userData!['address'] ?? 'Non disponible'}, ",
                   style: textStyleText(context),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Text(
                   "Téléphone: ${userData!['phone'] ?? 'Non disponible'}, ",
                   style: textStyleText(context),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
               ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Wrap(
               children: [
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Text(
                   "Categories: ${userData!['category'] ?? 'Non disponible'}, ",
                   style: textStyleText(context),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Text(
                   "Discipline: ${userData!['discipline'] ?? 'Non disponible'}, ",
                   style: textStyleText(context),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Text(
                   "Ceinture: ${userData!['belt'] ?? 'Non disponible'}, ",
                   style: textStyleText(context),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Text(
                   " N° de licence: ${userData!['licence'] ?? 'Non disponible'}, ",
                   style: textStyleText(context),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

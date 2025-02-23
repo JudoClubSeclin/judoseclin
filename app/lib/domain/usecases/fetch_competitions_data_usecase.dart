@@ -31,8 +31,8 @@ class FetchCompetitionDataUseCase {
   Future<Competition?> getCompetitionById(String competitionId) async {
     try {
       debugPrint("Fetching competition data from Firestore...");
-      Map<String, dynamic>? competitionData =
-          await competitionRepository.getById(competitionId);
+      Map<String, dynamic>? competitionData = await competitionRepository
+          .getById(competitionId);
 
       return Competition.fromMap(competitionData, competitionId);
     } catch (e) {
@@ -42,8 +42,12 @@ class FetchCompetitionDataUseCase {
   }
 
   Future<List<String>> execute(String userId) async {
-    final competitionIds = await competitionRepository.getUserCompetitionIds(userId);
-    final competitionTitles = await competitionRepository.getCompetitionTitles(competitionIds);
+    final competitionIds = await competitionRepository.getUserCompetitionIds(
+      userId,
+    );
+    final competitionTitles = await competitionRepository.getCompetitionTitles(
+      competitionIds,
+    );
     return competitionTitles.values.toList();
   }
 }

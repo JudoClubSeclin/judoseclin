@@ -1,4 +1,3 @@
-
 class InscriptionCompetitionInfoDto {
   final String id;
   final String userId;
@@ -11,15 +10,15 @@ class InscriptionCompetitionInfoDto {
     required this.userId,
     required this.competitionId,
     required this.timestamp,
-    this.validated = false
-});
+    this.validated = false,
+  });
 
   factory InscriptionCompetitionInfoDto.fromJson(Map<String, dynamic> json) {
     return InscriptionCompetitionInfoDto(
-        id:json ['id'],
-        userId:json ['userId'],
-        competitionId: json ['competitionId'],
-        timestamp: json ['timestamp']
+      id: json['id'],
+      userId: json['userId'],
+      competitionId: json['competitionId'],
+      timestamp: json['timestamp'],
     );
   }
 }

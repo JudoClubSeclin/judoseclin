@@ -1,4 +1,3 @@
-
 import '../../domain/entities/competition.dart';
 
 abstract class CompetitionRepository {
@@ -8,7 +7,8 @@ abstract class CompetitionRepository {
   Future<Map<String, dynamic>> getById(String competitionId);
   Future<void> add(Map<String, dynamic> data);
   Future<void> updateField(
-      String competitionId, String fieldName, String newValue);
+    String competitionId,
+    String fieldName,
+    String newValue,
+  );
 }
-
-

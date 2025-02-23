@@ -26,12 +26,11 @@ class ListAdherentsModule implements UIModule {
   List<RouteBase> getRoutes() {
     return [
       GoRoute(
-          path: '/admin/list/adherents',
-          pageBuilder: (context, state) {
-            return MaterialPage(
-              child: _buildAccountPage(),
-            );
-          })
+        path: '/admin/list/adherents',
+        pageBuilder: (context, state) {
+          return MaterialPage(child: _buildAccountPage());
+        },
+      ),
     ];
   }
 
@@ -46,7 +45,12 @@ class ListAdherentsModule implements UIModule {
     final firestoreService = getIt<FirestoreService>();
     return BlocProvider<AdherentsBloc>(
       create: (context) {
-        return AdherentsBloc(interactor,auth, firestoreService, adherentId: '');
+        return AdherentsBloc(
+          interactor,
+          auth,
+          firestoreService,
+          adherentId: '',
+        );
       },
       child: ListAdherentsView(interactor: interactor),
     );

@@ -33,7 +33,7 @@ class AccountModule implements UIModule {
             child: wrapWithProviders(context, const AccountPage()),
           );
         },
-      )
+      ),
     ];
   }
 
@@ -51,7 +51,10 @@ class AccountModule implements UIModule {
           create: (context) {
             final userId = getIt<FirebaseAuth>().currentUser?.uid;
             final interactor = getIt<AccountInteractor>();
-            return AccountBloc(userId: userId ?? '', accountInteractor: interactor);
+            return AccountBloc(
+              userId: userId ?? '',
+              accountInteractor: interactor,
+            );
           },
         ),
       ],

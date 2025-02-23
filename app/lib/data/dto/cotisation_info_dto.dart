@@ -1,5 +1,3 @@
-
-
 import '../../domain/entities/cotisation.dart';
 
 class CotisationInfoDto {
@@ -17,17 +15,16 @@ class CotisationInfoDto {
     required this.date,
     required this.cheques,
     required this.bankName,
-});
+  });
 
   factory CotisationInfoDto.fromJson(Map<String, dynamic> json) {
     return CotisationInfoDto(
-        id: json ['id'],
-        adherentId: json ['adherentId'],
-        amount: json ['amount'],
-        date: json ['date'],
-        cheques: json  ['cheques'],
-        bankName: json ['bankName']
+      id: json['id'],
+      adherentId: json['adherentId'],
+      amount: json['amount'],
+      date: json['date'],
+      cheques: json['cheques'],
+      bankName: json['bankName'],
     );
   }
-
 }

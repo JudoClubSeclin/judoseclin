@@ -69,75 +69,113 @@ class InscriptionButton extends StatelessWidget {
     return BlocProvider<InscriptionCompetitionBloc>(
       create: (context) => getIt<InscriptionCompetitionBloc>(),
       child: Builder(
-        builder: (context) => BlocListener<InscriptionCompetitionBloc,
-            InscriptionCompetitionState>(
-          listener: (context, state) {
-            if (state is InscriptionCompetitionSuccess) {
-              _showDialog(context, 'Inscription réussie',
-                  'Votre inscription a été validée avec succès !');
-            } else if (state is InscriptionCompetitionError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                    content:
-                        Text('Échec de l\'inscription: ${state.errorMessage}')),
-              );
-            }
-          },
-          child: CustomButton(
-              label: 'JE M\'INSCRIS',
-              onPressed: () async {
-                User? user = FirebaseAuth.instance.currentUser;
-
-                if (user == null) {
-                  context.go('/login');
-                  return;
+        builder:
+            (context) => BlocListener<
+              InscriptionCompetitionBloc,
+              InscriptionCompetitionState
+            >(
+              listener: (context, state) {
+                if (state is InscriptionCompetitionSuccess) {
+                  _showDialog(
+                    context,
+                    'Inscription réussie',
+                    'Votre inscription a été validée avec succès !',
+                  );
+                } else if (state is InscriptionCompetitionError) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Échec de l\'inscription: ${state.errorMessage}',
+                      ),
+                    ),
+                  );
                 }
+              },
+              child: CustomButton(
+                label: 'JE M\'INSCRIS',
+                onPressed: () async {
+                  User? user = FirebaseAuth.instance.currentUser;
 
-                final firestore = GetIt.I<FirestoreService>();
+                  if (user == null) {
+                    context.go('/login');
+                    return;
+                  }
 
-                try {
-                  bool allowed = await isCategoryAllowed(
-                      user.email!, competitionId, firestore);
+                  final firestore = GetIt.I<FirestoreService>();
 
-                  if (allowed) {
-                    context.read<InscriptionCompetitionBloc>().add(
-                          RegisterForCompetition(
-                            competitionId: competitionId,
-                            userId: user.uid,
-                          ),
-                        );
-
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Inscription validée ✅",
-                              style:
-                                  TextStyle(color: Colors.green, fontSize: 18)),
-                          content: Text(
-                            "Félicitations ! Vous êtes inscrit à la compétition.",
-                            style: textStyleText(context),
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: Text("OK"),
-                            ),
-                          ],
-                        );
-                      },
+                  try {
+                    bool allowed = await isCategoryAllowed(
+                      user.email!,
+                      competitionId,
+                      firestore,
                     );
-                  } else {
+
+                    if (allowed) {
+                      context.read<InscriptionCompetitionBloc>().add(
+                        RegisterForCompetition(
+                          competitionId: competitionId,
+                          userId: user.uid,
+                        ),
+                      );
+
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text(
+                              "Inscription validée ✅",
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontSize: 18,
+                              ),
+                            ),
+                            content: Text(
+                              "Félicitations ! Vous êtes inscrit à la compétition.",
+                              style: textStyleText(context),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: Text("OK"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text(
+                              "Inscription refusée ❌",
+                              style: TextStyle(color: Colors.red, fontSize: 18),
+                            ),
+                            content: Text(
+                              "Votre catégorie n'est pas prévue pour cette compétition.",
+                              style: textStyleText(context),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: Text("OK"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  } catch (e) {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text("Inscription refusée ❌",
-                              style:
-                                  TextStyle(color: Colors.red, fontSize: 18)),
+                          title: Text(
+                            "Erreur 🚨",
+                            style: TextStyle(color: Colors.red),
+                          ),
                           content: Text(
-                            "Votre catégorie n'est pas prévue pour cette compétition.",
-                            style: textStyleText(context),
+                            "Une erreur s'est produite : ${e.toString()}",
                           ),
                           actions: [
                             TextButton(
@@ -149,27 +187,9 @@ class InscriptionButton extends StatelessWidget {
                       },
                     );
                   }
-                } catch (e) {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text("Erreur 🚨",
-                            style: TextStyle(color: Colors.red)),
-                        content:
-                            Text("Une erreur s'est produite : ${e.toString()}"),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: Text("OK"),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }
-              }),
-        ),
+                },
+              ),
+            ),
       ),
     );
   }

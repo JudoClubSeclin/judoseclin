@@ -23,9 +23,7 @@ class LandingHome extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: size.height * 0.1,
-            ),
+            padding: EdgeInsets.symmetric(vertical: size.height * 0.1),
             child: SizedBox(
               width: size.height / 6,
               height: size.height / 6,
@@ -33,14 +31,9 @@ class LandingHome extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(
-              top: size.height * 0.0,
-            ),
-            child: Text(
-              "JUDO CLUB SECLIN",
-              style: titleStyleLarge(context)
-            ),
-          )
+            padding: EdgeInsets.only(top: size.height * 0.0),
+            child: Text("JUDO CLUB SECLIN", style: titleStyleLarge(context)),
+          ),
         ],
       ),
     );

@@ -33,27 +33,26 @@ class AdherentsInfoDto {
     required this.sante,
     required this.medicalCertificate,
     required this.invoice,
-});
+  });
 
   factory AdherentsInfoDto.fromJson(Map<String, dynamic> json) {
     return AdherentsInfoDto(
-        id: json['id'],
-        firstName:json ['firstName'],
-        lastName: json ['lastName'],
-        email: json ['email'],
-        dateOfBirth:json ['dateOfBirth'],
-        licence: json ['licence'],
-        belt: json ['belt'],
-        discipline: json ['discipline'],
-        category: json ['category'],
-        tutor: json ['tutor'],
-        phone: json ['phone'],
-        address: json ['address'],
-        image: json ['image'],
-        sante: json ['sante'],
-        medicalCertificate: json ['medicalCertificate'],
-        invoice: json ['invoice']
+      id: json['id'],
+      firstName: json['firstName'],
+      lastName: json['lastName'],
+      email: json['email'],
+      dateOfBirth: json['dateOfBirth'],
+      licence: json['licence'],
+      belt: json['belt'],
+      discipline: json['discipline'],
+      category: json['category'],
+      tutor: json['tutor'],
+      phone: json['phone'],
+      address: json['address'],
+      image: json['image'],
+      sante: json['sante'],
+      medicalCertificate: json['medicalCertificate'],
+      invoice: json['invoice'],
     );
-
   }
 }

@@ -7,7 +7,8 @@ final getIt = GetIt.instance;
 
 void setupAccountModule() {
   if (!getIt.isRegistered<AccountInteractor>()) {
-    getIt.registerLazySingleton(() => AccountInteractor(getIt<UserDataRepository>()));
-  }}
-
-
+    getIt.registerLazySingleton(
+      () => AccountInteractor(getIt<UserDataRepository>()),
+    );
+  }
+}

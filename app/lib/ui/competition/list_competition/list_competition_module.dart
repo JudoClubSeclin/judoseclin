@@ -12,8 +12,6 @@ import 'package:judoseclin/ui/ui_module.dart';
 import '../../../core/di/injection.dart';
 import '../../members/login/view/login_view.dart';
 
-
-
 @singleton
 class ListCompetitionModule implements UIModule {
   final AppRouter _appRouter;
@@ -29,12 +27,11 @@ class ListCompetitionModule implements UIModule {
   List<RouteBase> getRoutes() {
     return [
       GoRoute(
-          path: '/competition',
-          pageBuilder: (context, state) {
-            return MaterialPage(
-              child: _buildAccountPage(),
-            );
-          })
+        path: '/competition',
+        pageBuilder: (context, state) {
+          return MaterialPage(child: _buildAccountPage());
+        },
+      ),
     ];
   }
 
@@ -56,7 +53,11 @@ class ListCompetitionModule implements UIModule {
       );
     } else {
       return BlocProvider<CompetitionBloc>(
-        create: (_)=> CompetitionBloc( getIt<CompetitionInteractor>(), competitionId: ''),
+        create:
+            (_) => CompetitionBloc(
+              getIt<CompetitionInteractor>(),
+              competitionId: '',
+            ),
         child: LoginView(),
       );
     }

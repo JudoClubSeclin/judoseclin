@@ -14,7 +14,6 @@ import '../interactor/users_interactor.dart';
 class ResetPasswordModule implements UIModule {
   final AppRouter _appRouter;
 
-
   ResetPasswordModule(this._appRouter);
 
   @override
@@ -28,9 +27,7 @@ class ResetPasswordModule implements UIModule {
       GoRoute(
         path: '/reset_password',
         pageBuilder: (context, state) {
-          return MaterialPage(
-            child: _buildLoginPage(),
-          );
+          return MaterialPage(child: _buildLoginPage());
         },
       ),
     ];
@@ -38,8 +35,10 @@ class ResetPasswordModule implements UIModule {
 
   Widget _buildLoginPage() {
     return BlocProvider<ResetPasswordBloc>(
-      create: (_) => ResetPasswordBloc(getIt<
-          UsersInteractor>()), // Utilisation correcte de UsersInteractor injecté
+      create:
+          (_) => ResetPasswordBloc(
+            getIt<UsersInteractor>(),
+          ), // Utilisation correcte de UsersInteractor injecté
       child: ResetPasswordView(),
     );
   }

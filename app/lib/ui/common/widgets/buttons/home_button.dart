@@ -18,13 +18,11 @@ class HomeButton extends StatelessWidget {
         constraints: const BoxConstraints.tightFor(width: 40.0, height: 40.0),
         child: Material(
           // <-- Add this
-          color: Colors
-              .transparent, // <-- Add this to maintain the original design
+          color:
+              Colors
+                  .transparent, // <-- Add this to maintain the original design
           child: IconButton(
-            icon: const Icon(
-              Icons.home,
-              color: Colors.white,
-            ),
+            icon: const Icon(Icons.home, color: Colors.white),
             onPressed: () => context.go('/'),
           ),
         ),

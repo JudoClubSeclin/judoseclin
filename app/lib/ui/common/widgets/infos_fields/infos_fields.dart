@@ -47,10 +47,7 @@ class InfoField extends StatelessWidget {
   Widget _buildValue(BuildContext context, String text) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text(
-        text,
-        style: textStyleText(context),
-      ),
+      child: Text(text, style: textStyleText(context)),
     );
   }
 
@@ -82,9 +79,6 @@ class InfoField extends StatelessWidget {
     );
   }
 }
-
-
-
 
 class CotisationInfoField extends StatelessWidget {
   final String label;
@@ -118,7 +112,9 @@ class CotisationInfoField extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Text(
         text,
-        style: textStyleText(context).copyWith(fontWeight: FontWeight.bold), // 🔥 Style du thème + gras
+        style: textStyleText(
+          context,
+        ).copyWith(fontWeight: FontWeight.bold), // 🔥 Style du thème + gras
       ),
     );
   }

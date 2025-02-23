@@ -28,9 +28,7 @@ class AddAdherentsModule implements UIModule {
       GoRoute(
         path: '/admin/add/adherents',
         pageBuilder: (context, state) {
-          return MaterialPage(
-            child: _buildAccountPage(),
-          );
+          return MaterialPage(child: _buildAccountPage());
         },
       ),
     ];
@@ -56,8 +54,8 @@ class AddAdherentsModule implements UIModule {
         );
       },
       child: AddAdherentsView(),
-        // Assurez-vous que `AdherentsRepository` est correctement défini dans `getIt`
 
+      // Assurez-vous que `AdherentsRepository` est correctement défini dans `getIt`
     );
   }
 }

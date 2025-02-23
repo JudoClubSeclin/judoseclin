@@ -4,9 +4,20 @@ import 'package:pdf/widgets.dart' as pw;
 class EmojiUtils {
   static final Map<String, pw.MemoryImage> _emojiCache = {};
   static final List<String> _emojiNames = [
-    "personne", "adresse", "calandrier", "categorie", "ceinture",
-    "certificate", "email", "facture", "images", "licence",
-    "phone", "sante", "tuteur", "discipline"
+    "personne",
+    "adresse",
+    "calandrier",
+    "categorie",
+    "ceinture",
+    "certificate",
+    "email",
+    "facture",
+    "images",
+    "licence",
+    "phone",
+    "sante",
+    "tuteur",
+    "discipline",
   ];
 
   /// Charge toutes les images en mémoire une seule fois
@@ -23,6 +34,7 @@ class EmojiUtils {
   }
 
   /// Génération dynamique des getters
-  static Map<String, pw.MemoryImage?> get allEmojis =>
-      {for (var name in _emojiNames) name: _emojiCache[name]};
+  static Map<String, pw.MemoryImage?> get allEmojis => {
+    for (var name in _emojiNames) name: _emojiCache[name],
+  };
 }

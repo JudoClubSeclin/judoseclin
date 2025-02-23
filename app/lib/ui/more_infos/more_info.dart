@@ -9,8 +9,9 @@ import 'colonne_page.dart';
 import 'orientation_stack.dart';
 
 class MoreInfo extends StatelessWidget {
-  final competitionRepository =
-      CompetitionRepositoryImpl(getIt<FirestoreService>());
+  final competitionRepository = CompetitionRepositoryImpl(
+    getIt<FirestoreService>(),
+  );
 
   MoreInfo({super.key});
 
@@ -29,10 +30,7 @@ class MoreInfo extends StatelessWidget {
       child: OrientedStack(
         orientation: orientation,
         children: [
-          ColonneLinks(
-            fraction: .2,
-            size: size,
-          ),
+          ColonneLinks(fraction: .2, size: size),
           ColonnePage(
             docUrl: "assets/markdown/le-club.md",
             fraction: .4,

@@ -13,14 +13,14 @@ class AdherentsDetailView extends StatelessWidget {
   final String adherentId;
   final AdherentsInteractor adherentsInteractor;
   final CotisationInteractor cotisationInteractor;
-  final Adherents adherent ;
+  final Adherents adherent;
 
-   const AdherentsDetailView({
+  const AdherentsDetailView({
     super.key,
     required this.adherentId,
     required this.adherentsInteractor,
     required this.cotisationInteractor,
-  required this.adherent,
+    required this.adherent,
   });
 
   @override
@@ -46,27 +46,23 @@ class AdherentsDetailView extends StatelessWidget {
                   adherentId: adherentId.toString(),
                 ),
               ),
-              const SizedBox(
-                height: 60,
-              ),
+              const SizedBox(height: 60),
               InfoFieldAdherentsCotisation(
                 adherentId: adherentId.toString(),
                 cotisationInteractor: cotisationInteractor,
               ),
 
-
-                  /*CustomButton(
+              /*CustomButton(
                     label: 'Ajouter la cotisation',
                     onPressed: () =>
                         context.go('/admin/add/cotisation/$adherentId'),
                   ),*/
-                  CustomButton(
-                      label: "Télécharger la fiche PDF",
-                      onPressed: () {
-                        generateAndPrintPdf( adherentId, adherentsInteractor);
-
-                      },
-              )
+              CustomButton(
+                label: "Télécharger la fiche PDF",
+                onPressed: () {
+                  generateAndPrintPdf(adherentId, adherentsInteractor);
+                },
+              ),
             ],
           ),
         ),

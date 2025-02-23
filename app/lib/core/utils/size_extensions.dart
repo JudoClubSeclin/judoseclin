@@ -14,7 +14,7 @@ extension MaterialSizeRatio on Size {
   double max() => (height > width) ? height : width;
 
   double headerHeight() {
-    switch(orientation()) {
+    switch (orientation()) {
       case SizeOrientation.portrait:
         return height * .5;
       case SizeOrientation.paysage:
@@ -27,8 +27,4 @@ extension MaterialSizeRatio on Size {
   double newsHeight() => height - headerHeight();
 }
 
-enum SizeOrientation {
-  portrait,
-  paysage,
-  carre
-}
+enum SizeOrientation { portrait, paysage, carre }

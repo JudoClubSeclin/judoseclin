@@ -16,15 +16,19 @@ List<Cheque> parseCheques(String chequesInput) {
 
       String numeroCheque = numeroChequeStr;
       debugPrint(
-          'Valeur de montantChequeStr avant la conversion : $montantChequeStr');
+        'Valeur de montantChequeStr avant la conversion : $montantChequeStr',
+      );
       int montantChequeInt = int.parse(montantChequeStr);
       debugPrint(
-          'Valeur de montantChequeInt après la conversion : $montantChequeInt');
+        'Valeur de montantChequeInt après la conversion : $montantChequeInt',
+      );
 
-      cheques.add(Cheque(
-        numeroCheque: numeroCheque, // Convertir en string si nécessaire
-        montantCheque: montantChequeInt,
-      ));
+      cheques.add(
+        Cheque(
+          numeroCheque: numeroCheque, // Convertir en string si nécessaire
+          montantCheque: montantChequeInt,
+        ),
+      );
     }
   }
 

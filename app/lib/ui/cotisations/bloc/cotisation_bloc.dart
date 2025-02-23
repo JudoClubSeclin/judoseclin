@@ -11,18 +11,19 @@ class CotisationBloc extends Bloc<CotisationEvent, CotisationState> {
   final String adherentId;
 
   CotisationBloc({required this.cotisationInteractor, required this.adherentId})
-      : super(CotisationSignUpInitialState()) {
+    : super(CotisationSignUpInitialState()) {
     on<CotisationEvent>((event, emit) async {
       if (event is AddCotisationSignUpEvent) {
         emit(CotisationSignUpLoadingState());
         try {
           final cotisation = Cotisation(
-              id: event.id,
-              adherentId: event.adherentId,
-              amount: event.amount,
-              date: event.date,
-              cheques: event.cheques.cast<Cheque>(),
-              bankName: event.bankName);
+            id: event.id,
+            adherentId: event.adherentId,
+            amount: event.amount,
+            date: event.date,
+            cheques: event.cheques.cast<Cheque>(),
+            bankName: event.bankName,
+          );
           await cotisationInteractor.addCotisation(cotisation);
           debugPrint('je suis le bloc');
           emit(CotisationSignUpSuccessState(adherentId: adherentId));

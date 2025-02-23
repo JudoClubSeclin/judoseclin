@@ -16,16 +16,20 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
   final AuthService _authService;
   final FirestoreService _firestoreService;
 
-  AdherentsBloc(this.adherentsInteractor, this._authService, this._firestoreService, {required this.adherentId})
-      : super(SignUpInitialState()) {
+  AdherentsBloc(
+    this.adherentsInteractor,
+    this._authService,
+    this._firestoreService, {
+    required this.adherentId,
+  }) : super(SignUpInitialState()) {
     on<AddAdherentsSignUpEvent>(_onAddAdherentsSignUp);
     on<GeneratePdfEvent>(_onGeneratePdf);
   }
 
   Future<void> _onAddAdherentsSignUp(
-      AddAdherentsSignUpEvent event,
-      Emitter<AdherentsState> emit,
-      ) async {
+    AddAdherentsSignUpEvent event,
+    Emitter<AdherentsState> emit,
+  ) async {
     emit(SignUpLoadingState());
     try {
       if (event.email.isEmpty) {
@@ -33,28 +37,34 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
         return;
       }
 
-      DocumentReference adherentRef = await _firestoreService.collection('adherents').add({
-        'firstName': event.firstName,
-        'lastName': event.lastName,
-        'email': event.email,
-        'dateOfBirth': event.dateOfBirth,
-        'licence': event.licence,
-        'belt': event.belt,
-        'discipline': event.discipline,
-        'category': event.category,
-        'tutor': event.tutor,
-        'phone': event.phone,
-        'address': event.address,
-        'image': event.image,
-        'sante': event.sante,
-        'medicalCertificate': event.medicalCertificate,
-        'invoice': event.invoice,
-      });
+      DocumentReference adherentRef = await _firestoreService
+          .collection('adherents')
+          .add({
+            'firstName': event.firstName,
+            'lastName': event.lastName,
+            'email': event.email,
+            'dateOfBirth': event.dateOfBirth,
+            'licence': event.licence,
+            'belt': event.belt,
+            'discipline': event.discipline,
+            'category': event.category,
+            'tutor': event.tutor,
+            'phone': event.phone,
+            'address': event.address,
+            'image': event.image,
+            'sante': event.sante,
+            'medicalCertificate': event.medicalCertificate,
+            'invoice': event.invoice,
+          });
 
       bool accountExists = event.userExists;
 
       if (!accountExists) {
-        await envoyerEmailInvitation(email: event.email, nom: event.firstName, prenom: event.lastName);
+        await envoyerEmailInvitation(
+          email: event.email,
+          nom: event.firstName,
+          prenom: event.lastName,
+        );
       } else {
         User? user = _authService.currentUser;
         if (user != null) {
@@ -69,14 +79,18 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
       // Déclencher la génération du PDF après l'enregistrement réussi
       add(GeneratePdfEvent(adherentId: adherentRef.id));
     } catch (e) {
-      emit(SignUpErrorState("Erreur lors de l'ajout de l'adhérent : ${e.toString()}"));
+      emit(
+        SignUpErrorState(
+          "Erreur lors de l'ajout de l'adhérent : ${e.toString()}",
+        ),
+      );
     }
   }
 
   Future<void> _onGeneratePdf(
-      GeneratePdfEvent event,
-      Emitter<AdherentsState> emit,
-      ) async {
+    GeneratePdfEvent event,
+    Emitter<AdherentsState> emit,
+  ) async {
     emit(PdfGenerationState(isGenerating: true));
     try {
       await generateAndPrintPdf(event.adherentId, adherentsInteractor);

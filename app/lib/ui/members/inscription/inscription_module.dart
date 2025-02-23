@@ -27,9 +27,7 @@ class InscriptionModule implements UIModule {
       GoRoute(
         path: '/inscription',
         pageBuilder: (context, state) {
-          return MaterialPage(
-            child: _buildLoginPage(),
-          );
+          return MaterialPage(child: _buildLoginPage());
         },
       ),
     ];
@@ -37,7 +35,10 @@ class InscriptionModule implements UIModule {
 
   Widget _buildLoginPage() {
     return BlocProvider<UserBloc>(
-      create: (_) => UserBloc(getIt<UsersInteractor>()), // Utilisation correcte de UsersInteractor injecté
+      create:
+          (_) => UserBloc(
+            getIt<UsersInteractor>(),
+          ), // Utilisation correcte de UsersInteractor injecté
       child: InscriptionPage(usersInteractor: _usersInteractor),
     );
   }
@@ -47,4 +48,3 @@ class InscriptionModule implements UIModule {
     return {};
   }
 }
-

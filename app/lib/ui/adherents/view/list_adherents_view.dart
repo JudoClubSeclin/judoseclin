@@ -8,10 +8,7 @@ import '../../common/widgets/appbar/custom_appbar.dart';
 import '../interactor/adherents_interactor.dart';
 
 class ListAdherentsView extends StatelessWidget {
-  const ListAdherentsView({
-    super.key,
-    required this.interactor,
-  });
+  const ListAdherentsView({super.key, required this.interactor});
 
   final AdherentsInteractor interactor;
 
@@ -25,9 +22,11 @@ class ListAdherentsView extends StatelessWidget {
             snapshot.data!.isEmpty) {
           return Scaffold(
             body: Center(
-              child: Text(snapshot.hasError
-                  ? 'Erreur : ${snapshot.error}'
-                  : 'Aucun adhérent trouvé.'),
+              child: Text(
+                snapshot.hasError
+                    ? 'Erreur : ${snapshot.error}'
+                    : 'Aucun adhérent trouvé.',
+              ),
             ),
           );
         }
@@ -37,7 +36,7 @@ class ListAdherentsView extends StatelessWidget {
         return Scaffold(
           appBar: CustomAppBar(title: ''),
           drawer:
-          MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
+              MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
           body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -84,8 +83,8 @@ class ListAdherentsView extends StatelessWidget {
                                       style: textStyleText(context),
                                     ),
                                     const SizedBox(
-                                        width:
-                                        8.0), // Espace entre le prénom et le nom
+                                      width: 8.0,
+                                    ), // Espace entre le prénom et le nom
                                     Text(
                                       adherent.lastName,
                                       style: textStyleText(context),
@@ -99,13 +98,15 @@ class ListAdherentsView extends StatelessWidget {
                                 onTap: () {
                                   String adherentsId = adherent.id;
                                   if (adherentsId.isNotEmpty) {
-                                    context.goNamed('adherents_detail', pathParameters: {'id': adherentsId});
-
+                                    context.goNamed(
+                                      'adherents_detail',
+                                      pathParameters: {'id': adherentsId},
+                                    );
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
-                                          content:
-                                          Text('Adhérent introuvable')),
+                                        content: Text('Adhérent introuvable'),
+                                      ),
                                     );
                                   }
                                 },

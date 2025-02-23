@@ -10,8 +10,6 @@ import '../../../../theme.dart';
 import '../../../common/widgets/images/image_fond_ecran.dart';
 import '../reset_password_event.dart';
 
-
-
 class ResetPasswordView extends StatelessWidget {
   final emailController = TextEditingController();
 
@@ -28,9 +26,9 @@ class ResetPasswordView extends StatelessWidget {
           // Redirection vers la page de connexion après l'envoi réussi
           context.go('/account/login');
         } else if (state is ResetPasswordFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.error)));
         }
       },
       builder: (context, state) {
@@ -61,20 +59,21 @@ class ResetPasswordView extends StatelessWidget {
                 const SizedBox(height: 80),
                 CustomButton(
                   onPressed: () {
-                    BlocProvider.of<ResetPasswordBloc>(context).add(
-                      ResetPasswordRequested(email: emailController.text),
-                    );
+                    BlocProvider.of<ResetPasswordBloc>(
+                      context,
+                    ).add(ResetPasswordRequested(email: emailController.text));
                   },
                   label: 'Envoyé',
                 ),
                 const SizedBox(height: 80),
                 TextButton(
-                    onPressed: () => context.go('/login'),
-                    child: Text(
-                      "Connexion",
-                      style: TextStyle(color: Colors.red[400]),
-                      textAlign: TextAlign.center,
-                    )),
+                  onPressed: () => context.go('/login'),
+                  child: Text(
+                    "Connexion",
+                    style: TextStyle(color: Colors.red[400]),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ],
             ),
           ),
