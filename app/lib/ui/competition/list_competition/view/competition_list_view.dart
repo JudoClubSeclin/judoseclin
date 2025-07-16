@@ -48,7 +48,12 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
             }
 
             if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              return const Text('Aucune compétition trouvée.');
+              return Center(
+                child:
+                  Text('Aucune compétition trouvée.', style: titleStyleSmall(context).copyWith(
+                    decoration: TextDecoration.none,)
+              )
+              );
             }
 
             final competitions = snapshot.data!.docs;

@@ -13,7 +13,7 @@ Future<String?> myShowEditTextFieldDialog({
     builder: (context) {
       return Theme(
         data: Theme.of(context).copyWith(
-          dialogTheme: DialogTheme(backgroundColor: Colors.white),
+          dialogTheme: DialogThemeData(backgroundColor: Colors.white),
           textTheme: Theme.of(context).textTheme.apply(
             bodyColor: Colors.black,
             displayColor: Colors.black,
