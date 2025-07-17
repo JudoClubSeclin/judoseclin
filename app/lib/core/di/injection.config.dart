@@ -17,6 +17,7 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import '../../data/repository/adherents_repository_impl.dart' as _i463;
 import '../../data/repository/competititon_repository_impl.dart' as _i1004;
+import '../../data/repository/news_repository_impl.dart' as _i1034;
 import '../../data/repository/user_repository/auth_state_repository.dart'
     as _i48;
 import '../../data/repository/user_repository/auth_state_repository_impl.dart'
@@ -34,6 +35,7 @@ import '../../domain/usecases/fetch_competitions_data_usecase.dart' as _i846;
 import '../../domain/usecases/fetch_cotisation_data_usecase.dart' as _i23;
 import '../../domain/usecases/fetch_inscription_competition_data_usecase.dart'
     as _i680;
+import '../../domain/usecases/fetch_news_data_usecase.dart' as _i527;
 import '../../domain/usecases/fetch_user_data_usecase.dart' as _i656;
 import '../../ui/account/account_interactor.dart' as _i830;
 import '../../ui/account/account_module.dart' as _i692;
@@ -52,6 +54,7 @@ import '../../ui/members/inscription/inscription_module.dart' as _i734;
 import '../../ui/members/interactor/users_interactor.dart' as _i497;
 import '../../ui/members/login/login_module.dart' as _i63;
 import '../../ui/members/reset_password/reset_password_module.dart' as _i878;
+import '../../ui/news/add_news_module.dart' as _i658;
 import '../../ui/ui_module.dart' as _i573;
 import '../router/router_config.dart' as _i718;
 import 'api/auth_service.dart' as _i977;
@@ -69,26 +72,27 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final injectionModule = _$InjectionModule();
     gh.factory<_i703.FirebaseClient>(() => _i703.FirebaseClient());
+    gh.factory<_i680.FetchInscriptionCompetitionDataUseCase>(
+      () => _i680.FetchInscriptionCompetitionDataUseCase(),
+    );
     gh.factory<_i23.FetchCotisationDataUseCase>(
       () => _i23.FetchCotisationDataUseCase(),
-    );
-    gh.factory<_i155.FetchAdherentsDataUseCase>(
-      () => _i155.FetchAdherentsDataUseCase(),
     );
     gh.factory<_i846.FetchCompetitionDataUseCase>(
       () => _i846.FetchCompetitionDataUseCase(),
     );
-    gh.factory<_i680.FetchInscriptionCompetitionDataUseCase>(
-      () => _i680.FetchInscriptionCompetitionDataUseCase(),
+    gh.factory<_i527.FetchNewsDataUseCase>(() => _i527.FetchNewsDataUseCase());
+    gh.factory<_i155.FetchAdherentsDataUseCase>(
+      () => _i155.FetchAdherentsDataUseCase(),
     );
-    gh.singleton<_i573.AppRouter>(() => _i573.AppRouter());
-    gh.singleton<_i497.UsersInteractor>(() => _i497.UsersInteractor());
     gh.singleton<_i59.FirebaseAuth>(() => injectionModule.firebaseAuth);
     gh.singleton<_i457.FirebaseStorage>(() => injectionModule.firebaseStorage);
     gh.singleton<_i974.FirebaseFirestore>(
       () => injectionModule.firebaseFireStore,
     );
     gh.singleton<_i718.AppRouterConfig>(() => _i718.AppRouterConfig());
+    gh.singleton<_i573.AppRouter>(() => _i573.AppRouter());
+    gh.singleton<_i497.UsersInteractor>(() => _i497.UsersInteractor());
     gh.factory<_i94.UserDataRepository>(() => _i686.UserDataRepositoryImpl());
     gh.singleton<_i208.UserAuthRepository>(
       () => _i131.UserAuthRepositoryImpl(),
@@ -106,17 +110,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i746.FirestoreService>(
       () => _i746.FirestoreService(gh<_i974.FirebaseFirestore>()),
     );
-    gh.singleton<_i483.LandingModule>(
-      () => _i483.LandingModule(gh<_i573.AppRouter>()),
-    );
-    gh.singleton<_i1062.ListAdherentsModule>(
-      () => _i1062.ListAdherentsModule(gh<_i573.AppRouter>()),
-    );
     gh.singleton<_i10.AdherentsDetailModule>(
       () => _i10.AdherentsDetailModule(gh<_i573.AppRouter>()),
     );
     gh.singleton<_i776.AddAdherentsModule>(
       () => _i776.AddAdherentsModule(gh<_i573.AppRouter>()),
+    );
+    gh.singleton<_i1062.ListAdherentsModule>(
+      () => _i1062.ListAdherentsModule(gh<_i573.AppRouter>()),
+    );
+    gh.singleton<_i483.LandingModule>(
+      () => _i483.LandingModule(gh<_i573.AppRouter>()),
+    );
+    gh.singleton<_i692.AccountModule>(
+      () => _i692.AccountModule(gh<_i573.AppRouter>()),
+    );
+    gh.singleton<_i658.AddNewsModule>(
+      () => _i658.AddNewsModule(gh<_i573.AppRouter>()),
     );
     gh.singleton<_i878.ResetPasswordModule>(
       () => _i878.ResetPasswordModule(gh<_i573.AppRouter>()),
@@ -133,14 +143,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i944.AddCompetitionModule>(
       () => _i944.AddCompetitionModule(gh<_i573.AppRouter>()),
     );
-    gh.singleton<_i692.AccountModule>(
-      () => _i692.AccountModule(gh<_i573.AppRouter>()),
-    );
-    gh.factory<_i1004.CompetitionRepositoryImpl>(
-      () => _i1004.CompetitionRepositoryImpl(gh<_i746.FirestoreService>()),
+    gh.factory<_i1034.NewsRepositoryImpl>(
+      () => _i1034.NewsRepositoryImpl(gh<_i746.FirestoreService>()),
     );
     gh.factory<_i463.AdherentsRepositoryImpl>(
       () => _i463.AdherentsRepositoryImpl(gh<_i746.FirestoreService>()),
+    );
+    gh.factory<_i1004.CompetitionRepositoryImpl>(
+      () => _i1004.CompetitionRepositoryImpl(gh<_i746.FirestoreService>()),
     );
     gh.factory<_i656.FetchUserDataUseCase>(
       () => _i656.FetchUserDataUseCase(

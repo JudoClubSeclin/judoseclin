@@ -7,12 +7,14 @@ import 'package:judoseclin/ui/news/markdowned_news_list.dart';
 
 import '../../domain/entities/news.dart';
 
+
 class LandingNews extends HookWidget {
   const LandingNews({super.key});
 
   @override
   Widget build(BuildContext context) {
     final mesNews = useState<List<News>>([]);
+
 
     useEffect(() {
       var db = FirebaseFirestore.instance;
@@ -22,9 +24,10 @@ class LandingNews extends HookWidget {
           .limit(3)
           .get()
           .then((event) {
-            mesNews.value =
-                event.docs.map((e) => News.fromFirestore(e)).toList();
-          });
+        final news = event.docs.map((e) => News.fromFirestore(e)).toList();
+        debugPrint("✅ News récupérées : ${news.length}");
+        mesNews.value = news;
+      });
 
       return () {
         // Clean up any resources or subscriptions here, if needed.
