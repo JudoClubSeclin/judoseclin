@@ -2,37 +2,30 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class News {
   final String titre;
-  final String details;
-  final DateTime datePublication;
+  final String contenu;
+  final DateTime publication;
 
   const News({
     required this.titre,
-    required this.details,
-    required this.datePublication,
+    required this.contenu,
+    required this.publication,
   });
 
-  /// Factory method to create a `News` instance from Firestore data.
   factory News.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     final data = snapshot.data();
-    if (data == null) {
-      throw Exception('Snapshot data is null');
-    }
 
     return News(
-      titre: data['titre'] as String,
-      details: data['contenu'] as String,
-      datePublication: (data['date_publication'] as Timestamp).toDate(),
+      titre: data?['titre'],
+      contenu: data?['contenu'],
+      publication: data?['date_publication'].toDate(),
     );
   }
 
-  /// Converts the `News` instance into a Markdown string.
   String toMarkdownText() {
-    return '''
-# $titre
-
-_${datePublication.toLocal()}_
-
-$details
-    ''';
+    String md = "";
+    md += "# $titre\n\n";
+    md += "_${publication.toString()}_\n\n";
+    md += contenu;
+    return md;
   }
 }

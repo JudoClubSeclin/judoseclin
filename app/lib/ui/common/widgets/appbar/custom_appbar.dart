@@ -90,6 +90,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ),
                 ),
+                GestureDetector(
+                  onTap: () => GoRouter.of(context).go('/admin/add/news'),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Ajout-news',
+                      style: textStyleTextAppBar(context),
+                    ),
+                  ),
+                )
               ],
             );
           }

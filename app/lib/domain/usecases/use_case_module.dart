@@ -4,6 +4,7 @@ import 'package:judoseclin/data/repository/user_repository/user_data_repository.
 import 'package:judoseclin/domain/usecases/fetch_adherents_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/fetch_cotisation_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/fetch_inscription_competition_data_usecase.dart';
+import 'package:judoseclin/domain/usecases/fetch_news_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/fetch_user_data_usecase.dart';
 
 import 'fetch_competitions_data_usecase.dart';
@@ -13,33 +14,36 @@ final GetIt getIt = GetIt.instance;
 void setupDataUseCaseModule() {
   if (!getIt.isRegistered<FetchAdherentsDataUseCase>()) {
     getIt.registerLazySingleton<FetchAdherentsDataUseCase>(
-      () => FetchAdherentsDataUseCase(),
+          () => FetchAdherentsDataUseCase(),
     );
   }
 
-  if (!getIt.isRegistered<FetchCompetitionDataUseCase>()) {
+  if(!getIt.isRegistered<FetchCompetitionDataUseCase>()) {
     getIt.registerLazySingleton<FetchCompetitionDataUseCase>(
-      () => FetchCompetitionDataUseCase(),
+            () => FetchCompetitionDataUseCase()
     );
   }
-  if (!getIt.isRegistered<FetchCotisationDataUseCase>()) {
+  if(!getIt.isRegistered<FetchCotisationDataUseCase>()) {
     getIt.registerLazySingleton<FetchCotisationDataUseCase>(
-      () => FetchCotisationDataUseCase(),
+            () => FetchCotisationDataUseCase()
     );
   }
 
-  if (!getIt.isRegistered<FetchInscriptionCompetitionDataUseCase>()) {
+  if(!getIt.isRegistered<FetchInscriptionCompetitionDataUseCase>()) {
     getIt.registerLazySingleton<FetchInscriptionCompetitionDataUseCase>(
-      () => FetchInscriptionCompetitionDataUseCase(),
+            () => FetchInscriptionCompetitionDataUseCase()
     );
   }
 
-  if (!getIt.isRegistered<FetchUserDataUseCase>()) {
-    getIt.registerLazySingleton<FetchUserDataUseCase>(
-      () => FetchUserDataUseCase(
-        getIt<UserDataRepository>(),
-        getIt<AuthStateRepository>(),
-      ),
+  if(!getIt.isRegistered<FetchUserDataUseCase>()) {
+    getIt.registerLazySingleton<FetchUserDataUseCase>(() =>
+        FetchUserDataUseCase(
+            getIt<UserDataRepository>(), getIt<AuthStateRepository>())
     );
   }
-}
+  if(!getIt.isRegistered<FetchNewsDataUseCase>()) {
+    getIt.registerLazySingleton<FetchNewsDataUseCase>(()=>
+    FetchNewsDataUseCase());
+  }
+  }
+

@@ -5,6 +5,8 @@ import 'package:judoseclin/data/repository/competition_repository.dart';
 import 'package:judoseclin/data/repository/competititon_repository_impl.dart';
 import 'package:judoseclin/data/repository/cotisation_repository.dart';
 import 'package:judoseclin/data/repository/cotisation_repository_impl.dart';
+import 'package:judoseclin/data/repository/news_repository.dart';
+import 'package:judoseclin/data/repository/news_repository_impl.dart';
 import 'package:judoseclin/data/repository/user_repository/auth_state_repository.dart';
 import 'package:judoseclin/data/repository/user_repository/auth_state_repository_impl.dart';
 import 'package:judoseclin/data/repository/user_repository/user_auth_repository.dart';
@@ -18,49 +20,48 @@ import '../../core/di/injection.dart';
 void setupDataModule() {
   if (!getIt.isRegistered<FirebaseFirestore>()) {
     getIt.registerLazySingleton<FirebaseFirestore>(
-      () => FirebaseFirestore.instance,
-    );
+        () => FirebaseFirestore.instance);
   }
 
   if (!getIt.isRegistered<FirestoreService>()) {
     getIt.registerLazySingleton<FirestoreService>(
-      () => FirestoreService(getIt<FirebaseFirestore>()),
-    );
+        () => FirestoreService(getIt<FirebaseFirestore>()));
   }
 
   if (!getIt.isRegistered<UserAuthRepository>()) {
     getIt.registerLazySingleton<UserAuthRepository>(
-      () => UserAuthRepositoryImpl(),
-    );
+        () => UserAuthRepositoryImpl());
   }
 
   if (!getIt.isRegistered<AuthStateRepository>()) {
     getIt.registerLazySingleton<AuthStateRepository>(
-      () => AuthStateRepositoryImpl(),
-    );
+        () => AuthStateRepositoryImpl());
   }
 
   if (!getIt.isRegistered<UserDataRepository>()) {
     getIt.registerLazySingleton<UserDataRepository>(
-      () => UserDataRepositoryImpl(),
-    );
+        () => UserDataRepositoryImpl());
   }
 
   if (!getIt.isRegistered<AdherentsRepository>()) {
     getIt.registerLazySingleton<AdherentsRepository>(
-      () => AdherentsRepositoryImpl(getIt<FirestoreService>()),
-    );
+        () => AdherentsRepositoryImpl(getIt<FirestoreService>()));
   }
 
   if (!getIt.isRegistered<CompetitionRepository>()) {
     getIt.registerLazySingleton<CompetitionRepository>(
-      () => CompetitionRepositoryImpl(getIt<FirestoreService>()),
-    );
+        () => CompetitionRepositoryImpl(getIt<FirestoreService>()));
   }
 
   if (!getIt.isRegistered<CotisationRepository>()) {
     getIt.registerLazySingleton<CotisationRepository>(
-      () => CotisationRepositoryImpl(getIt<FirestoreService>()),
-    );
+        () => CotisationRepositoryImpl(getIt<FirestoreService>()));
   }
+
+  if(!getIt.isRegistered<NewsRepository>()) {
+    getIt.registerLazySingleton<NewsRepository>(
+        () => NewsRepositoryImpl(getIt<FirestoreService>()));
+
+  }
+
 }
