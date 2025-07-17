@@ -5,6 +5,7 @@ import 'package:judoseclin/theme.dart';
 import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/custom_buttom.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
+import 'package:judoseclin/ui/common/widgets/inputs/custom_text_area.dart';
 import 'package:judoseclin/ui/common/widgets/inputs/custom_textfield.dart';
 import 'package:judoseclin/ui/news/news_state.dart';
 import 'package:judoseclin/ui/news/news_bloc.dart';
@@ -83,10 +84,9 @@ class AddNewsView extends StatelessWidget {
                       controller: titreController,
                     ),
                     const SizedBox(height: 40.0),
-                    CustomTextField(
-                      labelText: 'detail',
-                      controller: contenuController,
-                    ),
+                   CustomTextArea(
+                       labelText: "Mon teste",
+                       controller: contenuController),
                     const SizedBox(height: 40.0),
                     CustomTextField(
                       labelText: 'date de publication',

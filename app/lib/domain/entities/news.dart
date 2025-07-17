@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class News {
   final String titre;
@@ -22,9 +23,10 @@ class News {
   }
 
   String toMarkdownText() {
+    final formattedDate = DateFormat('dd/MM/yyyy').format(publication);
     String md = "";
     md += "# $titre\n\n";
-    md += "_${publication.toString()}_\n\n";
+    md += "$formattedDate\n\n";
     md += contenu;
     return md;
   }
