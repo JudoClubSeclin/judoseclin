@@ -85,7 +85,7 @@ class AddNewsView extends StatelessWidget {
                     ),
                     const SizedBox(height: 40.0),
                    CustomTextArea(
-                       labelText: "Mon teste",
+                       labelText: "Mon texte",
                        controller: contenuController),
                     const SizedBox(height: 40.0),
                     CustomTextField(
