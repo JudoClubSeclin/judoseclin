@@ -5,6 +5,8 @@ import 'package:judoseclin/data/repository/competition_repository.dart';
 import 'package:judoseclin/data/repository/competititon_repository_impl.dart';
 import 'package:judoseclin/data/repository/cotisation_repository.dart';
 import 'package:judoseclin/data/repository/cotisation_repository_impl.dart';
+import 'package:judoseclin/data/repository/news_repository.dart';
+import 'package:judoseclin/data/repository/news_repository_impl.dart';
 import 'package:judoseclin/data/repository/user_repository/auth_state_repository.dart';
 import 'package:judoseclin/data/repository/user_repository/auth_state_repository_impl.dart';
 import 'package:judoseclin/data/repository/user_repository/user_auth_repository.dart';
@@ -54,6 +56,12 @@ void setupDataModule() {
   if (!getIt.isRegistered<CotisationRepository>()) {
     getIt.registerLazySingleton<CotisationRepository>(
         () => CotisationRepositoryImpl(getIt<FirestoreService>()));
+  }
+
+  if(!getIt.isRegistered<NewsRepository>()) {
+    getIt.registerLazySingleton<NewsRepository>(
+        () => NewsRepositoryImpl(getIt<FirestoreService>()));
+
   }
 
 }

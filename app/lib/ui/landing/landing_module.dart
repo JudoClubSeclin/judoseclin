@@ -26,7 +26,7 @@ class LandingModule implements UIModule {
         path: '/',
         builder: (context, state) => Landing(
           competitionRepository:
-              CompetitionRepositoryImpl(getIt<FirestoreService>()),
+              CompetitionRepositoryImpl(getIt<FirestoreService>()), newsId: '',
         ),
       )
     ];

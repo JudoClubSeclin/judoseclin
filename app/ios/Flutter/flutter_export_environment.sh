@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/home/ludo/snap/flutter/common/flutter"
-export "FLUTTER_APPLICATION_PATH=/home/ludo/developpement/judoseclin/app"
+export "FLUTTER_ROOT=/home/ludo/flutter"
+export "FLUTTER_APPLICATION_PATH=/home/ludo/Documents/dev/judoseclin/app"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"

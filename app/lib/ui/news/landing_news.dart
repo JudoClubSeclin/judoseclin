@@ -3,17 +3,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:judoseclin/core/utils/size_extensions.dart';
-import 'package:judoseclin/ui/landing_page/markdowned_news_list.dart';
+import 'package:judoseclin/ui/news/markdowned_news_list.dart';
 
 import '../../domain/entities/news.dart';
 
 
 class LandingNews extends HookWidget {
-  const LandingNews({super.key});
+  final String newsId;
+  const LandingNews(this.newsId, {super.key});
 
   @override
   Widget build(BuildContext context) {
     final mesNews = useState<List<News>>([]);
+
 
     useEffect(() {
       var db = FirebaseFirestore.instance;
@@ -23,7 +25,9 @@ class LandingNews extends HookWidget {
           .limit(3)
           .get()
           .then((event) {
-        mesNews.value = event.docs.map((e) => News.fromFirestore(e)).toList();
+        final news = event.docs.map((e) => News.fromFirestore(e, newsId)).toList();
+        debugPrint("✅ News récupérées : ${news.length}");
+        mesNews.value = news;
       });
 
       return () {

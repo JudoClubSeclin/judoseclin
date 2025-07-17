@@ -54,7 +54,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return [
       Consumer<FunctionAdminService>(
         builder: (context, authService, child) {
-          final bool hasAccess = authService.isAdmin && MediaQuery.sizeOf(context).width > 749;
+          final bool hasAccess =
+              authService.isAdmin && MediaQuery.sizeOf(context).width > 749;
 
           debugPrint('hasAccess: $hasAccess');
 
@@ -92,6 +93,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ),
                 ),
+                GestureDetector(
+                  onTap: () => GoRouter.of(context).go('/admin/add/news'),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Ajout-news',
+                      style: textStyleTextAppBar(context),
+                    ),
+                  ),
+                )
               ],
             );
           }

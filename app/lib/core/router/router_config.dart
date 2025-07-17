@@ -12,6 +12,7 @@ import 'package:judoseclin/ui/landing/landing_module.dart';
 import 'package:judoseclin/ui/members/inscription/inscription_module.dart';
 import 'package:judoseclin/ui/members/login/login_module.dart';
 import 'package:judoseclin/ui/members/reset_password/reset_password_module.dart';
+import 'package:judoseclin/ui/news/add_news_module.dart';
 
 import '../../domain/entities/setup_entity_module.dart';
 
@@ -29,7 +30,8 @@ class AppRouterConfig {
           ...getIt<AddAdherentsModule>().getRoutes(),
           ...getIt<ListAdherentsModule>().getRoutes(),
           ...getIt<AdherentsDetailModule>().getRoutes(),
-          ...getIt<AddCompetitionModule>().getRoutes()
+          ...getIt<AddCompetitionModule>().getRoutes(),
+          ...getIt<AddNewsModule>().getRoutes()
         ],
         errorBuilder: (context, state) => const ErrorPage(),
       );

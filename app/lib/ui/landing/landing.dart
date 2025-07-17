@@ -4,16 +4,18 @@ import 'package:judoseclin/ui/common/widgets/buttons/connexion_button.dart';
 import '../../configuration_locale.dart';
 import '../../data/repository/competition_repository.dart';
 import '../landing_page/landing_home.dart';
-import '../landing_page/landing_news.dart';
 import '../landing_page/landing_show_button.dart';
 import '../more_infos/more_info.dart';
+import '../news/landing_news.dart';
 
 class Landing extends StatelessWidget {
   final CompetitionRepository competitionRepository;
+  final String newsId;
 
   const Landing({
     super.key,
     required this.competitionRepository,
+    required this.newsId
   });
 
   @override
@@ -27,7 +29,7 @@ class Landing extends StatelessWidget {
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [const LandingHome(), const LandingNews(), MoreInfo()],
+              children: [const LandingHome(),  LandingNews(newsId), MoreInfo()],
             ),
             Positioned(
                 top: 40.0, // Ajustez la position verticale

@@ -4,6 +4,7 @@ import 'package:judoseclin/data/repository/user_repository/user_data_repository.
 import 'package:judoseclin/domain/usecases/fetch_adherents_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/fetch_cotisation_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/fetch_inscription_competition_data_usecase.dart';
+import 'package:judoseclin/domain/usecases/fetch_news_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/fetch_user_data_usecase.dart';
 
 import 'fetch_competitions_data_usecase.dart';
@@ -39,6 +40,10 @@ void setupDataUseCaseModule() {
         FetchUserDataUseCase(
             getIt<UserDataRepository>(), getIt<AuthStateRepository>())
     );
+  }
+  if(!getIt.isRegistered<FetchNewsDataUseCase>()) {
+    getIt.registerLazySingleton<FetchNewsDataUseCase>(()=>
+    FetchNewsDataUseCase());
   }
   }
 

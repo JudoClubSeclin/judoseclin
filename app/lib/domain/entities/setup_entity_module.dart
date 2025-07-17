@@ -70,8 +70,8 @@ void setupEntityModule() {
   ///Enregistrement news entity
   getIt.registerFactory<News>(() => News(
       titre: '',
-      datePublication: DateTime.now(),
-      details: ''
+      publication: DateTime.now(),
+      contenu: ''
   ));
 
   ///Enregistrement de Users entity

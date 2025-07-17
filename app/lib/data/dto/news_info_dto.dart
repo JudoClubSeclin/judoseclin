@@ -1,20 +1,23 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class NewsInfoDto {
   final String titre;
-  final DateTime datePublication;
-  final String details;
+  final DateTime publication;
+  final String contenu;
 
   NewsInfoDto({
     required this.titre,
-    required this.datePublication,
-    required this.details,
+    required this.publication,
+    required this.contenu,
   });
 
   factory NewsInfoDto.fromJson(Map<String, dynamic> json) {
     return NewsInfoDto(
-        titre: json ['titre'],
-        datePublication: json ['datePublication'],
-        details: json ['details']
+      titre: json['titre'] ?? '',
+      contenu: json['contenu'] ?? '',
+      publication: (json['datePublication'] ?? json['date_publication'])?.toDate() ?? DateTime.now(),
     );
   }
+
 }
