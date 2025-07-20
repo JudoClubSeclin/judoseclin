@@ -36,9 +36,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     } else {
       return context.canPop()
           ? IconButton(
-            icon: Icon(Icons.arrow_back, color: theme.colorScheme.onPrimary),
-            onPressed: () => context.pop(),
-          )
+        icon: Icon(Icons.arrow_back, color: theme.colorScheme.onPrimary),
+        onPressed: () => context.pop(),
+      )
           : Container();
     }
   }
@@ -132,7 +132,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         if (actions != null)
           ...actions!.map(
-            (action) => Padding(
+                (action) => Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: action,
             ),

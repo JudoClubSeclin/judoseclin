@@ -24,6 +24,7 @@ class LoginView extends StatelessWidget {
         if (state is LoginFailure) {
           showDialog(
             context: context,
+<<<<<<< HEAD
             builder:
                 (context) => AlertDialog(
                   title: const Text("Erreur de connexion"),
@@ -36,6 +37,17 @@ class LoginView extends StatelessWidget {
                       child: const Text("OK"),
                     ),
                   ],
+=======
+            builder: (context) => AlertDialog(
+              title:  Text("L'email est le mot de passe ne corresponde pas ",style: textStyleText(context),),
+              content: Text(state.error),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    GoRouter.of(context).pop();
+                  },
+                  child: const Text("OK"),
+>>>>>>> refactoclean
                 ),
           );
         }

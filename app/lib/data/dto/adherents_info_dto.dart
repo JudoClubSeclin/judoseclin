@@ -15,6 +15,7 @@ class AdherentsInfoDto {
   final String sante;
   final String medicalCertificate;
   final String invoice;
+  final String familyId;
 
   AdherentsInfoDto({
     required this.id,
@@ -33,6 +34,7 @@ class AdherentsInfoDto {
     required this.sante,
     required this.medicalCertificate,
     required this.invoice,
+<<<<<<< HEAD
   });
 
   factory AdherentsInfoDto.fromJson(Map<String, dynamic> json) {
@@ -53,6 +55,30 @@ class AdherentsInfoDto {
       sante: json['sante'],
       medicalCertificate: json['medicalCertificate'],
       invoice: json['invoice'],
+=======
+    required this.familyId
+});
+
+  factory AdherentsInfoDto.fromJson(Map<String, dynamic> json) {
+    return AdherentsInfoDto(
+        id: json['id'],
+        firstName:json ['firstName'],
+        lastName: json ['lastName'],
+        email: json ['email'],
+        dateOfBirth:json ['dateOfBirth'],
+        licence: json ['licence'],
+        belt: json ['belt'],
+        discipline: json ['discipline'],
+        category: json ['category'],
+        tutor: json ['tutor'],
+        phone: json ['phone'],
+        address: json ['address'],
+        image: json ['image'],
+        sante: json ['sante'],
+        medicalCertificate: json ['medicalCertificate'],
+        invoice: json ['invoice'],
+        familyId: json ['familyId']
+>>>>>>> refactoclean
     );
   }
 }

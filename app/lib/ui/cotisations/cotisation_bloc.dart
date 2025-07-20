@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:judoseclin/domain/entities/cotisation.dart';
 
-import '../interactor/cotisation_interactor.dart';
+import 'cotisation_interactor.dart';
 import 'cotisation_event.dart';
 import 'cotisation_sate.dart';
 

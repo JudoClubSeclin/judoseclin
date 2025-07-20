@@ -6,7 +6,7 @@ import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/ui/adherents/adherents-detail/adherents_detail_view.dart';
 import 'package:judoseclin/ui/adherents/adherents_bloc.dart';
 import 'package:judoseclin/ui/adherents/interactor/adherents_interactor.dart';
-import 'package:judoseclin/ui/cotisations/interactor/cotisation_interactor.dart';
+import 'package:judoseclin/ui/cotisations/cotisation_interactor.dart';
 
 import '../../../core/di/api/auth_service.dart';
 import '../../../core/di/api/firestore_service.dart';

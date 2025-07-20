@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 import '../../../core/utils/generete_and_download_pdf.dart';
 import '../../common/widgets/buttons/custom_buttom.dart';
-import '../../cotisations/interactor/cotisation_interactor.dart';
+import '../../cotisations/cotisation_interactor.dart';
 import '../interactor/adherents_interactor.dart';
 import 'info_field_adherents.dart';
 import 'info_field_adherents_cotisation.dart';
@@ -26,7 +27,7 @@ class AdherentsDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: ''),
+      appBar: CustomAppBar(title: '', ),
       drawer: MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
       body: DecoratedBox(
         position: DecorationPosition.background,
@@ -46,22 +47,30 @@ class AdherentsDetailView extends StatelessWidget {
                   adherentId: adherentId.toString(),
                 ),
               ),
-              const SizedBox(height: 60),
+              const SizedBox(
+                height: 60,
+              ),
               InfoFieldAdherentsCotisation(
                 adherentId: adherentId.toString(),
                 cotisationInteractor: cotisationInteractor,
               ),
-
-              /*CustomButton(
+              Wrap(
+                alignment: WrapAlignment.center,
+                runSpacing: 10,
+                spacing: 15,
+                children: [
+                  CustomButton(
                     label: 'Ajouter la cotisation',
                     onPressed: () =>
-                        context.go('/admin/add/cotisation/$adherentId'),
-                  ),*/
-              CustomButton(
-                label: "Télécharger la fiche PDF",
-                onPressed: () {
-                  generateAndPrintPdf(adherentId, adherentsInteractor);
-                },
+                        context.go('/admin/add/cotisation$adherentId'),
+                  ),
+                  CustomButton(
+                    label: "Télécharger la fiche PDF",
+                    onPressed: () {
+                      generateAndPrintPdf(adherentId, adherentsInteractor);
+                    },
+                  )
+                ],
               ),
             ],
           ),

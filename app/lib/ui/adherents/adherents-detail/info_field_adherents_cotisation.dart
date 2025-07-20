@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:judoseclin/domain/entities/cotisation.dart';
 
 import '../../common/widgets/infos_fields/infos_fields.dart';
-import '../../cotisations/interactor/cotisation_interactor.dart';
+import '../../cotisations/cotisation_interactor.dart';
 
 class InfoFieldAdherentsCotisation extends StatelessWidget {
   final String adherentId;

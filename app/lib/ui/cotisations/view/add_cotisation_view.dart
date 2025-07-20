@@ -8,9 +8,9 @@ import 'package:judoseclin/ui/common/widgets/inputs/custom_textfield.dart';
 import '../../../core/utils/parse_cheques.dart';
 import '../../../domain/entities/cotisation.dart';
 import '../../common/widgets/appbar/custom_appbar.dart';
-import '../bloc/cotisation_bloc.dart';
-import '../bloc/cotisation_event.dart';
-import '../bloc/cotisation_sate.dart';
+import '../cotisation_bloc.dart';
+import '../cotisation_event.dart';
+import '../cotisation_sate.dart';
 
 class AddCotisationView extends StatelessWidget {
   final String adherentId;

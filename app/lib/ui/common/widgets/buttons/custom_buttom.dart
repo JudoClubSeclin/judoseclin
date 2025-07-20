@@ -23,8 +23,12 @@ class CustomButton extends StatelessWidget {
         child: ElevatedButton(
           style: ButtonStyle(
             padding: WidgetStateProperty.all<EdgeInsets>(
+<<<<<<< HEAD
               const EdgeInsets.symmetric(vertical: 15),
             ),
+=======
+                const EdgeInsets.symmetric(vertical: 10)),
+>>>>>>> refactoclean
             backgroundColor: WidgetStateProperty.all(Colors.red[400]),
             shape: WidgetStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(

@@ -1,35 +1,48 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:judoseclin/theme.dart';
+import 'package:judoseclin/domain/entities/adherents.dart';
+
+import '../../../core/di/api/auth_service.dart';
+import '../../../core/di/api/firestore_service.dart';
+import '../../../core/di/injection.dart';
+import '../view/compte_adherent_view.dart';
 
 class DonneesUser extends StatefulWidget {
-  const DonneesUser({super.key});
+  final List<Adherents> adherents;
+  final Adherents utilisateurPrincipal;
+
+  const DonneesUser({
+    required this.adherents,
+    required this.utilisateurPrincipal,
+    super.key,
+  });
 
   @override
   State<DonneesUser> createState() => _DonneesUserState();
 }
 
 class _DonneesUserState extends State<DonneesUser> {
+  final AuthService _authService = getIt<AuthService>();
+  final FirestoreService _firestoreService = getIt<FirestoreService>();
+
   Map<String, dynamic>? userData;
-  bool isLoading = true; // Indicateur de chargement
+  bool isLoading = true;
+  List<Map<String, dynamic>> familyMembers = [];
 
   @override
   void initState() {
     super.initState();
-    fetchUserData(); // Appel de la fonction au démarrage du widget
+    fetchUserData();
   }
 
   Future<void> fetchUserData() async {
-    debugPrint("🔍 Fonction fetchUserData exécutée");
-
     try {
-      String? userEmail = FirebaseAuth.instance.currentUser?.email;
+      final userEmail = _authService.currentUser?.email;
       if (userEmail == null || userEmail.isEmpty) {
-        debugPrint("❌ Aucun email trouvé !");
+        debugPrint("Email utilisateur introuvable");
         return;
       }
 
+<<<<<<< HEAD
       debugPrint("🔍 Email utilisateur trouvé : $userEmail");
 
       var querySnapshot =
@@ -37,20 +50,47 @@ class _DonneesUserState extends State<DonneesUser> {
               .collection("adherents")
               .where("email", isEqualTo: userEmail)
               .get();
+=======
+      final userQuery = await _firestoreService
+          .collection("adherents")
+          .where("email", isEqualTo: userEmail)
+          .get();
+>>>>>>> refactoclean
 
-      if (querySnapshot.docs.isEmpty) {
-        debugPrint("❌ Aucun adhérent trouvé pour cet email.");
+      if (userQuery.docs.isEmpty) {
+        debugPrint("Aucun document trouvé pour cet email : $userEmail");
         return;
       }
 
-      setState(() {
-        userData = querySnapshot.docs.first.data();
-        isLoading = false; // Fin du chargement
-      });
+      final userDoc = userQuery.docs.first;
+      final currentUserData = userDoc.data();
+      final currentFamilyId = currentUserData['familyId'];
 
-      debugPrint("✅ Données récupérées : $userData");
+      if (currentFamilyId == null) {
+        debugPrint("Aucun familyId trouvé pour cet utilisateur");
+        return;
+      }
+
+      debugPrint("FAMILY ID: $currentFamilyId");
+
+      final familyQuery = await _firestoreService
+          .collection("adherents")
+          .where("familyId", isEqualTo: currentFamilyId)
+          .get();
+
+      final members = familyQuery.docs.map((doc) {
+        final data = doc.data();
+        data['id'] = doc.id;
+        return data;
+      }).toList();
+
+      setState(() {
+        userData = currentUserData;
+        familyMembers = members;
+        isLoading = false;
+      });
     } catch (e) {
-      debugPrint("❌ Erreur lors de la récupération des données : $e");
+      debugPrint("Erreur lors de la récupération des données utilisateur : $e");
       setState(() {
         isLoading = false;
       });
@@ -63,10 +103,11 @@ class _DonneesUserState extends State<DonneesUser> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    if (userData == null) {
+    if (familyMembers.isEmpty) {
       return const Center(child: Text("Aucune donnée trouvée"));
     }
 
+<<<<<<< HEAD
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -135,6 +176,38 @@ class _DonneesUserState extends State<DonneesUser> {
           ],
         ),
       ),
+=======
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.all(10),
+      itemCount: familyMembers.length,
+      itemBuilder: (context, index) {
+        final member = familyMembers[index]; // Récupérer le membre correspondant à l'index
+        return Card(
+          color: Colors.transparent,
+          margin: const EdgeInsets.symmetric(vertical: 6),
+          child: ListTile(
+            title: Text("${member['firstName']} ${member['lastName']}"),
+            subtitle: Text(
+                "${member['category']} - Ceinture: ${member['belt']}"),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              debugPrint("ID du membre cliqué: ${member['id']}"); // Vérifiez dans la console
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      CompteAdherentView(adherentId: member['id']),
+                ),
+              );
+            },
+          ),
+        );
+      },
+>>>>>>> refactoclean
     );
+
   }
 }
