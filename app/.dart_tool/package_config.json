@@ -14,28 +14,10 @@
       "languageVersion": "3.2"
     },
     {
-      "name": "accessibility_tools",
-      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/accessibility_tools-2.6.0",
-      "packageUri": "lib/",
-      "languageVersion": "3.8"
-    },
-    {
       "name": "analyzer",
-      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/analyzer-7.5.9",
+      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/analyzer-7.7.0",
       "packageUri": "lib/",
       "languageVersion": "3.5"
-    },
-    {
-      "name": "animations",
-      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/animations-2.0.11",
-      "packageUri": "lib/",
-      "languageVersion": "3.2"
-    },
-    {
-      "name": "animator",
-      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/animator-3.3.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
     },
     {
       "name": "archive",
@@ -123,7 +105,7 @@
     },
     {
       "name": "built_value",
-      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/built_value-8.10.1",
+      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/built_value-8.11.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -231,15 +213,9 @@
     },
     {
       "name": "dart_style",
-      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/dart_style-3.1.0",
+      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/dart_style-3.1.1",
       "packageUri": "lib/",
       "languageVersion": "3.7"
-    },
-    {
-      "name": "device_frame_plus",
-      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/device_frame_plus-1.5.0",
-      "packageUri": "lib/",
-      "languageVersion": "3.0"
     },
     {
       "name": "equatable",
@@ -350,12 +326,6 @@
       "languageVersion": "3.5"
     },
     {
-      "name": "flutter_localizations",
-      "rootUri": "file:///home/ludo/flutter/packages/flutter_localizations",
-      "packageUri": "lib/",
-      "languageVersion": "3.7"
-    },
-    {
       "name": "flutter_markdown",
       "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/flutter_markdown-0.7.7+1",
       "packageUri": "lib/",
@@ -378,12 +348,6 @@
       "rootUri": "file:///home/ludo/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.7"
-    },
-    {
-      "name": "freelance",
-      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/freelance-1.1.0",
-      "packageUri": "lib/",
-      "languageVersion": "3.4"
     },
     {
       "name": "freezed",
@@ -468,12 +432,6 @@
       "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/injectable_generator-2.7.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
-    },
-    {
-      "name": "inspector",
-      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/inspector-3.0.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
     },
     {
       "name": "intl",
@@ -566,20 +524,8 @@
       "languageVersion": "3.2"
     },
     {
-      "name": "navigation_builder",
-      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/navigation_builder-0.0.4",
-      "packageUri": "lib/",
-      "languageVersion": "2.18"
-    },
-    {
       "name": "nested",
       "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/nested-1.0.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "nil",
-      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/nil-1.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -674,12 +620,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "resizable_widget",
-      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/resizable_widget-1.0.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "shelf",
       "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/shelf-1.4.2",
       "packageUri": "lib/",
@@ -720,12 +660,6 @@
       "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/stack_trace-1.12.1",
       "packageUri": "lib/",
       "languageVersion": "3.4"
-    },
-    {
-      "name": "states_rebuilder",
-      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/states_rebuilder-6.4.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
     },
     {
       "name": "stream_channel",
@@ -862,18 +796,6 @@
     {
       "name": "web_socket_channel",
       "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/web_socket_channel-3.0.3",
-      "packageUri": "lib/",
-      "languageVersion": "3.3"
-    },
-    {
-      "name": "widgetbook",
-      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/widgetbook-3.14.3",
-      "packageUri": "lib/",
-      "languageVersion": "3.3"
-    },
-    {
-      "name": "widgetbook_annotation",
-      "rootUri": "file:///home/ludo/.pub-cache/hosted/pub.dev/widgetbook_annotation-3.5.0",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },

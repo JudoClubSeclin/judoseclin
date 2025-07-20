@@ -13,7 +13,6 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  freelance: ^1.0.2
   flutter_markdown: ^0.7.3
   carousel_slider: ^5.0.0
   flutter_bloc: ^9.0.0
