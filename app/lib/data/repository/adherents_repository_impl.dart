@@ -54,4 +54,15 @@ Future<void> updateField(
   }
 }
 
+@override
+Future<List<Adherents>> getAdherentsByFamilyId(String familyId) async {
+  final query = await _firestoreService
+      .collection('adherents')
+      .where('familyId', isEqualTo: familyId)
+      .get();
+
+  return query.docs.map((doc) => Adherents.fromMap(doc.data(), doc.id)).toList();
+}
+
+
 }

@@ -9,6 +9,8 @@ abstract class AdherentsRepository {
   Future<void> add(Map<String, dynamic> data);
   Future<void> updateField(
       String adherentId, String fieldName, String newValue);
+  Future<List<Adherents>> getAdherentsByFamilyId(String familyId);
+
 }
 
 

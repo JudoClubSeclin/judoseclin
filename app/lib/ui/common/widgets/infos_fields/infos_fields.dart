@@ -5,7 +5,7 @@ import 'package:judoseclin/domain/entities/cotisation.dart';
 import '../../../../core/utils/show_edit_text_field_dialog.dart';
 import '../../../../theme.dart';
 import '../../../adherents/interactor/adherents_interactor.dart';
-import '../../../cotisations/interactor/cotisation_interactor.dart';
+import '../../../cotisations/cotisation_interactor.dart';
 
 class InfoField extends StatelessWidget {
   final String label;

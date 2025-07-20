@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:judoseclin/core/di/api/firestore_service.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/domain/usecases/fetch_adherents_data_usecase.dart';
 
@@ -7,8 +8,10 @@ import '../../../data/repository/adherents_repository.dart';
 class AdherentsInteractor {
   final FetchAdherentsDataUseCase fetchAdherentsDataUseCase;
   final AdherentsRepository adherentsRepository;
+  final FirestoreService _firestoreService;
 
-  AdherentsInteractor(this.fetchAdherentsDataUseCase, this.adherentsRepository);
+  AdherentsInteractor(this.fetchAdherentsDataUseCase, this.adherentsRepository,
+      this._firestoreService);
 
   Future<void> addAdherents(Adherents adherents) async {
     try {
@@ -61,4 +64,23 @@ class AdherentsInteractor {
       rethrow;
     }
   }
+
+  Future<List<Adherents>> fetchByFamily(String familyId) {
+    return fetchAdherentsDataUseCase.call(familyId);
+  }
+
+  Future<Map<String, dynamic>?> fetchExistingFamilyByAddress(
+      String address) async {
+    final snapshot = await _firestoreService.collection('adherents')
+        .where('address', isEqualTo: address)
+        .get();
+
+    if (snapshot.docs.isNotEmpty) {
+      return snapshot.docs.first.data();
+    } else {
+      return null;
+    }
+  }
+
 }
+

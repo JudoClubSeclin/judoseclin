@@ -1,4 +1,4 @@
-import '../../../../domain/entities/cotisation.dart';
+import '../../../domain/entities/cotisation.dart';
 
 abstract class CotisationEvent {}
 

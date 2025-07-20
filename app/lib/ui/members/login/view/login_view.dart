@@ -27,7 +27,7 @@ class LoginView extends StatelessWidget {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: const Text("Erreur de connexion"),
+              title:  Text("L'email est le mot de passe ne corresponde pas ",style: textStyleText(context),),
               content: Text(state.error),
               actions: [
                 TextButton(

@@ -49,6 +49,7 @@ import '../../ui/competition/list_competition/detail_competition_module.dart'
     as _i409;
 import '../../ui/competition/list_competition/list_competition_module.dart'
     as _i606;
+import '../../ui/cotisations/cotisation_module.dart' as _i656;
 import '../../ui/landing/landing_module.dart' as _i483;
 import '../../ui/members/inscription/inscription_module.dart' as _i734;
 import '../../ui/members/interactor/users_interactor.dart' as _i497;
@@ -120,6 +121,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i878.ResetPasswordModule(gh<_i573.AppRouter>()));
     gh.singleton<_i63.LoginModule>(
         () => _i63.LoginModule(gh<_i573.AppRouter>()));
+    gh.singleton<_i656.CotisationModule>(
+        () => _i656.CotisationModule(gh<_i573.AppRouter>()));
     gh.singleton<_i409.CompetitionDetailModule>(
         () => _i409.CompetitionDetailModule(gh<_i573.AppRouter>()));
     gh.singleton<_i606.ListCompetitionModule>(

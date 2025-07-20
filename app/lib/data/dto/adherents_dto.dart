@@ -15,6 +15,7 @@ class AdherentsDto {
   final String sante;
   final String medicalCertificate;
   final String invoice;
+  final String familyId;
 
   AdherentsDto({
     required this.id,
@@ -33,5 +34,6 @@ class AdherentsDto {
     required this.sante,
     required this.medicalCertificate,
     required this.invoice,
+    required this.familyId
 });
 }

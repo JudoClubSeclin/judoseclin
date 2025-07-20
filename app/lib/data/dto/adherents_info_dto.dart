@@ -15,6 +15,7 @@ class AdherentsInfoDto {
   final String sante;
   final String medicalCertificate;
   final String invoice;
+  final String familyId;
 
   AdherentsInfoDto({
     required this.id,
@@ -33,6 +34,7 @@ class AdherentsInfoDto {
     required this.sante,
     required this.medicalCertificate,
     required this.invoice,
+    required this.familyId
 });
 
   factory AdherentsInfoDto.fromJson(Map<String, dynamic> json) {
@@ -52,7 +54,8 @@ class AdherentsInfoDto {
         image: json ['image'],
         sante: json ['sante'],
         medicalCertificate: json ['medicalCertificate'],
-        invoice: json ['invoice']
+        invoice: json ['invoice'],
+        familyId: json ['familyId']
     );
 
   }

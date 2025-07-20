@@ -19,6 +19,7 @@ class Adherents {
   final String sante;
   final String medicalCertificate;
   final String invoice;
+  final String? familyId;
 
   Adherents({
     required this.id,
@@ -37,6 +38,7 @@ class Adherents {
     required this.sante,
     required this.medicalCertificate,
     required this.invoice,
+    this.familyId
   });
 
   String get formattedDateOfBirth {
@@ -61,6 +63,8 @@ class Adherents {
       sante: data['sante'] ?? '',
       medicalCertificate: data['medicalCertificate'] ?? '',
       invoice: data['invoice'] ?? '',
+      familyId: data['familyId']?? ''
+
     );
   }
 }

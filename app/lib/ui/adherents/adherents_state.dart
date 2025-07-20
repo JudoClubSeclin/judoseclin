@@ -13,6 +13,19 @@ class SignUpSuccessState extends AdherentsState {
   SignUpSuccessState(this.isNewUser, this.adherentId);
 }
 
+class FamilyCheckSuccessState extends AdherentsState {
+  final String familyId;
+  final String email;
+  final String phone;
+
+  FamilyCheckSuccessState({
+    required this.familyId,
+    required this.email,
+    required this.phone,
+  });
+}
+
+
 class SignUpErrorState extends AdherentsState {
   final String error;
 

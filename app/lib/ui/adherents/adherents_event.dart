@@ -18,7 +18,8 @@ class AddAdherentsSignUpEvent extends AdherentsEvent {
   final String sante;
   final String medicalCertificate;
   final String invoice;
-  final bool userExists; // Ajout de cette ligne
+  final bool userExists;
+  final String familyId;
 
   AddAdherentsSignUpEvent({
     required this.id,
@@ -38,7 +39,8 @@ class AddAdherentsSignUpEvent extends AdherentsEvent {
     required this.sante,
     required this.medicalCertificate,
     required this.invoice,
-    required this.userExists, // Ajout de cette ligne
+    required this.userExists,
+    required this.familyId
   });
 }
 class AddCotisationEvent extends AdherentsEvent {
@@ -50,4 +52,10 @@ class GeneratePdfEvent extends AdherentsEvent {
   final String adherentId;
 
   GeneratePdfEvent({required this.adherentId});
+}
+
+class CheckFamilyByAddressEvent extends AdherentsEvent {
+  final String address;
+
+  CheckFamilyByAddressEvent(this.address);
 }

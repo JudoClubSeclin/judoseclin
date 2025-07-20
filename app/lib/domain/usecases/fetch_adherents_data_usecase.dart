@@ -40,4 +40,8 @@ class FetchAdherentsDataUseCase {
       rethrow;
     }
   }
+
+  Future<List<Adherents>> call(String familyId) {
+    return adherentsRepository.getAdherentsByFamilyId(familyId);
+  }
 }

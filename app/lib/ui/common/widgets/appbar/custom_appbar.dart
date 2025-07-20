@@ -29,19 +29,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
-            icon: Icon(
-              Icons.menu,
-              color: theme.colorScheme.onPrimary,
-            ),
+            icon: Icon(Icons.menu, color: theme.colorScheme.onPrimary),
           );
         },
       );
     } else {
       return context.canPop()
           ? IconButton(
-              icon: Icon(Icons.arrow_back, color: theme.colorScheme.onPrimary),
-              onPressed: () => context.pop(),
-            )
+        icon: Icon(Icons.arrow_back, color: theme.colorScheme.onPrimary),
+        onPressed: () => context.pop(),
+      )
           : Container();
     }
   }
@@ -83,8 +80,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () =>
-                      GoRouter.of(context).go('/admin/add/competition'),
+                  onTap:
+                      () => GoRouter.of(context).go('/admin/add/competition'),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
@@ -107,8 +104,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             );
           }
 
-          return const SizedBox
-              .shrink(); // Retourne un widget vide si pas d'accès
+          return const SizedBox.shrink(); // Retourne un widget vide si pas d'accès
         },
       ),
       ...navItems.map((item) {
@@ -117,14 +113,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Center(
-              child: Text(
-                item['label']!,
-                style: textStyleTextAppBar(context),
-              ),
+              child: Text(item['label']!, style: textStyleTextAppBar(context)),
             ),
           ),
         );
-      })
+      }),
     ];
   }
 
@@ -134,17 +127,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       backgroundColor: theme.colorScheme.primary,
-      title: Text(
-        title,
-        textAlign: TextAlign.center,
-      ),
+      title: Text(title, textAlign: TextAlign.center),
       leading: getLeading(context),
       actions: [
         if (actions != null)
-          ...actions!.map((action) => Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: action,
-              )),
+          ...actions!.map(
+                (action) => Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: action,
+            ),
+          ),
         if (onNavigate != null)
           IconButton(
             icon: Icon(Icons.new_releases, color: theme.colorScheme.surface),
@@ -168,15 +160,12 @@ class CustomDrawer extends StatelessWidget {
   List<Widget> generateDrawerItems(BuildContext context) {
     final List<Map<String, String>> drawerItems = [
       {'label': 'mon compte', 'route': '/account'},
-      {'label': 'Compétitions', 'route': '/competition'}
+      {'label': 'Compétitions', 'route': '/competition'},
     ];
 
     return drawerItems.map((item) {
       return ListTile(
-        title: Text(
-          item['label']!,
-          style: textStyleTextAppBar(context),
-        ),
+        title: Text(item['label']!, style: textStyleTextAppBar(context)),
         onTap: () {
           GoRouter.of(context).go(item['route']!);
           Navigator.pop(context);
