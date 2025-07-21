@@ -8,9 +8,9 @@ import '../../ui/adherents/interactor/adherents_interactor.dart';
 import 'emojis.dart';
 
 Future<void> generateAndPrintPdf(
-  String adherentId,
-  AdherentsInteractor adherentsInteractor,
-) async {
+    String adherentId,
+    AdherentsInteractor adherentsInteractor,
+    ) async {
   if (adherentId.isEmpty) {
     debugPrint("Erreur : L'ID de l'adhérent est vide !");
     return;
@@ -83,7 +83,7 @@ Future<void> generateAndPrintPdf(
               _buildRowWithIcon(
                 "calandrier",
                 "Date de naissance :",
-                adherent.formattedDateOfBirth,
+                formattedDateOfBirth,
                 regularFont,
               ),
               _buildRowWithIcon(
@@ -176,11 +176,11 @@ Future<void> generateAndPrintPdf(
 }
 
 pw.Widget _buildRowWithIcon(
-  String emojiName,
-  String label,
-  String value,
-  pw.Font regularFont,
-) {
+    String emojiName,
+    String label,
+    String value,
+    pw.Font regularFont,
+    ) {
   final pw.MemoryImage? icon = EmojiUtils.pdfEmoji(emojiName);
 
   return pw.Row(

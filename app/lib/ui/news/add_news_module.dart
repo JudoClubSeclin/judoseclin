@@ -41,9 +41,9 @@ class AddNewsModule implements UIModule {
     return BlocProvider<NewsBloc>(
       create: (context) {
         final newsInteractor = getIt<NewsInteractor>();
-        final _service = getIt<FirestoreService>();
+        final service = getIt<FirestoreService>();
 
-        return NewsBloc(_service, newsInteractor, newsId: '');
+        return NewsBloc(service, newsInteractor, newsId: '');
       },
       child: AddNewsView(),
     );

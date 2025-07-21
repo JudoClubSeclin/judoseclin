@@ -11,7 +11,7 @@ import 'account_view.dart';
 class AccountPage extends StatelessWidget {
   final String? adherentId;
 
-  const AccountPage({Key? key, this.adherentId}) : super(key: key);
+  const AccountPage({super.key, this.adherentId});
 
   @override
   Widget build(BuildContext context) {

@@ -37,6 +37,8 @@ dependencies:
   pdf: ^3.11.3
   universal_html: ^2.2.4
   printing: ^5.14.2
+  web: ^1.1.1
+  js: ^0.7.2
 
 dev_dependencies:
   flutter_test:

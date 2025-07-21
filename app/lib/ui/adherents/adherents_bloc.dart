@@ -7,8 +7,9 @@ import 'package:judoseclin/core/di/api/firestore_service.dart';
 import '../../core/utils/envoyer_email_invitation.dart';
 import '../../core/utils/generete_and_download_pdf.dart';
 import 'adherents_state.dart';
-import 'interactor/adherents_interactor.dart';
 import 'adherents_event.dart';
+import 'interactor/adherents_interactor.dart';
+
 
 class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
   final AdherentsInteractor adherentsInteractor;

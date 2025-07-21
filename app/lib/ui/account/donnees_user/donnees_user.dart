@@ -5,8 +5,6 @@ import 'package:judoseclin/domain/entities/adherents.dart';
 import '../../../core/di/api/auth_service.dart';
 import '../../../core/di/api/firestore_service.dart';
 import '../../../core/di/injection.dart';
-import '../../../theme.dart';
-import '../compte_adherent/compte_adherent_view.dart';
 
 class DonneesUser extends StatefulWidget {
   final List<Adherents> adherents;
@@ -124,7 +122,7 @@ class _DonneesUserState extends State<DonneesUser> {
               },
             ),
           );
-        }).toList(),
+        })
       ],
     );
   }
