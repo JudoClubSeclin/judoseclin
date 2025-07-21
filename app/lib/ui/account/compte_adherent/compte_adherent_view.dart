@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:judoseclin/theme.dart';
+import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
 
 import '../../common/widgets/images/image_fond_ecran.dart';
 import '../competition_inscrites/competition_inscrite.dart';
@@ -63,6 +64,7 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("CompteAdherentView build() appelé");
     if (isLoading) {
       return const Scaffold(
 
@@ -84,6 +86,8 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
     }
 
     return Scaffold(
+       appBar: CustomAppBar(title: '',),
+    drawer: MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
 
         body: Container(
             decoration: const BoxDecoration(

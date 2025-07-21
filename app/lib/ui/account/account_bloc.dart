@@ -10,19 +10,24 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final String userId;
 
   AccountBloc({required this.accountInteractor, required this.userId})
-    : super(AccountInitial()) {
+      : super(AccountInitial()) {
     on<LoadUserInfo>((event, emit) async {
       emit(AccountLoading());
       try {
-        final userData = await accountInteractor.fetchUserData(userId);
-        debugPrint('AccountBloc: LoadUserInfo event received');
-
+        Map<String, dynamic> userData;
+        if (event.adherentId != null && event.adherentId!.isNotEmpty) {
+          debugPrint('AccountBloc: LoadUserInfo event with adherentId ${event.adherentId}');
+          userData = await accountInteractor.fetchUserData(event.adherentId!);
+        } else {
+          debugPrint('AccountBloc: LoadUserInfo event with connected userId $userId');
+          userData = await accountInteractor.fetchUserData(userId);
+        }
         emit(AccountLoaded(userData: userData));
       } catch (e) {
         debugPrint('AccountBloc: Error - ${e.toString()}');
-
         emit(AccountError(message: e.toString()));
       }
     });
   }
 }
+

@@ -36,24 +36,21 @@ class AccountView extends StatelessWidget {
     final List<Adherents> adherents = [utilisateurPrincipal];
 
     return Scaffold(
-
-
-    body:  Container(
+      body:  Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage(ImageFondEcran.imagePath),
             fit: BoxFit.cover,
           ),
         ),
-        child: SingleChildScrollView(
+
           child: ConstrainedBox(
             constraints: BoxConstraints(
               minHeight: MediaQuery.of(context).size.height,
             ),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
-              child:
-              Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
@@ -80,7 +77,8 @@ class AccountView extends StatelessWidget {
             ),
           ),
         ),
-      ),
+
+
     );
   }
 }

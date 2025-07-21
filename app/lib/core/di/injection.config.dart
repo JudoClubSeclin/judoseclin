@@ -39,6 +39,7 @@ import '../../domain/usecases/fetch_news_data_usecase.dart' as _i527;
 import '../../domain/usecases/fetch_user_data_usecase.dart' as _i656;
 import '../../ui/account/account_interactor.dart' as _i830;
 import '../../ui/account/account_module.dart' as _i692;
+import '../../ui/account/compte_adherent/compte_adherent_module.dart' as _i150;
 import '../../ui/adherents/add_adherents_module.dart' as _i776;
 import '../../ui/adherents/adherents-detail/adherents_detail_module.dart'
     as _i10;
@@ -115,6 +116,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i483.LandingModule(gh<_i573.AppRouter>()));
     gh.singleton<_i692.AccountModule>(
         () => _i692.AccountModule(gh<_i573.AppRouter>()));
+    gh.singleton<_i150.CompteAdherentsModule>(
+        () => _i150.CompteAdherentsModule(gh<_i573.AppRouter>()));
     gh.singleton<_i658.AddNewsModule>(
         () => _i658.AddNewsModule(gh<_i573.AppRouter>()));
     gh.singleton<_i878.ResetPasswordModule>(

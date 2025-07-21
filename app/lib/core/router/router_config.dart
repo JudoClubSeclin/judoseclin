@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:judoseclin/ui/account/account_module.dart';
+import 'package:judoseclin/ui/account/compte_adherent/compte_adherent_module.dart';
 import 'package:judoseclin/ui/adherents/add_adherents_module.dart';
 import 'package:judoseclin/ui/adherents/adherents-detail/adherents_detail_module.dart';
 import 'package:judoseclin/ui/adherents/list_adherents_module.dart';
@@ -33,7 +34,8 @@ class AppRouterConfig {
           ...getIt<AdherentsDetailModule>().getRoutes(),
           ...getIt<AddCompetitionModule>().getRoutes(),
           ...getIt<AddNewsModule>().getRoutes(),
-          ...getIt<CotisationModule>().getRoutes()
+          ...getIt<CotisationModule>().getRoutes(),
+          ...getIt<CompteAdherentsModule>().getRoutes()
         ],
         errorBuilder: (context, state) => const ErrorPage(),
       );
