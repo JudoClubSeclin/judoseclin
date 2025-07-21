@@ -16,10 +16,6 @@ class AccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentUserId = FirebaseAuth.instance.currentUser?.uid;
-    final isSelf = currentUserId == userData['id'];
-    final isAdmin = context.read<FunctionAdminService>().isAdmin;
-    final showAdminActions = isAdmin && isSelf;
 
     final utilisateurPrincipal = Adherents(
       id: userData['id'] ?? '',
