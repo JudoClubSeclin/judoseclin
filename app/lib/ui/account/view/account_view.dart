@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/ui/account/donnees_user/donnees_user.dart';
-import 'package:provider/provider.dart';
 
 import '../../../core/utils/date_converter.dart';
-import '../../../core/utils/function_admin.dart';
 import '../../../theme.dart';
 import '../../common/widgets/images/image_fond_ecran.dart';
 

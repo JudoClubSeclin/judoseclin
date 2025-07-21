@@ -34,11 +34,6 @@ class AdherentsDto {
     required this.sante,
     required this.medicalCertificate,
     required this.invoice,
-<<<<<<< HEAD
+    required this.familyId
   });
 }
-=======
-    required this.familyId
-});
-}
->>>>>>> refactoclean

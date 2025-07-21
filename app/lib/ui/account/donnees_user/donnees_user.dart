@@ -4,6 +4,7 @@ import 'package:judoseclin/domain/entities/adherents.dart';
 import '../../../core/di/api/auth_service.dart';
 import '../../../core/di/api/firestore_service.dart';
 import '../../../core/di/injection.dart';
+import '../../../theme.dart';
 import '../view/compte_adherent_view.dart';
 
 class DonneesUser extends StatefulWidget {
@@ -42,20 +43,10 @@ class _DonneesUserState extends State<DonneesUser> {
         return;
       }
 
-<<<<<<< HEAD
-      debugPrint("🔍 Email utilisateur trouvé : $userEmail");
-
-      var querySnapshot =
-          await FirebaseFirestore.instance
-              .collection("adherents")
-              .where("email", isEqualTo: userEmail)
-              .get();
-=======
       final userQuery = await _firestoreService
           .collection("adherents")
           .where("email", isEqualTo: userEmail)
           .get();
->>>>>>> refactoclean
 
       if (userQuery.docs.isEmpty) {
         debugPrint("Aucun document trouvé pour cet email : $userEmail");
@@ -70,8 +61,6 @@ class _DonneesUserState extends State<DonneesUser> {
         debugPrint("Aucun familyId trouvé pour cet utilisateur");
         return;
       }
-
-      debugPrint("FAMILY ID: $currentFamilyId");
 
       final familyQuery = await _firestoreService
           .collection("adherents")
@@ -107,107 +96,54 @@ class _DonneesUserState extends State<DonneesUser> {
       return const Center(child: Text("Aucune donnée trouvée"));
     }
 
-<<<<<<< HEAD
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Wrap(
-              children: [
-                Text(
-                  "Prénom: ${userData!['lastName'] ?? 'Non disponible'}, ",
-                  style: textStyleText(context),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  "Nom: ${userData!['firstName'] ?? 'Non disponible'}, ",
-                  style: textStyleText(context),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  "Email: ${userData!['email'] ?? 'Non disponible'}, ",
-                  style: textStyleText(context),
-                ),
-              ],
-            ),
-            const SizedBox(width: 10),
-            const SizedBox(height: 20),
-            Wrap(
-              children: [
-                Text(
-                  "Adresse: ${userData!['address'] ?? 'Non disponible'}, ",
-                  style: textStyleText(context),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  "Téléphone: ${userData!['phone'] ?? 'Non disponible'}, ",
-                  style: textStyleText(context),
-                ),
-                const SizedBox(width: 10),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Wrap(
-              children: [
-                const SizedBox(width: 10),
-                Text(
-                  "Categories: ${userData!['category'] ?? 'Non disponible'}, ",
-                  style: textStyleText(context),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  "Discipline: ${userData!['discipline'] ?? 'Non disponible'}, ",
-                  style: textStyleText(context),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  "Ceinture: ${userData!['belt'] ?? 'Non disponible'}, ",
-                  style: textStyleText(context),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  " N° de licence: ${userData!['licence'] ?? 'Non disponible'}, ",
-                  style: textStyleText(context),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-=======
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+    return ListView(
       padding: const EdgeInsets.all(10),
-      itemCount: familyMembers.length,
-      itemBuilder: (context, index) {
-        final member = familyMembers[index]; // Récupérer le membre correspondant à l'index
-        return Card(
-          color: Colors.transparent,
-          margin: const EdgeInsets.symmetric(vertical: 6),
-          child: ListTile(
-            title: Text("${member['firstName']} ${member['lastName']}"),
-            subtitle: Text(
-                "${member['category']} - Ceinture: ${member['belt']}"),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () {
-              debugPrint("ID du membre cliqué: ${member['id']}"); // Vérifiez dans la console
-
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      CompteAdherentView(adherentId: member['id']),
-                ),
-              );
-            },
+      children: [
+        Card(
+          color: Colors.white.withOpacity(0.9),
+          margin: const EdgeInsets.only(bottom: 20),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                Text("Prénom: ${userData!['lastName'] ?? 'Non disponible'}", style: textStyleText(context)),
+                Text("Nom: ${userData!['firstName'] ?? 'Non disponible'}", style: textStyleText(context)),
+                Text("Email: ${userData!['email'] ?? 'Non disponible'}", style: textStyleText(context)),
+                Text("Adresse: ${userData!['address'] ?? 'Non disponible'}", style: textStyleText(context)),
+                Text("Téléphone: ${userData!['phone'] ?? 'Non disponible'}", style: textStyleText(context)),
+                Text("Catégorie: ${userData!['category'] ?? 'Non disponible'}", style: textStyleText(context)),
+                Text("Discipline: ${userData!['discipline'] ?? 'Non disponible'}", style: textStyleText(context)),
+                Text("Ceinture: ${userData!['belt'] ?? 'Non disponible'}", style: textStyleText(context)),
+                Text("N° de licence: ${userData!['licence'] ?? 'Non disponible'}", style: textStyleText(context)),
+              ],
+            ),
           ),
-        );
-      },
->>>>>>> refactoclean
+        ),
+        const Text("Membres de la famille", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 10),
+        ...familyMembers.map((member) {
+          return Card(
+            color: Colors.transparent,
+            elevation: 0,
+            margin: const EdgeInsets.symmetric(vertical: 6),
+            child: ListTile(
+              title: Text("${member['firstName']} ${member['lastName']}"),
+              subtitle: Text("${member['category']} - Ceinture: ${member['belt']}"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CompteAdherentView(adherentId: member['id']),
+                  ),
+                );
+              },
+            ),
+          );
+        })
+      ],
     );
-
   }
 }

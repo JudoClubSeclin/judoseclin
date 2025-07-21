@@ -59,23 +59,8 @@ class AdherentsRepositoryImpl extends AdherentsRepository {
       rethrow;
     }
   }
-}
-<<<<<<< HEAD
-=======
 
-@override
-Future<void> updateField(
-    String adherentId, String fieldName, String newValue) async {
-  try {
-    await _firestoreService.collection('adherents').doc(adherentId).update({
-      fieldName: newValue,
-    });
-  } catch (e) {
-    // Gestion des erreurs
-    debugPrint('Error updating field: $e');
-    rethrow;
-  }
-}
+
 
 @override
 Future<List<Adherents>> getAdherentsByFamilyId(String familyId) async {
@@ -89,4 +74,3 @@ Future<List<Adherents>> getAdherentsByFamilyId(String familyId) async {
 
 
 }
->>>>>>> refactoclean

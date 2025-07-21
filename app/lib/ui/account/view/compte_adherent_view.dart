@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:judoseclin/theme.dart';
 
-import '../../common/widgets/appbar/custom_appbar.dart';
 import '../../common/widgets/images/image_fond_ecran.dart';
 import '../competition_inscrites/competition_inscrite.dart';
 

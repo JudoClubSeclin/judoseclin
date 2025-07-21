@@ -16,33 +16,21 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
   final AuthService _authService;
   final FirestoreService _firestoreService;
 
-<<<<<<< HEAD
   AdherentsBloc(
-    this.adherentsInteractor,
-    this._authService,
-    this._firestoreService, {
-    required this.adherentId,
-  }) : super(SignUpInitialState()) {
-=======
-  AdherentsBloc(this.adherentsInteractor, this._authService,
-      this._firestoreService, {required this.adherentId})
-      : super(SignUpInitialState()) {
->>>>>>> refactoclean
+      this.adherentsInteractor,
+      this._authService,
+      this._firestoreService, {
+        required this.adherentId,
+      }) : super(SignUpInitialState()) {
     on<AddAdherentsSignUpEvent>(_onAddAdherentsSignUp);
     on<GeneratePdfEvent>(_onGeneratePdf);
     on<CheckFamilyByAddressEvent>(_onCheckFamilyByAddress);
-
   }
 
-<<<<<<< HEAD
   Future<void> _onAddAdherentsSignUp(
-    AddAdherentsSignUpEvent event,
-    Emitter<AdherentsState> emit,
-  ) async {
-=======
-  Future<void> _onAddAdherentsSignUp(AddAdherentsSignUpEvent event,
-      Emitter<AdherentsState> emit,) async {
->>>>>>> refactoclean
+      AddAdherentsSignUpEvent event,
+      Emitter<AdherentsState> emit,
+      ) async {
     emit(SignUpLoadingState());
     try {
       if (event.email.isEmpty) {
@@ -50,29 +38,7 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
         return;
       }
 
-<<<<<<< HEAD
-      DocumentReference adherentRef = await _firestoreService
-          .collection('adherents')
-          .add({
-            'firstName': event.firstName,
-            'lastName': event.lastName,
-            'email': event.email,
-            'dateOfBirth': event.dateOfBirth,
-            'licence': event.licence,
-            'belt': event.belt,
-            'discipline': event.discipline,
-            'category': event.category,
-            'tutor': event.tutor,
-            'phone': event.phone,
-            'address': event.address,
-            'image': event.image,
-            'sante': event.sante,
-            'medicalCertificate': event.medicalCertificate,
-            'invoice': event.invoice,
-          });
-=======
-      DocumentReference adherentRef = await _firestoreService.collection(
-          'adherents').add({
+      DocumentReference adherentRef = await _firestoreService.collection('adherents').add({
         'firstName': event.firstName,
         'lastName': event.lastName,
         'email': event.email,
@@ -88,22 +54,17 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
         'sante': event.sante,
         'medicalCertificate': event.medicalCertificate,
         'invoice': event.invoice,
-        'familyId': event.familyId
+        'familyId': event.familyId,
       });
->>>>>>> refactoclean
 
       bool accountExists = event.userExists;
 
       if (!accountExists) {
         await envoyerEmailInvitation(
-<<<<<<< HEAD
           email: event.email,
           nom: event.firstName,
           prenom: event.lastName,
         );
-=======
-            email: event.email, nom: event.firstName, prenom: event.lastName);
->>>>>>> refactoclean
       } else {
         User? user = _authService.currentUser;
         if (user != null) {
@@ -115,31 +76,17 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
 
       emit(SignUpSuccessState(!accountExists, adherentRef.id));
 
-      // Déclencher la génération du PDF après l'enregistrement réussi
+      // Génération du PDF
       add(GeneratePdfEvent(adherentId: adherentRef.id));
     } catch (e) {
-<<<<<<< HEAD
-      emit(
-        SignUpErrorState(
-          "Erreur lors de l'ajout de l'adhérent : ${e.toString()}",
-        ),
-      );
+      emit(SignUpErrorState("Erreur lors de l'ajout de l'adhérent : ${e.toString()}"));
     }
   }
 
   Future<void> _onGeneratePdf(
-    GeneratePdfEvent event,
-    Emitter<AdherentsState> emit,
-  ) async {
-=======
-      emit(SignUpErrorState(
-          "Erreur lors de l'ajout de l'adhérent : ${e.toString()}"));
-    }
-  }
-
-  Future<void> _onGeneratePdf(GeneratePdfEvent event,
-      Emitter<AdherentsState> emit,) async {
->>>>>>> refactoclean
+      GeneratePdfEvent event,
+      Emitter<AdherentsState> emit,
+      ) async {
     emit(PdfGenerationState(isGenerating: true));
     try {
       await generateAndPrintPdf(event.adherentId, adherentsInteractor);
@@ -148,9 +95,7 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
       emit(PdfGenerationState(isGenerating: false, error: e.toString()));
     }
   }
-<<<<<<< HEAD
-}
-=======
+
   Future<void> _onCheckFamilyByAddress(
       CheckFamilyByAddressEvent event,
       Emitter<AdherentsState> emit,
@@ -175,13 +120,9 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
           email: email,
           phone: phone,
         ));
-      } else {
-        // Aucun membre de famille trouvé, ne rien faire ou retourner un état neutre
       }
     } catch (e) {
-      // Optionnel : ajouter un état d’erreur si nécessaire
       emit(SignUpErrorState("Erreur lors de la vérification de l'adresse : ${e.toString()}"));
     }
   }
 }
->>>>>>> refactoclean
