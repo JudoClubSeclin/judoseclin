@@ -28,13 +28,23 @@ class CotisationInteractor {
     }
   }
 
-  Future<Iterable<Cotisation>> fetchAdherentsData() async {
+  Future<Iterable<Cotisation>> fetchCotisationsByAdherentId(String adherentId) async {
+    try {
+      return await fetchCotisationDataUseCase.getCotisationsByAdherentId(adherentId);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
+  Future<Iterable<Cotisation>> fetchCotisations() async {
     try {
       return await fetchCotisationDataUseCase.getCotisation();
     } catch (e) {
       rethrow;
     }
   }
+
 
   Future<Cotisation?> getCotisationById(String cotisationId) async {
     try {

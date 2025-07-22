@@ -2,6 +2,12 @@ import '../../../domain/entities/cotisation.dart';
 
 abstract class CotisationEvent {}
 
+class LoadCotisationsEvent extends CotisationEvent {
+  final String adherentId;
+
+  LoadCotisationsEvent(this.adherentId);
+}
+
 class AddCotisationSignUpEvent extends CotisationEvent {
   final String id;
   final String adherentId;

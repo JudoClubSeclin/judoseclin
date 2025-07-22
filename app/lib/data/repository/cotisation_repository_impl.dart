@@ -21,6 +21,20 @@ class CotisationRepositoryImpl extends CotisationRepository {
   }
 
   @override
+  Stream<Iterable<Cotisation>> getCotisationsByAdherentId(String adherentId) {
+    return _firestoreService
+        .collection('cotisation')
+        .where('adherentId', isEqualTo: adherentId)
+        .snapshots()
+        .map(
+          (querySnapshot) => querySnapshot.docs
+          .map((doc) => Cotisation.fromFMap(doc.data(), doc.id))
+          .toList(),
+    );
+  }
+
+
+  @override
   Future<Map<String, dynamic>?> getById(String cotisationId) {
     return _firestoreService
         .collection('cotisation')

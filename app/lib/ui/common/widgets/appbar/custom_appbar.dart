@@ -163,25 +163,91 @@ class CustomDrawer extends StatelessWidget {
       {'label': 'Compétitions', 'route': '/competition'},
     ];
 
-    return drawerItems.map((item) {
-      return ListTile(
-        title: Text(item['label']!, style: textStyleTextAppBar(context)),
-        onTap: () {
-          GoRouter.of(context).go(item['route']!);
-          Navigator.pop(context);
+    return [
+      Consumer<FunctionAdminService>(
+        builder: (context, authService, child) {
+          final bool hasAccess =
+              authService.isAdmin; // pas besoin de tester la largeur ici
+
+          debugPrint('hasAccess: $hasAccess');
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (hasAccess) ...[
+                GestureDetector(
+                  onTap: () => GoRouter.of(context).go('/admin/add/adherents'),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Ajout-Adhérents',
+                      style: textStyleText(context),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15,),
+                GestureDetector(
+                  onTap: () => GoRouter.of(context).go('/admin/list/adherents'),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Liste-Adhérents',
+                      style: textStyleText(context),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15,),
+                GestureDetector(
+                  onTap: () => GoRouter.of(context).go('/admin/add/competition'),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Ajout-compétition',
+                      style: textStyleText(context),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15,),
+                GestureDetector(
+                  onTap: () => GoRouter.of(context).go('/admin/add/news'),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Ajout-news',
+                      style: textStyleText(context),
+                    ),
+                  ),
+                ),
+                const Divider(),
+              ],
+              ...drawerItems.map((item) {
+                return ListTile(
+                  title: Text(item['label']!, style: textStyleText(context)),
+                  onTap: () {
+                    GoRouter.of(context).go(item['route']!);
+                    Navigator.pop(context);
+                  },
+                );
+              }).toList(),
+            ],
+          );
         },
-      );
-    }).toList();
+      ),
+    ];
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: theme.colorScheme.onSurface,
+      backgroundColor: theme.colorScheme.primary,
       elevation: 0,
-      child: ListView(
+      child:Align(
+        alignment: Alignment.topCenter,
+      child:ListView(
         padding: const EdgeInsets.fromLTRB(10, 25, 0, 0),
         children: generateDrawerItems(context),
+      ),
       ),
     );
   }

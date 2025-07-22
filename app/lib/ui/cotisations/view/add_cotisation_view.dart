@@ -12,124 +12,171 @@ import '../cotisation_bloc.dart';
 import '../cotisation_event.dart';
 import '../cotisation_sate.dart';
 
-class AddCotisationView extends StatelessWidget {
+class AddCotisationView extends StatefulWidget {
   final String adherentId;
+  const AddCotisationView({super.key, required this.adherentId});
+
+  @override
+  State<AddCotisationView> createState() => _AddCotisationViewState();
+}
+
+class _AddCotisationViewState extends State<AddCotisationView> {
   final amountController = TextEditingController();
   final dateController = TextEditingController();
-  final chequesController = TextEditingController();
   final bankNameController = TextEditingController();
 
-  AddCotisationView({super.key, required this.adherentId});
+  List<TextEditingController> chequeNumberControllers = [];
+  List<TextEditingController> chequeAmountControllers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    addChequeField();  // On démarre avec un chèque par défaut
+  }
+
+  void addChequeField() {
+    if (chequeNumberControllers.length < 4) {
+      setState(() {
+        chequeNumberControllers.add(TextEditingController());
+        chequeAmountControllers.add(TextEditingController());
+      });
+    }
+  }
+
+  void removeChequeField(int index) {
+    setState(() {
+      chequeNumberControllers[index].dispose();
+      chequeAmountControllers[index].dispose();
+      chequeNumberControllers.removeAt(index);
+      chequeAmountControllers.removeAt(index);
+    });
+  }
+
+  @override
+  void dispose() {
+    amountController.dispose();
+    dateController.dispose();
+    bankNameController.dispose();
+    for (var controller in chequeNumberControllers) {
+      controller.dispose();
+    }
+    for (var controller in chequeAmountControllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CotisationBloc, CotisationState>(
-      builder: (context, state) {
-        if (state is CotisationSignUpLoadingState) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is CotisationSignUpErrorState) {
-          return Text(state.error);
-        } else {
-          return _buildForm(context);
-        }
-      },
-    );
-  }
-
-  Widget _buildForm(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: ''),
-      drawer: MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
-      body: DecoratedBox(
+        appBar: CustomAppBar(title: '',),
+        drawer: MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
+      body:  Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage(ImageFondEcran.imagePath),
             fit: BoxFit.cover,
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              Text(
-                'Ajouter la cotisation ',
-                style: titleStyleMedium(context),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CustomTextField(
-                    labelText: 'Espèce',
-                    controller: amountController,
-                  ),
-                  CustomTextField(
-                    labelText: 'Date',
-                    controller: dateController,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 35),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CustomTextField(
-                    labelText: 'Numero : montant du cheque  ',
-                    controller: chequesController,
-                  ),
-                  CustomTextField(
-                    labelText: 'Nom de la banque ',
-                    controller: bankNameController,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              CustomButton(
-                onPressed: () {
-                  try {
-                    debugPrint('bouton appuyer');
 
-                    String amountInput = amountController.text.trim();
-                    int amount =
-                        amountInput.isNotEmpty
-                            ? int.parse(amountInput)
-                            : 0; // Valeur par défaut si la chaîne est vide
-
-                    String chequesInput = chequesController.text.trim();
-                    List<Cheque> cheques =
-                        chequesInput.isNotEmpty
-                            ? parseCheques(chequesInput)
-                            : [];
-
-                    debugPrint('Valeur de amountController: $amountInput');
-                    debugPrint('Valeur de chequesController: $chequesInput');
-                    debugPrint(
-                      'Valeur de chequesController (avant parseCheques): $chequesInput',
-                    );
-
-                    context.read<CotisationBloc>().add(
-                      AddCotisationSignUpEvent(
-                        id: 'adherentId',
-                        adherentId: adherentId,
-                        amount: amount,
-                        date: dateController.text.trim(),
-                        cheques: cheques,
-                        bankName: bankNameController.text.trim(),
+        child: SingleChildScrollView(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text("Ajouter la cotisation", style: titleStyleMedium(context),),
+            const SizedBox(height: 55,),
+            // Espèces, date, banque...
+            CustomTextField(
+                labelText: 'Espèce', controller: amountController),
+            const SizedBox(height: 20),
+          CustomTextField(labelText:' Date', controller: dateController),
+            const SizedBox(height: 20),
+           CustomTextField(labelText: "Non de la banque", controller: bankNameController),
+            const SizedBox(height: 20),
+            // Liste des chèques
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: chequeNumberControllers.length,
+              itemBuilder: (context, index) {
+                return Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: chequeNumberControllers[index],
+                        style: textStyleText(context),
+                        decoration: InputDecoration(
+                          labelText: 'N° chèque',
+                          labelStyle: textStyleText(context),
+                          enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red.shade400),
+                          ),
+                          floatingLabelStyle: TextStyle(color: Colors.red.shade400),
+                        )
+                        ),
                       ),
-                    );
-                  } catch (e) {
-                    debugPrint('Erreur inattendue: $e');
+
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: TextField(
+                        controller: chequeAmountControllers[index],
+                        keyboardType: TextInputType.number,
+                        style: textStyleText(context),
+                        decoration: InputDecoration(
+                labelText: 'N° chèque',
+                labelStyle: textStyleText(context),
+                enabledBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.black),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.red.shade400),
+                ),
+                floatingLabelStyle: TextStyle(color: Colors.red.shade400),
+                )
+                        ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.remove_circle, color: Colors.red),
+                      onPressed: () => removeChequeField(index),
+                    ),
+                  ],
+                );
+              },
+            ),
+            const SizedBox(height: 50),
+
+            CustomButton(
+              onPressed: addChequeField,
+              label: 'Ajouter un chèque',
+            ),
+
+            const SizedBox(height: 20),
+
+           CustomButton(
+              onPressed: () {
+                // Construire la liste des chèques ici à partir des controllers
+                List<Cheque> cheques = [];
+                for (int i = 0; i < chequeNumberControllers.length; i++) {
+                  String num = chequeNumberControllers[i].text.trim();
+                  String montantStr = chequeAmountControllers[i].text.trim();
+                  int montant = int.tryParse(montantStr) ?? 0;
+                  if (num.isNotEmpty && montant > 0) {
+                    cheques.add(Cheque(numeroCheque: num, montantCheque: montant));
                   }
-                },
-                label: 'Enregistrer la cotisation',
-              ),
-            ],
-          ),
+                }
+
+                // Puis envoyer au Bloc par exemple avec amount, date, bankName, cheques...
+              },
+              label: 'Enregistrer la cotisation',
+            ),
+          ],
         ),
       ),
+      )
     );
   }
 }

@@ -24,12 +24,14 @@ class CotisationModule implements UIModule {
   List<RouteBase> getRoutes() {
     return [
       GoRoute(
-          path: '/admin/add/cotisation',
-          pageBuilder: (context, state) {
-            return MaterialPage(
-              child: _buildAccountPage(),
-            );
-          })
+        path: '/admin/add/cotisation/:adherentId',
+        pageBuilder: (context, state) {
+          final adherentId = state.pathParameters['adherentId'] ?? '';
+          return MaterialPage(
+            child: _buildAccountPage(adherentId),
+          );
+        },
+      ),
     ];
   }
 
@@ -38,13 +40,17 @@ class CotisationModule implements UIModule {
     return {};
   }
 
-  Widget _buildAccountPage() {
+
+  Widget _buildAccountPage(String adherentId) {
     final interactor = getIt<CotisationInteractor>();
     return BlocProvider<CotisationBloc>(
       create: (context) {
-        return CotisationBloc( adherentId: '', cotisationInteractor: interactor);
+        return CotisationBloc(
+          adherentId: adherentId,
+          cotisationInteractor: interactor,
+        );
       },
-      child: AddCotisationView(adherentId: '',),
+      child: AddCotisationView(adherentId: adherentId),
     );
   }
 }

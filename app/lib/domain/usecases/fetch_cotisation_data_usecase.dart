@@ -13,9 +13,8 @@ class FetchCotisationDataUseCase {
   Future<Iterable<Cotisation>> getCotisation() async {
     try {
       debugPrint("Fetching cotisation data from Firestore...");
-
       Stream<Iterable<Cotisation>> cotisationStream =
-          cotisationRepository.getCotisationStream();
+      cotisationRepository.getCotisationStream();
       return await cotisationStream.first;
     } catch (e) {
       debugPrint('error fetching cotisation data: $e');
@@ -35,6 +34,18 @@ class FetchCotisationDataUseCase {
     } catch (e) {
       debugPrint('error fetching cotisation by ID: $e');
       rethrow;
+    }
+  }
+
+  Future<Iterable<Cotisation>> getCotisationsByAdherentId(String adherentId) async {
+    try {
+      debugPrint("Fetching cotisations for adherentId: $adherentId");
+      Stream<Iterable<Cotisation>> cotisationsStream =
+      cotisationRepository.getCotisationsByAdherentId(adherentId);
+      return await cotisationsStream.first;
+    } catch (e) {
+      debugPrint('error fetching cotisations by adherentId: $e');
+      return [];
     }
   }
 }

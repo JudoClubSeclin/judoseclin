@@ -52,9 +52,11 @@ class InfoFieldAdherents extends StatelessWidget {
                   alignment: WrapAlignment.spaceBetween,
                   runSpacing: 30.0,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      runAlignment: WrapAlignment.center,
+                      spacing: 10,
+                      runSpacing: 10,
                       children: [
                         InfoField(
                           label: 'Nom :',
@@ -79,8 +81,12 @@ class InfoFieldAdherents extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      runAlignment: WrapAlignment.center,
+                      spacing: 10,
+                      runSpacing: 10,
+
                       children: [
                         InfoField(
                           label: 'Discipline:',
@@ -105,8 +111,11 @@ class InfoFieldAdherents extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      runAlignment: WrapAlignment.center,
+                      spacing: 10,
+                      runSpacing: 10,
                       children: [
                         InfoField(
                           label: 'Email:',
@@ -131,8 +140,11 @@ class InfoFieldAdherents extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      runAlignment: WrapAlignment.center,
+                      spacing: 10,
+                      runSpacing: 10,
                       children: [
                         InfoField(
                           label: 'Droit à l\'image:',

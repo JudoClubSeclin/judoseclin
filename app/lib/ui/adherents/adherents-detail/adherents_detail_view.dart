@@ -62,7 +62,8 @@ class AdherentsDetailView extends StatelessWidget {
                   CustomButton(
                     label: 'Ajouter la cotisation',
                     onPressed: () =>
-                        context.go('/admin/add/cotisation$adherentId'),
+                        context.go('/admin/add/cotisation/$adherentId'),
+
                   ),
                   CustomButton(
                     label: "Télécharger la fiche PDF",

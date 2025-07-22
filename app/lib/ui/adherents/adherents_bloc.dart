@@ -6,7 +6,6 @@ import 'package:judoseclin/core/di/api/firestore_service.dart';
 
 import '../../core/utils/envoyer_email_invitation.dart';
 import '../../core/utils/generete_and_download_pdf.dart';
-import '../../domain/entities/adherents.dart';
 import 'adherents_state.dart';
 import 'adherents_event.dart';
 import 'adherents_interactor.dart';

@@ -25,8 +25,8 @@ class LandingHome extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(vertical: size.height * 0.1),
             child: SizedBox(
-              width: size.height / 6,
-              height: size.height / 6,
+              width: size.height / 6.5,
+              height: size.height / 6.5,
               child: Image.asset("assets/images/logo-fond-blanc.png"),
             ),
           ),

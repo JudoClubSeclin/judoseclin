@@ -1,17 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:judoseclin/domain/entities/cotisation.dart';
-
+import 'package:flutter/material.dart';
 import 'cotisation_interactor.dart';
 import 'cotisation_event.dart';
 import 'cotisation_sate.dart';
 
 class CotisationBloc extends Bloc<CotisationEvent, CotisationState> {
-  final CotisationInteractor cotisationInteractor;
   final String adherentId;
+  final CotisationInteractor cotisationInteractor;
 
   CotisationBloc({required this.cotisationInteractor, required this.adherentId})
-    : super(CotisationSignUpInitialState()) {
+      : super(CotisationSignUpInitialState()) {
     on<CotisationEvent>((event, emit) async {
       if (event is AddCotisationSignUpEvent) {
         emit(CotisationSignUpLoadingState());
@@ -34,3 +33,6 @@ class CotisationBloc extends Bloc<CotisationEvent, CotisationState> {
     });
   }
 }
+
+
+

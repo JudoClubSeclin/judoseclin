@@ -53,8 +53,9 @@ class AccountView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Wrap(
+                    alignment: WrapAlignment.center,
+
                     children: [
                       Text(
                         'Bonjour la famille',
@@ -63,7 +64,7 @@ class AccountView extends StatelessWidget {
                       const SizedBox(width: 22),
                       Text(
                         utilisateurPrincipal.firstName,
-                        style: titleStyleMedium(context),
+                        style: titleStyleSmall(context),
                       ),
                     ],
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:judoseclin/core/utils/calculated_font_size.dart';
 
 ThemeData theme = ThemeData(
   primarySwatch: Colors.red,
@@ -55,12 +56,8 @@ TextStyle titleStyle(BuildContext context) {
 }
 
 TextStyle titleStyleLarge(BuildContext context) {
-  Size size =
-      MediaQuery.of(context).size; // Correction : utilisation de MediaQuery.of
-  double titlefont =
-      size.width / 10; // Correction : suppression de la nullabilité
   return TextStyle(
-    fontSize: titlefont,
+    fontSize: calculateTitleFontSize(context, ratio: 30),
     color: theme.colorScheme.onPrimary, // Correction : utilisation de Theme.of
     fontFamily: "Hiromisake",
     shadows: [
@@ -70,12 +67,9 @@ TextStyle titleStyleLarge(BuildContext context) {
 }
 
 TextStyle titleStyleMedium(BuildContext context) {
-  Size size =
-      MediaQuery.of(context).size; // Correction : utilisation de MediaQuery.of
-  double titlefont =
-      size.width / 18; // Correction : suppression de la nullabilité
+ 
   return TextStyle(
-    fontSize: titlefont,
+    fontSize: calculateTitleFontSize(context, ratio: 50),
     color: theme.colorScheme.onPrimary, // Correction : utilisation de Theme.of
     fontFamily: "Hiromisake",
     shadows: [
@@ -85,12 +79,8 @@ TextStyle titleStyleMedium(BuildContext context) {
 }
 
 TextStyle titleStyleSmall(BuildContext context) {
-  Size size =
-      MediaQuery.of(context).size; // Correction : utilisation de MediaQuery.of
-  double titlefont =
-      size.width / 30; // Correction : suppression de la nullabilité
   return TextStyle(
-    fontSize: titlefont,
+    fontSize: calculateTitleFontSize(context, ratio: 70),
     color: theme.colorScheme.onPrimary, // Correction : utilisation de Theme.of
     fontFamily: "Hiromisake",
     shadows: [
@@ -100,12 +90,8 @@ TextStyle titleStyleSmall(BuildContext context) {
 }
 
 TextStyle textStyleText(BuildContext context) {
-  Size size =
-      MediaQuery.of(context).size; // Correction : utilisation de MediaQuery.of
-  double titlefont =
-      size.width / 65; // Correction : suppression de la nullabilité
   return TextStyle(
-    fontSize: titlefont,
+    fontSize: calculateFontSize(context, ratio: 85),
     color: theme.colorScheme.onPrimary, // Correction : utilisation de Theme.of
     fontFamily: "Hiromisake",
     shadows: [
