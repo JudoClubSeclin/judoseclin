@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:judoseclin/core/di/api/firestore_service.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/domain/usecases/fetch_adherents_data_usecase.dart';
 
-import '../../../data/repository/adherents_repository.dart';
+import '../../data/repository/adherents_repository.dart';
 
 class AdherentsInteractor {
   final FetchAdherentsDataUseCase fetchAdherentsDataUseCase;
@@ -37,13 +38,29 @@ class AdherentsInteractor {
     }
   }
 
-  Future<Iterable<Adherents>> fetchAdherentsData() async {
+  Future<List<Adherents>> fetchAdherentsData() async {
+    List<Adherents> adherents = [];
+    Set<String> adherentId = {};
     try {
-      return await fetchAdherentsDataUseCase.getAdherents();
+      debugPrint(">>> fetchAdherentsData called");
+
+      QuerySnapshot snapshot = await _firestoreService.collection('adherents').get();
+      for (var doc in snapshot.docs) {
+        Adherents adherent = Adherents.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+        if (adherentId.contains(adherent.id)) continue;  // Pour éviter doublons si besoin
+        adherentId.add(adherent.id);
+        adherents.add(adherent); // **Ajout de l'objet à la liste**
+      }
     } catch (e) {
+      debugPrint("Erreur lors de la récupération des adherents : $e");
       rethrow;
     }
+    debugPrint(">>> Nombre d'adhérents récupérés: ${adherents.length}");
+    return adherents;
   }
+
+
+
 
   Future<Adherents?> getAdherentsById(String adherentsId) async {
     try {
@@ -66,7 +83,8 @@ class AdherentsInteractor {
   }
 
   Future<List<Adherents>> fetchByFamily(String familyId) {
-    return fetchAdherentsDataUseCase.call(familyId);
+    return fetchAdherentsDataUseCase.getAdherentsByFamilyId(familyId);
+
   }
 
   Future<Map<String, dynamic>?> fetchExistingFamilyByAddress(

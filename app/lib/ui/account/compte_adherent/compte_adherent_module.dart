@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:judoseclin/core/di/api/firestore_service.dart';
 import 'package:judoseclin/ui/account/compte_adherent/compte_adherent_view.dart';
 import 'package:judoseclin/ui/adherents/adherents_bloc.dart';
-import 'package:judoseclin/ui/adherents/interactor/adherents_interactor.dart';
+import 'package:judoseclin/ui/adherents/adherents_interactor.dart';
 import 'package:judoseclin/ui/ui_module.dart';
 
 import '../../../core/di/api/auth_service.dart';

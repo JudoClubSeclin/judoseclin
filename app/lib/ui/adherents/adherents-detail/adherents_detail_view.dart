@@ -6,7 +6,7 @@ import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 import '../../../core/utils/generete_and_download_pdf.dart';
 import '../../common/widgets/buttons/custom_buttom.dart';
 import '../../cotisations/cotisation_interactor.dart';
-import '../interactor/adherents_interactor.dart';
+import '../adherents_interactor.dart';
 import 'info_field_adherents.dart';
 import 'info_field_adherents_cotisation.dart';
 

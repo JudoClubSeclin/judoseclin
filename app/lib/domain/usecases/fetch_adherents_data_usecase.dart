@@ -3,21 +3,23 @@ import 'package:injectable/injectable.dart';
 import 'package:judoseclin/data/repository/adherents_repository.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 
-import '../../core/di/injection.dart';
 
 @injectable
 class FetchAdherentsDataUseCase {
-  final adherentsRepository = getIt<AdherentsRepository>();
+  final AdherentsRepository adherentsRepository;
 
-  FetchAdherentsDataUseCase();
+  FetchAdherentsDataUseCase(this.adherentsRepository);
 
   Future<Iterable<Adherents>> getAdherents() async {
     try {
       debugPrint('Fetching adherents data');
       Stream<Iterable<Adherents>> adherentsStream =
           adherentsRepository.getAdherentsStream();
-
-      return await adherentsStream.first;
+      List<Adherents> adherentsList = [];
+      await for (var adherentIterable in adherentsStream){
+        adherentsList.addAll(adherentIterable);
+      }
+      return adherentsList;
     } catch (e) {
       debugPrint('Error fetching adherents data: $e');
       return [];
@@ -42,7 +44,14 @@ class FetchAdherentsDataUseCase {
     }
   }
 
+
+
   Future<List<Adherents>> call(String familyId) {
     return adherentsRepository.getAdherentsByFamilyId(familyId);
   }
+  Future<List<Adherents>> getAdherentsByFamilyId(String familyId) {
+    return adherentsRepository.getAdherentsByFamilyId(familyId);
+  }
+
+
 }

@@ -9,6 +9,7 @@ import '../competition_inscrites/competition_inscrite.dart';
 class CompteAdherentView extends StatefulWidget {
   final String adherentId;
 
+
   const CompteAdherentView({required this.adherentId, super.key});
 
   @override

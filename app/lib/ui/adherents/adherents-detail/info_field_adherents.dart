@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../theme.dart';
 import '../../common/widgets/infos_fields/infos_fields.dart';
-import '../interactor/adherents_interactor.dart';
+import '../adherents_interactor.dart';
 
 class InfoFieldAdherents extends StatelessWidget {
   final String adherentId;

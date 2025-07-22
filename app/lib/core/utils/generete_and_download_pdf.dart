@@ -4,7 +4,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'dart:html' as html;
 import 'package:flutter/services.dart' show Uint8List, rootBundle;
 import 'package:flutter/material.dart';
-import '../../ui/adherents/interactor/adherents_interactor.dart';
+import '../../ui/adherents/adherents_interactor.dart';
 import 'emojis.dart';
 
 Future<void> generateAndPrintPdf(

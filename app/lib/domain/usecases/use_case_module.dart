@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:judoseclin/data/repository/adherents_repository.dart';
 import 'package:judoseclin/data/repository/user_repository/auth_state_repository.dart';
 import 'package:judoseclin/data/repository/user_repository/user_data_repository.dart';
 import 'package:judoseclin/domain/usecases/fetch_adherents_data_usecase.dart';
@@ -14,7 +15,7 @@ final GetIt getIt = GetIt.instance;
 void setupDataUseCaseModule() {
   if (!getIt.isRegistered<FetchAdherentsDataUseCase>()) {
     getIt.registerLazySingleton<FetchAdherentsDataUseCase>(
-          () => FetchAdherentsDataUseCase(),
+          () => FetchAdherentsDataUseCase(getIt<AdherentsRepository>()),
     );
   }
 

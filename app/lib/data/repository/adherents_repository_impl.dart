@@ -11,7 +11,7 @@ class AdherentsRepositoryImpl extends AdherentsRepository {
   AdherentsRepositoryImpl(this._firestoreService);
 
   @override
-  Stream<Iterable<Adherents>> getAdherentsStream() {
+  Stream<List<Adherents>> getAdherentsStream() {
     return _firestoreService
         .collection('adherents')
         .snapshots()

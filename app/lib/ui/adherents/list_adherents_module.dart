@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:judoseclin/ui/adherents/adherents_bloc.dart';
-import 'package:judoseclin/ui/adherents/interactor/adherents_interactor.dart';
+import 'package:judoseclin/ui/adherents/adherents_interactor.dart';
 import 'package:judoseclin/ui/adherents/view/list_adherents_view.dart';
 import 'package:judoseclin/ui/ui_module.dart';
 
@@ -43,8 +43,22 @@ class ListAdherentsModule implements UIModule {
     final interactor = getIt<AdherentsInteractor>();
     final auth = getIt<AuthService>();
     final firestoreService = getIt<FirestoreService>();
+    debugPrint('>>> buildAccountPage appelé');
+
+    /*return FutureBuilder<bool>(
+      future: auth.isCurrentUserAdmin(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (snapshot.hasError) {
+          return Center(child: Text('Erreur: ${snapshot.error}'));
+        }*/
+
+
     return BlocProvider<AdherentsBloc>(
       create: (context) {
+        debugPrint('>>> Bloc AdherentsBloc créé');
         return AdherentsBloc(
           interactor,
           auth,

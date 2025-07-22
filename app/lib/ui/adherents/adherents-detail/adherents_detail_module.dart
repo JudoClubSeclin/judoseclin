@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/ui/adherents/adherents-detail/adherents_detail_view.dart';
 import 'package:judoseclin/ui/adherents/adherents_bloc.dart';
-import 'package:judoseclin/ui/adherents/interactor/adherents_interactor.dart';
+import 'package:judoseclin/ui/adherents/adherents_interactor.dart';
 import 'package:judoseclin/ui/cotisations/cotisation_interactor.dart';
 
 import '../../../core/di/api/auth_service.dart';
@@ -26,7 +26,7 @@ class AdherentsDetailModule implements UIModule {
 
   @override
   List<RouteBase> getRoutes() {
-    debugPrint("🚀 Route générée : /admin/adherents/:id");
+    //debugPrint("🚀 Route générée : /admin/adherents/:id");
     return [
       GoRoute(
         name: 'adherents_detail',

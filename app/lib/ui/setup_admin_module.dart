@@ -4,7 +4,7 @@ import 'package:judoseclin/data/repository/adherents_repository_impl.dart';
 import 'package:judoseclin/data/repository/news_repository.dart';
 import 'package:judoseclin/domain/usecases/fetch_adherents_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/fetch_news_data_usecase.dart';
-import 'package:judoseclin/ui/adherents/interactor/adherents_interactor.dart';
+import 'package:judoseclin/ui/adherents/adherents_interactor.dart';
 import 'package:judoseclin/ui/cotisations/cotisation_interactor.dart';
 import 'package:judoseclin/ui/news/news_interactor.dart';
 

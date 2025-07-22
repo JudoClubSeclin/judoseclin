@@ -59,3 +59,6 @@ class CheckFamilyByAddressEvent extends AdherentsEvent {
 
   CheckFamilyByAddressEvent(this.address);
 }
+
+class LoadAllAdherentsEvent extends AdherentsEvent {}
+

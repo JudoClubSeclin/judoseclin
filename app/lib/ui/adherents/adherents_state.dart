@@ -1,3 +1,5 @@
+import 'package:judoseclin/domain/entities/adherents.dart';
+
 abstract class AdherentsState {
   const AdherentsState(); // Ajoutez un constructeur sans nom
 }
@@ -5,6 +7,20 @@ abstract class AdherentsState {
 class SignUpInitialState extends AdherentsState {}
 
 class SignUpLoadingState extends AdherentsState {}
+
+class AllAdherentsLoadedState extends AdherentsState {
+  final List<Adherents> adherents;
+
+  AllAdherentsLoadedState(this.adherents);
+}
+
+class AdherentsLoadingErrorState extends AdherentsState {
+  final String error;
+
+  AdherentsLoadingErrorState(this.error);
+}
+
+
 
 class SignUpSuccessState extends AdherentsState {
   final String adherentId;

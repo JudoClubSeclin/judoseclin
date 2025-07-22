@@ -116,4 +116,23 @@ class AuthService extends ChangeNotifier {
       debugPrint('Erreur lors de la liaison utilisateur-adhérent: $e');
     }
   }
+
+ /* Future<bool> isCurrentUserAdmin() async {
+    final user = currentUser;
+    if (user == null) return false;
+
+    try {
+      final doc = await _firestore.collection('users').doc(user.uid).get();
+      final data = doc.data();
+      if (data != null && data['role'] == 'admin') {
+        return true;
+      }
+    } catch (e) {
+      debugPrint('Erreur lors de la récupération du rôle utilisateur : $e');
+    }
+
+    return false;
+  }*/
+
+
 }

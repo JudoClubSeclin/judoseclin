@@ -6,9 +6,11 @@ import 'package:judoseclin/core/di/api/firestore_service.dart';
 
 import '../../core/utils/envoyer_email_invitation.dart';
 import '../../core/utils/generete_and_download_pdf.dart';
+import '../../domain/entities/adherents.dart';
 import 'adherents_state.dart';
 import 'adherents_event.dart';
-import 'interactor/adherents_interactor.dart';
+import 'adherents_interactor.dart';
+import 'package:flutter/material.dart';
 
 
 class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
@@ -23,10 +25,23 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
       this._firestoreService, {
         required this.adherentId,
       }) : super(SignUpInitialState()) {
+    debugPrint('>>> AdherentsBloc constructor called');
+
     on<AddAdherentsSignUpEvent>(_onAddAdherentsSignUp);
     on<GeneratePdfEvent>(_onGeneratePdf);
     on<CheckFamilyByAddressEvent>(_onCheckFamilyByAddress);
+    on<LoadAllAdherentsEvent>((event, emit) async {
+      emit(SignUpLoadingState());
+      try {
+        final adherents = await adherentsInteractor.fetchAdherentsData(); // méthode à créer
+        emit(AllAdherentsLoadedState(adherents));
+      } catch (e) {
+        emit(AdherentsLoadingErrorState(e.toString()));
+      }
+    });
+
   }
+
 
   Future<void> _onAddAdherentsSignUp(
       AddAdherentsSignUpEvent event,

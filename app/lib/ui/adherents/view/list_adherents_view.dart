@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:judoseclin/theme.dart';
@@ -5,15 +6,16 @@ import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 
 import '../../../domain/entities/adherents.dart';
 import '../../common/widgets/appbar/custom_appbar.dart';
-import '../interactor/adherents_interactor.dart';
+import '../adherents_interactor.dart';
 
 class ListAdherentsView extends StatelessWidget {
+  final AdherentsInteractor interactor;
   const ListAdherentsView({super.key, required this.interactor});
 
-  final AdherentsInteractor interactor;
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('>>> ListAdherentsView build() appelé');
     return FutureBuilder<Iterable<Adherents>>(
       future: interactor.fetchAdherentsData(),
       builder: (context, snapshot) {
@@ -53,11 +55,19 @@ class ListAdherentsView extends StatelessWidget {
                     style: titleStyleMedium(context),
                   ),
                 ),
+                const SizedBox(height: 8),
+                // **Le nouveau compteur**
+                Center(
+                  child: Text(
+                    '${adherents.length} adhérent${adherents.length > 1 ? 's' : ''}',
+                    style: textStyleText(context).copyWith(fontSize: 16),
+                  ),
+                ),
                 Expanded(
                   child: ListView.builder(
                     itemCount: adherents.length,
                     itemBuilder: (context, index) {
-                      Adherents adherent = adherents.elementAt(index);
+                      final adherent = adherents.elementAt(index);
 
                       return Padding(
                         padding: const EdgeInsets.all(20),
