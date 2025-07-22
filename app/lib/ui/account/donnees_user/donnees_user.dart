@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
+import 'package:judoseclin/ui/common/widgets/Custom_card/custom_card.dart';
 
 import '../../../core/di/api/auth_service.dart';
 import '../../../core/di/api/firestore_service.dart';
@@ -102,29 +103,25 @@ class _DonneesUserState extends State<DonneesUser> {
       children: [
         const SizedBox(height: 10),
         ...familyMembers.map((member) {
-          return Card(
-            color: Colors.transparent,
-            elevation: 0.5,
-            margin: const EdgeInsets.symmetric(vertical: 6),
-            child: ListTile(
-              title: Text("${member['firstName']} ${member['lastName']}"),
-              subtitle: Text(
-                  "${member['category']} - Ceinture: ${member['belt']}"),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                String adherentId = member['id'];
-                if (adherentId.isNotEmpty) {
-                  context.goNamed(
-                    'mes_donnees',
-                    pathParameters: {'id': adherentId},
-                  );
-                }
-              },
-            ),
+          return Column(
+            children: [
+              CustomCard(
+                  title: "${member['firstName']} ${member['lastName']}",
+                  subTitle: "${member['email']}",
+                  onTap: () {
+                    String adherentId = member['id'];
+                    if (adherentId.isNotEmpty) {
+                      context.goNamed(
+                        'mes_donnees',
+                        pathParameters: {'id': adherentId},
+                      );
+                    }
+                  }),
+              const SizedBox(height: 10),
+            ],
           );
-        })
+        }),
       ],
     );
   }
-
 }

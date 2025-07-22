@@ -7,6 +7,7 @@ import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 
 import '../../../../core/utils/competition_provider.dart'; // Import de la classe
+import 'package:judoseclin/ui/common/widgets/Custom_card/custom_card.dart'; // Import CustomCard
 
 class CompetitionsListView extends StatefulWidget {
   const CompetitionsListView({super.key});
@@ -37,7 +38,7 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
 
         return StreamBuilder<QuerySnapshot>(
           stream:
-              FirebaseFirestore.instance.collection('competition').snapshots(),
+          FirebaseFirestore.instance.collection('competition').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -48,18 +49,26 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
             }
 
             if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              return Center(
-                child:
-                  Text('Aucune compétition trouvée.', style: titleStyleSmall(context).copyWith(
-                    decoration: TextDecoration.none,)
-              )
+              return Scaffold(
+                appBar: CustomAppBar(title: '',),
+                drawer: MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
+                body:
+                Center(
+                child: Text(
+                  'Aucune compétition trouvée.',
+                  style: titleStyleSmall(context).copyWith(
+                    decoration: TextDecoration.none,
+                  ),
+                ),
+                )
               );
             }
 
             final competitions = snapshot.data!.docs;
 
             return Scaffold(
-              appBar: CustomAppBar(title: ''),
+              appBar: CustomAppBar(title: '',),
+              drawer: MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
               body: Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
@@ -92,61 +101,32 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
                       'dd/MM/yyyy',
                     ).format(date);
 
+                    // Construire le sous-titre en 3 morceaux pour CustomCard
+                    final subTitle = '$formattedDate - ${isUserInscribed
+                            ? 'Je suis inscrit à cette compétition'
+                            : 'Je ne suis pas inscrit à cette compétition'}';
+
                     return Padding(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
                       child: Align(
                         alignment: Alignment.center,
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width * 0.7,
-                          child: Card(
-                            color: Colors.transparent,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              side: BorderSide(
-                                color: Colors.red[400]!,
-                                width: 2.0,
-                              ),
-                            ),
-                            child: ListTile(
-                              title: Wrap(
-                                children: [
-                                  Text(
-                                    competition['title'] as String,
-                                    style: textStyleText(context),
+                          child: CustomCard(
+                            title: competition['title'] as String,
+                            subTitle: subTitle,
+                            onTap: () {
+                              String competitionId = competition.id;
+                              if (competitionId.isNotEmpty) {
+                                context.go('/competition/$competitionId');
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Compétition introuvable'),
                                   ),
-                                  const SizedBox(width: 15),
-                                  Text(
-                                    formattedDate,
-                                    style: textStyleText(context),
-                                  ),
-                                  const SizedBox(width: 50),
-                                  Text(
-                                    isUserInscribed
-                                        ? 'Je suis inscrit à cette compétition'
-                                        : 'Je ne suis pas inscrit à cette compétition',
-                                    style: TextStyle(
-                                      color:
-                                          isUserInscribed
-                                              ? Colors.green
-                                              : Colors.redAccent,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              onTap: () {
-                                String competitionId = competition.id;
-                                if (competitionId.isNotEmpty) {
-                                  context.go('/competition/$competitionId');
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Compétition introuvable'),
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
+                                );
+                              }
+                            },
                           ),
                         ),
                       ),
