@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
+import 'package:judoseclin/domain/entities/cotisation.dart';
 import 'package:judoseclin/ui/adherents/adherents-detail/adherents_detail_view.dart';
 import 'package:judoseclin/ui/adherents/adherents_bloc.dart';
 import 'package:judoseclin/ui/adherents/adherents_interactor.dart';
@@ -62,12 +63,14 @@ class AdherentsDetailModule implements UIModule {
     final auth = getIt<AuthService>();
     final firestoreService = getIt<FirestoreService>();
     final adherent = getIt<Adherents>();
+    final cotisation = getIt<Cotisation>();
 
     return CustomTransitionPage(
       child: BlocProvider<AdherentsBloc>(
         create:
             (context) => AdherentsBloc(
               interactor,
+              cotisationInteractor,
               auth,
               firestoreService,
               adherentId: adherentId,
@@ -77,6 +80,7 @@ class AdherentsDetailModule implements UIModule {
           adherentsInteractor: interactor,
           cotisationInteractor: cotisationInteractor,
           adherent: adherent,
+          cotisation: cotisation,
         ),
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {

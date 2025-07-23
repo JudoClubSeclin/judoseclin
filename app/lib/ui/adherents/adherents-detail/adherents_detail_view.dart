@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
+import 'package:judoseclin/domain/entities/cotisation.dart';
 import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 import '../../../core/utils/generete_and_download_pdf.dart';
@@ -15,6 +16,7 @@ class AdherentsDetailView extends StatelessWidget {
   final AdherentsInteractor adherentsInteractor;
   final CotisationInteractor cotisationInteractor;
   final Adherents adherent;
+  final Cotisation cotisation;
 
   const AdherentsDetailView({
     super.key,
@@ -22,58 +24,99 @@ class AdherentsDetailView extends StatelessWidget {
     required this.adherentsInteractor,
     required this.cotisationInteractor,
     required this.adherent,
+    required this.cotisation,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: '', ),
-      drawer: MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
+      appBar: CustomAppBar(title: ''),
+      drawer: MediaQuery.sizeOf(context).width > 750 ? null : const Drawer(),
       body: DecoratedBox(
-        position: DecorationPosition.background,
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage(ImageFondEcran.imagePath),
             fit: BoxFit.cover,
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: InfoFieldAdherents(
-                  adherentsInteractor: adherentsInteractor,
-                  adherentId: adherentId.toString(),
+              InfoFieldAdherents(
+                adherentsInteractor: adherentsInteractor,
+                adherentId: adherentId,
+              ),
+
+              const SizedBox(height: 40),
+
+              SizedBox(
+                height: 300,
+                child: FutureBuilder<Iterable<Cotisation>>(
+                  future: cotisationInteractor.fetchCotisationsByAdherentId(adherentId),
+                  builder: (context, snapshot) {
+                    debugPrint('FutureBuilder status: ${snapshot.connectionState}');
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      debugPrint('Chargement des cotisations...');
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (snapshot.hasError) {
+                      debugPrint('Erreur chargement cotisations: ${snapshot.error}');
+                      return Center(child: Text('Erreur: ${snapshot.error}'));
+                    }
+                    final cotisations = snapshot.data?.toList() ?? [];
+                    debugPrint('Nombre de cotisations reçues: ${cotisations.length}');
+                    if (cotisations.isEmpty) {
+                      return const Center(child: Text('Aucune cotisation trouvée'));
+                    }
+                    return ListView.builder(
+                      itemCount: cotisations.length,
+                      itemBuilder: (context, index) {
+                        debugPrint('Affichage cotisation #$index: id=${cotisations[index].id}');
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: InfoFieldAdherentsCotisation(
+                            cotisationInteractor: cotisationInteractor,
+                            adherentId: adherentId,
+
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
-              const SizedBox(
-                height: 60,
-              ),
-              InfoFieldAdherentsCotisation(
-                adherentId: adherentId.toString(),
-                cotisationInteractor: cotisationInteractor,
-              ),
-              Wrap(
+
+
+
+          Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 600),
+              child: Wrap(
                 alignment: WrapAlignment.center,
-                runSpacing: 10,
                 spacing: 15,
+                runSpacing: 10,
                 children: [
                   CustomButton(
                     label: 'Ajouter la cotisation',
-                    onPressed: () =>
-                        context.go('/admin/add/cotisation/$adherentId'),
-
+                    onPressed: () {
+                      context.go('/admin/add/cotisation/$adherentId');
+                    },
                   ),
                   CustomButton(
-                    label: "Télécharger la fiche PDF",
+                    label: 'Télécharger la fiche PDF',
                     onPressed: () {
-                      generateAndPrintPdf(adherentId, adherentsInteractor);
+                      generateAndPrintPdf(adherentId, adherentsInteractor,cotisationInteractor);
                     },
-                  )
+                  ),
                 ],
               ),
+            )
+          ),
+              const SizedBox(height: 30),
             ],
+
           ),
         ),
       ),

@@ -133,7 +133,7 @@ class _ColonneLinksState extends State<ColonneLinks> {
               FittedBox(
                 fit: BoxFit.scaleDown,
                 // Utilisez BoxFit.contain si vous voulez conserver les proportions
-                child: Text("Documents", style: titleStyle),
+                child: Text("Documents", style: titleStyleMedium(context)),
               ),
               FutureBuilder(
                 future: getFiles("documents"),
@@ -172,7 +172,7 @@ class _ColonneLinksState extends State<ColonneLinks> {
               FittedBox(
                 fit: BoxFit.scaleDown,
                 // Utilisez BoxFit.contain si vous voulez conserver les proportions
-                child: Text("Ceinture Noire", style: titleStyle),
+                child: Text("Ceinture Noire", style: titleStyleMedium(context)),
               ),
               FutureBuilder(
                 future: getFiles("ceinture_noire"),
@@ -200,7 +200,7 @@ class _ColonneLinksState extends State<ColonneLinks> {
               ),
               FittedBox(
                 fit: BoxFit.scaleDown,
-                child: Text("Compétitions", style: titleStyleSmall(context)),
+                child: Text("Compétitions", style: titleStyleMedium(context)),
               ),
               FutureBuilder<QuerySnapshot>(
                 future: firestore.collection('competition').get(),

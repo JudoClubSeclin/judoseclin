@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:judoseclin/theme.dart';
 import 'package:judoseclin/ui/common/widgets/buttons/custom_buttom.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 import 'package:judoseclin/ui/common/widgets/inputs/custom_textfield.dart';
 
-import '../../../core/utils/parse_cheques.dart';
 import '../../../domain/entities/cotisation.dart';
 import '../../common/widgets/appbar/custom_appbar.dart';
-import '../cotisation_bloc.dart';
-import '../cotisation_event.dart';
-import '../cotisation_sate.dart';
+import '../cotisation_interactor.dart';
+
 
 class AddCotisationView extends StatefulWidget {
+  final CotisationInteractor cotisationInteractor;
   final String adherentId;
-  const AddCotisationView({super.key, required this.adherentId});
+  const AddCotisationView({super.key, required this.adherentId, required this.cotisationInteractor});
 
   @override
   State<AddCotisationView> createState() => _AddCotisationViewState();
@@ -127,7 +125,7 @@ class _AddCotisationViewState extends State<AddCotisationView> {
                         keyboardType: TextInputType.number,
                         style: textStyleText(context),
                         decoration: InputDecoration(
-                labelText: 'N° chèque',
+                labelText: 'Motant du chèque',
                 labelStyle: textStyleText(context),
                 enabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.black),
@@ -157,21 +155,43 @@ class _AddCotisationViewState extends State<AddCotisationView> {
             const SizedBox(height: 20),
 
            CustomButton(
-              onPressed: () {
-                // Construire la liste des chèques ici à partir des controllers
-                List<Cheque> cheques = [];
-                for (int i = 0; i < chequeNumberControllers.length; i++) {
-                  String num = chequeNumberControllers[i].text.trim();
-                  String montantStr = chequeAmountControllers[i].text.trim();
-                  int montant = int.tryParse(montantStr) ?? 0;
-                  if (num.isNotEmpty && montant > 0) {
-                    cheques.add(Cheque(numeroCheque: num, montantCheque: montant));
-                  }
-                }
+             onPressed: () async {
+               List<Cheque> cheques = [];
+               for (int i = 0; i < chequeNumberControllers.length; i++) {
+                 String num = chequeNumberControllers[i].text.trim();
+                 String montantStr = chequeAmountControllers[i].text.trim();
+                 int montant = int.tryParse(montantStr) ?? 0;
+                 if (num.isNotEmpty && montant > 0) {
+                   cheques.add(Cheque(numeroCheque: num, montantCheque: montant));
+                 }
+               }
 
-                // Puis envoyer au Bloc par exemple avec amount, date, bankName, cheques...
-              },
-              label: 'Enregistrer la cotisation',
+               final amount = int.tryParse(amountController.text.trim()) ?? 0;
+               final date = dateController.text.trim();
+               final bankName = bankNameController.text.trim();
+
+               final cotisation = Cotisation(
+                 adherentId: widget.adherentId,
+                 amount: amount,
+                 date: date,
+                 bankName: bankName,
+                 cheques: cheques, id: '',
+               );
+
+               try {
+                 await widget.cotisationInteractor.addCotisation(cotisation);
+                 ScaffoldMessenger.of(context).showSnackBar(
+                   const SnackBar(content: Text('Cotisation enregistrée')),
+                 );
+                 Navigator.of(context).pop(); // revenir à la page précédente
+               } catch (e) {
+                 ScaffoldMessenger.of(context).showSnackBar(
+                   SnackBar(content: Text('Erreur: $e')),
+                 );
+               }
+             },
+
+             label: 'Enregistrer la cotisation',
             ),
           ],
         ),

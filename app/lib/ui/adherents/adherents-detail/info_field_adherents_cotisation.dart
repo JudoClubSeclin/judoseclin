@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:judoseclin/domain/entities/cotisation.dart';
+import 'package:judoseclin/theme.dart';
 
-import '../../common/widgets/infos_fields/infos_fields.dart';
 import '../../cotisations/cotisation_interactor.dart';
 
 class InfoFieldAdherentsCotisation extends StatelessWidget {
@@ -16,86 +16,107 @@ class InfoFieldAdherentsCotisation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: cotisationInteractor.getCotisationById(adherentId),
+    debugPrint('InfoFieldAdherentsCotisation: build for adherentId=$adherentId');
+
+    return FutureBuilder<Iterable<Cotisation>>(
+      future: cotisationInteractor.fetchCotisationsByAdherentId(adherentId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Text('Erreur: ${snapshot.error}');
         } else {
-          var cotisation = snapshot.data;
-          if (cotisation != null && adherentId == cotisation.adherentId) {
-            return Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Wrap(
-                alignment: WrapAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CotisationInfoField(
-                        label: 'date',
-                        value: cotisation.date,
-                        field: 'date',
-                        cotisationInteractor: cotisationInteractor,
-                        cotisation: cotisation,
-                      ),
-                      CotisationInfoField(
-                        label: 'Banque',
-                        value: cotisation.bankName,
-                        field: 'bankName',
-                        cotisationInteractor: cotisationInteractor,
-                        cotisation: cotisation,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      if (cotisation.cheques.isNotEmpty) ...[
-                        const Text(''),
-                        for (Cheque cheque in cotisation.cheques)
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CotisationInfoField(
-                                label: 'Numéro du chèque',
-                                value: cheque.numeroCheque,
-                                field: 'cheques',
-                                cotisationInteractor: cotisationInteractor,
-                                cotisation: cotisation,
-                              ),
-                              CotisationInfoField(
-                                label: 'Montant du chèque:',
-                                value: cheque.montantCheque.toString(),
-                                field: 'cheque',
-                                cotisationInteractor: cotisationInteractor,
-                                cotisation: cotisation,
-                              ),
-                            ],
-                          ),
-                      ] else
-                        CotisationInfoField(
-                          label: 'Montant en espèce',
-                          value: cotisation.amount.toString(),
-                          field: 'amount',
-                          cotisationInteractor: cotisationInteractor,
-                          cotisation: cotisation,
-                        ),
-                      // Affichage du détail du paiement en espèces ou par chèque
-                    ],
-                  ),
-                ],
-              ),
-            );
-          } else {
-            return const SizedBox();
+          final cotisations = snapshot.data ?? [];
+          debugPrint('Nombre de cotisations récupérées: ${cotisations.length}');
+
+          if (cotisations.isEmpty) {
+            return const Text('Aucune cotisation trouvée');
           }
+
+          return Column(
+            children: cotisations.map((cotisation) {
+              return Container(
+                key: ValueKey(cotisation.id),
+                padding: const EdgeInsets.all(12),
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: theme.colorScheme.primary),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _buildLabelValue(context, 'Date', cotisation.date),
+                        _buildLabelValue(context, 'Banque', cotisation.bankName),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    if (cotisation.cheques.isNotEmpty)
+                      Column(
+                        children: cotisation.cheques.map((cheque) {
+                          return Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: _buildLabelValue(
+                                      context,
+                                      'N° chèque',
+                                      cheque.numeroCheque,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: _buildLabelValue(
+                                      context,
+                                      'Montant',
+                                      '${cheque.montantCheque}€',
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 8),
+                                    width: 15,
+                                    height: 15,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: theme.colorScheme.primary,
+                                        width: 1.5,
+                                      ),
+                                      borderRadius: BorderRadius.circular(2),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              Divider(color: theme.colorScheme.primary),
+                            ],
+                          );
+                        }).toList(),
+                      )
+                    else
+                      _buildLabelValue(context, 'Montant en espèce', '${cotisation.amount}€'),
+                  ],
+                ),
+              );
+            }).toList(),
+          );
         }
       },
+    );
+  }
+
+  Widget _buildLabelValue(BuildContext context, String label, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: textStyleText(context)),
+        const SizedBox(height: 4),
+        Text(value, style: textStyleText(context)),
+      ],
     );
   }
 }

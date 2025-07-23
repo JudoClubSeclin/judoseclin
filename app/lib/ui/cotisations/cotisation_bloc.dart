@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:judoseclin/domain/entities/cotisation.dart';
-import 'package:flutter/material.dart';
 import 'cotisation_interactor.dart';
 import 'cotisation_event.dart';
 import 'cotisation_sate.dart';
@@ -11,6 +10,7 @@ class CotisationBloc extends Bloc<CotisationEvent, CotisationState> {
 
   CotisationBloc({required this.cotisationInteractor, required this.adherentId})
       : super(CotisationSignUpInitialState()) {
+
     on<CotisationEvent>((event, emit) async {
       if (event is AddCotisationSignUpEvent) {
         emit(CotisationSignUpLoadingState());
@@ -24,13 +24,25 @@ class CotisationBloc extends Bloc<CotisationEvent, CotisationState> {
             bankName: event.bankName,
           );
           await cotisationInteractor.addCotisation(cotisation);
-          debugPrint('je suis le bloc');
           emit(CotisationSignUpSuccessState(adherentId: adherentId));
         } catch (error) {
           emit(CotisationSignUpErrorState(error.toString()));
         }
       }
     });
+
+    on<LoadCotisationsByAdherentEvent>((event, emit) async {
+      emit(CotisationSignUpLoadingState());
+
+      try {
+        final cotisations = await cotisationInteractor.fetchCotisationsByAdherentId(event.adherentId);
+        emit(CotisationsLoadedState(cotisations));
+
+      } catch (e) {
+        emit(CotisationSignUpErrorState(e.toString()));
+      }
+    });
+
   }
 }
 

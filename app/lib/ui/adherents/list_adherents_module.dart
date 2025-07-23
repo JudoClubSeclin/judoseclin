@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:judoseclin/ui/adherents/adherents_bloc.dart';
 import 'package:judoseclin/ui/adherents/adherents_interactor.dart';
 import 'package:judoseclin/ui/adherents/view/list_adherents_view.dart';
+import 'package:judoseclin/ui/cotisations/cotisation_interactor.dart';
 import 'package:judoseclin/ui/ui_module.dart';
 
 import '../../../core/di/injection.dart';
@@ -41,19 +42,11 @@ class ListAdherentsModule implements UIModule {
 
   Widget _buildAccountPage() {
     final interactor = getIt<AdherentsInteractor>();
+    final cotisationInteractor = getIt<CotisationInteractor>();
     final auth = getIt<AuthService>();
     final firestoreService = getIt<FirestoreService>();
     debugPrint('>>> buildAccountPage appelé');
 
-    /*return FutureBuilder<bool>(
-      future: auth.isCurrentUserAdmin(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (snapshot.hasError) {
-          return Center(child: Text('Erreur: ${snapshot.error}'));
-        }*/
 
 
     return BlocProvider<AdherentsBloc>(
@@ -61,6 +54,7 @@ class ListAdherentsModule implements UIModule {
         debugPrint('>>> Bloc AdherentsBloc créé');
         return AdherentsBloc(
           interactor,
+          cotisationInteractor,
           auth,
           firestoreService,
           adherentId: '',

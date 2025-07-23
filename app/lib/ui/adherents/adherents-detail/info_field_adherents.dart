@@ -27,156 +27,121 @@ class InfoFieldAdherents extends StatelessWidget {
         } else {
           final adherent = snapshot.data!;
 
-          return Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: ListView(
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      adherent.firstName,
-                      style: titleStyleMedium(context),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(width: 15),
-                    Text(
-                      adherent.lastName,
-                      style: titleStyleMedium(context),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                // Nom et prénom
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Text(
+                    '${adherent.firstName} ${adherent.lastName}',
+                    style: titleStyleMedium(context),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-                const SizedBox(height: 50),
-                Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  runSpacing: 30.0,
-                  children: [
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      runAlignment: WrapAlignment.center,
-                      spacing: 10,
-                      runSpacing: 10,
-                      children: [
-                        InfoField(
-                          label: 'Nom :',
-                          value: adherent.firstName,
-                          field: 'firstName',
-                          adherentsInteractor: adherentsInteractor,
-                          adherent: adherent,
-                        ),
-                        InfoField(
-                          label: 'Prénom',
-                          value: adherent.lastName,
-                          field: 'lastName',
-                          adherentsInteractor: adherentsInteractor,
-                          adherent: adherent,
-                        ),
-                        InfoField(
-                          label: 'Tuteur légal',
-                          value: adherent.tutor!,
-                          field: 'tutor',
-                          adherentsInteractor: adherentsInteractor,
-                          adherent: adherent,
-                        ),
-                      ],
-                    ),
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      runAlignment: WrapAlignment.center,
-                      spacing: 10,
-                      runSpacing: 10,
 
-                      children: [
-                        InfoField(
-                          label: 'Discipline:',
-                          value: adherent.discipline,
-                          field: 'discipline',
-                          adherentsInteractor: adherentsInteractor,
-                          adherent: adherent,
-                        ),
-                        InfoField(
-                          label: 'Catégorie:',
-                          value: adherent.category,
-                          field: 'category',
-                          adherentsInteractor: adherentsInteractor,
-                          adherent: adherent,
-                        ),
-                        InfoField(
-                          label: 'Ceinture:',
-                          value: adherent.belt,
-                          field: 'blet',
-                          adherentsInteractor: adherentsInteractor,
-                          adherent: adherent,
-                        ),
-                      ],
-                    ),
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      runAlignment: WrapAlignment.center,
-                      spacing: 10,
-                      runSpacing: 10,
-                      children: [
-                        InfoField(
-                          label: 'Email:',
-                          value: adherent.email,
-                          field: 'email',
-                          adherentsInteractor: adherentsInteractor,
-                          adherent: adherent,
-                        ),
-                        InfoField(
-                          label: 'Téléphone:',
-                          value: adherent.phone,
-                          field: 'phone',
-                          adherentsInteractor: adherentsInteractor,
-                          adherent: adherent,
-                        ),
-                        InfoField(
-                          label: 'adresse:',
-                          value: adherent.address,
-                          field: 'address',
-                          adherentsInteractor: adherentsInteractor,
-                          adherent: adherent,
-                        ),
-                      ],
-                    ),
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      runAlignment: WrapAlignment.center,
-                      spacing: 10,
-                      runSpacing: 10,
-                      children: [
-                        InfoField(
-                          label: 'Droit à l\'image:',
-                          value: adherent.image,
-                          field: 'image',
-                          adherentsInteractor: adherentsInteractor,
-                          adherent: adherent,
-                        ),
-                        InfoField(
-                          label: 'Urgence:',
-                          value: adherent.sante,
-                          field: 'sante',
-                          adherentsInteractor: adherentsInteractor,
-                          adherent: adherent,
-                        ),
-                        InfoField(
-                          label: 'Certificat médical:',
-                          value: adherent.medicalCertificate,
-                          field: 'medicalCertificate',
-                          adherentsInteractor: adherentsInteractor,
-                          adherent: adherent,
-                        ),
-                        InfoField(
-                          label: 'Facture:',
-                          value: adherent.invoice,
-                          field: 'invoice',
-                          adherentsInteractor: adherentsInteractor,
-                          adherent: adherent,
-                        ),
-                      ],
-                    ),
-                  ],
+                // Champs d'information
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 1000), // Largeur max
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 20,
+                    runSpacing: 20,
+                    children: [
+                      InfoField(
+                        label: 'Nom :',
+                        value: adherent.firstName,
+                        field: 'firstName',
+                        adherentsInteractor: adherentsInteractor,
+                        adherent: adherent,
+                      ),
+                      InfoField(
+                        label: 'Prénom',
+                        value: adherent.lastName,
+                        field: 'lastName',
+                        adherentsInteractor: adherentsInteractor,
+                        adherent: adherent,
+                      ),
+                      InfoField(
+                        label: 'Tuteur légal',
+                        value: adherent.tutor!,
+                        field: 'tutor',
+                        adherentsInteractor: adherentsInteractor,
+                        adherent: adherent,
+                      ),
+                      InfoField(
+                        label: 'Discipline:',
+                        value: adherent.discipline,
+                        field: 'discipline',
+                        adherentsInteractor: adherentsInteractor,
+                        adherent: adherent,
+                      ),
+                      InfoField(
+                        label: 'Catégorie:',
+                        value: adherent.category,
+                        field: 'category',
+                        adherentsInteractor: adherentsInteractor,
+                        adherent: adherent,
+                      ),
+                      InfoField(
+                        label: 'Ceinture:',
+                        value: adherent.belt,
+                        field: 'blet',
+                        adherentsInteractor: adherentsInteractor,
+                        adherent: adherent,
+                      ),
+                      InfoField(
+                        label: 'Email:',
+                        value: adherent.email,
+                        field: 'email',
+                        adherentsInteractor: adherentsInteractor,
+                        adherent: adherent,
+                      ),
+                      InfoField(
+                        label: 'Téléphone:',
+                        value: adherent.phone,
+                        field: 'phone',
+                        adherentsInteractor: adherentsInteractor,
+                        adherent: adherent,
+                      ),
+                      InfoField(
+                        label: 'adresse:',
+                        value: adherent.address,
+                        field: 'address',
+                        adherentsInteractor: adherentsInteractor,
+                        adherent: adherent,
+                      ),
+                      InfoField(
+                        label: 'Droit à l\'image:',
+                        value: adherent.image,
+                        field: 'image',
+                        adherentsInteractor: adherentsInteractor,
+                        adherent: adherent,
+                      ),
+                      InfoField(
+                        label: 'Urgence:',
+                        value: adherent.sante,
+                        field: 'sante',
+                        adherentsInteractor: adherentsInteractor,
+                        adherent: adherent,
+                      ),
+                      InfoField(
+                        label: 'Certificat médical:',
+                        value: adherent.medicalCertificate,
+                        field: 'medicalCertificate',
+                        adherentsInteractor: adherentsInteractor,
+                        adherent: adherent,
+                      ),
+                      InfoField(
+                        label: 'Facture:',
+                        value: adherent.invoice,
+                        field: 'invoice',
+                        adherentsInteractor: adherentsInteractor,
+                        adherent: adherent,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

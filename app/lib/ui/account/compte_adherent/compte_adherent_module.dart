@@ -6,6 +6,7 @@ import 'package:judoseclin/core/di/api/firestore_service.dart';
 import 'package:judoseclin/ui/account/compte_adherent/compte_adherent_view.dart';
 import 'package:judoseclin/ui/adherents/adherents_bloc.dart';
 import 'package:judoseclin/ui/adherents/adherents_interactor.dart';
+import 'package:judoseclin/ui/cotisations/cotisation_interactor.dart';
 import 'package:judoseclin/ui/ui_module.dart';
 
 import '../../../core/di/api/auth_service.dart';
@@ -51,6 +52,7 @@ class CompteAdherentsModule implements UIModule {
 
   Page<dynamic> _buildDetailPage(String adherentId) {
     final adherentsInteractor = getIt<AdherentsInteractor>();
+    final cotisationInteractor = getIt<CotisationInteractor>();
     final authService = getIt<AuthService>();
     final firestoreService = getIt<FirestoreService>();
 
@@ -59,6 +61,7 @@ class CompteAdherentsModule implements UIModule {
         create: (context) =>
             AdherentsBloc(
                 adherentsInteractor ,
+                cotisationInteractor,
                 authService,
                 firestoreService,
                 adherentId: adherentId

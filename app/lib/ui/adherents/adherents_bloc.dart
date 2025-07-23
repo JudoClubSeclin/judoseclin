@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:judoseclin/core/di/api/auth_service.dart';
 import 'package:judoseclin/core/di/api/firestore_service.dart';
+import 'package:judoseclin/ui/cotisations/cotisation_interactor.dart';
 
 import '../../core/utils/envoyer_email_invitation.dart';
 import '../../core/utils/generete_and_download_pdf.dart';
@@ -14,12 +15,14 @@ import 'package:flutter/material.dart';
 
 class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
   final AdherentsInteractor adherentsInteractor;
+  final CotisationInteractor cotisationInteractor;
   final String adherentId;
   final AuthService _authService;
   final FirestoreService _firestoreService;
 
   AdherentsBloc(
       this.adherentsInteractor,
+      this.cotisationInteractor,
       this._authService,
       this._firestoreService, {
         required this.adherentId,
@@ -104,7 +107,7 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
       ) async {
     emit(PdfGenerationState(isGenerating: true));
     try {
-      await generateAndPrintPdf(event.adherentId, adherentsInteractor);
+      await generateAndPrintPdf(event.adherentId, adherentsInteractor,cotisationInteractor);
       emit(PdfGenerationState(isGenerating: false));
     } catch (e) {
       emit(PdfGenerationState(isGenerating: false, error: e.toString()));

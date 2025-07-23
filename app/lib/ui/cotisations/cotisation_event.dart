@@ -25,3 +25,9 @@ class AddCotisationSignUpEvent extends CotisationEvent {
     required this.bankName,
   });
 }
+
+class LoadCotisationsByAdherentEvent extends CotisationEvent {
+  final String adherentId;
+
+  LoadCotisationsByAdherentEvent({required this.adherentId});
+}

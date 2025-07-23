@@ -50,7 +50,7 @@ class CotisationModule implements UIModule {
           cotisationInteractor: interactor,
         );
       },
-      child: AddCotisationView(adherentId: adherentId),
+      child: AddCotisationView(adherentId: adherentId, cotisationInteractor: interactor,),
     );
   }
 }

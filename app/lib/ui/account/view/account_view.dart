@@ -13,7 +13,6 @@ class AccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final utilisateurPrincipal = Adherents(
       id: userData['id'] ?? '',
       lastName: userData['lastName'] ?? '',
@@ -36,50 +35,46 @@ class AccountView extends StatelessWidget {
     final List<Adherents> adherents = [utilisateurPrincipal];
 
     return Scaffold(
-      body:  Container(
+      body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage(ImageFondEcran.imagePath),
             fit: BoxFit.cover,
           ),
         ),
-
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Wrap(
-                    alignment: WrapAlignment.center,
-
-                    children: [
-                      Text(
-                        'Bonjour la famille',
-                        style: titleStyleMedium(context),
-                      ),
-                      const SizedBox(width: 22),
-                      Text(
-                        utilisateurPrincipal.firstName,
-                        style: titleStyleSmall(context),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  DonneesUser(
-                    adherents: adherents,
-                    utilisateurPrincipal: utilisateurPrincipal,
-                  ),
-                ],
-              ),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  children: [
+                    Text(
+                      'Bonjour la famille',
+                      style: titleStyleMedium(context),
+                    ),
+                    const SizedBox(width: 22),
+                    Text(
+                      utilisateurPrincipal.firstName,
+                      style: titleStyleMedium(context),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                DonneesUser(
+                  adherents: adherents,
+                  utilisateurPrincipal: utilisateurPrincipal,
+                ),
+              ],
             ),
           ),
         ),
-
-
+      ),
     );
   }
 }

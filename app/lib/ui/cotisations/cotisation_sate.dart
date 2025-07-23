@@ -23,3 +23,5 @@ class CotisationsLoadedState extends CotisationState {
 
   CotisationsLoadedState(this.cotisations);
 }
+
+

@@ -7,6 +7,7 @@ import 'package:judoseclin/core/di/api/firestore_service.dart';
 import 'package:judoseclin/ui/adherents/adherents_bloc.dart';
 import 'package:judoseclin/ui/adherents/adherents_interactor.dart';
 import 'package:judoseclin/ui/adherents/view/add_adherents_view.dart';
+import 'package:judoseclin/ui/cotisations/cotisation_interactor.dart';
 import 'package:judoseclin/ui/ui_module.dart';
 
 import '../../../core/di/injection.dart';
@@ -43,14 +44,17 @@ class AddAdherentsModule implements UIModule {
     return BlocProvider<AdherentsBloc>(
       create: (context) {
         final interactor = getIt<AdherentsInteractor>();
+        final coitisationInteractor = getIt<CotisationInteractor>();
         final auth = getIt<AuthService>();
         final firestoreService = getIt<FirestoreService>();
 
         return AdherentsBloc(
           interactor,
+          coitisationInteractor,
           auth,
           firestoreService,
-          adherentId: '', // Remplacez par une valeur valide si nécessaire
+          adherentId: '',
+          // Remplacez par une valeur valide si nécessaire
         );
       },
       child: AddAdherentsView(),

@@ -25,7 +25,7 @@ class InfoField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Wrap(
       children: [
         _buildLabel(context, label),
         _buildValue(context, value),
@@ -98,14 +98,19 @@ class CotisationInfoField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _buildLabel(context, label),
-        _buildValue(context, value),
-        _buildEditButton(context),
-      ],
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 200), // limite la largeur max
+      child: Row(
+        mainAxisSize: MainAxisSize.min, // important pour prendre la largeur mini
+        children: [
+          _buildLabel(context, label),
+          _buildValue(context, value),
+          _buildEditButton(context),
+        ],
+      ),
     );
   }
+
 
   Widget _buildLabel(BuildContext context, String text) {
     return Padding(
