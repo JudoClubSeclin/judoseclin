@@ -16,6 +16,7 @@ class AdherentsInfoDto {
   final String medicalCertificate;
   final String invoice;
   final String familyId;
+  final String additionalAddress;
 
   AdherentsInfoDto({
     required this.id,
@@ -34,7 +35,8 @@ class AdherentsInfoDto {
     required this.sante,
     required this.medicalCertificate,
     required this.invoice,
-    required this.familyId
+    required this.familyId,
+    required this.additionalAddress
   });
 
 
@@ -56,7 +58,9 @@ class AdherentsInfoDto {
         sante: json ['sante'],
         medicalCertificate: json ['medicalCertificate'],
         invoice: json ['invoice'],
-        familyId: json ['familyId']
+        familyId: json ['familyId'],
+        additionalAddress: json ['additionalAddress']
+
     );
   }
 }

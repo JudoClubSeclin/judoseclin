@@ -19,26 +19,27 @@ class Adherents {
   final String medicalCertificate;
   final String invoice;
   final String? familyId;
+  final String? additionalAddress;
 
-  Adherents({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    this.dateOfBirth,
-    required this.licence,
-    required this.belt,
-    required this.discipline,
-    required this.category,
-    this.tutor,
-    required this.phone,
-    required this.address,
-    required this.image,
-    required this.sante,
-    required this.medicalCertificate,
-    required this.invoice,
-    this.familyId
-  });
+  Adherents(
+      {required this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.email,
+      this.dateOfBirth,
+      required this.licence,
+      required this.belt,
+      required this.discipline,
+      required this.category,
+      this.tutor,
+      required this.phone,
+      required this.address,
+      required this.image,
+      required this.sante,
+      required this.medicalCertificate,
+      required this.invoice,
+      this.familyId,
+      this.additionalAddress});
 
   String get formattedDateOfBirth {
     return DateFormat('dd/MM/yyyy').format(dateOfBirth!);
@@ -46,24 +47,23 @@ class Adherents {
 
   factory Adherents.fromMap(Map<String, dynamic> data, String id) {
     return Adherents(
-      id: id,
-      firstName: data['firstName'] ?? '',
-      lastName: data['lastName'] ?? '',
-      email: data['email'] ?? '',
-      dateOfBirth: DateConverter.convertToDateTime(data['dateOfBirth']),
-      licence: data['licence'] ?? '',
-      belt: data['belt'] ?? '',
-      discipline: data['discipline'] ?? '',
-      category: data['category'] ?? '',
-      tutor: data['tutor'] ?? '',
-      phone: data['phone'] ?? '',
-      address: data['address'] ?? '',
-      image: data['image'] ?? '',
-      sante: data['sante'] ?? '',
-      medicalCertificate: data['medicalCertificate'] ?? '',
-      invoice: data['invoice'] ?? '',
-      familyId: data['familyId']?? ''
-
-    );
+        id: id,
+        firstName: data['firstName'] ?? '',
+        lastName: data['lastName'] ?? '',
+        email: data['email'] ?? '',
+        dateOfBirth: DateConverter.convertToDateTime(data['dateOfBirth']),
+        licence: data['licence'] ?? '',
+        belt: data['belt'] ?? '',
+        discipline: data['discipline'] ?? '',
+        category: data['category'] ?? '',
+        tutor: data['tutor'] ?? '',
+        phone: data['phone'] ?? '',
+        address: data['address'] ?? '',
+        image: data['image'] ?? '',
+        sante: data['sante'] ?? '',
+        medicalCertificate: data['medicalCertificate'] ?? '',
+        invoice: data['invoice'] ?? '',
+        familyId: data['familyId'] ?? '',
+        additionalAddress: data['additionalAddress'] ?? '');
   }
 }

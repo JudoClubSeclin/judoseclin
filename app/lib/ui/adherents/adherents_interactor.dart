@@ -32,6 +32,7 @@ class AdherentsInteractor {
         'sante': adherents.sante,
         'medicalCertificate': adherents.medicalCertificate,
         'invoice': adherents.invoice,
+        'additionalAddress': adherents.additionalAddress
       });
     } catch (error) {
       debugPrint('Erreur lors de l\'ajout de l\'adhérent: $error');

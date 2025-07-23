@@ -33,6 +33,7 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
   final santeController = TextEditingController();
   final medicalCertificateController = TextEditingController();
   final invoiceController = TextEditingController();
+  final additionalAddressController = TextEditingController();
 
   String? currentFamilyId; // Pour stocker familyId détecté
 
@@ -53,6 +54,8 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
     santeController.dispose();
     medicalCertificateController.dispose();
     invoiceController.dispose();
+    additionalAddressController.dispose();
+
     super.dispose();
   }
 
@@ -85,7 +88,9 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
 
   Widget _buildForm(BuildContext context, String adherentId) {
     return Scaffold(
-      appBar: CustomAppBar(title: '',),
+      appBar: CustomAppBar(
+        title: '',
+      ),
       drawer: MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
       body: DecoratedBox(
         decoration: const BoxDecoration(
@@ -117,10 +122,14 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
                         if (value.trim().length >= 5) {
                           // Déclenche l'événement Bloc pour vérifier la famille
                           context.read<AdherentsBloc>().add(
-                            CheckFamilyByAddressEvent(value.trim()),
-                          );
+                                CheckFamilyByAddressEvent(value.trim()),
+                              );
                         }
                       },
+                    ),
+                    CustomTextField(
+                      labelText: "Suplément d'adresse",
+                      controller: additionalAddressController,
                     ),
                     CustomTextField(
                       labelText: 'NOM',
@@ -202,11 +211,12 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
                           .parse(dateOfBirthController.text.trim());
 
                       String formattedDate =
-                      DateFormat('dd/MM/yyyy').format(parsedDate);
+                          DateFormat('dd/MM/yyyy').format(parsedDate);
 
                       String familyId;
 
-                      if (currentFamilyId != null && currentFamilyId!.isNotEmpty) {
+                      if (currentFamilyId != null &&
+                          currentFamilyId!.isNotEmpty) {
                         familyId = currentFamilyId!;
                       } else {
                         familyId = addressController.text
@@ -216,28 +226,31 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
                       }
 
                       context.read<AdherentsBloc>().add(
-                        AddAdherentsSignUpEvent(
-                          id: '',
-                          firstName: firstNameController.text.trim(),
-                          lastName: lastNameController.text.trim(),
-                          email: emailController.text.trim(),
-                          dateOfBirth: formattedDate,
-                          licence: licenceController.text.trim(),
-                          belt: beltController.text.trim(),
-                          discipline: disciplineController.text.trim(),
-                          category: categoryController.text.trim(),
-                          tutor: tutorController.text.trim(),
-                          phone: phoneController.text.trim(),
-                          address: addressController.text.trim(),
-                          image: imageController.text.trim(),
-                          sante: santeController.text.trim(),
-                          medicalCertificate: medicalCertificateController.text.trim(),
-                          invoice: invoiceController.text.trim(),
-                          adherentId: '',
-                          userExists: false,
-                          familyId: familyId,
-                        ),
-                      );
+                            AddAdherentsSignUpEvent(
+                              id: '',
+                              firstName: firstNameController.text.trim(),
+                              lastName: lastNameController.text.trim(),
+                              email: emailController.text.trim(),
+                              dateOfBirth: formattedDate,
+                              licence: licenceController.text.trim(),
+                              additionalAddress:
+                                  additionalAddressController.text.trim(),
+                              belt: beltController.text.trim(),
+                              discipline: disciplineController.text.trim(),
+                              category: categoryController.text.trim(),
+                              tutor: tutorController.text.trim(),
+                              phone: phoneController.text.trim(),
+                              address: addressController.text.trim(),
+                              image: imageController.text.trim(),
+                              sante: santeController.text.trim(),
+                              medicalCertificate:
+                                  medicalCertificateController.text.trim(),
+                              invoice: invoiceController.text.trim(),
+                              adherentId: '',
+                              userExists: false,
+                              familyId: familyId,
+                            ),
+                          );
 
                       // Réinitialiser les champs et la famille détectée
                       firstNameController.clear();
@@ -255,12 +268,15 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
                       santeController.clear();
                       medicalCertificateController.clear();
                       invoiceController.clear();
+                      additionalAddressController.clear();
                       currentFamilyId = null;
                     } catch (e) {
-                      debugPrint('Erreur lors de l\'enregistrement ou de l\'envoi de l\'e-mail : $e');
+                      debugPrint(
+                          'Erreur lors de l\'enregistrement ou de l\'envoi de l\'e-mail : $e');
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Erreur lors du traitement des données: $e'),
+                          content:
+                              Text('Erreur lors du traitement des données: $e'),
                         ),
                       );
                     }

@@ -73,6 +73,7 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
         'medicalCertificate': event.medicalCertificate,
         'invoice': event.invoice,
         'familyId': event.familyId,
+        'additionalAddress': event.additionalAddress
       });
 
       bool accountExists = event.userExists;

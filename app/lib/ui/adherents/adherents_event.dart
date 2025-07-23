@@ -20,6 +20,7 @@ class AddAdherentsSignUpEvent extends AdherentsEvent {
   final String invoice;
   final bool userExists;
   final String familyId;
+  final String additionalAddress;
 
   AddAdherentsSignUpEvent({
     required this.id,
@@ -40,7 +41,8 @@ class AddAdherentsSignUpEvent extends AdherentsEvent {
     required this.medicalCertificate,
     required this.invoice,
     required this.userExists,
-    required this.familyId
+    required this.familyId,
+    required this.additionalAddress
   });
 }
 class AddCotisationEvent extends AdherentsEvent {
