@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:judoseclin/data/repository/adherents_repository.dart';
 import 'package:judoseclin/data/repository/adherents_repository_impl.dart';
 import 'package:judoseclin/data/repository/competition_repository.dart';
-import 'package:judoseclin/data/repository/competititon_repository_impl.dart';
+import 'package:judoseclin/data/repository/competition_repository_impl.dart';
 import 'package:judoseclin/data/repository/cotisation_repository.dart';
 import 'package:judoseclin/data/repository/cotisation_repository_impl.dart';
 import 'package:judoseclin/data/repository/news_repository.dart';
@@ -16,6 +16,8 @@ import 'package:judoseclin/data/repository/user_repository/user_data_repository_
 
 import '../../core/di/api/firestore_service.dart';
 import '../../core/di/injection.dart';
+import 'competition_registration_repository.dart';
+import 'competition_registration_repository_impl.dart';
 
 void setupDataModule() {
   if (!getIt.isRegistered<FirebaseFirestore>()) {
@@ -62,6 +64,10 @@ void setupDataModule() {
     getIt.registerLazySingleton<NewsRepository>(
         () => NewsRepositoryImpl(getIt<FirestoreService>()));
 
+  }
+  if(!getIt.isRegistered<CompetitionRegistrationRepository>()) {
+    getIt.registerLazySingleton<CompetitionRegistrationRepository>(
+        () => CompetitionRegistrationRepositoryImpl(getIt<FirestoreService>()));
   }
 
 }

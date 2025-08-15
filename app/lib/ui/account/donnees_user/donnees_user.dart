@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
+import 'package:judoseclin/ui/account/adherents_session.dart';
 import 'package:judoseclin/ui/common/widgets/Custom_card/custom_card.dart';
 
 import '../../../core/di/api/auth_service.dart';
@@ -111,6 +112,7 @@ class _DonneesUserState extends State<DonneesUser> {
                   onTap: () {
                     String adherentId = member['id'];
                     if (adherentId.isNotEmpty) {
+                      getIt<AdherentSession>().setAdherent(adherentId);
                       context.goNamed(
                         'mes_donnees',
                         pathParameters: {'id': adherentId},

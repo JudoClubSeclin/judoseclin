@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
-import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/ui/competition/list_competition/view/competition_detail_view.dart';
 
 import '../../../core/di/injection.dart';
@@ -26,16 +25,19 @@ class CompetitionDetailModule implements UIModule {
         path: '/competition/:id',
         pageBuilder: (context, state) {
           final competitionId = state.pathParameters['id'] ?? '';
-          final adherents = getIt<Adherents>();
+          final adherentId = state.uri.queryParameters['adherentId'] ?? '';
+
           return MaterialPage(
             child: CompetitionDetailView(
               competitionId: competitionId,
               competitionInteractor: getIt<CompetitionInteractor>(),
-              adherents: adherents,
+
+
             ),
           );
         },
       ),
+
     ];
   }
 

@@ -46,4 +46,14 @@ class FirestoreService {
   CollectionReference getCollection(String collectionPath) {
     return _firestore.collection(collectionPath);
   }
+
+  Future<Map<String, dynamic>?> getDocument(String collectionPath, String documentId) async {
+    try {
+      final doc = await _firestore.collection(collectionPath).doc(documentId).get();
+      return doc.exists ? doc.data() : null;
+    } catch (e) {
+      throw Exception("Erreur Firestore : $e");
+    }
+  }
+
 }

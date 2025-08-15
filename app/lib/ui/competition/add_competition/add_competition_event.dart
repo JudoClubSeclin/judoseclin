@@ -12,6 +12,11 @@ class AddCompetitionSignUpEvent extends AddCompetitionEvent {
   final String minime;
   final String cadet;
   final String juniorSenior;
+  final String minBeltPoussin;
+  final String minBeltBenjamin;
+  final String minBeltMinime;
+  final String minBeltCadet;
+  final String minBeltJuniorSenior;
 
   AddCompetitionSignUpEvent({
     required this.id,
@@ -25,5 +30,10 @@ class AddCompetitionSignUpEvent extends AddCompetitionEvent {
     required this.minime,
     required this.cadet,
     required this.juniorSenior,
+    required this.minBeltPoussin,
+    required this.minBeltBenjamin,
+    required this.minBeltMinime,
+    required this.minBeltCadet,
+    required this.minBeltJuniorSenior,
   });
 }

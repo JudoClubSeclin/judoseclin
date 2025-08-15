@@ -7,7 +7,8 @@ import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 
 import '../../../../core/utils/competition_provider.dart'; // Import de la classe
-import 'package:judoseclin/ui/common/widgets/Custom_card/custom_card.dart'; // Import CustomCard
+import 'package:judoseclin/ui/common/widgets/Custom_card/custom_card.dart';
+
 
 class CompetitionsListView extends StatefulWidget {
   const CompetitionsListView({super.key});
@@ -118,7 +119,8 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
                             onTap: () {
                               String competitionId = competition.id;
                               if (competitionId.isNotEmpty) {
-                                context.go('/competition/$competitionId');
+                                context.go('/competition/$competitionId',
+                                extra: competitionId);
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
@@ -126,6 +128,7 @@ class CompetitionsListViewState extends State<CompetitionsListView> {
                                   ),
                                 );
                               }
+
                             },
                           ),
                         ),

@@ -49,10 +49,17 @@ class CompetitionInteractor {
         'minime': competition.minime,
         'cadet': competition.cadet,
         'juniorSenior': competition.juniorSenior,
+        'minBeltPoussin': competition.minBeltPoussin,
+        'minBeltBenjamin': competition.minBeltBenjamin,
+        'minBeltMinime': competition.minBeltMinime,
+        'minBeltCadet': competition.minBeltCadet,
+
       });
     } catch (error) {
       debugPrint('Erreur lors de l\'ajout de la compétition : $error');
       rethrow;
     }
   }
+
+
 }

@@ -2,16 +2,19 @@ import '../../../../domain/entities/competition.dart';
 
 abstract class CompetitionState {}
 
-class CompetitionSignUpLoadingState extends CompetitionState {}
+class CompetitionLoadingState extends CompetitionState {}
 
-class CompetitionSignUpLoadedState extends CompetitionState {
-  final List<Competition> competitionData;
-
-  CompetitionSignUpLoadedState({required this.competitionData});
+class CompetitionLoadedState extends CompetitionState {
+  final List<Competition> competitions;
+  CompetitionLoadedState({required this.competitions});
 }
 
-class CompetitionSignUpErrorState extends CompetitionState {
-  final String message;
+class CompetitionDetailLoadedState extends CompetitionState {
+  final Competition competition;
+  CompetitionDetailLoadedState({required this.competition});
+}
 
-  CompetitionSignUpErrorState({required this.message});
+class CompetitionErrorState extends CompetitionState {
+  final String message;
+  CompetitionErrorState({required this.message});
 }

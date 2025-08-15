@@ -121,7 +121,6 @@ class _ColonneLinksState extends State<ColonneLinks> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle? titleStyle = getMDTheme(context, Colors.black).h1;
     return OrientedSizedBox(
       size: widget.size,
       fraction: widget.fraction,

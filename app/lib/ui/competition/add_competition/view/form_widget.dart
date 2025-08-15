@@ -23,6 +23,12 @@ class FormWidget extends StatelessWidget {
   final juniorSeniorController = TextEditingController();
   final DateTime? publishDate;
   final String addCompetitionId;
+  final minBeltPoussinController = TextEditingController();
+  final  minBeltBenjaminController = TextEditingController();
+  final  minBeltMinimeController = TextEditingController();
+  final  minBeltCadetController = TextEditingController();
+  final  minBeltJuniorSeniorController = TextEditingController();
+
 
   FormWidget(
     BuildContext context, {
@@ -104,54 +110,83 @@ class FormWidget extends StatelessWidget {
                       controller: juniorSeniorController,
                     ),
                     const SizedBox(width: 20),
+                    CustomTextField(
+                      labelText: 'min belt poussin',
+                      controller: minBeltPoussinController,
+                    ),
+                    const SizedBox(height: 20),
+                    CustomTextField(
+                      labelText: 'min belt benjamin',
+                      controller: minBeltBenjaminController,
+                    ),
+                    const SizedBox(width: 20),
+                    CustomTextField(
+                      labelText: 'min belt minime',
+                      controller: minBeltMinimeController,
+                    ),
+
+                    const SizedBox(height: 20),
+                    CustomTextField(
+                      labelText: 'min belt cadet',
+                      controller: minBeltCadetController,
+                    ),
+                    const SizedBox(width: 20),
+                    CustomTextField(
+                      labelText: 'min belt junior senior',
+                      controller: minBeltJuniorSeniorController,
+                    ),
+
                   ],
                 ),
                 const SizedBox(height: 20),
                 ConfigurationLocale.instance.peutSeConnecter
                     ? CustomButton(
-                      onPressed: () async {
-                        try {
-                          // Convertir la chaîne de date en objet DateTime
-                          DateTime parsedDate = DateFormat(
-                            'dd/MM/yyyy',
-                          ).parse(dateController.text.trim());
+                    onPressed: () async {
+                      try {
+                        DateTime parsedDate = DateFormat('dd/MM/yyyy').parse(dateController.text.trim());
+                        DateTime publishDate = DateTime.now();
 
-                          // Créer la date de publication (utiliser DateTime.now() pour la date actuelle)
-                          DateTime publishDate = DateTime.now();
+                        context.read<AddCompetitionBloc>().add(
+                          AddCompetitionSignUpEvent(
+                            id: '',
+                            address: addressController.text.trim(),
+                            title: titleController.text.trim(),
+                            subtitle: subtitleController.text.trim(),
+                            date: parsedDate,
+                            publishDate: publishDate,
+                            poussin: poussinController.text.trim(),
+                            benjamin: benjaminController.text.trim(),
+                            minime: minimeController.text.trim(),
+                            cadet: cadetController.text.trim(),
+                            juniorSenior: juniorSeniorController.text.trim(),
+                            minBeltPoussin: minBeltPoussinController.text.trim(),
+                            minBeltBenjamin: minBeltBenjaminController.text.trim(),
+                            minBeltMinime: minBeltMinimeController.text.trim(),
+                            minBeltCadet: minBeltCadetController.text.trim(), minBeltJuniorSenior: '',
 
-                          // Utiliser la date convertie dans votre AddCompetitionSignUpEvent
-                          context.read<AddCompetitionBloc>().add(
-                            AddCompetitionSignUpEvent(
-                              id: '',
-                              address: addressController.text.trim(),
-                              title: titleController.text.trim(),
-                              subtitle: subtitleController.text.trim(),
-                              date: parsedDate,
-                              publishDate: publishDate,
-                              poussin: poussinController.text.trim(),
-                              benjamin: benjaminController.text.trim(),
-                              minime: minimeController.text.trim(),
-                              cadet: cadetController.text.trim(),
-                              juniorSenior: juniorSeniorController.text.trim(),
-                            ),
-                          );
+                          ),
+                        );
 
-                          // Réinitialiser les contrôleurs de texte
-                          addressController.clear();
-                          titleController.clear();
-                          subtitleController.clear();
-                          dateController.clear();
-                          poussinController.clear();
-                          benjaminController.clear();
-                          minimeController.clear();
-                          cadetController.clear();
-                          juniorSeniorController.clear();
-                        } catch (e) {
-                          debugPrint(
-                            'Erreur d\'enregistrement des données: $e',
-                          );
-                        }
-                      },
+                        // Reset controllers...
+                        addressController.clear();
+                        titleController.clear();
+                        subtitleController.clear();
+                        dateController.clear();
+                        poussinController.clear();
+                        benjaminController.clear();
+                        minimeController.clear();
+                        cadetController.clear();
+                        juniorSeniorController.clear();
+                        minBeltPoussinController.clear();
+                        minBeltBenjaminController.clear();
+                        minBeltMinimeController.clear();
+                        minBeltCadetController.clear();
+
+                      } catch (e) {
+                        debugPrint('Erreur d\'enregistrement des données: $e');
+                      }
+                    },
+
                       label: 'publier',
                     )
                     : const SizedBox(),

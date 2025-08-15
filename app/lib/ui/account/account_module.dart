@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import 'package:judoseclin/core/di/api/firestore_service.dart';
 import 'package:judoseclin/ui/account/account_bloc.dart';
 import 'package:judoseclin/ui/account/account_interactor.dart';
 import 'package:judoseclin/ui/account/view/account_page.dart';
 import 'package:judoseclin/ui/ui_module.dart';
 import 'package:provider/provider.dart';
-
 import '../../core/di/api/auth_service.dart';
-import '../../domain/entities/setup_entity_module.dart';
+import '../../core/di/injection.dart';
 
 @singleton
 class AccountModule implements UIModule {
@@ -38,22 +38,24 @@ class AccountModule implements UIModule {
   }
 
   @override
-  Map<String, WidgetBuilder> getShareWidgets() {
-    return {};
-  }
+  Map<String, WidgetBuilder> getShareWidgets() => {};
 
-  /// Implémente la méthode wrapWithProviders pour éviter la duplication
+  /// Fournit AuthService et AccountBloc aux widgets enfants
   Widget wrapWithProviders(BuildContext context, Widget child) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: getIt<AuthService>()),
         BlocProvider<AccountBloc>(
           create: (context) {
-            final userId = getIt<FirebaseAuth>().currentUser?.uid;
+            final authService = getIt<AuthService>();
+            final firestoreService = getIt<FirestoreService>();
             final interactor = getIt<AccountInteractor>();
+
+            // Utilisation du constructeur avec tous les paramètres nommés
             return AccountBloc(
-              userId: userId ?? '',
+              firestore: firestoreService,
               accountInteractor: interactor,
+              auth: authService,
             );
           },
         ),

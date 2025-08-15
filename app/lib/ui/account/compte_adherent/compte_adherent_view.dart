@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:judoseclin/theme.dart';
+import 'package:judoseclin/ui/account/competition_inscrites/competition_Register.dart';
 import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
 
 import '../../common/widgets/images/image_fond_ecran.dart';
-import '../competition_inscrites/competition_inscrite.dart';
 
 class CompteAdherentView extends StatefulWidget {
   final String adherentId;
-
 
   const CompteAdherentView({required this.adherentId, super.key});
 
@@ -29,8 +28,7 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
 
   Future<void> _loadAdherentData() async {
     try {
-      debugPrint(
-          "Tentative de récupération du document avec ID: ${widget.adherentId}");
+      debugPrint("Tentative de récupération du document avec ID: ${widget.adherentId}");
 
       final doc = await FirebaseFirestore.instance
           .collection('adherents')
@@ -42,19 +40,16 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
 
       if (!mounted) return;
 
-      if (doc.exists) {
-        setState(() {
+      setState(() {
+        if (doc.exists) {
           adherentData = doc.data();
-          isLoading = false;
-        });
-      } else {
-        setState(() {
+        } else {
           error = 'Document introuvable dans Firestore';
-          isLoading = false;
-        });
-      }
+        }
+        isLoading = false;
+      });
     } catch (e) {
-      debugPrint("Erreur Firebase: ${e.toString()}");
+      debugPrint("Erreur Firebase: $e");
       if (!mounted) return;
       setState(() {
         error = 'Erreur de connexion à Firestore';
@@ -66,10 +61,9 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
   @override
   Widget build(BuildContext context) {
     debugPrint("CompteAdherentView build() appelé");
+
     if (isLoading) {
       return const Scaffold(
-
-
         body: Center(child: CircularProgressIndicator()),
       );
     }
@@ -87,107 +81,89 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
     }
 
     return Scaffold(
-       appBar: CustomAppBar(title: '',),
-    drawer: MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
+      appBar: CustomAppBar(title: ''),
+      drawer: MediaQuery.sizeOf(context).width > 750 ? null : CustomDrawer(),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(ImageFondEcran.imagePath),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 20),
+                  Text(
+                    'Bonjour ${adherentData!['lastName']}',
+                    style: titleStyleMedium(context),
+                  ),
+                  const SizedBox(height: 50),
 
-        body: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(ImageFondEcran.imagePath),
-                fit: BoxFit.cover,
+                  _buildUserInfoSection(),
+                  const SizedBox(height: 75),
+
+                  CompetitionRegister(adherentId: '${adherentData!['id']}', competitionId: '')
+                ],
               ),
             ),
-            child: SingleChildScrollView(
-                child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: MediaQuery.of(context).size.height,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const SizedBox(height: 20),
-                            // Le titre en haut
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Text(
-                                'Bonjour ${adherentData!['lastName']}',
-                                style: titleStyleMedium(context),
-                              ),
-                            ),
-                            const SizedBox(height: 50),
-
-                            // Infos centrées
-                            Center(
-                              child: Column(children: [
-                                Wrap(children: [
-                                  Text(
-                                      'Nom: ${adherentData!['lastName'] ?? 'Non disponible'}',
-                                      style: textStyleText(context)),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text(
-                                      'Prénom: ${adherentData!['firstName'] ?? 'Non disponible'}',
-                                      style: textStyleText(context)),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text(
-                                      'Email: ${adherentData!['email'] ?? 'Non disponible'}',
-                                      style: textStyleText(context)),
-                                  const SizedBox(
-                                    height: 30,
-                                  ),
-                                ]),
-                                Wrap(
-                                  children: [
-                                    Text(
-                                        'Adresse: ${adherentData!['address'] ?? 'Non disponible'}',
-                                        style: textStyleText(context)),
-                                    const SizedBox(
-                                      width: 15,
-                                    ),
-                                    Text(
-                                        'Téléphone: ${adherentData!['phone'] ?? 'Non disponible'}',
-                                        style: textStyleText(context)),
-                                    const SizedBox(
-                                      height: 30,
-                                    ),
-                                  ],
-                                ),
-                                Wrap(children: [
-                                  Text(
-                                      'Catégorie: ${adherentData!['category'] ?? 'Non disponible'}',
-                                      style: textStyleText(context)),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text(
-                                      'Discipline: ${adherentData!['discipline'] ?? 'Non disponible'}',
-                                      style: textStyleText(context)),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text(
-                                      'Ceinture: ${adherentData!['belt'] ?? 'Non disponible'}',
-                                      style: textStyleText(context)),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text(
-                                      'N° de licence: ${adherentData!['licence'] ?? 'Non disponible'}',
-                                      style: textStyleText(context)),
-                                ]),
-                              ]),
-                            ),
-
-                            const SizedBox(
-                              height: 75,
-                            ),
-                            const CompetitionsInscrites(),
-                          ]),
-                    )))));
+          ),
+        ),
+      ),
+    );
   }
-}
+
+  Widget _buildUserInfoSection() {
+    return Center(
+      child: Column(
+        children: [
+          Wrap(
+            spacing: 15,
+            runSpacing: 15,
+            children: [
+              _buildInfoItem('Nom', adherentData!['lastName']),
+              _buildInfoItem('Prénom', adherentData!['firstName']),
+              _buildInfoItem('Email', adherentData!['email']),
+            ],
+          ),
+          const SizedBox(height: 30),
+          Wrap(
+            spacing: 15,
+            runSpacing: 15,
+            children: [
+              _buildInfoItem('Adresse', adherentData!['address']),
+              _buildInfoItem('Téléphone', adherentData!['phone']),
+            ],
+          ),
+          const SizedBox(height: 30),
+          Wrap(
+            spacing: 15,
+            runSpacing: 15,
+            children: [
+              _buildInfoItem('Catégorie', adherentData!['category']),
+              _buildInfoItem('Discipline', adherentData!['discipline']),
+              _buildInfoItem('Ceinture', adherentData!['belt']),
+              _buildInfoItem('N° de licence', adherentData!['licence']),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoItem(String label, String? value) {
+    return Text(
+      '$label: ${value ?? 'Non disponible'}',
+      style: textStyleText(context),
+    );
+  }
+
+
+  }

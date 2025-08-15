@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:judoseclin/core/di/api/firestore_service.dart';
 import 'package:judoseclin/core/utils/size_extensions.dart';
-import 'package:judoseclin/data/repository/competititon_repository_impl.dart';
+import 'package:judoseclin/data/repository/competition_repository_impl.dart';
 
 import '../../domain/entities/setup_entity_module.dart';
 import 'colone_links.dart';

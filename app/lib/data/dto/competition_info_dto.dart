@@ -5,11 +5,16 @@ class CompetitionInfoDto {
   final String subtitle;
   final DateTime date;
   final DateTime publishDate;
-  final String poussin;
-  final String benjamin;
-  final String minime;
-  final String cadet;
-  final String juniorSenior;
+  final String? poussin;
+  final String? benjamin;
+  final String? minime;
+  final String? cadet;
+  final String? juniorSenior;
+  final String? minBeltPoussin;
+  final String? minBeltBenjamin;
+  final String? minBeltMinime;
+  final String? minBeltCadet;
+  final String? minBeltJuniorSenior;
 
   CompetitionInfoDto({
     required this.id,
@@ -18,11 +23,16 @@ class CompetitionInfoDto {
     required this.subtitle,
     required this.date,
     required this.publishDate,
-    required this.poussin,
-    required this.benjamin,
-    required this.minime,
-    required this.cadet,
-    required this.juniorSenior,
+     this.poussin,
+     this.benjamin,
+     this.minime,
+     this.cadet,
+     this.juniorSenior,
+     this.minBeltPoussin,
+     this.minBeltBenjamin,
+     this.minBeltMinime,
+     this.minBeltCadet,
+     this.minBeltJuniorSenior,
   });
 
   factory CompetitionInfoDto.fromJson(Map<String, dynamic> json) {
@@ -38,6 +48,11 @@ class CompetitionInfoDto {
       minime: json['minime'],
       cadet: json['cadet'],
       juniorSenior: json['juniorSenior'],
+      minBeltPoussin: json['minBeltPoussin'],
+      minBeltBenjamin: json['minBeltBenjamin'],
+      minBeltMinime: json['minBeltMinime'],
+      minBeltCadet: json['minBeltCadet'],
+      minBeltJuniorSenior: json['minBeltJuniorSenior'],
     );
   }
 }

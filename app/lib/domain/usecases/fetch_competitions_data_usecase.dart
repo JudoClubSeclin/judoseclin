@@ -13,7 +13,7 @@ class FetchCompetitionDataUseCase {
     try {
       debugPrint("Fetching competition data from Firestore...");
       Stream<Iterable<Competition>> competitionStream =
-          competitionRepository.getCompetitionStream();
+      competitionRepository.getCompetitionStream();
 
       // Utilisez 'await for' pour consommer le Stream
       List<Competition> competitionList = [];
@@ -31,23 +31,16 @@ class FetchCompetitionDataUseCase {
   Future<Competition?> getCompetitionById(String competitionId) async {
     try {
       debugPrint("Fetching competition data from Firestore...");
-      Map<String, dynamic>? competitionData = await competitionRepository
+      Competition? competition = await competitionRepository
           .getById(competitionId);
 
-      return Competition.fromMap(competitionData, competitionId);
+      return competition;
     } catch (e) {
       debugPrint(e.toString());
       rethrow;
     }
   }
 
-  Future<List<String>> execute(String userId) async {
-    final competitionIds = await competitionRepository.getUserCompetitionIds(
-      userId,
-    );
-    final competitionTitles = await competitionRepository.getCompetitionTitles(
-      competitionIds,
-    );
-    return competitionTitles.values.toList();
-  }
 }
+
+

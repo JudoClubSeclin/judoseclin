@@ -6,43 +6,56 @@ class Competition {
   final String address;
   final String title;
   final String subtitle;
-  final DateTime? date;
+  final DateTime date;
   final DateTime publishDate;
-  final String poussin;
-  final String benjamin;
-  final String minime;
-  final String cadet;
-  final String juniorSenior;
+
+  final String? poussin;
+  final String? benjamin;
+  final String? minime;
+  final String? cadet;
+  final String? juniorSenior;
+
+  final String? minBeltPoussin;
+  final String? minBeltBenjamin;
+  final String? minBeltMinime;
+  final String? minBeltCadet;
+  final String? minBeltJuniorSenior;
 
   Competition({
     required this.id,
     required this.address,
     required this.title,
     required this.subtitle,
-    this.date,
+    required this.date,
     required this.publishDate,
-    required this.poussin,
-    required this.benjamin,
-    required this.minime,
-    required this.cadet,
-    required this.juniorSenior,
+    this.poussin,
+    this.benjamin,
+    this.minime,
+    this.cadet,
+    this.juniorSenior,
+    this.minBeltPoussin,
+    this.minBeltBenjamin,
+    this.minBeltMinime,
+    this.minBeltCadet,
+    this.minBeltJuniorSenior,
   });
 
-  // Formatte la date au format (DD/MM/YYYY)
+  /// Formatte la date de publication au format JJ/MM/AAAA
   String get formattedPublishDate {
     return DateFormat('dd/MM/yyyy').format(publishDate);
   }
 
-  // vérifie si la date est bien dans le futur
+  /// Vérifie si la compétition est à venir
   bool get isInFuture {
-    return date?.isAfter(DateTime.now()) ?? false;
+    return date.isAfter(DateTime.now());
   }
 
-  // Constructeur de la classe à partir d'une map
+  /// Crée une instance depuis une Map (ex: Firestore)
   factory Competition.fromMap(Map<String, dynamic>? data, String id) {
     if (data == null) {
       throw ArgumentError('data map cannot be null');
     }
+
     return Competition(
       id: id,
       address: data['address'] ?? '',
@@ -50,26 +63,36 @@ class Competition {
       subtitle: data['subtitle'] ?? '',
       date: DateConverter.convertToDateTime(data['date']),
       publishDate: DateConverter.convertToDateTime(data['publishDate']),
-      poussin: data['poussin'] ?? '',
-      benjamin: data['benjamin'] ?? '',
-      minime: data['minime'] ?? '',
-      cadet: data['cadet'] ?? '',
-      juniorSenior: data['juniorSenior'] ?? '',
+      poussin: data['poussin'],
+      benjamin: data['benjamin'],
+      minime: data['minime'],
+      cadet: data['cadet'],
+      juniorSenior: data['juniorSenior'],
+      minBeltPoussin: data['minBeltPoussin'],
+      minBeltBenjamin: data['minBeltBenjamin'],
+      minBeltMinime: data['minBeltMinime'],
+      minBeltCadet: data['minBeltCadet'],
+      minBeltJuniorSenior: data['minBeltJuniorSenior'],
     );
   }
 
-  // Méthode de création d'une compétition avec publishDate automatique
+  /// Constructeur automatique avec publishDate = maintenant
   factory Competition.publish({
     required String id,
     required String address,
     required String title,
     required String subtitle,
     required DateTime date,
-    required String poussin,
-    required String benjamin,
-    required String minime,
-    required String cadet,
-    required String juniorSenior,
+    String? poussin,
+    String? benjamin,
+    String? minime,
+    String? cadet,
+    String? juniorSenior,
+    String? minBeltPoussin,
+    String? minBeltBenjamin,
+    String? minBeltMinime,
+    String? minBeltCadet,
+    String? minBeltJuniorSenior,
   }) {
     return Competition(
       id: id,
@@ -83,23 +106,33 @@ class Competition {
       minime: minime,
       cadet: cadet,
       juniorSenior: juniorSenior,
+      minBeltPoussin: minBeltPoussin,
+      minBeltBenjamin: minBeltBenjamin,
+      minBeltMinime: minBeltMinime,
+      minBeltCadet: minBeltCadet,
+      minBeltJuniorSenior: minBeltJuniorSenior,
     );
   }
 
-  // Implement toMap method
+  /// Transforme l'objet en Map (ex: pour Firestore)
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'address': address,
       'title': title,
       'subtitle': subtitle,
-      'date': date?.toIso8601String(),
+      'date': date.toIso8601String(),
       'publishDate': publishDate.toIso8601String(),
       'poussin': poussin,
       'benjamin': benjamin,
       'minime': minime,
       'cadet': cadet,
       'juniorSenior': juniorSenior,
+      'minBeltPoussin': minBeltPoussin,
+      'minBeltBenjamin': minBeltBenjamin,
+      'minBeltMinime': minBeltMinime,
+      'minBeltCadet': minBeltCadet,
+      'minBeltJuniorSenior': minBeltJuniorSenior,
     };
   }
 }

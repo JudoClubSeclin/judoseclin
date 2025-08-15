@@ -16,7 +16,7 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await EmojiUtils.preloadEmojis();
 
-  configureDependencies();
+   configureDependencies();
   runApp(
     MultiProvider(
       providers: [

@@ -40,6 +40,11 @@ class AddCompetitionBloc
             minime: event.minime,
             cadet: event.cadet,
             juniorSenior: event.juniorSenior,
+            minBeltPoussin: event.minBeltPoussin,
+            minBeltBenjamin: event.minBeltBenjamin,
+            minBeltMinime: event.minBeltMinime,
+            minBeltCadet: event.minBeltCadet,
+            minBeltJuniorSenior: event.minBeltJuniorSenior
           );
 
           await competitionInteractor.addCompetition(competition);

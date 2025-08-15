@@ -4,10 +4,11 @@ import 'package:judoseclin/data/repository/user_repository/auth_state_repository
 import 'package:judoseclin/data/repository/user_repository/user_data_repository.dart';
 import 'package:judoseclin/domain/usecases/fetch_adherents_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/fetch_cotisation_data_usecase.dart';
-import 'package:judoseclin/domain/usecases/fetch_inscription_competition_data_usecase.dart';
+import 'package:judoseclin/domain/usecases/fetch_competition_registration_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/fetch_news_data_usecase.dart';
 import 'package:judoseclin/domain/usecases/fetch_user_data_usecase.dart';
 
+import '../../data/repository/competition_registration_repository.dart';
 import 'fetch_competitions_data_usecase.dart';
 
 final GetIt getIt = GetIt.instance;
@@ -30,12 +31,6 @@ void setupDataUseCaseModule() {
     );
   }
 
-  if(!getIt.isRegistered<FetchInscriptionCompetitionDataUseCase>()) {
-    getIt.registerLazySingleton<FetchInscriptionCompetitionDataUseCase>(
-            () => FetchInscriptionCompetitionDataUseCase()
-    );
-  }
-
   if(!getIt.isRegistered<FetchUserDataUseCase>()) {
     getIt.registerLazySingleton<FetchUserDataUseCase>(() =>
         FetchUserDataUseCase(
@@ -46,5 +41,12 @@ void setupDataUseCaseModule() {
     getIt.registerLazySingleton<FetchNewsDataUseCase>(()=>
     FetchNewsDataUseCase());
   }
+
+  if(!getIt.isRegistered<RegisterToCompetitionUseCase>()) {
+    getIt.registerLazySingleton<RegisterToCompetitionUseCase>(
+            () => RegisterToCompetitionUseCase(getIt<CompetitionRegistrationRepository>())
+    );
+  }
+
   }
 

@@ -1,10 +1,9 @@
 import '../../domain/entities/competition.dart';
 
 abstract class CompetitionRepository {
-  Stream<Iterable<Competition>> getCompetitionStream();
-  Future<List<String>> getUserCompetitionIds(String userId);
+  Stream<List<Competition>> getCompetitionStream();
   Future<Map<String, String>> getCompetitionTitles(List<String> competitionIds);
-  Future<Map<String, dynamic>> getById(String competitionId);
+  Future<Competition?> getById(String competitionId);
   Future<void> add(Map<String, dynamic> data);
   Future<void> updateField(
     String competitionId,

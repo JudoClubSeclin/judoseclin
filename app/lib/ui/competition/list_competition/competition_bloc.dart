@@ -1,30 +1,41 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'competition_interactor.dart';
+import '../../../data/repository/competition_repository.dart';
+import '../../../domain/entities/competition.dart';
 import 'competition_event.dart';
 import 'competition_state.dart';
 
 class CompetitionBloc extends Bloc<CompetitionEvent, CompetitionState> {
-  final CompetitionInteractor competitionInteractor;
+  final CompetitionRepository competitionRepository;
 
-  CompetitionBloc(this.competitionInteractor, {required String competitionId})
-    : super(CompetitionSignUpLoadingState());
-
-  Stream<CompetitionState> mapEventToState(CompetitionEvent event) async* {
-    if (event is LoadCompetitions) {
-      yield CompetitionSignUpLoadingState();
+  CompetitionBloc(this.competitionRepository) : super(CompetitionLoadingState()) {
+    // Charger la liste
+    on<LoadCompetitions>((event, emit) async {
+      emit(CompetitionLoadingState());
       try {
-        final competition = await competitionInteractor.fetchCompetitionData();
-
-        // Convertir l'itérable en une liste
-        final competitionList = competition.toList();
-
-        yield CompetitionSignUpLoadedState(competitionData: competitionList);
-      } catch (e) {
-        yield CompetitionSignUpErrorState(
-          message: 'Une erreur s\'est produite : $e',
+        final competitionsStream = competitionRepository.getCompetitionStream();
+        await emit.forEach<List<Competition>>(
+          competitionsStream,
+          onData: (competitions) => CompetitionLoadedState(competitions: competitions),
+          onError: (error, stackTrace) => CompetitionErrorState(message: error.toString()),
         );
+      } catch (e) {
+        emit(CompetitionErrorState(message: e.toString()));
       }
-    }
+    });
+
+    // Charger le détail
+    on<FetchCompetitionDetail>((event, emit) async {
+      emit(CompetitionLoadingState());
+      try {
+        final competition = await competitionRepository.getById(event.competitionId);
+        if (competition != null) {
+          emit(CompetitionDetailLoadedState(competition: competition));
+        } else {
+          emit(CompetitionErrorState(message: 'Compétition introuvable'));
+        }
+      } catch (e) {
+        emit(CompetitionErrorState(message: e.toString()));
+      }
+    });
   }
 }

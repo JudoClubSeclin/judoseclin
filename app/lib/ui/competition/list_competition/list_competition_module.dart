@@ -5,11 +5,11 @@ import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:judoseclin/ui/competition/list_competition/competition_bloc.dart';
-import 'package:judoseclin/ui/competition/list_competition/competition_interactor.dart';
 import 'package:judoseclin/ui/competition/list_competition/view/competition_list_view.dart';
 import 'package:judoseclin/ui/ui_module.dart';
 
 import '../../../core/di/injection.dart';
+import '../../../data/repository/competition_repository.dart';
 import '../../members/login/view/login_view.dart';
 
 @singleton
@@ -46,18 +46,16 @@ class ListCompetitionModule implements UIModule {
     if (userId != null) {
       return BlocProvider<CompetitionBloc>(
         create: (context) {
-          final interactor = getIt<CompetitionInteractor>();
-          return CompetitionBloc(interactor, competitionId: '');
+          final repository = getIt<CompetitionRepository>();
+          return CompetitionBloc(repository);
         },
         child: const CompetitionsListView(),
       );
     } else {
       return BlocProvider<CompetitionBloc>(
-        create:
-            (_) => CompetitionBloc(
-              getIt<CompetitionInteractor>(),
-              competitionId: '',
-            ),
+        create: (_) => CompetitionBloc(
+          getIt<CompetitionRepository>(),
+        ),
         child: LoginView(),
       );
     }

@@ -4,11 +4,11 @@ import 'package:get_it/get_it.dart';
 import 'package:judoseclin/core/utils/parse_cheques.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/domain/entities/cotisation.dart';
-import 'package:judoseclin/domain/entities/inscription_competition.dart';
 import 'package:judoseclin/domain/entities/news.dart';
 import 'package:judoseclin/domain/entities/users.dart';
 
 import 'competition.dart';
+import 'competition_registration.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -40,7 +40,7 @@ void setupEntityModule() {
       address: '',
       title: '',
       subtitle: '',
-      date: null,
+      date: DateTime.now(),
       publishDate: DateTime.now(),
       poussin: '',
       benjamin: '',
@@ -60,11 +60,10 @@ void setupEntityModule() {
   ));
 
   ///Enregistrement inscription_competition entity
-  getIt.registerFactory<InscriptionCompetition>(() => InscriptionCompetition(
+  getIt.registerFactory<CompetitionRegistration>(() => CompetitionRegistration(
       id: '',
-      userId: '',
+      adherentId: '',
       competitionId: '',
-      timestamp: null
   ));
 
   ///Enregistrement news entity

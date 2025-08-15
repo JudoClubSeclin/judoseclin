@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:judoseclin/core/di/api/firestore_service.dart';
-import 'package:judoseclin/data/repository/competititon_repository_impl.dart';
+import 'package:judoseclin/data/repository/competition_repository_impl.dart';
 import 'package:judoseclin/ui/ui_module.dart';
 
 import '../../domain/entities/setup_entity_module.dart';
