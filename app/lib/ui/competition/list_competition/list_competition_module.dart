@@ -49,7 +49,7 @@ class ListCompetitionModule implements UIModule {
           final repository = getIt<CompetitionRepository>();
           return CompetitionBloc(repository);
         },
-        child: const CompetitionsListView(),
+        child:  CompetitionsListView(),
       );
     } else {
       return BlocProvider<CompetitionBloc>(

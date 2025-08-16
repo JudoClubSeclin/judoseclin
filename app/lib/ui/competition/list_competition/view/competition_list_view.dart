@@ -1,22 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:judoseclin/theme.dart';
 import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 import 'package:judoseclin/ui/common/widgets/Custom_card/custom_card.dart';
-import '../../../../core/utils/competition_provider.dart'; // Pour récupérer les inscriptions
+import '../../../../core/utils/competition_provider.dart';
+import '../../../account/adherents_session.dart'; // Pour récupérer les inscriptions
 
 class CompetitionsListView extends StatelessWidget {
-  const CompetitionsListView({super.key});
+  final adherentId = GetIt.I<AdherentSession>().getAdherent();
+
+   CompetitionsListView({super.key});
 
   @override
   Widget build(BuildContext context) {
     // Future pour les inscriptions de l'utilisateur (vide si non connecté)
     final userInscriptionsFuture = FirebaseAuth.instance.currentUser != null
-        ? UserCompetitionsProvider().getUserInscriptions()
+        ? CompetitionRegistrationProvider().getUserInscriptionsForAdherent(adherentId!)
         : Future.value(<String>[]);
 
     return FutureBuilder<List<String>>(
