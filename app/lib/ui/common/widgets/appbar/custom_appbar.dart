@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:judoseclin/core/utils/function_admin.dart';
@@ -145,10 +146,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         if (isWideScreen) ...generateNavActions(context),
         IconButton(
           icon: Icon(Icons.logout, color: theme.colorScheme.onPrimary),
-          onPressed: () {
-            GoRouter.of(context).go('/'); // Redirection après déconnexion
+          onPressed: () async {
+            try {
+              await FirebaseAuth.instance.signOut(); // Déconnexion
+              GoRouter.of(context).go('/');           // Redirection vers la page d'accueil
+            } catch (e) {
+              debugPrint('Erreur lors de la déconnexion : $e');
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Erreur lors de la déconnexion')),
+              );
+            }
           },
-        ),
+        )
+
       ],
     );
   }

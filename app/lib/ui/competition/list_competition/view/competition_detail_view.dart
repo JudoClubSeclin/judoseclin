@@ -8,9 +8,6 @@ import 'package:judoseclin/ui/competition/inscription_competition/competition_re
 
 import '../../../../domain/entities/competition.dart';
 import '../../../../theme.dart';
-import '../../../account/account_bloc.dart';
-import '../../../account/account_event.dart';
-import '../../../account/account_state.dart';
 import '../../../account/adherents_session.dart';
 import '../../inscription_competition/competition_Registration_bloc.dart';
 import '../../inscription_competition/competition_registration_interactor.dart';
@@ -20,10 +17,6 @@ import '../competition_interactor.dart';
 class CompetitionDetailView extends StatefulWidget {
   final String competitionId;
   final CompetitionInteractor competitionInteractor;
-
-
-
-
 
   const CompetitionDetailView({
     super.key,
@@ -36,28 +29,12 @@ class CompetitionDetailView extends StatefulWidget {
 }
 
 class _CompetitionDetailViewState extends State<CompetitionDetailView> {
-  final accountBloc = getIt<AccountBloc>();
-  final adherentId = getIt<AdherentSession>().getAdherent();
-
-
-  @override
-  void initState() {
-    super.initState();
-
-    // On déclenche le chargement utilisateur si pas déjà fait
-    if (accountBloc.state is AccountInitial) {
-      accountBloc.add(LoadUserInfo()); // userId déjà connu dans le bloc
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (adherentId == null) {
-      return const Center(child: Text("Aucun adhérent sélectionné"));
-    }
+    final adherentId = getIt<AdherentSession>().getAdherent(); // peut être null si pas sélectionné
+
     debugPrint("CompetitionDetailView build() -> competitionId=${widget.competitionId}");
-    debugPrint("AccountBloc state = ${accountBloc.state}");
-    debugPrint("AdherentSession state = ${getIt<AdherentSession>().getAdherent()}");
+    debugPrint("AdherentSession state = $adherentId");
 
     return BlocProvider(
       create: (_) => getIt<CompetitionRegistrationBloc>(
@@ -68,8 +45,8 @@ class _CompetitionDetailViewState extends State<CompetitionDetailView> {
         drawer: MediaQuery.of(context).size.width > 750 ? null : const CustomDrawer(),
         body: Stack(
           children: [
-            Positioned.fill(
-              child: const DecoratedBox(
+            const Positioned.fill(
+              child: DecoratedBox(
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(ImageFondEcran.imagePath),
@@ -95,26 +72,7 @@ class _CompetitionDetailViewState extends State<CompetitionDetailView> {
                   }
 
                   final competition = snapshot.data!;
-
-                  // On écoute l'état du compte
-                  return BlocBuilder<AccountBloc, AccountState>(
-                    bloc: accountBloc,
-                    builder: (context, state) {
-                      if (state is AccountLoading) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (state is AccountLoaded) {
-                        return _buildCompetitionDetails(
-                          context,
-                          competition,
-                          state.userData['id'] as String?,
-                        );
-                      } else if (state is AccountError) {
-                        return Center(child: Text('Erreur: ${state.message}'));
-                      } else {
-                        return const SizedBox.shrink();
-                      }
-                    },
-                  );
+                  return _buildCompetitionDetails(context, competition, adherentId);
                 },
               ),
             ),
@@ -125,70 +83,85 @@ class _CompetitionDetailViewState extends State<CompetitionDetailView> {
   }
 
   Widget _buildCompetitionDetails(BuildContext context, Competition competition, String? adherentId) {
-
-    final adherentId = getIt<AdherentSession>().getAdherent();
-    if (adherentId == null || adherentId.isEmpty) {
-      return const Center(child: Text("Aucun adhérent sélectionné"));
-    }
-    debugPrint("AdherentSession state = ${getIt<AdherentSession>().getAdherent()}");
+    // On affiche TOUJOURS les infos de la compétition (public)
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(competition.title, style: titleStyleMedium(context), textAlign: TextAlign.center),
-          const SizedBox(height: 20),
-          Text(competition.subtitle, style: titleStyleSmall(context), textAlign: TextAlign.center),
-          const SizedBox(height: 20),
-          Text(DateFormat('dd/MM/yyyy').format(competition.date), style: textStyleText(context)),
-          Text(competition.address, style: textStyleText(context)),
-          const SizedBox(height: 20),
-          _buildCategoryInfo(context, 'Poussin', competition.poussin),
-          _buildCategoryInfo(context, 'Benjamin', competition.benjamin),
-          _buildCategoryInfo(context, 'Minime', competition.minime),
-          _buildCategoryInfo(context, 'Cadet', competition.cadet),
-          _buildCategoryInfo(context, 'Junior/Senior', competition.juniorSenior),
-          _buildCategoryInfo(context, 'Ceinture minimum Poussin', competition.minBeltPoussin),
-          _buildCategoryInfo(context, 'Ceinture minimum Benjamin', competition.minBeltBenjamin),
-          _buildCategoryInfo(context, 'Ceinture minimum Minime', competition.minBeltMinime),
-          _buildCategoryInfo(context, 'Ceinture minimum Cadet', competition.minBeltCadet),
-          _buildCategoryInfo(context, 'Ceinture minimum Junior/Senior', competition.minBeltJuniorSenior),
-          const SizedBox(height: 20),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 900),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(competition.title, style: titleStyleMedium(context), textAlign: TextAlign.center),
+              const SizedBox(height: 12),
+              if (competition.subtitle.isNotEmpty)
+                Text(competition.subtitle, style: titleStyleSmall(context), textAlign: TextAlign.center),
+              const SizedBox(height: 16),
+              Text(DateFormat('dd/MM/yyyy').format(competition.date), style: textStyleText(context)),
+              if (competition.address.isNotEmpty)
+                Text(competition.address, style: textStyleText(context)),
+              const SizedBox(height: 20),
 
-          BlocListener<CompetitionRegistrationBloc, CompetitionRegistrationState>(
-            listener: (context, state) {
-              if (state is CompetitionRegistrationLoading) {
-                debugPrint("Bloc: Inscription en cours...");
-              } else if (state is CompetitionRegistrationSuccess) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Inscription réussie !')),
-                );
-              } else if (state is CompetitionRegistrationFailure) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Erreur : ${state.message}')),
-                );
-              }
-            },
+              // Créneaux / catégories présentes
+              _buildCategoryInfo(context, 'Poussin', competition.poussin),
+              _buildCategoryInfo(context, 'Benjamin', competition.benjamin),
+              _buildCategoryInfo(context, 'Minime', competition.minime),
+              _buildCategoryInfo(context, 'Cadet', competition.cadet),
+              _buildCategoryInfo(context, 'Junior/Senior', competition.juniorSenior),
 
-            child: InscriptionButton(
-              competitionId: competition.id,
-              adherentId: adherentId,
-              competitionDate: competition.date,
-            ),
+              // Ceintures minimales (affichées seulement si définies)
+              _buildCategoryInfo(context, 'Ceinture minimum Poussin', competition.minBeltPoussin),
+              _buildCategoryInfo(context, 'Ceinture minimum Benjamin', competition.minBeltBenjamin),
+              _buildCategoryInfo(context, 'Ceinture minimum Minime', competition.minBeltMinime),
+              _buildCategoryInfo(context, 'Ceinture minimum Cadet', competition.minBeltCadet),
+              _buildCategoryInfo(context, 'Ceinture minimum Junior/Senior', competition.minBeltJuniorSenior),
+
+              const SizedBox(height: 24),
+
+              // Messages d'aide (facultatifs)
+              if (adherentId == null || adherentId.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Text(
+                    "Connectez-vous et sélectionnez un adhérent pour vous inscrire.",
+                    style: textStyleText(context),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+
+              // Bouton d'inscription : les vérifs (connexion + règles) se font DANS le bouton
+              BlocListener<CompetitionRegistrationBloc, CompetitionRegistrationState>(
+                listener: (context, state) {
+                  if (state is CompetitionRegistrationLoading) {
+                    debugPrint("Bloc: Inscription en cours...");
+                  } else if (state is CompetitionRegistrationSuccess) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Inscription réussie !')),
+                    );
+                  } else if (state is CompetitionRegistrationFailure) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Erreur : ${state.message}')),
+                    );
+                  }
+                },
+                child: InscriptionButton(
+                  competitionId: competition.id,
+                  adherentId: (adherentId ?? ''),
+                  competitionDate: competition.date,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 
-  Widget _buildCategoryInfo(BuildContext context, String category, String? info) {
-    if (info == null || info.trim().isEmpty) return const SizedBox.shrink();
-    return Column(
-      children: [
-        Text('$category: $info', style: textStyleText(context)),
-        const SizedBox(height: 10),
-      ],
+  Widget _buildCategoryInfo(BuildContext context, String label, String? value) {
+    if (value == null || value.trim().isEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Text('$label: $value', style: textStyleText(context)),
     );
   }
 }
-
