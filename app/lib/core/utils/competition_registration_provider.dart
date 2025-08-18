@@ -54,4 +54,6 @@ class CompetitionRegistrationProvider {
       return "❌ Une erreur est survenue.";
     }
   }
+
+
 }

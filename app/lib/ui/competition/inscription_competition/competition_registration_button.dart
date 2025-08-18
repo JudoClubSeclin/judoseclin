@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:judoseclin/theme.dart';
 import '../../../core/di/api/firestore_service.dart';
 import 'competition_Registration_bloc.dart';
@@ -40,7 +41,7 @@ class InscriptionButton extends StatelessWidget {
         onPressed: () async {
           final currentUser = FirebaseAuth.instance.currentUser;
           if (currentUser == null) {
-            Navigator.of(context).pushNamed('/login');
+           context.go("/login");
             return;
           }
 

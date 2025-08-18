@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:judoseclin/theme.dart';
 
 import '../../../core/di/injection.dart';
@@ -14,6 +16,18 @@ class CompetitionRegister extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      // L'utilisateur n'est pas connecté
+      return ElevatedButton(
+        onPressed: () {
+          context.go('/login');
+        },
+        child: const Text('Connectez-vous pour vous inscrire'),
+      );
+    }
+
+    // Si connecté, continuer avec le Bloc
     return BlocProvider(
       create: (_) => getIt<CompetitionRegistrationBloc>()
         ..add(CheckRegistrationStatusEvent(
@@ -34,7 +48,7 @@ class CompetitionRegister extends StatelessWidget {
           } else if (state is CompetitionRegistrationFailure) {
             return Text(
               'Erreur: ${state.message}',
-              style: TextStyle(color: Colors.red),
+              style: const TextStyle(color: Colors.red),
             );
           }
           return const SizedBox.shrink();
