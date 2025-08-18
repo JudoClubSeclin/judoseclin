@@ -1,58 +1,65 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
-class CompetitionRegistrationProvider {
+@singleton
+class CompetitionProvider {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  /// Vérifie si un adhérent est déjà inscrit à une compétition
-  Future<bool> isAdherentRegistered(String competitionId, String adherentId) async {
+  /// Récupérer les compétitions passées pour un adhérent
+  Future<List<Map<String, dynamic>>> getPastCompetitionsForAdherent(String adherentId) async {
     try {
-      final query = await _firestore
-          .collection('competition_registration')
-          .where('competitionId', isEqualTo: competitionId)
-          .where('adherentId', isEqualTo: adherentId)
-          .get();
-
-      return query.docs.isNotEmpty;
-    } catch (e) {
-      debugPrint("Erreur lors de la vérification d'inscription : $e");
-      return false;
-    }
-  }
-
-  Future<List<String>> getUserInscriptionsForAdherent(String adherentId) async {
-    try {
-      final query = await _firestore
+      final registrations = await _firestore
           .collection('competition_registration')
           .where('adherentId', isEqualTo: adherentId)
           .get();
 
-      return query.docs.map((doc) => doc['competitionId'] as String).toList();
+      List<Map<String, dynamic>> pastCompetitions = [];
+
+      for (var doc in registrations.docs) {
+        final data = doc.data();
+        final compId = data['competitionId'];
+
+        // Charger la compétition liée
+        final compDoc = await _firestore.collection('competitions').doc(compId).get();
+        if (compDoc.exists) {
+          final compData = compDoc.data()!;
+          final compDate = (compData['date'] as Timestamp).toDate();
+
+          if (compDate.isBefore(DateTime.now())) {
+            pastCompetitions.add({
+              'id': compDoc.id,
+              'title': compData['title'],
+              'date': compDate,
+            });
+          }
+        }
+      }
+
+      return pastCompetitions;
     } catch (e) {
-      debugPrint("Erreur lors de la récupération des inscriptions : $e");
+      debugPrint("Erreur récupération compétitions passées : $e");
       return [];
     }
   }
 
-
-  /// Inscrire un adhérent si pas déjà inscrit
-  Future<String> inscrireACompetition(String competitionId, String adherentId) async {
+  Future<Map<String, dynamic>?> getCompetitionById(String competitionId) async {
     try {
-      final alreadyRegistered = await isAdherentRegistered(competitionId, adherentId);
-      if (alreadyRegistered) {
-        return "⚠️ Vous êtes déjà inscrit à cette compétition.";
+      final doc = await _firestore.collection('competitions').doc(competitionId).get();
+      if (doc.exists) {
+        final data = doc.data()!;
+        final compDate = (data['date'] as Timestamp).toDate();
+        return {
+          'id': doc.id,
+          'title': data['title'] ?? 'Compétition',
+          'date': compDate,
+        };
       }
-
-      await _firestore.collection('competition_registration').add({
-        'competitionId': competitionId,
-        'adherentId': adherentId,
-        'createdAt': FieldValue.serverTimestamp(),
-      });
-
-      return "✅ Inscription réussie !";
+      return null;
     } catch (e) {
-      debugPrint("Erreur lors de l'inscription : $e");
-      return "❌ Une erreur est survenue.";
+      debugPrint("Erreur getCompetitionById: $e");
+      return null;
     }
   }
+
 }

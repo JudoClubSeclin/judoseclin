@@ -60,6 +60,8 @@ import '../../ui/members/reset_password/reset_password_module.dart' as _i878;
 import '../../ui/news/add_news_module.dart' as _i658;
 import '../../ui/ui_module.dart' as _i573;
 import '../router/router_config.dart' as _i718;
+import '../utils/competition_provider.dart' as _i311;
+import '../utils/competition_registration_provider.dart' as _i676;
 import 'api/auth_service.dart' as _i977;
 import 'api/firebase_client.dart' as _i703;
 import 'api/firestore_service.dart' as _i746;
@@ -84,6 +86,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i846.FetchCompetitionDataUseCase>(
         () => _i846.FetchCompetitionDataUseCase());
     gh.factory<_i527.FetchNewsDataUseCase>(() => _i527.FetchNewsDataUseCase());
+    gh.singleton<_i311.CompetitionProvider>(() => _i311.CompetitionProvider());
+    gh.singleton<_i676.CompetitionRegistrationProvider>(
+        () => _i676.CompetitionRegistrationProvider());
     gh.singleton<_i59.FirebaseAuth>(() => injectionModule.firebaseAuth);
     gh.singleton<_i457.FirebaseStorage>(() => injectionModule.firebaseStorage);
     gh.singleton<_i974.FirebaseFirestore>(

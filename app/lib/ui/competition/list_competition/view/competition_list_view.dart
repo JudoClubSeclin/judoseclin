@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:judoseclin/theme.dart';
 import 'package:judoseclin/ui/common/widgets/appbar/custom_appbar.dart';
 import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 import 'package:judoseclin/ui/common/widgets/Custom_card/custom_card.dart';
-import '../../../../core/utils/competition_provider.dart';
+import '../../../../core/utils/competition_registration_provider.dart';
 import '../../../account/adherents_session.dart'; // Pour récupérer les inscriptions
 
 class CompetitionsListView extends StatelessWidget {
