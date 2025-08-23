@@ -6,6 +6,7 @@ import 'package:judoseclin/ui/common/widgets/images/image_fond_ecran.dart';
 
 import '../../../core/utils/competition_provider.dart';
 import '../../../core/utils/competition_registration_provider.dart';
+import '../../../core/utils/envoyer_email_invitation.dart';
 
 class CompteAdherentView extends StatefulWidget {
   final String adherentId;
@@ -233,6 +234,45 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
                  Text("Compétitions passées : ", style: textStyleText(context)),
                 if (pastCompetitions.isEmpty)  Text("Aucune compétition passée.", style: textStyleText(context)),
                 ...pastCompetitions.map((c) => buildCompetitionCard(c, isPast: true)),
+
+                ElevatedButton(
+                  onPressed: () async {
+                    if (adherentData != null) {
+                      debugPrint('Envoi email à: ${adherentData!['email']}');
+                      debugPrint('Nom: ${adherentData!['firstName']}');
+                      debugPrint('Prénom: ${adherentData!['lastName']}');
+                      final success = await envoyerEmailInvitation(
+
+                        email: adherentData!['email'] ?? '',
+                        nom: adherentData!['lastName'] ?? '',
+                        prenom: adherentData!['firstName'] ?? '',
+                      );
+
+                      if (success) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'E-mail envoyé avec succès !',
+                              style: textStyleText(context),
+                            ),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Erreur lors de l\'envoi de l\'e-mail',
+                              style: textStyleText(context),
+                            ),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
+                    }
+                  },
+                  child: const Text("Envoyer email test"),
+                ),
               ],
             ),
           ),

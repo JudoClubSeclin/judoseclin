@@ -34,11 +34,13 @@ class AccountPage extends StatelessWidget {
           } else {
             if (state is! AccountLoading) {
               context.read<AccountBloc>().add(LoadUserInfo(adherentId: adherentId));
+
             }
             return const Center(
               child: SizedBox(width: 50, height: 50, child: CircularProgressIndicator()),
             );
           }
+
         },
       ),
     );

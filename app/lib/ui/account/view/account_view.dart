@@ -70,6 +70,7 @@ class AccountView extends StatelessWidget {
                   adherents: adherents,
                   utilisateurPrincipal: utilisateurPrincipal,
                 ),
+
               ],
             ),
           ),

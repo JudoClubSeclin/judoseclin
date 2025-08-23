@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:judoseclin/core/di/api/auth_service.dart';
@@ -11,7 +12,6 @@ import 'adherents_state.dart';
 import 'adherents_event.dart';
 import 'adherents_interactor.dart';
 import 'package:flutter/material.dart';
-
 
 class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
   final AdherentsInteractor adherentsInteractor;
@@ -35,15 +35,13 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
     on<LoadAllAdherentsEvent>((event, emit) async {
       emit(SignUpLoadingState());
       try {
-        final adherents = await adherentsInteractor.fetchAdherentsData(); // méthode à créer
+        final adherents = await adherentsInteractor.fetchAdherentsData();
         emit(AllAdherentsLoadedState(adherents));
       } catch (e) {
         emit(AdherentsLoadingErrorState(e.toString()));
       }
     });
-
   }
-
 
   Future<void> _onAddAdherentsSignUp(
       AddAdherentsSignUpEvent event,
@@ -56,6 +54,7 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
         return;
       }
 
+      // Ajout de l'adhérent dans Firestore
       DocumentReference adherentRef = await _firestoreService.collection('adherents').add({
         'firstName': event.firstName,
         'lastName': event.lastName,
@@ -73,24 +72,51 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
         'medicalCertificate': event.medicalCertificate,
         'invoice': event.invoice,
         'familyId': event.familyId,
-        'additionalAddress': event.additionalAddress
+        'additionalAddress': event.additionalAddress,
       });
 
       bool accountExists = event.userExists;
 
-      if (!accountExists) {
-        await envoyerEmailInvitation(
-          email: event.email,
-          nom: event.firstName,
-          prenom: event.lastName,
-        );
-      } else {
-        User? user = _authService.currentUser;
-        if (user != null) {
-          await _authService.linkUserToAdherent(user);
-        } else {
-          await _authService.sendInformationEmail(event.email, true);
+      // Fonction interne pour envoyer l'email
+      Future<bool> _envoyerEmailInvitationBloc({
+        required String email,
+        required String lastName,
+        required String firstName,
+      }) async {
+        try {
+          final HttpsCallable callable = FirebaseFunctions.instance.httpsCallable(
+            'sendEmail', // Nom de ta fonction callable Firebase
+            options: HttpsCallableOptions(
+              timeout: const Duration(seconds: 30),
+            ),
+          );
+
+          final messageText = 'Bonjour $firstName $lastName,\n\n'
+              'Votre fiche adhérent a été créée. '
+              'Veuillez créer votre compte en cliquant sur le lien ci-dessous.\n\n'
+              'Cordialement,\nL\'équipe du judo club Seclin.';
+
+          final response = await callable.call(<String, dynamic>{
+            'to': email,
+            'subject': 'Créer votre compte',
+            'text': messageText,
+            'lien': 'https://judoseclin.fr/#/inscription?email=${Uri.encodeComponent(email)}',
+          });
+
+          return response.data['success'] == true;
+        } catch (e) {
+          debugPrint('Erreur envoi email depuis Bloc: $e');
+          return false;
         }
+      }
+
+      // Envoi de l'email uniquement si le compte n'existe pas
+      if (!accountExists) {
+        await _envoyerEmailInvitationBloc(
+          email: event.email,
+          lastName: event.lastName,
+          firstName: event.firstName,
+        );
       }
 
       emit(SignUpSuccessState(!accountExists, adherentRef.id));
@@ -108,7 +134,7 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
       ) async {
     emit(PdfGenerationState(isGenerating: true));
     try {
-      await generateAndPrintPdf(event.adherentId, adherentsInteractor,cotisationInteractor);
+      await generateAndPrintPdf(event.adherentId, adherentsInteractor, cotisationInteractor);
       emit(PdfGenerationState(isGenerating: false));
     } catch (e) {
       emit(PdfGenerationState(isGenerating: false, error: e.toString()));
