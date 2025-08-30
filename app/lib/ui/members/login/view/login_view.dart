@@ -101,7 +101,7 @@ class LoginView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    /* Expanded(
+                     Expanded(
                       child: TextButton(
                         onPressed: () => context.go('/reset_password'),
                         child: Text(
@@ -110,7 +110,7 @@ class LoginView extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                       ),
-                    ),*/
+                    ),
                   ],
                 ),
               ],

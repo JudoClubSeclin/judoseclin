@@ -2,7 +2,7 @@ class UserInfoDto {
   final bool isAdministrator;
   final String firstName;
   final String lastName;
-  final DateTime? dateOfBirth;
+  final String dateOfBirth;
   final String? licenseNumber;
 
   UserInfoDto({

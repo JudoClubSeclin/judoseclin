@@ -6,39 +6,61 @@ import 'package:judoseclin/ui/account/donnees_user/donnees_user.dart';
 import '../../../theme.dart';
 import '../../common/widgets/images/image_fond_ecran.dart';
 
-class AccountView extends StatelessWidget {
+class AccountView extends StatefulWidget {
   final Map<String, dynamic> userData;
 
   const AccountView({super.key, required this.userData});
 
   @override
+  State<AccountView> createState() => _AccountViewState();
+}
+
+class _AccountViewState extends State<AccountView> {
+  late Future<List<Adherents>> _adherentsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _adherentsFuture = _fetchFamilyMembers(widget.userData['familyId'] ?? '');
+  }
+
+  Future<List<Adherents>> _fetchFamilyMembers(String familyId) async {
+    if (familyId.isEmpty) return [];
+
+    final snapshot = await FirebaseFirestore.instance
+        .collection('adherents')
+        .where('familyId', isEqualTo: familyId)
+        .get();
+
+    return snapshot.docs.map((doc) {
+      final data = doc.data();
+      return Adherents(
+        id: doc.id,
+        lastName: data['lastName'] ?? '',
+        firstName: data['firstName'] ?? '',
+        familyId: data['familyId'] ?? '',
+        dateOfBirth: data['dateOfBirth'],
+        belt: data['belt'] ?? '',
+        email: data['email'] ?? '',
+        licence: data['licence'] ?? '',
+        discipline: data['discipline'] ?? '',
+        boardPosition: data['boardPosition'] ?? '',
+        tutor: data['tutor'] ?? '',
+        category: data['category'] ?? '',
+        phone: data['phone'] ?? '',
+        address: data['address'] ?? '',
+        image: data['image'] ?? '',
+        sante: data['sante'] ?? '',
+        medicalCertificate: data['medicalCertificate'] ?? '',
+        invoice: data['invoice'] ?? '',
+        additionalAddress: data['additionalAddress'] ?? '',
+        postalCode: data['postalCode'] ?? '',
+      );
+    }).toList();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final utilisateurPrincipal = Adherents(
-      id: userData['id'] ?? '',
-      lastName: userData['lastName'] ?? '',
-      firstName: userData['firstName'] ?? '',
-      familyId: userData['familyId'] ?? '',
-      dateOfBirth: _toStringDate(userData['dateOfBirth']),
-      belt: userData['belt'] ?? '',
-      email: userData['email'] ?? '',
-      licence: userData['licence'] ?? '',
-      discipline: userData['discipline'] ?? '',
-      boardPosition: userData['boardPosition'] ?? '',
-      tutor: userData['tutor'] ?? '',
-      category: userData['category'] ?? '',
-      phone: userData['phone'] ?? '',
-      address: userData['address'] ?? '',
-      image: userData['image'] ?? '',
-      sante: userData['sante'] ?? '',
-      medicalCertificate: userData['medicalCertificate'] ?? '',
-      invoice: userData['invoice'] ?? '',
-      additionalAddress: userData['additionalAddress'] ?? '',
-      postalCode: userData['postalCode'] ?? '',
-    );
-
-
-    final List<Adherents> adherents = [utilisateurPrincipal];
-
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -47,57 +69,68 @@ class AccountView extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: MediaQuery.of(context).size.height,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  children: [
-                    Text(
-                      'Bonjour la famille',
-                      style: titleStyleMedium(context),
-                    ),
-                    const SizedBox(width: 22),
-                    Text(
-                      utilisateurPrincipal.firstName,
-                      style: titleStyleMedium(context),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                DonneesUser(
-                  adherents: adherents,
-                  utilisateurPrincipal: utilisateurPrincipal,
-                ),
+        child: FutureBuilder<List<Adherents>>(
+          future: _adherentsFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Erreur: ${snapshot.error}'));
+            }
 
-              ],
-            ),
-          ),
+            final adherents = snapshot.data ?? [];
+
+            // Au moins afficher l'utilisateur principal
+            if (adherents.isEmpty) {
+              final utilisateurPrincipal = Adherents(
+                id: widget.userData['id'] ?? '',
+                lastName: widget.userData['lastName'] ?? '',
+                firstName: widget.userData['firstName'] ?? '',
+                familyId: widget.userData['familyId'] ?? '',
+                dateOfBirth: widget.userData['dateOfBirth'],
+                belt: widget.userData['belt'] ?? '',
+                email: widget.userData['email'] ?? '',
+                licence: widget.userData['licence'] ?? '',
+                discipline: widget.userData['discipline'] ?? '',
+                boardPosition: widget.userData['boardPosition'] ?? '',
+                tutor: widget.userData['tutor'] ?? '',
+                category: widget.userData['category'] ?? '',
+                phone: widget.userData['phone'] ?? '',
+                address: widget.userData['address'] ?? '',
+                image: widget.userData['image'] ?? '',
+                sante: widget.userData['sante'] ?? '',
+                medicalCertificate: widget.userData['medicalCertificate'] ?? '',
+                invoice: widget.userData['invoice'] ?? '',
+                additionalAddress: widget.userData['additionalAddress'] ?? '',
+                postalCode: widget.userData['postalCode'] ?? '',
+              );
+              adherents.add(utilisateurPrincipal);
+            }
+
+            return Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    children: [
+                      Text('Bonjour la famille', style: titleStyleMedium(context)),
+                      const SizedBox(width: 22),
+                      Text(adherents.first.firstName, style: titleStyleMedium(context)),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  DonneesUser(
+
+                    utilisateurPrincipal: adherents.first,
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
   }
 }
-String _toStringDate(dynamic value) {
-  if (value == null) return '';
-  if (value is String) return value;
-  if (value is DateTime) {
-    return "${value.day.toString().padLeft(2,'0')}/"
-        "${value.month.toString().padLeft(2,'0')}/"
-        "${value.year}";
-  }
-  if (value is Timestamp) {
-    final dt = value.toDate();
-    return "${dt.day.toString().padLeft(2,'0')}/"
-        "${dt.month.toString().padLeft(2,'0')}/"
-        "${dt.year}";
-  }
-  return value.toString();
-}
-

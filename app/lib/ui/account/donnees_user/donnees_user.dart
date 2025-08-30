@@ -3,20 +3,14 @@ import 'package:go_router/go_router.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/ui/account/adherents_session.dart';
 import 'package:judoseclin/ui/common/widgets/Custom_card/custom_card.dart';
-
 import '../../../core/di/api/auth_service.dart';
 import '../../../core/di/api/firestore_service.dart';
 import '../../../core/di/injection.dart';
 
 class DonneesUser extends StatefulWidget {
-  final List<Adherents> adherents;
   final Adherents utilisateurPrincipal;
 
-  const DonneesUser({
-    required this.adherents,
-    required this.utilisateurPrincipal,
-    super.key,
-  });
+  const DonneesUser({super.key, required this.utilisateurPrincipal});
 
   @override
   State<DonneesUser> createState() => _DonneesUserState();
@@ -26,43 +20,47 @@ class _DonneesUserState extends State<DonneesUser> {
   final AuthService _authService = getIt<AuthService>();
   final FirestoreService _firestoreService = getIt<FirestoreService>();
 
-  Map<String, dynamic>? userData;
   bool isLoading = true;
-  List<Map<String, dynamic>> familyMembers = [];
+  List<Adherents> familyMembers = [];
 
   @override
   void initState() {
     super.initState();
-    fetchUserData();
+    fetchFamilyMembers();
   }
 
-  Future<void> fetchUserData() async {
+  Future<void> fetchFamilyMembers() async {
     try {
-      final userEmail = _authService.currentUser?.email;
-      if (userEmail == null || userEmail.isEmpty) {
+      final rawEmail = _authService.currentUser?.email ?? '';
+      final userEmail = rawEmail.trim(); // Nettoyage
+
+      if (userEmail.isEmpty) {
         debugPrint("Email utilisateur introuvable");
+        setState(() => isLoading = false);
         return;
       }
 
+      // Récupérer le document de l'utilisateur courant
       final userQuery = await _firestoreService
           .collection("adherents")
           .where("email", isEqualTo: userEmail)
           .get();
 
       if (userQuery.docs.isEmpty) {
-        debugPrint("Aucun document trouvé pour cet email : $userEmail");
+        debugPrint("Aucun document trouvé pour cet email : '$userEmail'");
+        // On peut fallback sur utilisateurPrincipal si nécessaire
+        setState(() {
+          familyMembers = [widget.utilisateurPrincipal];
+          isLoading = false;
+        });
         return;
       }
 
       final userDoc = userQuery.docs.first;
       final currentUserData = userDoc.data();
-      final currentFamilyId = currentUserData['familyId'];
+      final currentFamilyId = currentUserData['familyId'] ?? '';
 
-      if (currentFamilyId == null) {
-        debugPrint("Aucun familyId trouvé pour cet utilisateur");
-        return;
-      }
-
+      // Récupérer les membres de la famille
       final familyQuery = await _firestoreService
           .collection("adherents")
           .where("familyId", isEqualTo: currentFamilyId)
@@ -70,18 +68,17 @@ class _DonneesUserState extends State<DonneesUser> {
 
       final members = familyQuery.docs.map((doc) {
         final data = doc.data();
-        data['id'] = doc.id;
-        return data;
+        return Adherents.fromMap(data, doc.id);
       }).toList();
 
       setState(() {
-        userData = currentUserData;
-        familyMembers = members;
+        familyMembers = members.isNotEmpty ? members : [widget.utilisateurPrincipal];
         isLoading = false;
       });
     } catch (e) {
-      debugPrint("Erreur lors de la récupération des données utilisateur : $e");
+      debugPrint("Erreur lors de la récupération des membres de la famille : $e");
       setState(() {
+        familyMembers = [widget.utilisateurPrincipal];
         isLoading = false;
       });
     }
@@ -89,41 +86,35 @@ class _DonneesUserState extends State<DonneesUser> {
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
+    if (isLoading) return const Center(child: CircularProgressIndicator());
 
     if (familyMembers.isEmpty) {
       return const Center(child: Text("Aucune donnée trouvée"));
     }
 
-    return ListView(
+    return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.all(10),
-      children: [
-        const SizedBox(height: 10),
-        ...familyMembers.map((member) {
-          return Column(
-            children: [
-              CustomCard(
-                  title: "${member['firstName']} ${member['lastName']}",
-                  subTitle: "${member['email']}",
-                  onTap: () {
-                    String adherentId = member['id'];
-                    if (adherentId.isNotEmpty) {
-                      getIt<AdherentSession>().setAdherent(adherentId);
-                      context.goNamed(
-                        'mes_donnees',
-                        pathParameters: {'id': adherentId},
-                      );
-                    }
-                  }),
-              const SizedBox(height: 10),
-            ],
-          );
-        }),
-      ],
+      itemCount: familyMembers.length,
+      separatorBuilder: (_, __) => const SizedBox(height: 10),
+      itemBuilder: (context, index) {
+        final member = familyMembers[index];
+        return CustomCard(
+          title: "${member.firstName} ${member.lastName}",
+          subTitle: member.email,
+          onTap: () {
+            final adherentId = member.id;
+            if (adherentId.isNotEmpty) {
+              getIt<AdherentSession>().setAdherent(adherentId);
+              context.goNamed(
+                'mes_donnees',
+                pathParameters: {'id': adherentId},
+              );
+            }
+          },
+        );
+      },
     );
   }
 }
