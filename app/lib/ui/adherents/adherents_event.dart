@@ -8,9 +8,10 @@ class AddAdherentsSignUpEvent extends AdherentsEvent {
   final String email;
   final String dateOfBirth;
   final String licence;
-  final String belt;
-  final String discipline;
-  final String category;
+  final String? belt;
+  final String? discipline;
+  final String? boardPosition;
+  final String? category;
   final String tutor;
   final String phone;
   final String address;
@@ -21,6 +22,7 @@ class AddAdherentsSignUpEvent extends AdherentsEvent {
   final bool userExists;
   final String familyId;
   final String additionalAddress;
+  final String postalCode;
 
   AddAdherentsSignUpEvent({
     required this.id,
@@ -32,6 +34,7 @@ class AddAdherentsSignUpEvent extends AdherentsEvent {
     required this.licence,
     required this.belt,
     required this.discipline,
+    required this.boardPosition,
     required this.category,
     required this.tutor,
     required this.phone,
@@ -42,7 +45,8 @@ class AddAdherentsSignUpEvent extends AdherentsEvent {
     required this.invoice,
     required this.userExists,
     required this.familyId,
-    required this.additionalAddress
+    required this.additionalAddress,
+    required this. postalCode
   });
 }
 class AddCotisationEvent extends AdherentsEvent {

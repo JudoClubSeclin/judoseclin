@@ -22,6 +22,8 @@ class _AddCotisationViewState extends State<AddCotisationView> {
   final amountController = TextEditingController();
   final dateController = TextEditingController();
   final bankNameController = TextEditingController();
+  final bankCardController = TextEditingController();
+
 
   List<TextEditingController> chequeNumberControllers = [];
   List<TextEditingController> chequeAmountControllers = [];

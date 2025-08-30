@@ -9,7 +9,7 @@ import 'package:judoseclin/ui/competition/inscription_competition/competition_re
 import '../../../../domain/entities/competition.dart';
 import '../../../../theme.dart';
 import '../../../account/adherents_session.dart';
-import '../../inscription_competition/competition_Registration_bloc.dart';
+import '../../inscription_competition/competition_registration_bloc.dart';
 import '../../inscription_competition/competition_registration_interactor.dart';
 import '../../inscription_competition/competition_registration_state.dart';
 import '../competition_interactor.dart';

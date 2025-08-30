@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:judoseclin/core/di/api/auth_service.dart';
 import 'package:judoseclin/core/di/api/firestore_service.dart';
 import 'package:judoseclin/ui/cotisations/cotisation_interactor.dart';
 
-import '../../core/utils/envoyer_email_invitation.dart';
 import '../../core/utils/generete_and_download_pdf.dart';
 import 'adherents_state.dart';
 import 'adherents_event.dart';
@@ -73,6 +71,10 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
         'invoice': event.invoice,
         'familyId': event.familyId,
         'additionalAddress': event.additionalAddress,
+        'postalCode': event.postalCode,
+        'boardPosition': event.boardPosition,
+
+
       });
 
       bool accountExists = event.userExists;

@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:judoseclin/theme.dart';
 import '../../../core/di/api/firestore_service.dart';
-import 'competition_Registration_bloc.dart';
+import 'competition_registration_bloc.dart';
 import 'competition_registration_event.dart';
 import '../../common/widgets/buttons/custom_buttom.dart';
 

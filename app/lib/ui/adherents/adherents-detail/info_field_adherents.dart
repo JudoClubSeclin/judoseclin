@@ -1,7 +1,9 @@
 // InfoFieldAdherents
 import 'package:flutter/material.dart';
+import 'package:judoseclin/ui/common/widgets/buttons/custom_buttom.dart';
 
 import '../../../../theme.dart';
+import '../../common/send_email_form/send_email_form.dart';
 import '../../common/widgets/infos_fields/infos_fields.dart';
 import '../adherents_interactor.dart';
 
@@ -26,8 +28,10 @@ class InfoFieldAdherents extends StatelessWidget {
           return Text('Erreur: ${snapshot.error}');
         } else {
           final adherent = snapshot.data!;
+          debugPrint("email récupèrer InfoFieldAdherents: ${adherent.email}");
 
-          return SingleChildScrollView(
+
+        return SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
@@ -71,23 +75,44 @@ class InfoFieldAdherents extends StatelessWidget {
                         adherent: adherent,
                       ),
                       InfoField(
+                        label: 'Date de naissance:',
+                        value: adherent.dateOfBirth,
+                        field: 'dateOfBirth',
+                        adherentsInteractor: adherentsInteractor,
+                        adherent: adherent,
+                      ),
+                      InfoField(
                         label: 'Discipline:',
-                        value: adherent.discipline,
+                        value: adherent.discipline ?? "_",
                         field: 'discipline',
                         adherentsInteractor: adherentsInteractor,
                         adherent: adherent,
                       ),
                       InfoField(
+                        label: 'Poste occupé:',
+                        value: adherent.boardPosition ?? "_",
+                        field: 'boardPosition',
+                        adherentsInteractor: adherentsInteractor,
+                        adherent: adherent,
+                      ),
+                      InfoField(
+                        label: 'Licence:',
+                        value: adherent.licence ?? "_",
+                        field: 'licence',
+                        adherentsInteractor: adherentsInteractor,
+                        adherent: adherent,
+                      ),
+                      InfoField(
                         label: 'Catégorie:',
-                        value: adherent.category,
+                        value: adherent.category ?? "_",
                         field: 'category',
                         adherentsInteractor: adherentsInteractor,
                         adherent: adherent,
                       ),
                       InfoField(
                         label: 'Ceinture:',
-                        value: adherent.belt,
-                        field: 'blet',
+                        value: adherent.belt ?? "_",
+                        field: 'belt',
                         adherentsInteractor: adherentsInteractor,
                         adherent: adherent,
                       ),
@@ -112,6 +137,12 @@ class InfoFieldAdherents extends StatelessWidget {
                         adherentsInteractor: adherentsInteractor,
                         adherent: adherent,
                       ),
+                      InfoField(
+                          label: 'ville/Code postal',
+                          value: adherent.postalCode,
+                          field: 'postalCode'
+                          , adherentsInteractor: adherentsInteractor,
+                          adherent: adherent),
                       InfoField(
                         label: 'Droit à l\'image:',
                         value: adherent.image,
@@ -140,6 +171,22 @@ class InfoFieldAdherents extends StatelessWidget {
                         adherentsInteractor: adherentsInteractor,
                         adherent: adherent,
                       ),
+                      const SizedBox(height: 20),
+                      //Text("Email: ${adherent.email}"),
+                      CustomButton(
+                        onPressed: () {
+                          debugPrint("📩 Email utilisé dans InfoFieldAdherents: ${adherent.email}");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SendEmailForm(adherent: adherent),
+                            ),
+                          );
+                        },
+                        label:  "Envoyer un email"
+                      ),
+
+
                     ],
                   ),
                 ),

@@ -1,8 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:judoseclin/domain/entities/adherents.dart';
 import 'package:judoseclin/ui/account/donnees_user/donnees_user.dart';
 
-import '../../../core/utils/date_converter.dart';
 import '../../../theme.dart';
 import '../../common/widgets/images/image_fond_ecran.dart';
 
@@ -18,11 +18,13 @@ class AccountView extends StatelessWidget {
       lastName: userData['lastName'] ?? '',
       firstName: userData['firstName'] ?? '',
       familyId: userData['familyId'] ?? '',
-      dateOfBirth: DateConverter.convertToDateTime(userData['dateOfBirth']),
+      dateOfBirth: _toStringDate(userData['dateOfBirth']),
       belt: userData['belt'] ?? '',
       email: userData['email'] ?? '',
       licence: userData['licence'] ?? '',
       discipline: userData['discipline'] ?? '',
+      boardPosition: userData['boardPosition'] ?? '',
+      tutor: userData['tutor'] ?? '',
       category: userData['category'] ?? '',
       phone: userData['phone'] ?? '',
       address: userData['address'] ?? '',
@@ -30,7 +32,10 @@ class AccountView extends StatelessWidget {
       sante: userData['sante'] ?? '',
       medicalCertificate: userData['medicalCertificate'] ?? '',
       invoice: userData['invoice'] ?? '',
+      additionalAddress: userData['additionalAddress'] ?? '',
+      postalCode: userData['postalCode'] ?? '',
     );
+
 
     final List<Adherents> adherents = [utilisateurPrincipal];
 
@@ -79,3 +84,20 @@ class AccountView extends StatelessWidget {
     );
   }
 }
+String _toStringDate(dynamic value) {
+  if (value == null) return '';
+  if (value is String) return value;
+  if (value is DateTime) {
+    return "${value.day.toString().padLeft(2,'0')}/"
+        "${value.month.toString().padLeft(2,'0')}/"
+        "${value.year}";
+  }
+  if (value is Timestamp) {
+    final dt = value.toDate();
+    return "${dt.day.toString().padLeft(2,'0')}/"
+        "${dt.month.toString().padLeft(2,'0')}/"
+        "${dt.year}";
+  }
+  return value.toString();
+}
+

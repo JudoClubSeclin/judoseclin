@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:judoseclin/domain/usecases/fetch_competition_registration_data_usecase.dart';
-import 'package:judoseclin/ui/competition/inscription_competition/competition_Registration_bloc.dart';
+import 'package:judoseclin/ui/competition/inscription_competition/competition_registration_bloc.dart';
 import 'package:flutter/material.dart';
 import '../../../core/di/api/firestore_service.dart';
 import '../../../data/repository/competition_registration_repository.dart';

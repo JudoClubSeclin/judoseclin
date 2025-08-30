@@ -24,6 +24,7 @@ class AdherentsInteractor {
         'licence': adherents.licence,
         'belt': adherents.belt,
         'discipline': adherents.discipline,
+        'boardPosition': adherents.boardPosition,
         'category': adherents.category,
         'tutor': adherents.tutor,
         'phone': adherents.phone,

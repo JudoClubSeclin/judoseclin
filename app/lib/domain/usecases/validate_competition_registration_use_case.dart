@@ -7,7 +7,7 @@ class ValidateCompetitionRegistrationUseCase {
     required Competition competition,
     required Adherents adherent,
   }) {
-    final category = adherent.category.toLowerCase();
+    final category = adherent.category?.toLowerCase();
     if (category == null) return false;
 
     String? minBelt;

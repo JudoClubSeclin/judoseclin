@@ -10,7 +10,7 @@ Le Judo club de Seclin, qui a vu le jour en 1973, a été créer par le Docteur 
 - Trésorière adjointe : Ombeline LAPENDRY
 - Secrétaire adjointe : Manon SPYSSCHAERT
 - Membre actif : Steeve VANDENSTORME
-- Memvre actif : Elisa SPYSSCHAERT
+- Membre actif : Elisa SPYSSCHAERT
 - Membre actif : Christophe JOUGLEUX
 - Site web : Benoît FONTAINE et Ludovic SPYSSCHAERT
 

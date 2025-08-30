@@ -35,7 +35,8 @@ class AppRouterConfig {
           ...getIt<AddCompetitionModule>().getRoutes(),
           ...getIt<AddNewsModule>().getRoutes(),
           ...getIt<CotisationModule>().getRoutes(),
-          ...getIt<CompteAdherentsModule>().getRoutes()
+          ...getIt<CompteAdherentsModule>().getRoutes(),
+
         ],
         errorBuilder: (context, state) => const ErrorPage(),
       );

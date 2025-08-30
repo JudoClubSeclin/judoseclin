@@ -15,6 +15,7 @@ class AddCotisationSignUpEvent extends CotisationEvent {
   final String date;
   final List<Cheque> cheques;
   final String bankName;
+  final int bankCard;
 
   AddCotisationSignUpEvent({
     required this.id,
@@ -23,6 +24,7 @@ class AddCotisationSignUpEvent extends CotisationEvent {
     required this.date,
     required this.cheques,
     required this.bankName,
+    required this.bankCard,
   });
 }
 

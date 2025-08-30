@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:judoseclin/core/di/api/auth_service.dart';
 import 'package:judoseclin/ui/account/account_bloc.dart';

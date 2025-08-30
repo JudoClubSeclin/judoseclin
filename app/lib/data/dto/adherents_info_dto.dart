@@ -3,11 +3,12 @@ class AdherentsInfoDto {
   final String firstName;
   final String lastName;
   final String email;
-  final DateTime dateOfBirth;
+  final String dateOfBirth;
   final String licence;
-  final String belt;
-  final String discipline;
-  final String category;
+  final String? belt;
+  final String? discipline;
+  final String? boardPosition;
+  final String? category;
   final String tutor;
   final String phone;
   final String address;
@@ -17,6 +18,8 @@ class AdherentsInfoDto {
   final String invoice;
   final String familyId;
   final String additionalAddress;
+  final String postalCode;
+
 
   AdherentsInfoDto({
     required this.id,
@@ -27,6 +30,7 @@ class AdherentsInfoDto {
     required this.licence,
     required this.belt,
     required this.discipline,
+    required this.boardPosition,
     required this.category,
     required this.tutor,
     required this.phone,
@@ -36,7 +40,8 @@ class AdherentsInfoDto {
     required this.medicalCertificate,
     required this.invoice,
     required this.familyId,
-    required this.additionalAddress
+    required this.additionalAddress,
+    required this.postalCode
   });
 
 
@@ -50,6 +55,7 @@ class AdherentsInfoDto {
         licence: json ['licence'],
         belt: json ['belt'],
         discipline: json ['discipline'],
+        boardPosition: json ['boardPosition'],
         category: json ['category'],
         tutor: json ['tutor'],
         phone: json ['phone'],
@@ -59,7 +65,8 @@ class AdherentsInfoDto {
         medicalCertificate: json ['medicalCertificate'],
         invoice: json ['invoice'],
         familyId: json ['familyId'],
-        additionalAddress: json ['additionalAddress']
+        additionalAddress: json ['additionalAddress'],
+        postalCode: json ['postalCode']
 
     );
   }

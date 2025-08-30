@@ -8,6 +8,7 @@ class Cotisation {
   final List<Cheque> cheques;
   final String bankName;
 
+
   Cotisation({
     required this.id,
     required this.adherentId,

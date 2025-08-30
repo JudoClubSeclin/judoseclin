@@ -20,10 +20,11 @@ void setupEntityModule() {
       firstName: '',
       lastName: '',
       email: '',
-      dateOfBirth: null,
+      dateOfBirth: '',
       licence: '',
       belt: '',
       discipline: '',
+      boardPosition: '',
       category: '',
       tutor: '',
       phone: '',
@@ -31,7 +32,7 @@ void setupEntityModule() {
       image: '',
       sante: '',
       medicalCertificate: '',
-      invoice: ''
+      invoice: '', postalCode: ''
   ));
 
   ///enregistrement Competition entity
@@ -56,7 +57,8 @@ void setupEntityModule() {
       amount:0 ,
       date: '',
       cheques: parseCheques('') ,
-      bankName: ''
+      bankName: '',
+
   ));
 
   ///Enregistrement inscription_competition entity

@@ -22,6 +22,7 @@ class CotisationBloc extends Bloc<CotisationEvent, CotisationState> {
             date: event.date,
             cheques: event.cheques.cast<Cheque>(),
             bankName: event.bankName,
+
           );
           await cotisationInteractor.addCotisation(cotisation);
           emit(CotisationSignUpSuccessState(adherentId: adherentId));

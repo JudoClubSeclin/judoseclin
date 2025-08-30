@@ -3,11 +3,12 @@ class AdherentsDto {
   final String firstName;
   final String lastName;
   final String email;
-  final DateTime dateOfBirth;
+  final String dateOfBirth;
   final String licence;
-  final String belt;
-  final String discipline;
-  final String category;
+  final String? belt;
+  final String? discipline;
+  final String? boardPosition;
+  final String? category;
   final String tutor;
   final String phone;
   final String address;
@@ -17,6 +18,7 @@ class AdherentsDto {
   final String invoice;
   final String familyId;
   final String additionalAddress;
+  final String postalCode;
 
   AdherentsDto({
     required this.id,
@@ -27,6 +29,7 @@ class AdherentsDto {
     required this.licence,
     required this.belt,
     required this.discipline,
+    required this.boardPosition,
     required this.category,
     required this.tutor,
     required this.phone,
@@ -36,6 +39,8 @@ class AdherentsDto {
     required this.medicalCertificate,
     required this.invoice,
     required this.familyId,
-    required this.additionalAddress
+    required this.additionalAddress,
+    required this.postalCode
+
   });
 }

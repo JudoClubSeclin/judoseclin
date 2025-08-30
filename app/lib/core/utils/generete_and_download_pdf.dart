@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'dart:html' as html;
@@ -35,14 +34,7 @@ Future<void> generateAndPrintPdf(
       await rootBundle.load("assets/fonts/Roboto-Regular.ttf"),
     );
 
-    String formattedDateOfBirth = "Non spécifiée";
-    if (adherent.dateOfBirth != null) {
-      if (adherent.dateOfBirth is DateTime) {
-        formattedDateOfBirth = DateFormat('dd/MM/yyyy').format(adherent.dateOfBirth!);
-      } else if (adherent.dateOfBirth is String) {
-        formattedDateOfBirth = adherent.dateOfBirth as String;
-      }
-    }
+
 
     pdf.addPage(
       pw.Page(
@@ -65,13 +57,14 @@ Future<void> generateAndPrintPdf(
               _buildRowWithIcon("personne", "Nom :", adherent.firstName, regularFont),
               _buildRowWithIcon("personne", "Prénom :", adherent.lastName, regularFont),
               _buildRowWithIcon("tuteur", "Tuteur legal :", adherent.tutor ?? "Non spécifié", regularFont),
-              _buildRowWithIcon("calandrier", "Date de naissance :", formattedDateOfBirth, regularFont),
+              _buildRowWithIcon("calandrier", "Date de naissance :", adherent.dateOfBirth, regularFont),
               _buildRowWithIcon("adresse", "Adresse :", adherent.address, regularFont),
               _buildRowWithIcon("email", "Email :", adherent.email, regularFont),
               _buildRowWithIcon("phone", "Téléphone :", adherent.phone, regularFont),
-              _buildRowWithIcon("ceinture", "Ceinture :", adherent.belt, regularFont),
-              _buildRowWithIcon("discipline", "Discipline :", adherent.discipline, regularFont),
-              _buildRowWithIcon("categorie", "Catégorie :", adherent.category, regularFont),
+              _buildRowWithIcon("ceinture", "Ceinture :", adherent.belt ?? "-", regularFont),
+              _buildRowWithIcon("discipline", "Discipline :", adherent.discipline ?? "_", regularFont),
+              _buildRowWithIcon("position", "Poste occupé :", adherent.boardPosition ??"_", regularFont),
+              _buildRowWithIcon("categorie", "Catégorie :", adherent.category ?? "-", regularFont),
               _buildRowWithIcon("certificate", "Certificat médical :", adherent.medicalCertificate, regularFont),
               _buildRowWithIcon("licence", "Licence :", adherent.licence, regularFont),
               _buildRowWithIcon("images", "Droit à l'image :", adherent.image, regularFont),

@@ -8,6 +8,7 @@ class CotisationInfoDto {
   final List<Cheque> cheques;
   final String bankName;
 
+
   CotisationInfoDto({
     required this.id,
     required this.adherentId,

@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:judoseclin/theme.dart';
 
 import '../../../core/di/injection.dart';
-import '../../competition/inscription_competition/competition_Registration_bloc.dart';
+import '../../competition/inscription_competition/competition_registration_bloc.dart';
 import '../../competition/inscription_competition/competition_registration_event.dart';
 import '../../competition/inscription_competition/competition_registration_state.dart';
 

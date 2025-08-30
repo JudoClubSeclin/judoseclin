@@ -25,6 +25,7 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
   final licenceController = TextEditingController();
   final beltController = TextEditingController();
   final disciplineController = TextEditingController();
+  final boardPositionController = TextEditingController();
   final categoryController = TextEditingController();
   final tutorController = TextEditingController();
   final phoneController = TextEditingController();
@@ -34,6 +35,7 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
   final medicalCertificateController = TextEditingController();
   final invoiceController = TextEditingController();
   final additionalAddressController = TextEditingController();
+  final postalCodeController = TextEditingController();
 
   String? currentFamilyId; // Pour stocker familyId détecté
 
@@ -46,6 +48,7 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
     licenceController.dispose();
     beltController.dispose();
     disciplineController.dispose();
+    boardPositionController.dispose();
     categoryController.dispose();
     tutorController.dispose();
     phoneController.dispose();
@@ -55,6 +58,7 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
     medicalCertificateController.dispose();
     invoiceController.dispose();
     additionalAddressController.dispose();
+    postalCodeController.dispose();
 
     super.dispose();
   }
@@ -116,6 +120,15 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
                   runSpacing: 20.0,
                   children: [
                     CustomTextField(
+                      labelText: 'NOM',
+                      controller: firstNameController,
+                    ),
+                    const SizedBox(width: 40),
+                    CustomTextField(
+                      labelText: 'PRÉNOM',
+                      controller: lastNameController,
+                    ),
+                    CustomTextField(
                       labelText: 'Adresse',
                       controller: addressController,
                       onChanged: (value) {
@@ -132,14 +145,10 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
                       controller: additionalAddressController,
                     ),
                     CustomTextField(
-                      labelText: 'NOM',
-                      controller: firstNameController,
+                      labelText: "Code postal / ville",
+                      controller: postalCodeController,
                     ),
-                    const SizedBox(width: 40),
-                    CustomTextField(
-                      labelText: 'PRÉNOM',
-                      controller: lastNameController,
-                    ),
+                    const SizedBox(height: 20),
                     const SizedBox(height: 20),
                     CustomTextField(
                       labelText: 'Date de naissance (jj/mm/aaaa)',
@@ -164,6 +173,11 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
                     CustomTextField(
                       labelText: 'discipline',
                       controller: disciplineController,
+                    ),
+                    const SizedBox(width: 40),
+                    CustomTextField(
+                      labelText: 'Poste occupé',
+                      controller: boardPositionController,
                     ),
                     const SizedBox(width: 40),
                     CustomTextField(
@@ -207,11 +221,7 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
                 CustomButton(
                   onPressed: () async {
                     try {
-                      DateTime parsedDate = DateFormat('dd/MM/yyyy')
-                          .parse(dateOfBirthController.text.trim());
 
-                      String formattedDate =
-                          DateFormat('dd/MM/yyyy').format(parsedDate);
 
                       String familyId;
 
@@ -231,12 +241,15 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
                               firstName: firstNameController.text.trim(),
                               lastName: lastNameController.text.trim(),
                               email: emailController.text.trim(),
-                              dateOfBirth: formattedDate,
+                              dateOfBirth: dateOfBirthController.text.trim(),
                               licence: licenceController.text.trim(),
                               additionalAddress:
                                   additionalAddressController.text.trim(),
+                              postalCode: postalCodeController.text.trim(),
                               belt: beltController.text.trim(),
                               discipline: disciplineController.text.trim(),
+                              boardPosition:
+                                  boardPositionController.text.trim(),
                               category: categoryController.text.trim(),
                               tutor: tutorController.text.trim(),
                               phone: phoneController.text.trim(),
@@ -260,6 +273,7 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
                       licenceController.clear();
                       beltController.clear();
                       disciplineController.clear();
+                      boardPositionController.clear();
                       categoryController.clear();
                       tutorController.clear();
                       phoneController.clear();
@@ -269,6 +283,7 @@ class _AddAdherentsViewState extends State<AddAdherentsView> {
                       medicalCertificateController.clear();
                       invoiceController.clear();
                       additionalAddressController.clear();
+                      postalCodeController.clear();
                       currentFamilyId = null;
                     } catch (e) {
                       debugPrint(

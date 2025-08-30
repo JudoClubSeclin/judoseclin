@@ -90,30 +90,33 @@ class AdherentsDetailView extends StatelessWidget {
 
 
 
-          Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 600),
-              child: Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 15,
-                runSpacing: 10,
-                children: [
-                  CustomButton(
-                    label: 'Ajouter la cotisation',
-                    onPressed: () {
-                      context.go('/admin/add/cotisation/$adherentId');
-                    },
-                  ),
-                  CustomButton(
-                    label: 'Télécharger la fiche PDF',
-                    onPressed: () {
-                      generateAndPrintPdf(adherentId, adherentsInteractor,cotisationInteractor);
-                    },
-                  ),
-                ],
+              Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 600),
+                    child: Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 15,
+                      runSpacing: 10,
+                      children: [
+                        CustomButton(
+                          label: 'Ajouter la cotisation',
+                          onPressed: () {
+                            context.go('/admin/add/cotisation/$adherentId');
+                          },
+                        ),
+                        CustomButton(
+                          label: 'Télécharger la fiche PDF',
+                          onPressed: () {
+                            generateAndPrintPdf(adherentId, adherentsInteractor,cotisationInteractor);
+                          },
+                        ),
+
+
+
+                      ],
+                    ),
+                  )
               ),
-            )
-          ),
               const SizedBox(height: 30),
             ],
 
