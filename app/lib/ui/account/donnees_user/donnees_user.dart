@@ -100,7 +100,12 @@ class _DonneesUserState extends State<DonneesUser> {
       separatorBuilder: (_, __) => const SizedBox(height: 10),
       itemBuilder: (context, index) {
         final member = familyMembers[index];
-        return CustomCard(
+        return
+          Center(
+              child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 500), // largeur max
+                  child:
+          CustomCard(
           title: "${member.firstName} ${member.lastName}",
           subTitle: member.email,
           onTap: () {
@@ -113,6 +118,8 @@ class _DonneesUserState extends State<DonneesUser> {
               );
             }
           },
+          )
+              )
         );
       },
     );
