@@ -24,6 +24,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final isWideScreen = MediaQuery.of(context).size.width > 749;
 
     if (!isWideScreen) {
+
       return Builder(
         builder: (BuildContext context) {
           return IconButton(
@@ -118,7 +119,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
         );
-      }),
+      }).toList(),
     ];
   }
 

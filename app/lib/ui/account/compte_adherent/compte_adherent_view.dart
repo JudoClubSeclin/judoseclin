@@ -205,7 +205,10 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
     }
 
     return Scaffold(
-      appBar: CustomAppBar(title: ''),
+      appBar:const CustomAppBar(title: ''),
+      drawer: MediaQuery.of(context).size.width <= 750
+          ? const CustomDrawer()
+          : null,
       body: Container(
         width: double.infinity,
         height: double.infinity,
