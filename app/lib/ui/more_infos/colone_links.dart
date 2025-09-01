@@ -91,6 +91,8 @@ class PaddedText extends StatelessWidget {
   }
 }
 
+// ...imports et classes File, CompetitionListButtons, FileListButtons, PaddedText restent inchangés
+
 class ColonneLinks extends StatefulWidget {
   final double fraction;
   final Size size;
@@ -108,14 +110,13 @@ class _ColonneLinksState extends State<ColonneLinks> {
   Future<List<File>> getFiles(String folderName) async {
     final Reference folderRef = storage.ref().child(folderName);
     final ListResult result = await folderRef.listAll();
-    var futures =
-        result.items.map((Reference ref) async {
-          var fileUrl = await ref.getDownloadURL();
-          return File(
-            fileTitle: ref.name.replaceAll("_", " ").toUpperCase(),
-            fileUrl: Uri.parse(fileUrl),
-          );
-        }).toList();
+    var futures = result.items.map((Reference ref) async {
+      var fileUrl = await ref.getDownloadURL();
+      return File(
+        fileTitle: ref.name.replaceAll("_", " ").toUpperCase(),
+        fileUrl: Uri.parse(fileUrl),
+      );
+    }).toList();
     return Future.wait(futures);
   }
 
@@ -131,15 +132,11 @@ class _ColonneLinksState extends State<ColonneLinks> {
             children: [
               FittedBox(
                 fit: BoxFit.scaleDown,
-                // Utilisez BoxFit.contain si vous voulez conserver les proportions
                 child: Text("Documents", style: titleStyleMedium(context)),
               ),
               FutureBuilder(
                 future: getFiles("documents"),
-                builder: (
-                  BuildContext context,
-                  AsyncSnapshot<List<File>> snapshot,
-                ) {
+                builder: (BuildContext context, AsyncSnapshot<List<File>> snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.none:
                     case ConnectionState.waiting:
@@ -161,24 +158,18 @@ class _ColonneLinksState extends State<ColonneLinks> {
                       }
                       break;
                     default:
-                      return const Text(
-                        "En attente de données...",
-                      ); // Ajoutez une valeur par défaut ici
+                      return const Text("En attente de données...");
                   }
-                  return const SizedBox(); // Une valeur de retour par défaut si aucun cas n'est atteint
+                  return const SizedBox();
                 },
               ),
               FittedBox(
                 fit: BoxFit.scaleDown,
-                // Utilisez BoxFit.contain si vous voulez conserver les proportions
                 child: Text("Ceinture Noire", style: titleStyleMedium(context)),
               ),
               FutureBuilder(
                 future: getFiles("ceinture_noire"),
-                builder: (
-                  BuildContext context,
-                  AsyncSnapshot<List<File>> snapshot,
-                ) {
+                builder: (BuildContext context, AsyncSnapshot<List<File>> snapshot) {
                   if (snapshot.hasData) {
                     List<File> files = snapshot.data ?? [];
                     if (files.isEmpty) {
@@ -197,24 +188,24 @@ class _ColonneLinksState extends State<ColonneLinks> {
                   }
                 },
               ),
+
+              // ============================
+              // Partie Compétitions commentée
+              // ============================
+              /*
               FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text("Compétitions", style: titleStyleMedium(context)),
               ),
               FutureBuilder<QuerySnapshot>(
                 future: firestore.collection('competition').get(),
-                builder: (
-                  BuildContext context,
-                  AsyncSnapshot<QuerySnapshot> snapshot,
-                ) {
+                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.none:
                     case ConnectionState.waiting:
                       return const CircularProgressIndicator();
                     case ConnectionState.done:
-                      // debugPrint('Data received: ${snapshot.data}');
                       if (snapshot.hasError) {
-                        //  debugPrint('Erreur: ${snapshot.error}');
                         return const Text(
                           "Erreur lors de la récupération des compétitions",
                         );
@@ -226,7 +217,6 @@ class _ColonneLinksState extends State<ColonneLinks> {
                               return Competition.fromMap(data, doc.id);
                             }).toList();
 
-                        debugPrint('Data received: ${snapshot.data}');
                         if (competitions.isEmpty) {
                           return const Text(
                             "Aucune compétition disponible pour le moment",
@@ -244,6 +234,7 @@ class _ColonneLinksState extends State<ColonneLinks> {
                   return const SizedBox();
                 },
               ),
+              */
             ],
           ),
         ),
