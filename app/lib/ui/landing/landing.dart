@@ -24,7 +24,8 @@ class Landing extends StatelessWidget {
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [const LandingHome(), const LandingNews(), MoreInfo()],
+              children: [const LandingHome(), const LandingNews(), MoreInfo()
+        ],
             ),
             Positioned(
               top: 40.0, // Ajustez la position verticale

@@ -9,7 +9,6 @@ import 'package:judoseclin/ui/adherents/adherents_interactor.dart';
 import 'package:judoseclin/ui/cotisations/cotisation_interactor.dart';
 import 'package:judoseclin/ui/ui_module.dart';
 
-import '../../../core/di/api/auth_service.dart';
 import '../../../core/di/injection.dart';
 
 @singleton
@@ -53,7 +52,6 @@ class CompteAdherentsModule implements UIModule {
   Page<dynamic> _buildDetailPage(String adherentId) {
     final adherentsInteractor = getIt<AdherentsInteractor>();
     final cotisationInteractor = getIt<CotisationInteractor>();
-    final authService = getIt<AuthService>();
     final firestoreService = getIt<FirestoreService>();
 
     return CustomTransitionPage(
@@ -62,7 +60,6 @@ class CompteAdherentsModule implements UIModule {
             AdherentsBloc(
                 adherentsInteractor ,
                 cotisationInteractor,
-                authService,
                 firestoreService,
                 adherentId: adherentId
             ),

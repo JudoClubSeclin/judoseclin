@@ -14,10 +14,10 @@ class CustomCard extends StatefulWidget {
   });
 
   @override
-  _CustomCardState createState() => _CustomCardState();
+  CustomCardState createState() => CustomCardState();
 }
 
-class _CustomCardState extends State<CustomCard> {
+class CustomCardState extends State<CustomCard> {
   bool _isHovered = false;
 
   @override

@@ -19,7 +19,7 @@ class _SendEmailAdherentState extends State<SendEmailAdherent> {
   bool _isSending = false;
 
   Future<void> _sendEmail() async {
-    final toEmail = widget.adherent.email ?? "";
+    final toEmail = widget.adherent.email;
     final subject = _subjectController.text.trim();
     final body = _messageController.text.trim();
 
@@ -29,6 +29,7 @@ class _SendEmailAdherentState extends State<SendEmailAdherent> {
     debugPrint("Message: $body");
 
     if (toEmail.isEmpty) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("⚠️ Aucun email disponible pour cet adhérent")),
       );
@@ -36,6 +37,7 @@ class _SendEmailAdherentState extends State<SendEmailAdherent> {
     }
 
     if (subject.isEmpty || body.isEmpty) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("⚠️ Sujet et message obligatoires")),
       );
@@ -47,7 +49,6 @@ class _SendEmailAdherentState extends State<SendEmailAdherent> {
     });
 
     try {
-      // 🔑 Remplace par tes vraies clés EmailJS
       const serviceId = "service_xxxxxxx";
       const templateId = "template_xxxxxxx";
       const userId = "user_xxxxxxx";
@@ -71,6 +72,8 @@ class _SendEmailAdherentState extends State<SendEmailAdherent> {
         }),
       );
 
+      if (!mounted) return; // ✅ vérification context
+
       if (response.statusCode == 200) {
         debugPrint("✅ Email envoyé avec succès !");
         ScaffoldMessenger.of(context).showSnackBar(
@@ -84,13 +87,17 @@ class _SendEmailAdherentState extends State<SendEmailAdherent> {
       }
     } catch (e) {
       debugPrint("❌ Exception: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("❌ Erreur: $e")),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("❌ Erreur: $e")),
+        );
+      }
     } finally {
-      setState(() {
+      if (!mounted) {
+        setState(() {
         _isSending = false;
       });
+      }
     }
   }
 
@@ -107,7 +114,7 @@ class _SendEmailAdherentState extends State<SendEmailAdherent> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("📧 Destinataire: ${adherent.email ?? "Non renseigné"}"),
+            Text("📧 Destinataire: ${adherent.email}"),
             const SizedBox(height: 20),
 
             TextField(

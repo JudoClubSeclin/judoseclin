@@ -31,9 +31,11 @@ class _SendEmailFormState extends State<SendEmailForm> {
     final email = widget.adherent.email;
 
     if (email.isEmpty) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Email non renseigné")),
       );
+      if (!mounted) return;
       setState(() => _isSending = false);
       return;
     }
@@ -46,18 +48,23 @@ class _SendEmailFormState extends State<SendEmailForm> {
         'text': message,
       });
 
+      if (!mounted) return;
       if (result.data['success'] == true) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Email envoyé ✅")),
         );
+        if (!mounted) return;
         Navigator.pop(context);
       }
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Erreur: ${e.toString()}")),
       );
     } finally {
-      setState(() => _isSending = false);
+      if (!mounted) {
+        setState(() => _isSending = false);
+      }
     }
   }
 

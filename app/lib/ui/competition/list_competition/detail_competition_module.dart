@@ -25,7 +25,6 @@ class CompetitionDetailModule implements UIModule {
         path: '/competition/:id',
         pageBuilder: (context, state) {
           final competitionId = state.pathParameters['id'] ?? '';
-          final adherentId = state.uri.queryParameters['adherentId'] ?? '';
 
           return MaterialPage(
             child: CompetitionDetailView(

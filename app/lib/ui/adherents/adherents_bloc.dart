@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:judoseclin/core/di/api/auth_service.dart';
 import 'package:judoseclin/core/di/api/firestore_service.dart';
 import 'package:judoseclin/ui/cotisations/cotisation_interactor.dart';
 
@@ -15,13 +14,11 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
   final AdherentsInteractor adherentsInteractor;
   final CotisationInteractor cotisationInteractor;
   final String adherentId;
-  final AuthService _authService;
   final FirestoreService _firestoreService;
 
   AdherentsBloc(
       this.adherentsInteractor,
       this.cotisationInteractor,
-      this._authService,
       this._firestoreService, {
         required this.adherentId,
       }) : super(SignUpInitialState()) {
@@ -80,7 +77,7 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
       bool accountExists = event.userExists;
 
       // Fonction interne pour envoyer l'email
-      Future<bool> _envoyerEmailInvitationBloc({
+      Future<bool> envoyerEmailInvitationBloc({
         required String email,
         required String lastName,
         required String firstName,
@@ -114,7 +111,7 @@ class AdherentsBloc extends Bloc<AdherentsEvent, AdherentsState> {
 
       // Envoi de l'email uniquement si le compte n'existe pas
       if (!accountExists) {
-        await _envoyerEmailInvitationBloc(
+        await envoyerEmailInvitationBloc(
           email: event.email,
           lastName: event.lastName,
           firstName: event.firstName,

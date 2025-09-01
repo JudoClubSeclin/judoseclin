@@ -97,7 +97,7 @@ class InfoFieldAdherents extends StatelessWidget {
                       ),
                       InfoField(
                         label: 'Licence:',
-                        value: adherent.licence ?? "_",
+                        value: adherent.licence,
                         field: 'licence',
                         adherentsInteractor: adherentsInteractor,
                         adherent: adherent,

@@ -9,7 +9,6 @@ import 'package:judoseclin/ui/cotisations/cotisation_interactor.dart';
 import 'package:judoseclin/ui/ui_module.dart';
 
 import '../../../core/di/injection.dart';
-import '../../core/di/api/auth_service.dart';
 import '../../core/di/api/firestore_service.dart';
 
 @singleton
@@ -43,7 +42,6 @@ class ListAdherentsModule implements UIModule {
   Widget _buildAccountPage() {
     final interactor = getIt<AdherentsInteractor>();
     final cotisationInteractor = getIt<CotisationInteractor>();
-    final auth = getIt<AuthService>();
     final firestoreService = getIt<FirestoreService>();
     debugPrint('>>> buildAccountPage appelé');
 
@@ -55,7 +53,6 @@ class ListAdherentsModule implements UIModule {
         return AdherentsBloc(
           interactor,
           cotisationInteractor,
-          auth,
           firestoreService,
           adherentId: '',
         );

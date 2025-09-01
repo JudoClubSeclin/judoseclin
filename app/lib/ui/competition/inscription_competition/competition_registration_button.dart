@@ -40,62 +40,62 @@ class InscriptionButton extends StatelessWidget {
       label: "Je m'inscris",
         onPressed: () async {
           final currentUser = FirebaseAuth.instance.currentUser;
+          final scaffold = ScaffoldMessenger.of(context); // capture
+          final router = GoRouter.of(context);            // capture
+
           if (currentUser == null) {
-           context.go("/login");
+            router.go("/login");
             return;
           }
 
           final firestore = GetIt.I<FirestoreService>();
 
           try {
-            // 🔹 Récupération infos adhérent
             final adherentDoc = await firestore.getCollection('adherents').doc(adherentId).get();
+
             if (!adherentDoc.exists) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                 SnackBar(content: Text("Adhérent non trouvé.",style: textStyleText(context))),
+              scaffold.showSnackBar(
+                SnackBar(content: Text("Adhérent non trouvé.", style: textStyleText(context))),
               );
               return;
             }
 
-            // 🔹 Vérification déjà inscrit
             final existingRegistrationsQuery = await firestore.getCollection('competition_registration')
                 .where('adherentId', isEqualTo: adherentId)
                 .where('competitionId', isEqualTo: competitionId)
                 .get();
 
             if (existingRegistrationsQuery.docs.isNotEmpty) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                 SnackBar(content: Text("⚠️ Vous êtes déjà inscrit à cette compétition.",style: textStyleText(context))),
+              scaffold.showSnackBar(
+                SnackBar(content: Text("⚠️ Vous êtes déjà inscrit à cette compétition.", style: textStyleText(context))),
               );
               return;
             }
 
-            // 🔹 Vérification ceinture et catégorie comme avant
+            // Récupération infos adhérent
             final adherentData = adherentDoc.data() as Map<String, dynamic>;
             final adherentBelt = adherentData['belt'] as String?;
             final adherentCategory = adherentData['category'] as String?;
 
             if (adherentBelt == null || adherentCategory == null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("Données adhérent incomplètes.",style: textStyleText(context))),
+              scaffold.showSnackBar(
+                SnackBar(content: Text("Données adhérent incomplètes.", style: textStyleText(context))),
               );
               return;
             }
 
-            // 🔹 Récupération infos compétition et min ceinture
             final competitionDoc = await firestore.getCollection('competition').doc(competitionId).get();
             final competitionData = competitionDoc.data() as Map<String, dynamic>;
             final minBeltField = "minBelt${adherentCategory[0].toUpperCase()}${adherentCategory.substring(1).toLowerCase()}";
             final minBelt = competitionData[minBeltField] as String?;
 
             if (minBelt != null && minBelt.isNotEmpty && !_isEligible(adherentBelt, minBelt)) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("Votre ceinture (${adherentBelt}) est inférieure à la ceinture minimale (${minBelt})",style: textStyleText(context))),
+              scaffold.showSnackBar(
+                SnackBar(content: Text("Votre ceinture ($adherentBelt) est inférieure à la ceinture minimale (${minBelt})", style: textStyleText(context))),
               );
               return;
             }
 
-            // ✅ Tout est OK → Bloc
             final bloc = BlocProvider.of<CompetitionRegistrationBloc>(context);
             bloc.add(RegisterToCompetitionEvent(
               adherentId: adherentId,
@@ -103,17 +103,19 @@ class InscriptionButton extends StatelessWidget {
               competitionDate: competitionDate,
             ));
 
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("Inscription validée ✅",style: textStyleText(context))),
+            scaffold.showSnackBar(
+              SnackBar(content: Text("Inscription validée ✅", style: textStyleText(context))),
             );
 
           } catch (e) {
             debugPrint("Erreur lors de l'inscription : $e");
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("Erreur lors de l'inscription.",style: textStyleText(context))),
+            scaffold.showSnackBar(
+              SnackBar(content: Text("Erreur lors de l'inscription.", style: textStyleText(context))),
             );
           }
         }
+
+
 
     );
   }

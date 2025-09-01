@@ -52,10 +52,11 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
       debugPrint("Erreur Firebase: $e");
       error = 'Erreur de connexion à Firestore';
     } finally {
-      if (!mounted) return;
-      setState(() {
+      if (!mounted) {
+        setState(() {
         isLoading = false;
       });
+      }
     }
   }
 

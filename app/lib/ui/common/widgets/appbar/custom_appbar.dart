@@ -119,7 +119,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
         );
-      }).toList(),
+      })
     ];
   }
 
@@ -147,17 +147,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         if (isWideScreen) ...generateNavActions(context),
         IconButton(
           icon: Icon(Icons.logout, color: theme.colorScheme.onPrimary),
-          onPressed: () async {
-            try {
-              await FirebaseAuth.instance.signOut(); // Déconnexion
-              GoRouter.of(context).go('/');           // Redirection vers la page d'accueil
-            } catch (e) {
-              debugPrint('Erreur lors de la déconnexion : $e');
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Erreur lors de la déconnexion')),
-              );
+            onPressed: () async {
+              final router = GoRouter.of(context); // capture avant await
+              try {
+                await FirebaseAuth.instance.signOut();
+                router.go('/');
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Erreur lors de la déconnexion')),
+                );
+              }
             }
-          },
+
+
         )
 
       ],

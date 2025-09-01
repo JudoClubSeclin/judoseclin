@@ -86,7 +86,7 @@ class CompetitionsListView extends StatelessWidget {
                     final competition = competitions[index];
 
                     // Vérifie si l'utilisateur est inscrit (si connecté)
-                    final isUserInscribed = competition.id != null && userInscriptions.contains(competition.id);
+                    final isUserInscribed = userInscriptions.contains(competition.id);
 
                     // Gestion de la date
                     dynamic dateField = competition['date'];
@@ -119,9 +119,9 @@ class CompetitionsListView extends StatelessWidget {
                             title: competition['title'] as String? ?? 'Compétition',
                             subTitle: subTitle,
                             onTap: () {
-                              if (competition.id != null) {
+
                                 context.go('/competition/${competition.id}', extra: competition.id);
-                              }
+
                             },
                           ),
                         ),

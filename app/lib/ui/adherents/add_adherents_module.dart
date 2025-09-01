@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
-import 'package:judoseclin/core/di/api/auth_service.dart';
 import 'package:judoseclin/core/di/api/firestore_service.dart';
 import 'package:judoseclin/ui/adherents/adherents_bloc.dart';
 import 'package:judoseclin/ui/adherents/adherents_interactor.dart';
@@ -45,13 +44,11 @@ class AddAdherentsModule implements UIModule {
       create: (context) {
         final interactor = getIt<AdherentsInteractor>();
         final coitisationInteractor = getIt<CotisationInteractor>();
-        final auth = getIt<AuthService>();
         final firestoreService = getIt<FirestoreService>();
 
         return AdherentsBloc(
           interactor,
           coitisationInteractor,
-          auth,
           firestoreService,
           adherentId: '',
           // Remplacez par une valeur valide si nécessaire
