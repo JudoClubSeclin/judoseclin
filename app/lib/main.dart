@@ -18,7 +18,6 @@ void main() async {
   await EmojiUtils.preloadEmojis();
 
   configureDependencies();
-  debugPaintSizeEnabled = true;
   runApp(
     MultiProvider(
       providers: [
