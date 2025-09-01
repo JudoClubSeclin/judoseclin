@@ -1,12 +1,14 @@
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'dart:html' as html;
-import 'package:flutter/services.dart' show Uint8List, rootBundle;
+import 'dart:typed_data';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:open_file/open_file.dart';
+import 'dart:io';
 
 import '../../ui/adherents/adherents_interactor.dart';
 import '../../ui/cotisations/cotisation_interactor.dart';
-
 import 'emojis.dart';
 
 Future<void> generateAndPrintPdf(
@@ -33,8 +35,6 @@ Future<void> generateAndPrintPdf(
     final regularFont = pw.Font.ttf(
       await rootBundle.load("assets/fonts/Roboto-Regular.ttf"),
     );
-
-
 
     pdf.addPage(
       pw.Page(
@@ -135,15 +135,22 @@ Future<void> generateAndPrintPdf(
       ),
     );
 
-    Uint8List pdfBytes = await pdf.save();
-
-    final blob = html.Blob([pdfBytes], 'application/pdf');
-    final url = html.Url.createObjectUrlFromBlob(blob);
-    html.window.open(url, '_blank');
-    html.Url.revokeObjectUrl(url);
+    final pdfBytes = await pdf.save();
+    await downloadPdf(pdfBytes, 'fiche_adherent_${adherent.firstName}_${adherent.lastName}.pdf');
   } catch (e) {
     debugPrint("Erreur lors de la génération du PDF : $e");
     rethrow;
+  }
+}
+
+Future<void> downloadPdf(Uint8List pdfBytes, String fileName) async {
+  try {
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/$fileName');
+    await file.writeAsBytes(pdfBytes);
+    await OpenFile.open(file.path);
+  } catch (e) {
+    debugPrint('Erreur lors du téléchargement: $e');
   }
 }
 

@@ -39,6 +39,8 @@ dependencies:
   printing: ^5.14.2
   web: ^1.1.1
   js: ^0.7.2
+  path_provider: ^2.1.5
+  open_file: ^3.5.10
 
 dev_dependencies:
   flutter_test:
@@ -62,7 +64,7 @@ flutter:
   fonts:
     - family: MaterialIcons
       fonts:
-        - asset: fonts/MaterialIcons-Regular.otf
+        - asset: fonts/font/MaterialIcons-Regular.ttf
     - family: Hiromisake
       fonts:
         - asset: fonts/Hiromisake-Regular.ttf
