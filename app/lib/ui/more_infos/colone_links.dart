@@ -189,10 +189,7 @@ class _ColonneLinksState extends State<ColonneLinks> {
                 },
               ),
 
-              // ============================
-              // Partie Compétitions commentée
-              // ============================
-              /*
+
               FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text("Compétitions", style: titleStyleMedium(context)),
@@ -234,7 +231,7 @@ class _ColonneLinksState extends State<ColonneLinks> {
                   return const SizedBox();
                 },
               ),
-              */
+
             ],
           ),
         ),

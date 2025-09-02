@@ -120,7 +120,7 @@ class CompetitionsListView extends StatelessWidget {
                             subTitle: subTitle,
                             onTap: () {
 
-                                context.go('/competition/${competition.id}', extra: competition.id);
+                              context.go('/competition/${competition.id}', extra: competition.id);
 
                             },
                           ),

@@ -15,6 +15,7 @@ class LandingHome extends StatelessWidget {
         image: DecorationImage(
           image: AssetImage("assets/images/bg-appbar-0.jpg"),
           fit: BoxFit.cover,
+
         ),
       ),
       child: Column(

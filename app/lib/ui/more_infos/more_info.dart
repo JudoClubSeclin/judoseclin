@@ -23,7 +23,7 @@ class MoreInfo extends StatelessWidget {
       width: size.width,
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/bg-main-0.jpg"),
+          image: AssetImage("assets/images/bg-main-1.jpg"),
           fit: BoxFit.cover,
         ),
       ),
