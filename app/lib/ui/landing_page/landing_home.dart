@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:judoseclin/core/utils/size_extensions.dart';
 import 'package:judoseclin/theme.dart';
 
 class LandingHome extends StatelessWidget {
@@ -9,7 +8,7 @@ class LandingHome extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Container(
-      height: size.headerHeight(),
+      height: 300,
       width: double.infinity,
       decoration: const BoxDecoration(
         image: DecorationImage(
