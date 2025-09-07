@@ -2,8 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:judoseclin/core/utils/size_extensions.dart';
 import 'package:judoseclin/theme.dart';
 
-class LandingHome extends StatelessWidget {
+class LandingHome extends StatefulWidget {
   const LandingHome({super.key});
+
+  @override
+  State<LandingHome> createState() => _LandingHomeState();
+}
+
+class _LandingHomeState extends State<LandingHome> {
+  late Image appbarImage;
+  late Image logoImage;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    appbarImage = Image.asset("assets/images/bg-appbar-0.jpg");
+    logoImage = Image.asset("assets/images/logo-fond-blanc.png");
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    precacheImage(appbarImage.image, context);
+    precacheImage(logoImage.image, context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,11 +36,10 @@ class LandingHome extends StatelessWidget {
     return Container(
       height: size.headerHeight(),
       width: double.infinity,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/bg-appbar-0.jpg"),
+          image: appbarImage.image,
           fit: BoxFit.cover,
-
         ),
       ),
       child: Column(
@@ -28,7 +52,7 @@ class LandingHome extends StatelessWidget {
             child: SizedBox(
               width: size.height / 6.5,
               height: size.height / 6.5,
-              child: Image.asset("assets/images/logo-fond-blanc.png"),
+              child: logoImage,
             ),
           ),
           Padding(
