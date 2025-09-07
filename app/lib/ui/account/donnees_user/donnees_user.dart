@@ -32,23 +32,21 @@ class _DonneesUserState extends State<DonneesUser> {
   Future<void> fetchFamilyMembers() async {
     try {
       final rawEmail = _authService.currentUser?.email ?? '';
-      final userEmail = rawEmail.trim(); // Nettoyage
+      final userEmail = rawEmail.trim();
 
       if (userEmail.isEmpty) {
-        debugPrint("Email utilisateur introuvable");
+        debugPrint("⚠️ Email utilisateur introuvable");
         setState(() => isLoading = false);
         return;
       }
 
-      // Récupérer le document de l'utilisateur courant
       final userQuery = await _firestoreService
           .collection("adherents")
           .where("email", isEqualTo: userEmail)
           .get();
 
       if (userQuery.docs.isEmpty) {
-        debugPrint("Aucun document trouvé pour cet email : '$userEmail'");
-        // On peut fallback sur utilisateurPrincipal si nécessaire
+        debugPrint("⚠️ Aucun document trouvé pour '$userEmail'");
         setState(() {
           familyMembers = [widget.utilisateurPrincipal];
           isLoading = false;
@@ -60,7 +58,6 @@ class _DonneesUserState extends State<DonneesUser> {
       final currentUserData = userDoc.data();
       final currentFamilyId = currentUserData['familyId'] ?? '';
 
-      // Récupérer les membres de la famille
       final familyQuery = await _firestoreService
           .collection("adherents")
           .where("familyId", isEqualTo: currentFamilyId)
@@ -72,11 +69,12 @@ class _DonneesUserState extends State<DonneesUser> {
       }).toList();
 
       setState(() {
-        familyMembers = members.isNotEmpty ? members : [widget.utilisateurPrincipal];
+        familyMembers =
+        members.isNotEmpty ? members : [widget.utilisateurPrincipal];
         isLoading = false;
       });
     } catch (e) {
-      debugPrint("Erreur lors de la récupération des membres de la famille : $e");
+      debugPrint("❌ Erreur lors de la récupération des membres : $e");
       setState(() {
         familyMembers = [widget.utilisateurPrincipal];
         isLoading = false;
@@ -100,26 +98,29 @@ class _DonneesUserState extends State<DonneesUser> {
       separatorBuilder: (_, __) => const SizedBox(height: 10),
       itemBuilder: (context, index) {
         final member = familyMembers[index];
-        return
-          Center(
-              child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 500), // largeur max
-                  child:
-          CustomCard(
-          title: "${member.firstName} ${member.lastName}",
-          subTitle: member.email,
-          onTap: () {
-            final adherentId = member.id;
-            if (adherentId.isNotEmpty) {
-              getIt<AdherentSession>().setAdherent(adherentId);
-              context.goNamed(
-                'mes_donnees',
-                pathParameters: {'id': adherentId},
-              );
-            }
-          },
-          )
-              )
+        final adherentId = member.id?.trim();
+
+        return Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 500),
+            child: CustomCard(
+              title: "${member.firstName ?? ''} ${member.lastName ?? ''}",
+              subTitle: member.email ?? "Email non disponible",
+              onTap: () {
+                if (adherentId == null || adherentId.isEmpty) {
+                  debugPrint("⚠️ Impossible de naviguer : id vide pour $member");
+                  return;
+                }
+
+                getIt<AdherentSession>().setAdherent(adherentId);
+
+                context.goNamed(
+                  'mes_donnees',
+                  pathParameters: {'id': adherentId},
+                );
+              },
+            ),
+          ),
         );
       },
     );

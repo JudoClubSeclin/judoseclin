@@ -1,8 +1,6 @@
 name: judoseclin
 description: "Cette application vous permet de suivre l'actualité du club mais aussi de gérer vos inscriptions aux compétitions"
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 version: 1.0.0+18
 
 environment:
@@ -50,10 +48,6 @@ dev_dependencies:
   json_serializable: ^6.8.0
   injectable_generator: ^2.6.2
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
 flutter:
   uses-material-design: true
   assets:
@@ -61,13 +55,11 @@ flutter:
     - assets/markdown/
     - assets/documents/
     - assets/emojis/
+    - assets/fonts/
   fonts:
-    - family: MaterialIcons
-      fonts:
-        - asset: assets/fonts/font/MaterialIcons-Regular.ttf
     - family: Hiromisake
       fonts:
-        - asset: fonts/Hiromisake-Regular.ttf
+        - asset: assets/fonts/Hiromisake-Regular.ttf
     - family: Roboto
       fonts:
         - asset: assets/fonts/Roboto-Regular.ttf
@@ -75,4 +67,3 @@ flutter:
     - family: NotoEmoji
       fonts:
         - asset: assets/fonts/NotoEmoji-Regular.ttf
-

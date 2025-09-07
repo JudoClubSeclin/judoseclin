@@ -35,7 +35,7 @@ class _AccountViewState extends State<AccountView> {
     return snapshot.docs.map((doc) {
       final data = doc.data();
       return Adherents(
-        id: doc.id,
+        id: doc.id, // ✅ Firestore doc.id toujours présent
         lastName: data['lastName'] ?? '',
         firstName: data['firstName'] ?? '',
         familyId: data['familyId'] ?? '',
@@ -80,10 +80,10 @@ class _AccountViewState extends State<AccountView> {
 
             final adherents = snapshot.data ?? [];
 
-            // Au moins afficher l'utilisateur principal
+            // ✅ Fallback sur utilisateurPrincipal
             if (adherents.isEmpty) {
               final utilisateurPrincipal = Adherents(
-                id: widget.userData['id'] ?? '',
+                id: widget.userData['id']?.toString() ?? 'fallback-id', // ✅ Jamais vide
                 lastName: widget.userData['lastName'] ?? '',
                 firstName: widget.userData['firstName'] ?? '',
                 familyId: widget.userData['familyId'] ?? '',
@@ -115,14 +115,15 @@ class _AccountViewState extends State<AccountView> {
                   Wrap(
                     alignment: WrapAlignment.center,
                     children: [
-                      Text('Bonjour la famille', style: titleStyleMedium(context)),
+                      Text('Bonjour la famille',
+                          style: titleStyleMedium(context)),
                       const SizedBox(width: 22),
-                      Text(adherents.first.firstName, style: titleStyleMedium(context)),
+                      Text(adherents.first.firstName,
+                          style: titleStyleMedium(context)),
                     ],
                   ),
                   const SizedBox(height: 20),
                   DonneesUser(
-
                     utilisateurPrincipal: adherents.first,
                   ),
                 ],

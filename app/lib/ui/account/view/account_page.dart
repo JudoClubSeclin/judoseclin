@@ -28,9 +28,13 @@ class AccountPage extends StatelessWidget {
         ],
       ),
       body: BlocBuilder<AccountBloc, AccountState>(
+
         builder: (context, state) {
           if (state is AccountLoaded) {
+            debugPrint("🔎 AccountPage lancé avec adherentId = $adherentId");
+
             return AccountView(userData: state.userData);
+
           } else {
             if (state is! AccountLoading) {
               context.read<AccountBloc>().add(LoadUserInfo(adherentId: adherentId));

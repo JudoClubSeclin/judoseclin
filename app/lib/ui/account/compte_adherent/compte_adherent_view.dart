@@ -52,10 +52,10 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
       debugPrint("Erreur Firebase: $e");
       error = 'Erreur de connexion à Firestore';
     } finally {
-      if (!mounted) {
+      if (mounted) {
         setState(() {
-        isLoading = false;
-      });
+          isLoading = false;
+        });
       }
     }
   }
@@ -66,15 +66,13 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
     final adherentId = widget.adherentId;
 
     try {
-      // 1) Récupère tous les competitionId pour cet adhérent
       final allCompetitionIds = await registrationProvider
-          .getUserInscriptionsForAdherent(adherentId); // lit 'competition_registration'
+          .getUserInscriptionsForAdherent(adherentId);
 
       pastCompetitions.clear();
       futureCompetitions.clear();
 
       for (final compId in allCompetitionIds) {
-        // 2) Charge la compétition dans la collec 'competition' (singulier)
         final compDoc = await FirebaseFirestore.instance
             .collection('competition')
             .doc(compId)
@@ -83,21 +81,20 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
         if (!compDoc.exists) continue;
 
         final data = compDoc.data()!;
-        // 3) Date robuste (Timestamp ou String)
         final rawDate = data['date'];
+
         DateTime compDate;
         if (rawDate is Timestamp) {
           compDate = rawDate.toDate();
         } else if (rawDate is String) {
           compDate = DateTime.tryParse(rawDate) ?? DateTime(1900);
         } else {
-          // type inattendu -> on ignore
-          continue;
+          continue; // type inattendu
         }
 
         final entry = {
           'id': compDoc.id,
-          'title': (data['title'] ?? 'Compétition') as String,
+          'title': (data['title'] ?? 'Compétition').toString(),
         };
 
         if (compDate.isBefore(DateTime.now())) {
@@ -107,15 +104,14 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
         }
       }
 
-      if (mounted) setState(() {}); // rafraîchir l’UI si on a rempli les listes
+      if (mounted) setState(() {});
     } catch (e) {
       debugPrint("Erreur récupération compétitions : $e");
     }
   }
 
-
-
-  Widget buildCompetitionCard(Map<String, dynamic> competition, {bool isPast = false}) {
+  Widget buildCompetitionCard(Map<String, dynamic> competition,
+      {bool isPast = false}) {
     final title = competition['title'] ?? 'Compétition';
     final text = isPast
         ? 'J’ai participé à la compétition : $title'
@@ -169,7 +165,7 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
             spacing: 15,
             runSpacing: 15,
             children: [
-              _buildInfoItem('post occuper', adherentData!['boardPosition']),
+              _buildInfoItem('Poste occupé', adherentData!['boardPosition']),
               _buildInfoItem('N° de licence', adherentData!['licence']),
             ],
           ),
@@ -178,9 +174,9 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
     );
   }
 
-  Widget _buildInfoItem(String label, String? value) {
+  Widget _buildInfoItem(String label, dynamic value) {
     return Text(
-      '$label: ${value ?? 'Non disponible'}',
+      '$label: ${value?.toString() ?? 'Non disponible'}',
       style: textStyleText(context),
     );
   }
@@ -206,10 +202,9 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
     }
 
     return Scaffold(
-      appBar:const CustomAppBar(title: ''),
-      drawer: MediaQuery.of(context).size.width <= 750
-          ? const CustomDrawer()
-          : null,
+      appBar: const CustomAppBar(title: ''),
+      drawer:
+      MediaQuery.of(context).size.width <= 750 ? const CustomDrawer() : null,
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -227,7 +222,7 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
               children: [
                 const SizedBox(height: 20),
                 Text(
-                  'Bonjour ${adherentData!['lastName']}',
+                  'Bonjour ${adherentData?['lastName']?.toString() ?? ''}',
                   style: titleStyleMedium(context),
                 ),
                 const SizedBox(height: 50),
@@ -235,17 +230,24 @@ class _CompteAdherentViewState extends State<CompteAdherentView> {
                 const SizedBox(height: 40),
 
                 // 🔹 Compétitions futures
-                 Text("Compétitions à venir : ", style: textStyleText(context)),
-                if (futureCompetitions.isEmpty)  Text("Aucune compétition à venir.",style: textStyleText(context)),
-                ...futureCompetitions.map((c) => buildCompetitionCard(c, isPast: false)),
+                Text("Compétitions à venir : ",
+                    style: textStyleText(context)),
+                if (futureCompetitions.isEmpty)
+                  Text("Aucune compétition à venir.",
+                      style: textStyleText(context)),
+                ...futureCompetitions
+                    .map((c) => buildCompetitionCard(c, isPast: false)),
 
                 const SizedBox(height: 20),
 
                 // 🔹 Compétitions passées
-                 Text("Compétitions passées : ", style: textStyleText(context)),
-                if (pastCompetitions.isEmpty)  Text("Aucune compétition passée.", style: textStyleText(context)),
-                ...pastCompetitions.map((c) => buildCompetitionCard(c, isPast: true)),
-
+                Text("Compétitions passées : ",
+                    style: textStyleText(context)),
+                if (pastCompetitions.isEmpty)
+                  Text("Aucune compétition passée.",
+                      style: textStyleText(context)),
+                ...pastCompetitions
+                    .map((c) => buildCompetitionCard(c, isPast: true)),
               ],
             ),
           ),
