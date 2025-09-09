@@ -915,8 +915,8 @@
     }
   ],
   "generator": "pub",
-  "generatorVersion": "3.9.0",
+  "generatorVersion": "3.9.2",
   "flutterRoot": "file:///Users/bfontaine/flutter",
-  "flutterVersion": "3.35.2",
+  "flutterVersion": "3.35.3",
   "pubCache": "file:///Users/bfontaine/.pub-cache"
 }
