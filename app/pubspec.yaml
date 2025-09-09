@@ -10,6 +10,9 @@ resolution: workspace
 dependencies:
   flutter:
     sdk: flutter
+
+  landing_page:
+    path: ../features/landing_page
   cupertino_icons: ^1.0.8
   flutter_markdown: ^0.7.7+1
   carousel_slider: ^5.1.1
