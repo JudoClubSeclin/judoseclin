@@ -1,3 +1,3 @@
 library;
 
-export '/src/ui/ui_module.dart';
+export 'src/ui/ui_module.dart';

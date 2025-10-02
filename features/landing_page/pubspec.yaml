@@ -10,6 +10,8 @@ resolution: workspace
 dependencies:
   flutter:
     sdk: flutter
+  news:
+    path: ../news
   image_loader_flutter: ^0.0.13
 
 dev_dependencies:

@@ -98,7 +98,7 @@ class _DonneesUserState extends State<DonneesUser> {
       separatorBuilder: (_, __) => const SizedBox(height: 10),
       itemBuilder: (context, index) {
         final member = familyMembers[index];
-        final adherentId = member.id?.trim();
+        final adherentId = member.id.trim();
 
         return Center(
           child: ConstrainedBox(
