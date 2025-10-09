@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:news/src/ui/news_carousel.dart'; // ← chemin relatif vers ton carousel
+import 'package:news/news.dart';
+
 
 class WithImageOnly extends StatelessWidget {
   static Image? _appbarImage;
@@ -44,6 +45,7 @@ class WithImageOnly extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 0),
               child: NewsCarousel(),
             ),
+
           ],
         ),
       ),
