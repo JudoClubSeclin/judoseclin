@@ -1,7 +1,8 @@
 name: landing_page
-description: "A new Flutter package project."
+description: "LandingPage."
 version: 0.0.1
-homepage:
+publish_to: none
+
 
 environment:
   sdk: ^3.9.2
@@ -11,7 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
   news:
-    path: ./news
+    path: ../news
+  judoseclin:
+    path: ../../app
   image_loader_flutter: ^0.0.13
 
 dev_dependencies:
@@ -26,6 +29,3 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
-
-workspace:
-  - news

@@ -6,7 +6,7 @@ void main() {
   testWidgets('WithImageOnly utilise le bon chemin image', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: WithImageOnly(),
+        home: LandingPage(),
       ),
     );
 

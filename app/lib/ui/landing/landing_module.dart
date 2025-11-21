@@ -23,11 +23,11 @@ class LandingModule implements UIModule {
         builder: (context, state) => FutureBuilder(
           future: () async {
             await landing_page.loadLibrary();
-            await landing_page.WithImageOnly.precacheImages(context);
+            await landing_page.loadLibrary();
           }(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return landing_page.WithImageOnly(); // 👈 ton widget de la feature
+              return landing_page.LandingPage(); // 👈 ton widget de la feature
             } else {
               return const Center(
                 child: SizedBox(
